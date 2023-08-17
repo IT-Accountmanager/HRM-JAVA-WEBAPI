@@ -1,14 +1,33 @@
 package com.hrm.main.models;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 
-
+@Entity
 public class BankDetails {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bank_id_seq")
+	@SequenceGenerator(name = "bank_id_seq", initialValue = 1, allocationSize = 1, sequenceName = "bank_seq")
+	@Column(name = "Id")
+	private int bankDetId;
 	private String accountNo;
 	private String bankHolderName;
 	private String bankName;
-	private String IFSCCode;
+	private String ifscCode;
 	private String branchName;
 	private String branchCity;
+
+	public int getBankDetId() {
+		return bankDetId;
+	}
+
+	public void setBankDetId(int bankDetId) {
+		this.bankDetId = bankDetId;
+	}
 
 	public String getBankHolderName() {
 		return bankHolderName;
@@ -34,12 +53,12 @@ public class BankDetails {
 		this.accountNo = accountNo;
 	}
 
-	public String getIFSCCode() {
-		return IFSCCode;
+	public String getIfscCode() {
+		return ifscCode;
 	}
 
-	public void setIFSCCode(String iFSCCode) {
-		IFSCCode = iFSCCode;
+	public void setIfscCode(String ifscCode) {
+		this.ifscCode = ifscCode;
 	}
 
 	public String getBranchName() {

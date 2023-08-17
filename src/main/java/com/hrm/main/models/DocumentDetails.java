@@ -1,12 +1,29 @@
 package com.hrm.main.models;
 
-//code
-public class DocumentDetails {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 
+@Entity
+public class DocumentDetails {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "doc_id_seq")
+	@SequenceGenerator(name = "doc_id_seq", initialValue = 1, allocationSize = 1, sequenceName = "doc_id_seq")
+	private int docId;
 	private String adharCardNo;
 	private String panCardNo;
 	private String drivingLicenseNo;
 	private String passportNo;
+
+	public int getDocId() {
+		return docId;
+	}
+
+	public void setDocId(int docId) {
+		this.docId = docId;
+	}
 
 	public String getAdharCardNo() {
 		return adharCardNo;

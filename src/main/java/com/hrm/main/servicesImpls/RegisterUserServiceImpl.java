@@ -17,7 +17,7 @@ public class RegisterUserServiceImpl implements IRegisterUserService {
 		try {
 			var registerUser = this.userRepo.save(user);
 			if (registerUser.getId() > 0) {
-				return "User Register Successfully with ID : " + registerUser.getId();
+				return "User Register Successfully of ID : " + registerUser.getId();
 			}
 		} catch (Exception ex) {
 			return ex.getMessage();
