@@ -15,7 +15,9 @@ public class PersonalDetailsServiceImpl implements IPersonalDetailsService {
 
 	@Override
 	public String addPersonalDetails(PersonalDetails personalDetails) {
-		PersonalDetails details = personalDetailsRepo.save(personalDetails);
+
+		PersonalDetails details = personalDetailsRepo.saveAndFlush(personalDetails);
+
 		return "Personal Details Added Successfully";
 	}
 

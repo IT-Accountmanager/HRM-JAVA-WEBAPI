@@ -1,9 +1,12 @@
 package com.hrm.main.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity
@@ -23,6 +26,28 @@ public class PersonalDetails {
 	private String personalMailId;
 	private Long phoneNo;
 	private Long alternativePhoneNo;
+
+	@OneToOne(mappedBy = "permanent", cascade = CascadeType.ALL)
+	private PermanentAddress perAddress;
+
+	@OneToOne(mappedBy = "current", cascade = CascadeType.ALL)
+	private PresentAddress preAddress;
+
+	public PermanentAddress getPerAddress() {
+		return perAddress;
+	}
+
+	public void setPerAddress(PermanentAddress perAddress) {
+		this.perAddress = perAddress;
+	}
+
+	public PresentAddress getPreAddress() {
+		return preAddress;
+	}
+
+	public void setPreAddress(PresentAddress preAddress) {
+		this.preAddress = preAddress;
+	}
 
 	public int getId() {
 		return id;

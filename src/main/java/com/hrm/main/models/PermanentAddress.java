@@ -1,8 +1,22 @@
+
 package com.hrm.main.models;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.SequenceGenerator;
 
+@Entity
 public class PermanentAddress {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "per_id_seq")
+	@SequenceGenerator(name = "per_id_seq", initialValue = 1, allocationSize = 1, sequenceName = "per_id_seq")
+	private int perAddId;
 	private String country;
 	private String state;
 	private String city;
@@ -10,6 +24,26 @@ public class PermanentAddress {
 	private String area;
 	private String landmark;
 	private String pincode;
+
+	@OneToOne
+	@JoinColumn(name = "personal_details_id", referencedColumnName = "id")
+	private PersonalDetails permanent;
+
+	public PersonalDetails getPermanent() {
+		return permanent;
+	}
+
+	public void setPermanent(PersonalDetails permanent) {
+		this.permanent = permanent;
+	}
+
+	public int getPerAddId() {
+		return perAddId;
+	}
+
+	public void setPerAddId(int perAddId) {
+		this.perAddId = perAddId;
+	}
 
 	public String getCountry() {
 		return country;

@@ -1,8 +1,23 @@
+
 package com.hrm.main.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.SequenceGenerator;
 
+@Entity
 public class PresentAddress {
 
+	@Id
+
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pre_id_seq")
+
+	@SequenceGenerator(name = "pre_id_seq", initialValue = 1, allocationSize = 1, sequenceName = "pre_id_seq")
+	private int preAddId;
 	private String country;
 	private String state;
 	private String city;
@@ -10,6 +25,18 @@ public class PresentAddress {
 	private String area;
 	private String landmark;
 	private String pincode;
+
+	@OneToOne
+	@JoinColumn(name = "personal_details_id", referencedColumnName = "id")
+	private PersonalDetails current;
+
+	public PersonalDetails getCurrent() {
+		return current;
+	}
+
+	public void setCurrent(PersonalDetails current) {
+		this.current = current;
+	}
 
 	public String getCountry() {
 		return country;
@@ -65,6 +92,14 @@ public class PresentAddress {
 
 	public void setPincode(String pincode) {
 		this.pincode = pincode;
+	}
+
+	public int getPreAddId() {
+		return preAddId;
+	}
+
+	public void setPreAddId(int preAddId) {
+		this.preAddId = preAddId;
 	}
 
 }
