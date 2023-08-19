@@ -27,7 +27,7 @@ public class PresentAddress {
 	private String pincode;
 
 	@OneToOne
-	@JoinColumn(name = "personal_details_id", referencedColumnName = "id")
+	@JoinColumn(name = "Present_Id", referencedColumnName = "id")
 	private PersonalDetails current;
 
 	public PersonalDetails getCurrent() {

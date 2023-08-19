@@ -1,21 +1,35 @@
 package com.hrm.main.models;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity
 public class DocumentDetails {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "doc_id_seq")
-	@SequenceGenerator(name = "doc_id_seq", initialValue = 1, allocationSize = 1, sequenceName = "doc_id_seq")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int docId;
 	private String adharCardNo;
 	private String panCardNo;
 	private String drivingLicenseNo;
 	private String passportNo;
+
+	@OneToMany(mappedBy = "docDetails", cascade = CascadeType.ALL)
+	private List<DocumentUpload> docuUpload;
+
+	public List<DocumentUpload> getDocuUpload() {
+		return docuUpload;
+	}
+
+	public void setDocuUpload(List<DocumentUpload> docuUpload) {
+		this.docuUpload = docuUpload;
+	}
 
 	public int getDocId() {
 		return docId;
@@ -55,6 +69,28 @@ public class DocumentDetails {
 
 	public void setPassportNo(String passportNo) {
 		this.passportNo = passportNo;
+	}
+
+	public DocumentDetails(int docId, String adharCardNo, String panCardNo, String drivingLicenseNo, String passportNo,
+			List<DocumentUpload> docuUpload) {
+		super();
+		this.docId = docId;
+		this.adharCardNo = adharCardNo;
+		this.panCardNo = panCardNo;
+		this.drivingLicenseNo = drivingLicenseNo;
+		this.passportNo = passportNo;
+		this.docuUpload = docuUpload;
+	}
+
+	public DocumentDetails() {
+		super();
+	}
+
+	@Override
+	public String toString() {
+		return "DocumentDetails [docId=" + docId + ", adharCardNo=" + adharCardNo + ", panCardNo=" + panCardNo
+				+ ", drivingLicenseNo=" + drivingLicenseNo + ", passportNo=" + passportNo + ", docuUpload=" + docuUpload
+				+ "]";
 	}
 
 }
