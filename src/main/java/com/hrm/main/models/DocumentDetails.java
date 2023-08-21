@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 
@@ -20,7 +21,8 @@ public class DocumentDetails {
 	private String drivingLicenseNo;
 	private String passportNo;
 
-	@OneToMany(mappedBy = "docDetails", cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "docDetailsId")
 	private List<DocumentUpload> docuUpload;
 
 	public List<DocumentUpload> getDocuUpload() {

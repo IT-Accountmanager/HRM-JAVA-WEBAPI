@@ -10,24 +10,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hrm.main.models.DocumentDetails;
-import com.hrm.main.models.DocumentUpload;
-import com.hrm.main.services.IDocumentsDetailsService;
+import com.hrm.main.models.AddressDetails;
+import com.hrm.main.services.IAddressDetailsService;
 
-@CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
+@CrossOrigin("*")
 
 @RestController
 
-@RequestMapping("/DocumentsDetails")
-public class DocumentsDetailsController {
+@RequestMapping("/AddressDetails")
+public class AddressDetailsController {
 
 	@Autowired
-	IDocumentsDetailsService docDeatilsService;
+	IAddressDetailsService addressDetailsService;
 
-	@PostMapping("/add")
-	public ResponseEntity<String> addDocumentDetails(@RequestBody DocumentDetails docDetails) {
-		String result = docDeatilsService.addDocuments(docDetails);
+	@PostMapping("/AddAddress")
+	public ResponseEntity<String> addAddress(@RequestBody AddressDetails addressDetails) {
+		String result = addressDetailsService.addAdd(addressDetails);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
-	}
 
+	}
 }

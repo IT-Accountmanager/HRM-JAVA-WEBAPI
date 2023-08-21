@@ -27,27 +27,25 @@ public class PersonalDetails {
 	private Long phoneNo;
 	private Long alternativePhoneNo;
 
-	@OneToOne(mappedBy = "permanent", cascade = CascadeType.ALL)
-	private PermanentAddress perAddress;
+	/*
+	 * @OneToOne(mappedBy = "permanent", cascade = CascadeType.ALL) private
+	 * PermanentAddress perAddress;
+	 * 
+	 * @OneToOne(mappedBy = "current", cascade = CascadeType.ALL) private
+	 * PresentAddress preAddress;
+	 */
 
-	@OneToOne(mappedBy = "current", cascade = CascadeType.ALL)
-	private PresentAddress preAddress;
-
-	public PermanentAddress getPerAddress() {
-		return perAddress;
-	}
-
-	public void setPerAddress(PermanentAddress perAddress) {
-		this.perAddress = perAddress;
-	}
-
-	public PresentAddress getPreAddress() {
-		return preAddress;
-	}
-
-	public void setPreAddress(PresentAddress preAddress) {
-		this.preAddress = preAddress;
-	}
+	/*
+	 * public PermanentAddress getPerAddress() { return perAddress; }
+	 * 
+	 * public void setPerAddress(PermanentAddress perAddress) { this.perAddress =
+	 * perAddress; }
+	 * 
+	 * public PresentAddress getPreAddress() { return preAddress; }
+	 * 
+	 * public void setPreAddress(PresentAddress preAddress) { this.preAddress =
+	 * preAddress; }
+	 */
 
 	public int getId() {
 		return id;

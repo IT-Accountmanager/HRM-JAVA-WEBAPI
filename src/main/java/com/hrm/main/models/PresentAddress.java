@@ -13,30 +13,40 @@ import jakarta.persistence.SequenceGenerator;
 public class PresentAddress {
 
 	@Id
-
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pre_id_seq")
-
 	@SequenceGenerator(name = "pre_id_seq", initialValue = 1, allocationSize = 1, sequenceName = "pre_id_seq")
 	private int preAddId;
 	private String country;
 	private String state;
 	private String city;
 	private String houseNo;
+
+	public AddressDetails getAddCur() {
+		return addCur;
+	}
+
+	public void setAddCur(AddressDetails addCur) {
+		this.addCur = addCur;
+	}
+
 	private String area;
 	private String landmark;
 	private String pincode;
 
 	@OneToOne
-	@JoinColumn(name = "Present_Id", referencedColumnName = "id")
-	private PersonalDetails current;
+	@JoinColumn(name = "2kk")
+	private AddressDetails addCur;
 
-	public PersonalDetails getCurrent() {
-		return current;
-	}
-
-	public void setCurrent(PersonalDetails current) {
-		this.current = current;
-	}
+	/*
+	 * @OneToOne
+	 * 
+	 * @JoinColumn(name = "Present_Id", referencedColumnName = "id") private
+	 * PersonalDetails current;
+	 * 
+	 * public PersonalDetails getCurrent() { return current; }
+	 * 
+	 * public void setCurrent(PersonalDetails current) { this.current = current; }
+	 */
 
 	public String getCountry() {
 		return country;
