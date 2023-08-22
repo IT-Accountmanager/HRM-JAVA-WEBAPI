@@ -1,8 +1,12 @@
 package com.hrm.main.servicesImpls;
 
+import java.util.Base64;
+import java.util.Base64.Decoder;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.hrm.main.models.DocumentDetails;
 import com.hrm.main.models.DocumentUpload;
 import com.hrm.main.repositories.DocumentUploadRepository;
@@ -19,7 +23,20 @@ public class DocumentsDetailsServiceImpl implements IDocumentsDetailsService {
 
 	@Override
 	public String addDocuments(DocumentDetails docDetails) {
+
 		try {
+
+			for (DocumentUpload doc : docDetails.getDocuUpload()) {
+				Decoder decoder = Base64.getDecoder();
+				// Ensure that the length is a multiple of 4
+				while (doc.base64Data.length() % 4 != 0) {
+					doc.base64Data += "=";
+				}
+
+				doc.setContent(decoder.decode(doc.base64Data));
+
+			}
+
 			var save = this.docRepo.save(docDetails);
 			/*
 			 * docUpload.setDocDetails(docDetails); docUpRepo.save(docUpload);
@@ -32,6 +49,12 @@ public class DocumentsDetailsServiceImpl implements IDocumentsDetailsService {
 			return ex.getMessage();
 		}
 		return "Documents Details are not added.";
+	}
+
+	@Override
+	public List<DocumentDetails> getDocumentsDetById(Integer docId) {
+		DocumentDetails document = docRepo.findById(docId).orElseThrow(null);
+		return (List<DocumentDetails>) document;
 	}
 
 }

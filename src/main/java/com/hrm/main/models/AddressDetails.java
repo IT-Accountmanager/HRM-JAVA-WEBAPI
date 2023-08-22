@@ -21,12 +21,12 @@ public class AddressDetails {
 	private String name;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "kk")
-	private PermanentAddress perAdd;
+	@JoinColumn(name = "permanent_add_Id")
+	private PermanentAddress permanetAdd;
 
-	@OneToOne(mappedBy = "addCur", cascade = CascadeType.ALL)
-	@JoinColumn(name = "kk1")
-	private PresentAddress preAdd;
+	@OneToOne(/* mappedBy = "addCur", */ cascade = CascadeType.ALL)
+	@JoinColumn(name = "present_add_Id")
+	private PresentAddress presentAdd;
 
 	public int getAdId() {
 		return adId;
@@ -44,20 +44,22 @@ public class AddressDetails {
 		this.name = name;
 	}
 
-	public PermanentAddress getPerAdd() {
-		return perAdd;
+	public PermanentAddress getPermanetAdd() {
+		return permanetAdd;
 	}
 
-	public void setPerAdd(PermanentAddress perAdd) {
-		this.perAdd = perAdd;
+	public void setPermanetAdd(PermanentAddress permanetAdd) {
+		this.permanetAdd = permanetAdd;
 	}
 
-	public PresentAddress getPreAdd() {
-		return preAdd;
+	public PresentAddress getPresentAdd() {
+		return presentAdd;
 	}
 
-	public void setPreAdd(PresentAddress preAdd) {
-		this.preAdd = preAdd;
+	public void setPresentAdd(PresentAddress presentAdd) {
+		this.presentAdd = presentAdd;
 	}
+
+	
 
 }

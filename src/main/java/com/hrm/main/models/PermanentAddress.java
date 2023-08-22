@@ -25,9 +25,10 @@ public class PermanentAddress {
 	private String landmark;
 	private String pincode;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "1kk")
-	private AddressDetails addPer;
+	/*
+	 * @OneToOne(cascade = CascadeType.ALL) // @JoinColumn(name = "1kk") private
+	 * AddressDetails permanentAddressDetails;
+	 */
 
 	/* @OneToOne */
 
@@ -100,14 +101,14 @@ public class PermanentAddress {
 		this.landmark = landmark;
 	}
 
-	public AddressDetails getAddPer() {
-		return addPer;
-	}
-
-	public void setAddPer(AddressDetails addPer) {
-		this.addPer = addPer;
-	}
-
+	/*
+	 * public AddressDetails getPermanentAddressDetails() { return
+	 * permanentAddressDetails; }
+	 * 
+	 * public void setPermanentAddressDetails(AddressDetails
+	 * permanentAddressDetails) { this.permanentAddressDetails =
+	 * permanentAddressDetails; }
+	 */
 	public String getPincode() {
 		return pincode;
 	}

@@ -6,4 +6,6 @@ public interface ISocialDetailsService {
 
 	String addSocialDetails(SocialDetails socialDetails);
 
+	SocialDetails getSocialServiceById(Integer id);
+
 }

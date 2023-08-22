@@ -1,5 +1,8 @@
 package com.hrm.main.servicesImpls;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,13 @@ public class SocialDetailsServiceImpl implements ISocialDetailsService {
 			ex.getMessage();
 		}
 		return "Social Details Are Not Added ";
+	}
+
+	@Override
+	public SocialDetails getSocialServiceById(Integer id) {
+		// List<SocialDetails> findById =
+		// this.socialDetailsRepo.findById(id).orElseThrow(null);
+		return null;
 	}
 
 }

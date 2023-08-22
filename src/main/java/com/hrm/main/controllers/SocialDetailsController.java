@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,12 @@ public class SocialDetailsController {
 		String result = this.socialDetailsService.addSocialDetails(socialDetails);
 
 		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+
+	@GetMapping("/get/{id}")
+	public ResponseEntity<SocialDetails> getSocialServiceById(@PathVariable Integer id) {
+		SocialDetails result = this.socialDetailsService.getSocialServiceById(id);
+		return new ResponseEntity<SocialDetails>(result, HttpStatus.OK);
 	}
 
 }

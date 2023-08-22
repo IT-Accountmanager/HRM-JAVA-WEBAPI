@@ -20,23 +20,14 @@ public class PresentAddress {
 	private String state;
 	private String city;
 	private String houseNo;
-
-	public AddressDetails getAddCur() {
-		return addCur;
-	}
-
-	public void setAddCur(AddressDetails addCur) {
-		this.addCur = addCur;
-	}
-
 	private String area;
 	private String landmark;
 	private String pincode;
 
-	@OneToOne
-	@JoinColumn(name = "2kk")
-	private AddressDetails addCur;
-
+	/*
+	 * @OneToOne //@JoinColumn(name = "2kk") private AddressDetails
+	 * presentAddressDetails;
+	 */
 	/*
 	 * @OneToOne
 	 * 
@@ -111,5 +102,14 @@ public class PresentAddress {
 	public void setPreAddId(int preAddId) {
 		this.preAddId = preAddId;
 	}
+
+	/*
+	 * public AddressDetails getPresentAddressDetails() { return
+	 * presentAddressDetails; }
+	 * 
+	 * public void setPresentAddressDetails(AddressDetails presentAddressDetails) {
+	 * this.presentAddressDetails = presentAddressDetails; }
+	 */
+	
 
 }

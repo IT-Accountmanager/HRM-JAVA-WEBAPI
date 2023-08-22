@@ -14,7 +14,8 @@ import jakarta.persistence.SequenceGenerator;
 @Entity
 public class DocumentDetails {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "doc_Det_seq")
+	@SequenceGenerator(name = "doc_Det_seq", initialValue = 1, allocationSize = 1,sequenceName = "doc_Det_seq")
 	private int docId;
 	private String adharCardNo;
 	private String panCardNo;
