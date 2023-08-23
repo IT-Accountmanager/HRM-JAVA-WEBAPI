@@ -19,7 +19,7 @@ public class SocialDetailsServiceImpl implements ISocialDetailsService {
 	public String addSocialDetails(SocialDetails socialDetails) {
 		var addedSocial = this.socialDetailsRepo.save(socialDetails);
 		try {
-			if (addedSocial.getSocialDetailsId() > 1) {
+			if (addedSocial.getSocialDetailsId() > 0) {
 				return "Social Details Added Successfully of Id : " + addedSocial.getSocialDetailsId();
 			}
 
@@ -31,9 +31,8 @@ public class SocialDetailsServiceImpl implements ISocialDetailsService {
 
 	@Override
 	public SocialDetails getSocialServiceById(Integer id) {
-		// List<SocialDetails> findById =
-		// this.socialDetailsRepo.findById(id).orElseThrow(null);
-		return null;
+		SocialDetails socialDetails = socialDetailsRepo.findById(id).orElseThrow(null);
+		return socialDetails;
 	}
 
 }

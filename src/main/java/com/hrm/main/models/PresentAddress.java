@@ -25,7 +25,7 @@ public class PresentAddress {
 	private String pincode;
 
 	/*
-	 * @OneToOne //@JoinColumn(name = "2kk") private AddressDetails
+	 * @OneToOne // @JoinColumn(name = "2kk") private AddressDetails
 	 * presentAddressDetails;
 	 */
 	/*
@@ -110,6 +110,4 @@ public class PresentAddress {
 	 * public void setPresentAddressDetails(AddressDetails presentAddressDetails) {
 	 * this.presentAddressDetails = presentAddressDetails; }
 	 */
-	
-
 }

@@ -22,13 +22,13 @@ import com.hrm.main.services.IDocumentsDetailsService;
 
 @RestController
 
-@RequestMapping("/documentsDetails")
+@RequestMapping("/DocumentsDetails")
 public class DocumentsDetailsController {
 
 	@Autowired
 	IDocumentsDetailsService docDeatilsService;
 
-	@PostMapping("/add")
+	@PostMapping("/Add")
 	public ResponseEntity<String> addDocumentDetails(@RequestBody DocumentDetails docDetails) {
 		String result = docDeatilsService.addDocuments(docDetails);
 		return new ResponseEntity<String>(result, HttpStatus.OK);

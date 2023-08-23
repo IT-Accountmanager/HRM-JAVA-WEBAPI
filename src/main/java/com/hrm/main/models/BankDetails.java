@@ -1,11 +1,15 @@
 package com.hrm.main.models;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Transient;
 
 @Entity
 public class BankDetails {
@@ -20,6 +24,12 @@ public class BankDetails {
 	private String ifscCode;
 	private String branchName;
 	private String branchCity;
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(name = "file64", columnDefinition = "LONGBLOB")
+	private byte[] bankDoc;
+	@Transient
+	public String base64Data;
 
 	public int getBankDetId() {
 		return bankDetId;
@@ -75,6 +85,14 @@ public class BankDetails {
 
 	public void setBranchCity(String branchCity) {
 		this.branchCity = branchCity;
+	}
+
+	public byte[] getBankDoc() {
+		return bankDoc;
+	}
+
+	public void setBankDoc(byte[] bankDoc) {
+		this.bankDoc = bankDoc;
 	}
 
 }

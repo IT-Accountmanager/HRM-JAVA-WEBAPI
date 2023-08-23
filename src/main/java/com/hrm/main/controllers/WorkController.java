@@ -1,32 +1,38 @@
-
 package com.hrm.main.controllers;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hrm.main.models.AddressDetails;
-import com.hrm.main.services.IAddressDetailsService;
+import com.hrm.main.models.Work;
+import com.hrm.main.services.IWorkService;
 
 @CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
-
 @RestController
+@RequestMapping("/work")
 
-@RequestMapping("/AddressDetails")
-public class AddressDetailsController {
-
+public class WorkController {
 	@Autowired
-	IAddressDetailsService addressDetailsService;
+	IWorkService workService;
 
-	@PostMapping("/AddAddress")
-	public ResponseEntity<String> addAddress(@RequestBody AddressDetails addressDetails) {
-		String result = addressDetailsService.addAdd(addressDetails);
+	@PostMapping("/AddWork")
+	public ResponseEntity<String> createWork(@RequestBody Work work) {
+		String result = this.workService.createWork(work);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
-
 	}
+
+	@GetMapping("/getWork")
+	public ResponseEntity<List<Work>> getAllWork() {
+		List<Work> allWork = this.workService.getAllWork();
+		return new ResponseEntity<List<Work>>(allWork, HttpStatus.OK);
+	}
+
 }

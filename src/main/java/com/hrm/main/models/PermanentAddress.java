@@ -29,25 +29,26 @@ public class PermanentAddress {
 	 * @OneToOne(cascade = CascadeType.ALL) // @JoinColumn(name = "1kk") private
 	 * AddressDetails permanentAddressDetails;
 	 */
-
 	/* @OneToOne */
 
 	/*
 	 * @JoinColumn(name = "personal_details_id", referencedColumnName = "id")
 	 * private PersonalDetails permanent;
 	 */
-	/*
-	 * public PersonalDetails getPermanent() { return permanent; }
-	 * 
-	 * public void setPermanent(PersonalDetails permanent) { this.permanent =
-	 * permanent;
-	 * 
-	 * }
-	 */
 
+	
 	public int getPerAddId() {
 		return perAddId;
 	}
+
+	/*
+	 * public AddressDetails getPermanentAddressDetails() { return
+	 * permanentAddressDetails; }
+	 * 
+	 * public void setPermanentAddressDetails(AddressDetails
+	 * permanentAddressDetails) { this.permanentAddressDetails =
+	 * permanentAddressDetails; }
+	 */
 
 	public void setPerAddId(int perAddId) {
 		this.perAddId = perAddId;
