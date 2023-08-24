@@ -1,10 +1,15 @@
 package com.hrm.main.models;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Transient;
 
 @Entity
 
@@ -21,6 +26,30 @@ public class Work {
 	private String joinedDate;
 	private String relievedDate;
 	private String tenure;
+	private String contactName;
+	private long contactNo;
+	private String emailId;
+	private String ctc;
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(columnDefinition = "LONGBLOB")
+	private byte[] uploadOfferLetter;
+	@Transient
+	public String offerLetterBase64Data;
+
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(columnDefinition = "LONGBLOB")
+	private byte[] appraisalLetter;
+	@Transient
+	public String appraisalLetterBase64Data;
+
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(columnDefinition = "LONGBLOB")
+	private byte[] relievedLetter;
+	@Transient
+	public String relievedLetterBase64Data;
 
 	public int getId() {
 		return id;
@@ -92,6 +121,62 @@ public class Work {
 
 	public void setTenure(String tenure) {
 		this.tenure = tenure;
+	}
+
+	public String getContactName() {
+		return contactName;
+	}
+
+	public void setContactName(String contactName) {
+		this.contactName = contactName;
+	}
+
+	public long getContactNo() {
+		return contactNo;
+	}
+
+	public void setContactNo(long contactNo) {
+		this.contactNo = contactNo;
+	}
+
+	public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
+	public String getCtc() {
+		return ctc;
+	}
+
+	public void setCtc(String ctc) {
+		this.ctc = ctc;
+	}
+
+	public byte[] getUploadOfferLetter() {
+		return uploadOfferLetter;
+	}
+
+	public void setUploadOfferLetter(byte[] uploadOfferLetter) {
+		this.uploadOfferLetter = uploadOfferLetter;
+	}
+
+	public byte[] getAppraisalLetter() {
+		return appraisalLetter;
+	}
+
+	public void setAppraisalLetter(byte[] appraisalLetter) {
+		this.appraisalLetter = appraisalLetter;
+	}
+
+	public byte[] getRelievedLetter() {
+		return relievedLetter;
+	}
+
+	public void setRelievedLetter(byte[] relievedLetter) {
+		this.relievedLetter = relievedLetter;
 	}
 
 }

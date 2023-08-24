@@ -9,4 +9,11 @@ public interface IWorkService {
 	String createWork(Work work);
 
 	List<Work> getAllWork();
+
+	Work getWork(Integer id);
+
+	String updateWork(Work work, Integer id);
+
+	String deleteWork(Integer id);
+
 }
