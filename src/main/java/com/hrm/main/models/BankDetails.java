@@ -26,7 +26,7 @@ public class BankDetails {
 	private String branchCity;
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
-	@Column(name = "file64", columnDefinition = "LONGBLOB")
+	@Column(columnDefinition = "LONGBLOB")
 	private byte[] bankDoc;
 	@Transient
 	public String base64Data;

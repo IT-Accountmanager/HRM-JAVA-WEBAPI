@@ -20,7 +20,7 @@ public class DocumentUpload {
 	private String fileName;
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
-	@Column(name = "file64", columnDefinition = "LONGBLOB")
+	@Column(columnDefinition = "LONGBLOB")
 	private byte[] content;
 	private String documentType;
 	@Transient

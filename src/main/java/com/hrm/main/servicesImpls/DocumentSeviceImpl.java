@@ -36,4 +36,39 @@ public class DocumentSeviceImpl implements IDocumentService {
 		return allDoc;
 	}
 
+	@Override
+	public Document getDocument(Integer id) {
+		Document doc = documentRepo.findById(id).get();
+		return doc;
+	}
+
+	@Override
+	public String deleteDocument(Integer id) {
+		try {
+			documentRepo.deleteById(id);
+			return "Id no. " + id + " is Deleted Succeefully.";
+		} catch (Exception e) {
+			e.getMessage();
+		}
+
+		return "Id no. " + id + " is not Deleted.";
+	}
+
+	@Override
+	public String updateDocument(Document doc, Integer id) {
+		try {
+			doc.setId(id);
+
+			documentRepo.save(doc);
+
+			return "Id no. " + id + " Is Updated.";
+
+		} catch (Exception ex) {
+			ex.getMessage();
+		}
+
+		return "Id no. " + id + " Is not Updated.";
+
+	}
+
 }
