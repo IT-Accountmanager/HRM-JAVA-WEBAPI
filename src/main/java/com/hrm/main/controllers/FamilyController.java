@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.Family;
 import com.hrm.main.services.IFamilyService;
 
+
 @CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
 @RestController
 @RequestMapping("/family")
