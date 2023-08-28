@@ -15,11 +15,17 @@ public class DocumentSeviceImpl implements IDocumentService {
 	@Autowired
 	private IDocumentRepository documentRepo;
 
+	@Autowired
+	WorkServiceImpl workServImpl;
+
 	@Override
 	public String createDocument(Document doc) {
 		try {
+
+			workServImpl.createWork(doc.getWork());
 			var document1 = this.documentRepo.save(doc);
 
+			
 			if (document1.getId() > 0) {
 				return "Documents are added:" + document1.getId();
 			}

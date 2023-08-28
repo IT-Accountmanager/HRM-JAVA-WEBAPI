@@ -1,11 +1,12 @@
 package com.hrm.main.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
-
 
 @Entity
 public class Document {
@@ -19,6 +20,16 @@ public class Document {
 	private String documentName;
 	private String date;
 	private String hrName;
+	@OneToOne(cascade = CascadeType.ALL)
+	private Work work;
+
+	public Work getWork() {
+		return work;
+	}
+
+	public void setWork(Work work) {
+		this.work = work;
+	}
 
 	public int getId() {
 		return id;

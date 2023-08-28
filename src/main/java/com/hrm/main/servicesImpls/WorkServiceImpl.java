@@ -105,4 +105,11 @@ public class WorkServiceImpl implements IWorkService {
 		return "Id no. " + id + " is not Deleted.";
 	}
 
+	@Override
+	public String getDocument(Integer id) {
+		byte[] relievedLetterBase64Data = workRepo.findById(id).get().getRelievedLetter();
+
+		return org.apache.tomcat.util.codec.binary.Base64.encodeBase64String(relievedLetterBase64Data);
+	}
+
 }
