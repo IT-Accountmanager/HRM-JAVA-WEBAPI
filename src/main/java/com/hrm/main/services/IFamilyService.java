@@ -8,4 +8,10 @@ public interface IFamilyService {
 	String createFamily(Family family);
 
 	List<Family> getAllFamily();
+	
+	Family getFamilyById(int id);	
+
+	String updateFamily(Family family, Integer id);
+
+	String deleteFamily(Integer id);	
 }
