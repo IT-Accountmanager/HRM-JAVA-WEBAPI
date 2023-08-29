@@ -3,9 +3,9 @@ package com.hrm.main.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.hrm.main.models.Attendance;
+import com.hrm.main.models.AttendanceSummary;
 
 @Repository
-public interface IAttendanceRepository extends JpaRepository<Attendance, Integer> {
+public interface IAttendanceSummaryRepository extends JpaRepository<AttendanceSummary, Integer> {
 
 }

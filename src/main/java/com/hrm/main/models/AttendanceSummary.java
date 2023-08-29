@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity
-public class Attendance {
+public class AttendanceSummary {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "attendance_id_seq")
 	@SequenceGenerator(name = "attendance_id_seq", initialValue = 1, allocationSize = 1, sequenceName = "attendance_seq")

@@ -51,9 +51,9 @@ public class DocumentsDetailsServiceImpl implements IDocumentsDetailsService {
 	}
 
 	@Override
-	public List<DocumentDetails> getDocumentsDetById(Integer docId) {
-		DocumentDetails document = docRepo.findById(docId).orElseThrow(null);
-		return (List<DocumentDetails>) document;
+	public DocumentDetails getDocumentsDetById(Integer docId) {
+		DocumentDetails document = docRepo.findById(docId).get();
+		return document;
 	}
 
 }
