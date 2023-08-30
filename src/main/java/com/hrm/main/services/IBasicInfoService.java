@@ -6,7 +6,7 @@ public interface IBasicInfoService {
 
 	String addBasicInfo(BasicInfo basicInfo);
 
-	BasicInfo getBasicIndfo(Integer id);
+	String updateInfo(BasicInfo basicInfo, Integer id);
 
-	BasicInfo updateIndfo(BasicInfo basicInfo, Integer id);
+	BasicInfo getBasicInfo(Integer id);
 }

@@ -42,18 +42,20 @@ public class FamilyServiceImpl implements IFamilyService {
 
 	@Override
 	public String updateFamily(Family family, Integer id) {
+
 		try {
-			family.setId(id);
-
-			familyRepo.save(family);
-
-			return "Id no. " + id + " is updated. ";
+			if (this.familyRepo.existsById(id)) {
+				family.setId(id);
+				this.familyRepo.save(family);
+				return "Id no. " + id + " is updated. ";
+			} else {
+				return "Id no. " + id + " is does not exists ";
+			}
 
 		} catch (Exception e) {
 			e.getMessage();
 		}
 		return "Id no. " + id + " is not updated. ";
-
 	}
 
 	@Override

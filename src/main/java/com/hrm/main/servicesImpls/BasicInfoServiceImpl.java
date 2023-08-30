@@ -26,15 +26,27 @@ public class BasicInfoServiceImpl implements IBasicInfoService {
 	}
 
 	@Override
-	public BasicInfo getBasicIndfo(Integer id) {
+	public String updateInfo(BasicInfo basicInfo, Integer id) {
 
-		return null;
+		try {
+			if (this.basicInfoRepo.existsById(id)) {
+				basicInfo.setId(id);
+				this.basicInfoRepo.save(basicInfo);
+				return "Id no. " + id + " is updated. ";
+			} else {
+				return "Id no. " + id + " is does not exists. ";
+			}
+
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return "Id no. " + id + " is not updated. ";
 	}
 
 	@Override
-	public BasicInfo updateIndfo(BasicInfo basicInfo, Integer id) {
+	public BasicInfo getBasicInfo(Integer id) {
+		return this.basicInfoRepo.findById(id).get();
 
-		return null;
 	}
 
 }

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.hrm.main.models.AttendanceSummary;
 import com.hrm.main.repositories.IAttendanceSummaryRepository;
 import com.hrm.main.services.IAttendanceSummaryService;
@@ -59,18 +58,20 @@ public class AttendanceSummaryServiceImpl implements IAttendanceSummaryService {
 
 	@Override
 	public String editAttendance(AttendanceSummary attendance, Integer id) {
+
 		try {
-			attendance.setId(id);
-
-			attendanceRepo.save(attendance);
-
-			return "Id no. " + id + " is updated. ";
+			if (this.attendanceRepo.existsById(id)) {
+				attendance.setId(id);
+				this.attendanceRepo.save(attendance);
+				return "Id no. " + id + " is updated. ";
+			} else {
+				return "Id no. " + id + " is does not exists. ";
+			}
 
 		} catch (Exception e) {
 			e.getMessage();
 		}
 		return "Id no. " + id + " is not updated. ";
-
 	}
 
 }

@@ -9,8 +9,8 @@ import jakarta.persistence.SequenceGenerator;
 @Entity
 public class AttendanceSummary {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "attendance_id_seq")
-	@SequenceGenerator(name = "attendance_id_seq", initialValue = 1, allocationSize = 1, sequenceName = "attendance_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "attendance_summary_id_seq")
+	@SequenceGenerator(name = "attendance_summary_id_seq", initialValue = 1, allocationSize = 1, sequenceName = "attendance_summary_id_seq")
 	private int id;
 	private String attendanceStatus;
 	private String date;
@@ -22,6 +22,10 @@ public class AttendanceSummary {
 	private int billableHours;
 	private String workStatus;
 	private String status;
+	private String breakDuration;
+	private String totalHours;
+	private String shift;
+	private String extraWorkingHours;
 
 	public int getId() {
 		return id;
@@ -109,6 +113,38 @@ public class AttendanceSummary {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getBreakDuration() {
+		return breakDuration;
+	}
+
+	public void setBreakDuration(String breakDuration) {
+		this.breakDuration = breakDuration;
+	}
+
+	public String getTotalHours() {
+		return totalHours;
+	}
+
+	public void setTotalHours(String totalHours) {
+		this.totalHours = totalHours;
+	}
+
+	public String getShift() {
+		return shift;
+	}
+
+	public void setShift(String shift) {
+		this.shift = shift;
+	}
+
+	public String getExtraWorkingHours() {
+		return extraWorkingHours;
+	}
+
+	public void setExtraWorkingHours(String extraWorkingHours) {
+		this.extraWorkingHours = extraWorkingHours;
 	}
 
 }

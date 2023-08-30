@@ -27,4 +27,28 @@ public class WorkHistoryServiceImpl implements IWorkHistoryService {
 		return "Work History Are Not Added ";
 	}
 
+	@Override
+	public String updateWorkHistory(WorkHistory workHistory, Integer id) {
+
+		try {
+			if (this.workHistoryRepo.existsById(id)) {
+				workHistory.setDeptId(id);
+				this.workHistoryRepo.save(workHistory);
+				return "Id no. " + id + " is updated. ";
+			} else {
+				return "Id no. " + id + " is does not exists. ";
+			}
+
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return "Id no. " + id + " is not updated. ";
+	}
+
+	@Override
+	public WorkHistory getWorkHistory(Integer id) {
+		return this.workHistoryRepo.findById(id).get();
+
+	}
+
 }

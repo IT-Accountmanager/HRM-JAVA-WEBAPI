@@ -38,29 +38,38 @@ public class RegularizationServiceImpl implements IRegularizationService {
 
 	@Override
 	public Regularization getRegularization(Integer id) {
-		return null;
+		return this.regularizationRepo.findById(id).get();
 	}
 
 	@Override
 	public String deleteRegularization(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			this.regularizationRepo.deleteById(id);
+
+			return "Id no. " + id + " is deleted succesfully. ";
+
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return "Id no. " + id + " is not deleted. ";
 	}
 
 	@Override
 	public String editRegularization(Regularization regularization, Integer id) {
+
 		try {
-			regularization.setId(id);
-
-			this.regularizationRepo.save(regularization);
-
-			return "Id no. " + id + " is updated. ";
+			if (this.regularizationRepo.existsById(id)) {
+				regularization.setId(id);
+				this.regularizationRepo.save(regularization);
+				return "Id no. " + id + " is updated. ";
+			} else {
+				return "Id no. " + id + " is does not exists ";
+			}
 
 		} catch (Exception e) {
 			e.getMessage();
 		}
 		return "Id no. " + id + " is not updated. ";
-
 	}
 
 }

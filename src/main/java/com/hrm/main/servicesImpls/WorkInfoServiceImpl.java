@@ -26,4 +26,28 @@ public class WorkInfoServiceImpl implements IWorkInfoService {
 		return "Work Information Are Not Added ";
 	}
 
+	@Override
+	public String updateInfo(WorkInfo workInfo, Integer id) {
+
+		try {
+			if (this.workInfoRepo.existsById(id)) {
+				workInfo.setId(id);
+				this.workInfoRepo.save(workInfo);
+				return "Id no. " + id + " is updated. ";
+			} else {
+				return "Id no. " + id + " is does not exists. ";
+			}
+
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return "Id no. " + id + " is not updated. ";
+	}
+
+	@Override
+	public WorkInfo getWorkInfo(Integer id) {
+		return this.workInfoRepo.findById(id).get();
+
+	}
+
 }
