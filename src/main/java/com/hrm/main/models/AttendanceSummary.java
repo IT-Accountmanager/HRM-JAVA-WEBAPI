@@ -1,5 +1,7 @@
 package com.hrm.main.models;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,19 +15,23 @@ public class AttendanceSummary {
 	@SequenceGenerator(name = "attendance_summary_id_seq", initialValue = 1, allocationSize = 1, sequenceName = "attendance_summary_id_seq")
 	private int id;
 	private String attendanceStatus;
-	private String date;
-	private String inTime;
-	private String outTime;
+	/*
+	 * LocalDate dt = LocalDate.now(); DateTimeFormatter formatter =
+	 * DateTimeFormatter.ofPattern("dd-mm-yyyy");
+	 */
+	private LocalDate date;
+	private LocalTime inTime;
+	private LocalTime outTime;
 	private String manager;
 	private String projectId;
 	private String task;
 	private int billableHours;
 	private String workStatus;
 	private String status;
-	private String breakDuration;
-	private String totalHours;
+	private int breakDuration;
+	private int totalHours;
 	private String shift;
-	private String extraWorkingHours;
+	private int extraWorkingHours;
 
 	public int getId() {
 		return id;
@@ -43,27 +49,27 @@ public class AttendanceSummary {
 		this.attendanceStatus = attendanceStatus;
 	}
 
-	public String getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
-	public String getInTime() {
+	public LocalTime getInTime() {
 		return inTime;
 	}
 
-	public void setInTime(String inTime) {
+	public void setInTime(LocalTime inTime) {
 		this.inTime = inTime;
 	}
 
-	public String getOutTime() {
+	public LocalTime getOutTime() {
 		return outTime;
 	}
 
-	public void setOutTime(String outTime) {
+	public void setOutTime(LocalTime outTime) {
 		this.outTime = outTime;
 	}
 
@@ -115,19 +121,19 @@ public class AttendanceSummary {
 		this.status = status;
 	}
 
-	public String getBreakDuration() {
+	public int getBreakDuration() {
 		return breakDuration;
 	}
 
-	public void setBreakDuration(String breakDuration) {
+	public void setBreakDuration(int breakDuration) {
 		this.breakDuration = breakDuration;
 	}
 
-	public String getTotalHours() {
+	public int getTotalHours() {
 		return totalHours;
 	}
 
-	public void setTotalHours(String totalHours) {
+	public void setTotalHours(int totalHours) {
 		this.totalHours = totalHours;
 	}
 
@@ -139,11 +145,11 @@ public class AttendanceSummary {
 		this.shift = shift;
 	}
 
-	public String getExtraWorkingHours() {
+	public int getExtraWorkingHours() {
 		return extraWorkingHours;
 	}
 
-	public void setExtraWorkingHours(String extraWorkingHours) {
+	public void setExtraWorkingHours(int extraWorkingHours) {
 		this.extraWorkingHours = extraWorkingHours;
 	}
 

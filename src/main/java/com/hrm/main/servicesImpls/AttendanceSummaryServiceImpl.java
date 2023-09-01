@@ -16,6 +16,7 @@ public class AttendanceSummaryServiceImpl implements IAttendanceSummaryService {
 
 	@Override
 	public String addAttendence(AttendanceSummary attendance) {
+
 		try {
 
 			AttendanceSummary addedAttendence = this.attendanceRepo.save(attendance);

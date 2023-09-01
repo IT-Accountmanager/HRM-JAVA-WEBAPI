@@ -1,5 +1,7 @@
 package com.hrm.main.models;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +20,7 @@ public class Document {
 	private String month;
 	private long documentNumber;
 	private String documentName;
-	private String date;
+	private LocalDate date;
 	private String hrName;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Work work;
@@ -63,11 +65,11 @@ public class Document {
 		this.documentName = documentName;
 	}
 
-	public String getDate() {
+	 public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 

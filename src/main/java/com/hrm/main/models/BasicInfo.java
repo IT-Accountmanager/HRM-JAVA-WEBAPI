@@ -1,5 +1,7 @@
 package com.hrm.main.models;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +15,7 @@ public class BasicInfo {
 	@SequenceGenerator(name = "basic_info_id_seq", allocationSize = 1, initialValue = 1, sequenceName = "basic_info_id_seq")
 	private int id;
 	private int empId;
-	private String dateOfJoining;
+	private LocalDate dateOfJoining;
 	private int probationPeriod;
 	private String employeeType;
 	private String workLocation;
@@ -36,11 +38,11 @@ public class BasicInfo {
 		this.empId = empId;
 	}
 
-	public String getDateOfJoining() {
+	public LocalDate getDateOfJoining() {
 		return dateOfJoining;
 	}
 
-	public void setDateOfJoining(String dateOfJoining) {
+	public void setDateOfJoining(LocalDate dateOfJoining) {
 		this.dateOfJoining = dateOfJoining;
 	}
 
