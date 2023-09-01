@@ -16,4 +16,6 @@ public interface IWorkService {
 
 	String deleteWork(Integer id);
 
+	String getDocument(Integer id);
+
 }

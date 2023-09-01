@@ -54,6 +54,7 @@ public class EducationServiceImpl implements IEducationService {
 	@Override
 	public String deleteEducation(Integer id) {
 		try {
+
 			educationRepo.deleteById(id);
 			return "Id no. " + id + " is Deleted Succeefully.";
 		} catch (Exception e) {
@@ -65,19 +66,27 @@ public class EducationServiceImpl implements IEducationService {
 
 	@Override
 	public String updateEducation(Education edu, Integer id) {
+
 		try {
-			edu.setId(id);
+			if (this.educationRepo.existsById(id)) {
 
-			educationRepo.save(edu);
+				edu.setId(id);
+				Decoder decoder = Base64.getDecoder();
 
-			return "Id no. " + id + " Is Updated.";
+				while (edu.base64Data.length() % 4 != 0) {
+					edu.base64Data += "=";
+				}
+				edu.setCertificate(decoder.decode(edu.base64Data));
+				this.educationRepo.save(edu);
+				return "Id no. " + id + " is updated. ";
+			} else {
+				return "Id no. " + id + " is does not exists. ";
+			}
 
-		} catch (Exception ex) {
-			ex.getMessage();
+		} catch (Exception e) {
+			e.getMessage();
 		}
-
-		return "Id no. " + id + " Is not Updated.";
-
+		return "Id no. " + id + " is not updated. ";
 	}
 
 }

@@ -34,11 +34,10 @@ public class DocumentsDetailsController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
-	@GetMapping("/get/{docId}")
-	public ResponseEntity<List<DocumentUpload>> getDocumentsDetailsById(@PathVariable Integer docId) {
-		List<DocumentDetails> documents = this.docDeatilsService.getDocumentsDetById(docId);
-		return new ResponseEntity<List<DocumentUpload>>(HttpStatus.OK);
-
-	}
-
+	/*
+	 * @GetMapping("/get/{docId}") public ResponseEntity<DocumentUpload>
+	 * getDocumentsDetailsById(@PathVariable Integer docId) { DocumentDetails
+	 * documents = this.docDeatilsService.getDocumentsDetById(docId); return new
+	 * ResponseEntity<DocumentUpload>(documents,HttpStatus.OK); }
+	 */
 }

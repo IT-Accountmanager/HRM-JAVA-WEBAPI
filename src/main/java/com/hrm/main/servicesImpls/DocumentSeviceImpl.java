@@ -15,11 +15,17 @@ public class DocumentSeviceImpl implements IDocumentService {
 	@Autowired
 	private IDocumentRepository documentRepo;
 
+	@Autowired
+	WorkServiceImpl workServImpl;
+
 	@Override
 	public String createDocument(Document doc) {
 		try {
+
+			workServImpl.createWork(doc.getWork());
 			var document1 = this.documentRepo.save(doc);
 
+			
 			if (document1.getId() > 0) {
 				return "Documents are added:" + document1.getId();
 			}
@@ -56,19 +62,20 @@ public class DocumentSeviceImpl implements IDocumentService {
 
 	@Override
 	public String updateDocument(Document doc, Integer id) {
+
 		try {
-			doc.setId(id);
+			if (this.documentRepo.existsById(id)) {
+				doc.setId(id);
+				this.documentRepo.save(doc);
+				return "Id no. " + id + " is updated. ";
+			} else {
+				return "Id no. " + id + " is does not exists ";
+			}
 
-			documentRepo.save(doc);
-
-			return "Id no. " + id + " Is Updated.";
-
-		} catch (Exception ex) {
-			ex.getMessage();
+		} catch (Exception e) {
+			e.getMessage();
 		}
-
-		return "Id no. " + id + " Is not Updated.";
-
+		return "Id no. " + id + " is not updated. ";
 	}
 
 }

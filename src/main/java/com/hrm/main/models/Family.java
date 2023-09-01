@@ -9,8 +9,8 @@ import jakarta.persistence.SequenceGenerator;
 @Entity
 public class Family {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Fam_Id_Sequence")
-	@SequenceGenerator(name = "Fam_Id_Sequence", initialValue = 1, allocationSize = 1, sequenceName = "Fam_Id_Sequence")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Family_Id_Sequence")
+	@SequenceGenerator(name = "Family_Id_Sequence", initialValue = 1, allocationSize = 1, sequenceName = "Family_Id_Sequence")
 	private int id;
 	private String name;
 	private String relationship;

@@ -41,7 +41,7 @@ public class FamilyController {
 		List<Family> allFamily = this.familyService.getAllFamily();
 		return new ResponseEntity<List<Family>>(allFamily, HttpStatus.OK);
 	}
-	@GetMapping("/getFamilyById/{id}")
+	@GetMapping("/getFamily/{id}")
 	public Family getFamilyById(@PathVariable int id) {
 		Family famDetails = familyService.getFamilyById(id);
 		return famDetails;

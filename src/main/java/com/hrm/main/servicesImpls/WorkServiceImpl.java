@@ -65,6 +65,20 @@ public class WorkServiceImpl implements IWorkService {
 	public String updateWork(Work work, Integer id) {
 
 		try {
+			Decoder decoder = Base64.getDecoder();
+			while (work.offerLetterBase64Data.length() % 4 != 0) {
+				work.offerLetterBase64Data += "=";
+			}
+			while (work.appraisalLetterBase64Data.length() % 4 != 0) {
+				work.appraisalLetterBase64Data += "=";
+			}
+			while (work.relievedLetterBase64Data.length() % 4 != 0) {
+				work.relievedLetterBase64Data += "=";
+			}
+
+			work.setUploadOfferLetter(decoder.decode(work.offerLetterBase64Data));
+			work.setAppraisalLetter(decoder.decode(work.appraisalLetterBase64Data));
+			work.setRelievedLetter(decoder.decode(work.relievedLetterBase64Data));
 			work.setId(id);
 
 			workRepo.save(work);
@@ -89,6 +103,13 @@ public class WorkServiceImpl implements IWorkService {
 		}
 
 		return "Id no. " + id + " is not Deleted.";
+	}
+
+	@Override
+	public String getDocument(Integer id) {
+		byte[] relievedLetterBase64Data = workRepo.findById(id).get().getRelievedLetter();
+
+		return org.apache.tomcat.util.codec.binary.Base64.encodeBase64String(relievedLetterBase64Data);
 	}
 
 }

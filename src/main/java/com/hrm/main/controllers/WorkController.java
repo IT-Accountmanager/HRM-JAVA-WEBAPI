@@ -56,4 +56,10 @@ public class WorkController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
+	@GetMapping("/getDocument/{id}")
+	public ResponseEntity<String> getDocument(@PathVariable Integer id) {
+		String result = this.workService.getDocument(id);
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+
 }
