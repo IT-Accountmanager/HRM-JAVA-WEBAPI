@@ -1,7 +1,10 @@
 package com.hrm.main.models;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,11 +18,10 @@ public class AttendanceSummary {
 	@SequenceGenerator(name = "attendance_summary_id_seq", initialValue = 1, allocationSize = 1, sequenceName = "attendance_summary_id_seq")
 	private int id;
 	private String attendanceStatus;
-	/*
-	 * LocalDate dt = LocalDate.now(); DateTimeFormatter formatter =
-	 * DateTimeFormatter.ofPattern("dd-mm-yyyy");
-	 */
-	private LocalDate date;
+
+	//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
+
+	private LocalDate date ;
 	private LocalTime inTime;
 	private LocalTime outTime;
 	private String manager;

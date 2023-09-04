@@ -16,8 +16,8 @@ import jakarta.persistence.Transient;
 @Entity
 public class Education {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Edu_Id_Sequence")
-	@SequenceGenerator(name = "Edu_Id_Sequence", initialValue = 1, allocationSize = 1, sequenceName = "Edu_Id_Sequence")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Education_Id_Sequence")
+	@SequenceGenerator(name = "Education_Id_Sequence", initialValue = 1, allocationSize = 1, sequenceName = "Education_Id_Sequence")
 	private int id;
 	private String qualification;
 	private String courseType;
