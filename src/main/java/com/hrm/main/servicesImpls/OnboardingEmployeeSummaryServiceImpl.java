@@ -40,6 +40,13 @@ public class OnboardingEmployeeSummaryServiceImpl implements IOnboardingEmployee
 		return employeeSummary;
 	}
 
+	@Override
+	public List<String> findDepartments() {
+		return this.onboardingEmployeeSummaryRepository.findDepartments();
+	}
+
+	
+
 	/*
 	 * @Override public String updateSummary(OnboardingEmployeeSummary summary,
 	 * Integer id) { try {
