@@ -1,9 +1,12 @@
 package com.hrm.main.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity
@@ -20,7 +23,31 @@ public class Onboarding {
 	private int bondPeriod;
 	private int bondBreakAmount;
 	private long ctc;
-	private String status;
+
+	public enum Status {
+		Review, Pending, Approved, Rejected
+	}
+
+	private Status status;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn
+	private Profile profile;
+
+	public Profile getProfile() {
+		return profile;
+	}
+
+	public void setProfile(Profile profile) {
+		this.profile = profile;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 
 	public int getSrNo() {
 		return srNo;
@@ -92,34 +119,6 @@ public class Onboarding {
 
 	public void setCtc(long ctc) {
 		this.ctc = ctc;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public Onboarding(int srNo, String jobTitle, int candidateId, String candidateName, long contactNumber,
-			String emailId, int bondPeriod, int bondBreakAmount, long ctc, String status) {
-		super();
-		this.srNo = srNo;
-		this.jobTitle = jobTitle;
-		this.candidateId = candidateId;
-		this.candidateName = candidateName;
-		this.contactNumber = contactNumber;
-		this.emailId = emailId;
-		this.bondPeriod = bondPeriod;
-		this.bondBreakAmount = bondBreakAmount;
-		this.ctc = ctc;
-		this.status = status;
-	}
-
-	public Onboarding() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 }
