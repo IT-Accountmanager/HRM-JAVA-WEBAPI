@@ -66,7 +66,7 @@ public class TeamDirectoryServiceImpl implements ITeamDirectoryService {
 		} catch (Exception e) {
 			e.getMessage();
 		}
-		return "Id no. "+ id + "is not deleted";
+		return "Id no. "+ id + " is not deleted";
 	}
 
 	@Override

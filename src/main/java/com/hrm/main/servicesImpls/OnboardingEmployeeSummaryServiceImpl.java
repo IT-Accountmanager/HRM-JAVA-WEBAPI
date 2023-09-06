@@ -40,38 +40,30 @@ public class OnboardingEmployeeSummaryServiceImpl implements IOnboardingEmployee
 		return employeeSummary;
 	}
 
-	@Override
-	public String updateSummary(OnboardingEmployeeSummary summary, Integer id) {
-		try {
-			if(this.onboardingEmployeeSummaryRepository.existsById(id)) {
-				
-			summary.setId(id);
-			
-			this.onboardingEmployeeSummaryRepository.save(summary);
-			
-			return "Id no. : " + id +" is updated .";
-			
-			}else {
-				return "Id no. : "+id+ " is does not exists .";
-			}
-			
-		} catch (Exception e) {
-			e.getMessage();
-		}
-		return "Id no. : " + id + " is not updated .";
-	}
+	/*
+	 * @Override public String updateSummary(OnboardingEmployeeSummary summary,
+	 * Integer id) { try {
+	 * if(this.onboardingEmployeeSummaryRepository.existsById(id)) {
+	 * 
+	 * summary.setId(id);
+	 * 
+	 * this.onboardingEmployeeSummaryRepository.save(summary);
+	 * 
+	 * return "Id no. : " + id +" is updated .";
+	 * 
+	 * }else { return "Id no. : "+id+ " is does not exists ."; }
+	 * 
+	 * } catch (Exception e) { e.getMessage(); } return "Id no. : " + id +
+	 * " is not updated ."; }
+	 */
 
-	@Override
-	public String deleteSummary(Integer id) {
-		try {
-			onboardingEmployeeSummaryRepository.deleteById(id);
-			
-			return "Id no. : " + id +" is deleted";
-			
-		} catch (Exception e) {
-			e.getMessage();
-		}
-		return "Id no. : " + id +" is not deleted" ;
-	}
-
+	/*
+	 * @Override public String deleteSummary(Integer id) { try {
+	 * onboardingEmployeeSummaryRepository.deleteById(id);
+	 * 
+	 * return "Id no. : " + id +" is deleted";
+	 * 
+	 * } catch (Exception e) { e.getMessage(); } return "Id no. : " + id
+	 * +" is not deleted" ; }
+	 */
 }

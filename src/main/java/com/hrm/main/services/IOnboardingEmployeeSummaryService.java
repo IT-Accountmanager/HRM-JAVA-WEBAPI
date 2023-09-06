@@ -12,8 +12,8 @@ public interface IOnboardingEmployeeSummaryService {
 	
 	OnboardingEmployeeSummary getSummaryById(int id);
 	
-	String updateSummary(OnboardingEmployeeSummary summary,Integer id);
+	//String updateSummary(OnboardingEmployeeSummary summary,Integer id);
 	
-	String deleteSummary(Integer id);
+	//String deleteSummary(Integer id);
 
 }

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import com.hrm.main.models.Email;
@@ -30,7 +29,7 @@ public class EmailServiceImpl implements IEmailService {
 
 			SimpleMailMessage mailMessage = new SimpleMailMessage();
 
-			mailMessage.setFrom(sender);
+			mailMessage.setFrom(email.getSender());
 			mailMessage.setTo(email.getRecipient());
 			mailMessage.setSubject(email.getSubject());
 			mailMessage.setText(email.getMsgBody());
@@ -52,7 +51,7 @@ public class EmailServiceImpl implements IEmailService {
 		try {
 			MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
-			mimeMessageHelper.setFrom(sender);
+			mimeMessageHelper.setFrom(email.getSender());
 			mimeMessageHelper.setTo(email.getRecipient());
 			mimeMessageHelper.setSubject(email.getSubject());
 			mimeMessageHelper.setText(email.getMsgBody());
