@@ -12,7 +12,7 @@ import com.hrm.main.services.IOnboardingHRManagerService;
 @Service
 
 public class OnboardingHRManagerServiceImpl implements IOnboardingHRManagerService {
-	
+
 	@Autowired
 	private IOnboardingHRManagerRepository onboardingHRManagerRepository;
 
@@ -20,13 +20,13 @@ public class OnboardingHRManagerServiceImpl implements IOnboardingHRManagerServi
 	public String createHRManager(OnboardingHRManager hrManager) {
 		try {
 			var manager = this.onboardingHRManagerRepository.save(hrManager);
-			if(manager.getId()>0) {
+			if (manager.getId() > 0) {
 				return "All detail are added : " + manager.getId();
 			}
 		} catch (Exception e) {
 			e.getMessage();
 		}
-		return "All details are not added" ;
+		return "All details are not added";
 	}
 
 	@Override
@@ -43,39 +43,44 @@ public class OnboardingHRManagerServiceImpl implements IOnboardingHRManagerServi
 
 	@Override
 	public String updateHRManager(OnboardingHRManager hrManager, Integer id) {
-		
+
 		try {
-			
-			if(this.onboardingHRManagerRepository.existsById(id)) {
-		
-		hrManager.setId(id);
-		
-		this.onboardingHRManagerRepository.save(hrManager);
-		
-		return "Id no. : "+id+" is updated ";
-		
-			}else {
-				return "Id no. : "+id+" is does not exists ";
+
+			if (this.onboardingHRManagerRepository.existsById(id)) {
+
+				hrManager.setId(id);
+
+				this.onboardingHRManagerRepository.save(hrManager);
+
+				return "Id no. : " + id + " is updated ";
+
+			} else {
+				return "Id no. : " + id + " is does not exists ";
 			}
-		
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.getMessage();
 		}
-		
-		return "Id no. :"+id+" is updated ";
+
+		return "Id no. :" + id + " is updated ";
 	}
 
 	@Override
 	public String deleteHRManager(Integer id) {
 		try {
 			onboardingHRManagerRepository.deleteById(id);
-			
-			return "Id no. :"+id+" is deleted successfully";
-			
+
+			return "Id no. :" + id + " is deleted successfully";
+
 		} catch (Exception e) {
 			e.getMessage();
 		}
-		return "Id no. :" +id+" is not deleted";
+		return "Id no. :" + id + " is not deleted";
+	}
+
+	@Override
+	public Long nextValue() {
+		return this.onboardingHRManagerRepository.count();
 	}
 
 }

@@ -19,4 +19,9 @@ public interface IOnboardingRepository extends JpaRepository<Onboarding, Integer
 	 * Long findNextSrNo();
 	 */
 
+	/*
+	 * @Query("UPDATE onboarding onb set onb.status = ?2 where onb.srNo = ?1")
+	 * String profileStatusChange(Integer id, String status);
+	 */
+
 }
