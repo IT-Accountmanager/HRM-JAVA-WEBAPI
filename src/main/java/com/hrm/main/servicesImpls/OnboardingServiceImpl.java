@@ -17,7 +17,7 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	@Override
 	public String createOnboarding(Onboarding onboarding) {
 		try {
-
+			onboarding.getProfile().setOnboarding(onboarding);
 			Onboarding save = this.onboardingRepository.save(onboarding);
 			if (save.getSrNo() > 0) {
 				return "Onboarding of Id no. " + save.getSrNo() + " is Successfully Added!";
@@ -79,6 +79,12 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	@Override
 	public Long nextValue() {
 		return this.onboardingRepository.count();
+	}
+
+	@Override
+	public String createOnboarding(List<Onboarding> onboardings) {
+		this.onboardingRepository.saveAll(onboardings);
+		return "Added all Successfully";
 	}
 
 }

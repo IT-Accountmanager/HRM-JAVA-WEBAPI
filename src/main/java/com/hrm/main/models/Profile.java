@@ -18,18 +18,18 @@ public class Profile {
 	@SequenceGenerator(name = "Profile_seq", initialValue = 1, allocationSize = 1, sequenceName = "Profile_seq")
 	private int profileId;
 
-	/*
-	 * @OneToOne(cascade = CascadeType.ALL)
-	 * 
-	 * @JoinColumn private Onboarding onboarding;
-	 */
+	@OneToOne(cascade = CascadeType.ALL)
 
-	/*
-	 * public Onboarding getOnboarding() { return onboarding; }
-	 * 
-	 * public void setOnboarding(Onboarding onboarding) { this.onboarding =
-	 * onboarding; }
-	 */
+	@JoinColumn
+	private Onboarding onboarding;
+
+	public Onboarding getOnboarding() {
+		return onboarding;
+	}
+
+	public void setOnboarding(Onboarding onboarding) {
+		this.onboarding = onboarding;
+	}
 
 	public int getProfileId() {
 		return profileId;

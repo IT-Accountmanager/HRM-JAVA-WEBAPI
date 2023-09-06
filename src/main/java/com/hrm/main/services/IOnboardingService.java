@@ -7,6 +7,8 @@ public interface IOnboardingService {
 
 	String createOnboarding(Onboarding onboarding);
 
+	String createOnboarding(List<Onboarding> onboardings);
+
 	List<Onboarding> getAllOnboarding();
 
 	Onboarding getOnboardingById(int id);
@@ -16,4 +18,5 @@ public interface IOnboardingService {
 	String deleteOnboarding(Integer id);
 
 	Long nextValue();
+
 }
