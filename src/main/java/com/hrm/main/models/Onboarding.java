@@ -31,8 +31,9 @@ public class Onboarding {
 	};
 
 	private Status status;
+	
+	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn
 	private Profile profile;
 
 	public Profile getProfile() {

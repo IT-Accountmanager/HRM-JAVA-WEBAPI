@@ -1,7 +1,6 @@
 
 package com.hrm.main.models;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,9 +17,8 @@ public class Profile {
 	@SequenceGenerator(name = "Profile_seq", initialValue = 1, allocationSize = 1, sequenceName = "Profile_seq")
 	private int profileId;
 
-	@OneToOne(cascade = CascadeType.ALL)
-
-	@JoinColumn
+	@OneToOne
+	@JoinColumn(name = "profile")
 	private Onboarding onboarding;
 
 	public Onboarding getOnboarding() {

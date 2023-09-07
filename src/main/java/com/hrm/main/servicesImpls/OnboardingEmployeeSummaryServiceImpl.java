@@ -11,14 +11,14 @@ import com.hrm.main.services.IOnboardingEmployeeSummaryService;
 @Service
 
 public class OnboardingEmployeeSummaryServiceImpl implements IOnboardingEmployeeSummaryService {
-	
+
 	@Autowired
 	private IOnboardingEmployeeSummaryRepository onboardingEmployeeSummaryRepository;
 
 	@Override
 	public String createSummary(OnboardingEmployeeSummary summary) {
 		try {
-			var employeeSummary =this.onboardingEmployeeSummaryRepository.save(summary);
+			var employeeSummary = this.onboardingEmployeeSummaryRepository.save(summary);
 			if (employeeSummary.getId() > 0) {
 				return "Employee summary details is added : " + employeeSummary.getId();
 			}
@@ -45,7 +45,25 @@ public class OnboardingEmployeeSummaryServiceImpl implements IOnboardingEmployee
 		return this.onboardingEmployeeSummaryRepository.findDepartments();
 	}
 
-	
+	@Override
+	public List<String> findMGMTEmployee() {
+		return this.onboardingEmployeeSummaryRepository.findMGMTEmployee();
+	}
+
+	@Override
+	public List<String> findFinanceEmployee() {
+		return this.onboardingEmployeeSummaryRepository.findFinanceEmployee();
+	}
+
+	@Override
+	public List<String> findDevelopmentEmployee() {
+		return this.onboardingEmployeeSummaryRepository.findDevelopmentEmployee();
+	}
+
+	@Override
+	public List<String> findHREmployee() {
+		return this.onboardingEmployeeSummaryRepository.findHREmployee();
+	}
 
 	/*
 	 * @Override public String updateSummary(OnboardingEmployeeSummary summary,

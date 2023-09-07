@@ -66,4 +66,27 @@ public class OnboardingEmployeeSummaryController {
 		return new ResponseEntity<List<String>>(findDepartments, HttpStatus.OK);
 	}
 
+	@GetMapping("/getHrEmployee")
+	public ResponseEntity<List<String>> findHrEmployee() {
+		List<String> employee = this.onboardingEmployeeSummaryService.findHREmployee();
+		return new ResponseEntity<List<String>>(employee, HttpStatus.OK);
+	}
+
+	@GetMapping("/getFinanceEmployee")
+	public ResponseEntity<List<String>> findFinanceEmployee() {
+		List<String> employee = this.onboardingEmployeeSummaryService.findFinanceEmployee();
+		return new ResponseEntity<List<String>>(employee, HttpStatus.OK);
+	}
+
+	@GetMapping("/getDevelopmentEmployee")
+	public ResponseEntity<List<String>> findDevelopmentEmployee() {
+		List<String> employee = this.onboardingEmployeeSummaryService.findDevelopmentEmployee();
+		return new ResponseEntity<List<String>>(employee, HttpStatus.OK);
+	}
+
+	@GetMapping("/getMGMTEmployee")
+	public ResponseEntity<List<String>> findMGMTEmployee() {
+		List<String> employee = this.onboardingEmployeeSummaryService.findMGMTEmployee();
+		return new ResponseEntity<List<String>>(employee, HttpStatus.OK);
+	}
 }

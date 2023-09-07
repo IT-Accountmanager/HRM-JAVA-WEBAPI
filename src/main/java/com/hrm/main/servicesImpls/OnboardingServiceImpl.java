@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Regularization;
 import com.hrm.main.repositories.IOnboardingRepository;
+import com.hrm.main.repositories.IProfileRepository;
 import com.hrm.main.services.IOnboardingService;
 
 @Service
@@ -13,12 +14,16 @@ public class OnboardingServiceImpl implements IOnboardingService {
 
 	@Autowired
 	IOnboardingRepository onboardingRepository;
+	@Autowired
+	IProfileRepository profileRepository;
 
 	@Override
 	public String createOnboarding(Onboarding onboarding) {
 		try {
-			// onboarding.getProfile().setOnboarding(onboarding);
+//onboarding.getProfile().setProfileId();
 			Onboarding save = this.onboardingRepository.save(onboarding);
+			
+
 			if (save.getSrNo() > 0) {
 				return "Onboarding of Id no. " + save.getSrNo() + " is Successfully Added!";
 			}

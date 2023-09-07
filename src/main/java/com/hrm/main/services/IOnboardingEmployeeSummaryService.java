@@ -18,4 +18,12 @@ public interface IOnboardingEmployeeSummaryService {
 
 	List<String> findDepartments();
 
+	List<String> findMGMTEmployee();
+
+	List<String> findFinanceEmployee();
+
+	List<String> findDevelopmentEmployee();
+
+	List<String> findHREmployee();
+
 }
