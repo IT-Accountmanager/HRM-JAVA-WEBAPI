@@ -60,6 +60,4 @@ public class AddressDetails {
 		this.presentAdd = presentAdd;
 	}
 
-	
-
 }

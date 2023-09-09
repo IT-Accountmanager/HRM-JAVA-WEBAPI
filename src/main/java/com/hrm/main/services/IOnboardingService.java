@@ -5,7 +5,9 @@ import com.hrm.main.models.Onboarding;
 
 public interface IOnboardingService {
 
-	String createOnboarding(Onboarding onboarding);
+	// String createOnboarding(Onboarding onboarding);
+
+	Onboarding createOnboarding(Onboarding onboardingRequest);
 
 	String createOnboarding(List<Onboarding> onboardings);
 

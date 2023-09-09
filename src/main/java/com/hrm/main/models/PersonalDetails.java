@@ -11,7 +11,7 @@ public class PersonalDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pdid_seq")
 	@SequenceGenerator(name = "pdid_seq", initialValue = 1, allocationSize = 1, sequenceName = "pdid_seq")
-	private int id;
+	private int pdid;
 	private String firstName;
 	private String middleName;
 	private String lastName;
@@ -44,16 +44,16 @@ public class PersonalDetails {
 	 * preAddress; }
 	 */
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public String getFirstName() {
 		return firstName;
+	}
+
+	public int getPdid() {
+		return pdid;
+	}
+
+	public void setPdid(int pdid) {
+		this.pdid = pdid;
 	}
 
 	public void setFirstName(String firstName) {

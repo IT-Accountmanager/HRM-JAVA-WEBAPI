@@ -26,10 +26,17 @@ public class OnboardingController {
 	@Autowired
 	IOnboardingService onboardingService;
 
+	/*
+	 * @PostMapping("/post") public ResponseEntity<String>
+	 * addOnboarding(@RequestBody Onboarding onboarding) { String createOnboarding =
+	 * this.onboardingService.createOnboarding(onboarding); return new
+	 * ResponseEntity<String>(createOnboarding, HttpStatus.CREATED); }
+	 */
+
 	@PostMapping("/post")
-	public ResponseEntity<String> addOnboarding(@RequestBody Onboarding onboarding) {
-		String createOnboarding = this.onboardingService.createOnboarding(onboarding);
-		return new ResponseEntity<String>(createOnboarding, HttpStatus.CREATED);
+	public ResponseEntity<Onboarding> addOnboarding(@RequestBody Onboarding onboardingRequest) {
+		Onboarding createOnboarding = this.onboardingService.createOnboarding(onboardingRequest);
+		return new ResponseEntity<Onboarding>(createOnboarding, HttpStatus.OK);
 	}
 
 	@PostMapping("/post/import")

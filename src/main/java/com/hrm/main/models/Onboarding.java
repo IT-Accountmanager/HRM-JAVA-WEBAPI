@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 
@@ -31,9 +32,14 @@ public class Onboarding {
 	};
 
 	private Status status;
-	
-	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
+	@OneToOne(cascade = CascadeType.ALL)
+
+	@JoinTable(name = "o_p_id", joinColumns = {
+
+			@JoinColumn(name = "o_id", referencedColumnName = "srNo") }, inverseJoinColumns = {
+
+					@JoinColumn(name = "p_id", referencedColumnName = "profileId") })
 	private Profile profile;
 
 	public Profile getProfile() {

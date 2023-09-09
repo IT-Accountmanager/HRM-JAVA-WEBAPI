@@ -38,8 +38,8 @@ public class WorkServiceImpl implements IWorkService {
 			work.setRelievedLetter(decoder.decode(work.relievedLetterBase64Data));
 
 			var work1 = this.workRepo.save(work);
-			if (work1.getId() > 0) {
-				return "Work details are added : " + work1.getId();
+			if (work1.getWorkId() > 0) {
+				return "Work details are added : " + work1.getWorkId();
 			}
 		} catch (Exception e) {
 			e.getMessage();
@@ -79,7 +79,7 @@ public class WorkServiceImpl implements IWorkService {
 			work.setUploadOfferLetter(decoder.decode(work.offerLetterBase64Data));
 			work.setAppraisalLetter(decoder.decode(work.appraisalLetterBase64Data));
 			work.setRelievedLetter(decoder.decode(work.relievedLetterBase64Data));
-			work.setId(id);
+			work.setWorkId(id);
 
 			workRepo.save(work);
 

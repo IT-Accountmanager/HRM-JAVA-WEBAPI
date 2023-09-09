@@ -19,8 +19,8 @@ public class FamilyServiceImpl implements IFamilyService {
 	public String createFamily(Family family) {
 		try {
 			var fam = this.familyRepo.save(family);
-			if (fam.getId() > 0) {
-				return "Family details are added : " + fam.getId();
+			if (fam.getFamilyId() > 0) {
+				return "Family details are added : " + fam.getFamilyId();
 			}
 		} catch (Exception e) {
 			e.getMessage();
@@ -33,6 +33,7 @@ public class FamilyServiceImpl implements IFamilyService {
 		List<Family> allFam = familyRepo.findAll();
 		return allFam;
 	}
+
 	@Override
 	public Family getFamilyById(int id) {
 
@@ -45,7 +46,7 @@ public class FamilyServiceImpl implements IFamilyService {
 
 		try {
 			if (this.familyRepo.existsById(id)) {
-				family.setId(id);
+				family.setFamilyId(id);
 				this.familyRepo.save(family);
 				return "Id no. " + id + " is updated. ";
 			} else {
@@ -70,6 +71,5 @@ public class FamilyServiceImpl implements IFamilyService {
 		}
 		return "Id no. " + id + " is not deleted. ";
 	}
-
 
 }

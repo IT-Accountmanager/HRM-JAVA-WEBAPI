@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hrm.main.models.Onboarding;
+import com.hrm.main.models.Profile;
 import com.hrm.main.models.Regularization;
 import com.hrm.main.repositories.IOnboardingRepository;
 import com.hrm.main.repositories.IProfileRepository;
@@ -14,26 +15,43 @@ public class OnboardingServiceImpl implements IOnboardingService {
 
 	@Autowired
 	IOnboardingRepository onboardingRepository;
+
 	@Autowired
 	IProfileRepository profileRepository;
 
+	/*
+	 * @Override public String createOnboarding(Onboarding onboarding) { try {
+	 * //onboarding.getProfile().setProfileId(); Onboarding save =
+	 * this.onboardingRepository.save(onboarding);
+	 * 
+	 * 
+	 * if (save.getSrNo() > 0) { return "Onboarding of Id no. " + save.getSrNo() +
+	 * " is Successfully Added!"; } return "Onboarding is not Added!";
+	 * 
+	 * } catch (Exception e) { e.getMessage(); } return "Onboarding is not added!";
+	 * 
+	 * }
+	 */
+
 	@Override
-	public String createOnboarding(Onboarding onboarding) {
-		try {
-//onboarding.getProfile().setProfileId();
-			Onboarding save = this.onboardingRepository.save(onboarding);
-			
+	public Onboarding createOnboarding(Onboarding onboardingRequest) {
+		Onboarding onboarding = new Onboarding();
+		onboarding.setJobTitle(onboardingRequest.getJobTitle());
+		onboarding.setCandidateId(onboardingRequest.getCandidateId());
+		onboarding.setCandidateName(onboardingRequest.getCandidateName());
+		onboarding.setContactNumber(onboardingRequest.getContactNumber());
+		onboarding.setEmailId(onboardingRequest.getEmailId());
+		onboarding.setBondPeriod(onboardingRequest.getBondPeriod());
+		onboarding.setBondBreakAmount(onboardingRequest.getBondBreakAmount());
+		onboarding.setCtc(onboardingRequest.getCtc());
 
-			if (save.getSrNo() > 0) {
-				return "Onboarding of Id no. " + save.getSrNo() + " is Successfully Added!";
-			}
-			return "Onboarding is not Added!";
+		onboarding.setStatus(Onboarding.Status.Pending);
 
-		} catch (Exception e) {
-			e.getMessage();
-		}
-		return "Onboarding is not added!";
+		Profile profile = new Profile();
+		profile.setOnboarding(onboarding);
+		onboarding.setProfile(profile);
 
+		return onboardingRepository.save(onboarding);
 	}
 
 	@Override
