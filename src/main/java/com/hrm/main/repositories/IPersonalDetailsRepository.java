@@ -5,7 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import com.hrm.main.models.PersonalDetails;
 
-@Repository
-public interface IPersonalDetailsRepository extends JpaRepository<PersonalDetails, Integer> {
+import jakarta.mail.FetchProfile.Item;
 
+@Repository
+public interface IPersonalDetailsRepository extends JpaRepository<PersonalDetails, Long> {
+
+	
 }

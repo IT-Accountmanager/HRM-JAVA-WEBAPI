@@ -18,7 +18,24 @@ public class PersonalDetailsServiceImpl implements IPersonalDetailsService {
 
 		PersonalDetails details = personalDetailsRepo.save(personalDetails);
 
-		return "Personal Details Added Successfully";
+		return "Personal Details and Image Added Successfully";
+	}
+
+	@Override	
+	public PersonalDetails uploadImage(String firstName,String middleName,String lastName,String dateOfBirth,String gender,String bloodGroup,String maritalStatus,String officialMailId, byte[]imageData) {
+		PersonalDetails personaldetails =new PersonalDetails(null, firstName, middleName, lastName, dateOfBirth, gender, bloodGroup, maritalStatus, officialMailId, imageData, officialMailId, null, null);
+		personaldetails.setFirstName(firstName);
+		personaldetails.setMiddleName(middleName);
+		personaldetails.setLastName(lastName);
+		personaldetails.setDateOfBirth(dateOfBirth);
+		personaldetails.setGender(gender);
+		personaldetails.setBloodGroup(bloodGroup);
+		personaldetails.setMaritalStatus(maritalStatus);
+		personaldetails.setOfficialMailId(officialMailId);
+		personaldetails.setImageData(imageData);
+		return personalDetailsRepo.save(personaldetails);
+		
+	
 	}
 
 }
