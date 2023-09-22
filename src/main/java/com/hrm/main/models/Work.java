@@ -1,5 +1,7 @@
 package com.hrm.main.models;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,13 +25,14 @@ public class Work {
 	private String designation;
 	private String employeeType;
 	private String location;
-	private String joinedDate;
-	private String relievedDate;
+	private LocalDate joinedDate;
+	private LocalDate relievedDate;
 	private String tenure;
 	private String contactName;
 	private long contactNo;
 	private String emailId;
 	private String ctc;
+	private int candidateId;
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	@Column(columnDefinition = "LONGBLOB")
@@ -50,8 +53,6 @@ public class Work {
 	private byte[] relievedLetter;
 	@Transient
 	public String relievedLetterBase64Data;
-
-	
 
 	public int getWorkId() {
 		return workId;
@@ -101,19 +102,19 @@ public class Work {
 		this.location = location;
 	}
 
-	public String getJoinedDate() {
+	public LocalDate getJoinedDate() {
 		return joinedDate;
 	}
 
-	public void setJoinedDate(String joinedDate) {
+	public void setJoinedDate(LocalDate joinedDate) {
 		this.joinedDate = joinedDate;
 	}
 
-	public String getRelievedDate() {
+	public LocalDate getRelievedDate() {
 		return relievedDate;
 	}
 
-	public void setRelievedDate(String relievedDate) {
+	public void setRelievedDate(LocalDate relievedDate) {
 		this.relievedDate = relievedDate;
 	}
 
@@ -179,6 +180,14 @@ public class Work {
 
 	public void setRelievedLetter(byte[] relievedLetter) {
 		this.relievedLetter = relievedLetter;
+	}
+
+	public int getCandidateId() {
+		return candidateId;
+	}
+
+	public void setCandidateId(int candidateId) {
+		this.candidateId = candidateId;
 	}
 
 }

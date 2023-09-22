@@ -19,9 +19,9 @@ public class WorkServiceImpl implements IWorkService {
 	private IWorkRepository workRepo;
 
 	@Override
-	public String createWork(Work work) {
+	public String createWork(Work work , int candidateId) {
 		try {
-
+			work.setCandidateId(candidateId);
 			Decoder decoder = Base64.getDecoder();
 			while (work.offerLetterBase64Data.length() % 4 != 0) {
 				work.offerLetterBase64Data += "=";

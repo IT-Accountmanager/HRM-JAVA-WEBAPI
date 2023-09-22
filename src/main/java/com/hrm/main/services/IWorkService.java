@@ -6,7 +6,7 @@ import com.hrm.main.models.Work;
 
 public interface IWorkService {
 
-	String createWork(Work work);
+	String createWork(Work work, int candidateId);
 
 	List<Work> getAllWork();
 

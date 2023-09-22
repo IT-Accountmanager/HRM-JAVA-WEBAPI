@@ -26,6 +26,7 @@ public class Education {
 	private LocalDate endDate;
 	private float percentage;
 	private String collegeName;
+	private int candidateId;
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	@Column(columnDefinition = "LONGBLOB")
@@ -103,6 +104,14 @@ public class Education {
 
 	public void setCollegeName(String collegeName) {
 		this.collegeName = collegeName;
+	}
+
+	public int getCandidateId() {
+		return candidateId;
+	}
+
+	public void setCandidateId(int candidateId) {
+		this.candidateId = candidateId;
 	}
 
 }

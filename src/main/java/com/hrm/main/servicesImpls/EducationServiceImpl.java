@@ -19,8 +19,9 @@ public class EducationServiceImpl implements IEducationService {
 	private IEducationRepository educationRepo;
 
 	@Override
-	public String createEducation(Education education) {
+	public String createEducation(Education education , int candidateId) {
 		try {
+			education.setCandidateId(candidateId);
 			Decoder decoder = Base64.getDecoder();
 
 			while (education.base64Data.length() % 4 != 0) {

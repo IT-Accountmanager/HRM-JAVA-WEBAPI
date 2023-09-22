@@ -12,19 +12,24 @@ import com.hrm.main.services.IOnboardingHRExecutiveService;
 @Service
 
 public class OnboardingHRExecutiveServiceImpl implements IOnboardingHRExecutiveService {
-	
+
 	@Autowired
 	private IOnboardingHRExecutiveRepository onboardingHRExecutiveRepository;
+
+	@Autowired
+	private IOnboardingHRExecutiveRepository hrExecutiveRepository;
 
 	@Override
 	public String createExecutive(OnboardingHRExecutive hrExecutive) {
 		try {
+			// super()
+
 			var executive1 = this.onboardingHRExecutiveRepository.save(hrExecutive);
-			if(executive1.getId()>0) {
+			if (executive1.getId() > 0) {
 				return "All details are added : " + executive1.getId();
 			}
 		} catch (Exception e) {
-			e.getMessage();			
+			e.getMessage();
 		}
 		return "All details are not added : ";
 	}
@@ -44,36 +49,35 @@ public class OnboardingHRExecutiveServiceImpl implements IOnboardingHRExecutiveS
 	@Override
 	public String updateHRExecutive(OnboardingHRExecutive hrExecutive, Integer id) {
 		try {
-			
-			if(this.onboardingHRExecutiveRepository.existsById(id)) {			
-			
-			hrExecutive.setId(id);
-			
-			this.onboardingHRExecutiveRepository.save(hrExecutive);
-			
-			return "Id no. : " +id+ " is updated.";
-			
-			}else {
-				return "Id no. : "+id+" is does not exists";
+
+			if (this.onboardingHRExecutiveRepository.existsById(id)) {
+
+				hrExecutive.setId(id);
+
+				this.onboardingHRExecutiveRepository.save(hrExecutive);
+
+				return "Id no. : " + id + " is updated.";
+
+			} else {
+				return "Id no. : " + id + " is does not exists";
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.getMessage();
 		}
-		return "Id no. : " +id+ "is not updated.";
+		return "Id no. : " + id + "is not updated.";
 	}
 
 	@Override
 	public String deleteHrExecutive(Integer id) {
 		try {
 			onboardingHRExecutiveRepository.deleteById(id);
-			
-			return "Id no. : " + id +" is deleted";
-			
-		}catch (Exception e) {
+
+			return "Id no. : " + id + " is deleted";
+
+		} catch (Exception e) {
 			e.getMessage();
 		}
-		return "Id no. : " + id +" is not deleted" ;
+		return "Id no. : " + id + " is not deleted";
 	}
-	
 
 }

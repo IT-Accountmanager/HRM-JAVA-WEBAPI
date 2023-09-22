@@ -4,6 +4,6 @@ import com.hrm.main.models.Personal;
 
 public interface IPersonalService {
 
-	String addPersonal(Personal personal);
+	String addPersonal(Personal personal, Integer candidateId);
 
 }

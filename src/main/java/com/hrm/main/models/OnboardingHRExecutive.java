@@ -1,74 +1,132 @@
 package com.hrm.main.models;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 
 @Entity
-
+@Table(name = "hr_executive")
 public class OnboardingHRExecutive {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Executive_Id_Sequence")
-	@SequenceGenerator(name="Executive_Id_Sequence", initialValue = 1,allocationSize = 1,sequenceName = "Executive_Id_Sequence")
-	
+	/*
+	 * @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+	 * "HrExecutive_Id_Sequence")
+	 * 
+	 * @SequenceGenerator(name = "HrExecutive_Id_Sequence", initialValue = 1,
+	 * allocationSize = 1, sequenceName = "HrExecutive_Id_Sequence")
+	 */
 	private int id;
+	private String jobTitle;
+	private int candidateId;
+	private String candidateName;
+	private long contactNumber;
+	private String emailId;
+	private int bondPeriod;
+	private int bondBreakAmount;
+	private long ctc;
+
+	public enum Status {
+		Review, Pending, Approved, Rejected
+	};
+
+	private Status status;
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getJobTitle() {
 		return jobTitle;
 	}
+
 	public void setJobTitle(String jobTitle) {
 		this.jobTitle = jobTitle;
 	}
-	public long getCandidateId() {
+
+	public int getCandidateId() {
 		return candidateId;
 	}
-	public void setCandidateId(long candidateId) {
+
+	public void setCandidateId(int candidateId) {
 		this.candidateId = candidateId;
 	}
+
 	public String getCandidateName() {
 		return candidateName;
 	}
+
 	public void setCandidateName(String candidateName) {
 		this.candidateName = candidateName;
 	}
-	public long getMobileNumber() {
-		return mobileNumber;
+
+	public long getContactNumber() {
+		return contactNumber;
 	}
-	public void setMobileNumber(long mobileNumber) {
-		this.mobileNumber = mobileNumber;
+
+	public void setContactNumber(long contactNumber) {
+		this.contactNumber = contactNumber;
 	}
+
 	public String getEmailId() {
 		return emailId;
 	}
+
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
-	public String getLocation() {
-		return location;
+
+	public int getBondPeriod() {
+		return bondPeriod;
 	}
-	public void setLocation(String location) {
-		this.location = location;
+
+	public void setBondPeriod(int bondPeriod) {
+		this.bondPeriod = bondPeriod;
 	}
-	public String getStatus() {
+
+	public int getBondBreakAmount() {
+		return bondBreakAmount;
+	}
+
+	public void setBondBreakAmount(int bondBreakAmount) {
+		this.bondBreakAmount = bondBreakAmount;
+	}
+
+	public long getCtc() {
+		return ctc;
+	}
+
+	public void setCtc(long ctc) {
+		this.ctc = ctc;
+	}
+
+	public Status getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+
+	public void setStatus(Status status) {
 		this.status = status;
 	}
-	private String jobTitle;
-	private long candidateId;
-	private String candidateName;
-	private long mobileNumber;
-	private String emailId;
-	private String location;
-	private String status;
+
+	public OnboardingHRExecutive(int id, String jobTitle, int candidateId, String candidateName, long contactNumber,
+			String emailId, int bondPeriod, int bondBreakAmount, long ctc, Status status) {
+		super();
+		this.id = id;
+		this.jobTitle = jobTitle;
+		this.candidateId = candidateId;
+		this.candidateName = candidateName;
+		this.contactNumber = contactNumber;
+		this.emailId = emailId;
+		this.bondPeriod = bondPeriod;
+		this.bondBreakAmount = bondBreakAmount;
+		this.ctc = ctc;
+		this.status = status;
+	}
+	
+	
 
 }

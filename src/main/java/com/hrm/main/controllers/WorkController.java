@@ -26,9 +26,9 @@ public class WorkController {
 	@Autowired
 	IWorkService workService;
 
-	@PostMapping("/AddWork")
-	public ResponseEntity<String> createWork(@RequestBody Work work) {
-		String result = this.workService.createWork(work);
+	@PostMapping("/AddWork/{candidateId}")
+	public ResponseEntity<String> createWork(@RequestBody Work work, @PathVariable int candidateId) {
+		String result = this.workService.createWork(work, candidateId);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 

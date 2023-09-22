@@ -41,6 +41,8 @@ public class Personal {
 	@JoinColumn(name = "socialDetailsId")
 	private SocialDetails socialDetails;
 
+	private int candidateId;
+
 	public int getPersonalId() {
 		return personalId;
 	}
@@ -89,8 +91,18 @@ public class Personal {
 		this.socialDetails = socialDetails;
 	}
 
+	public int getCandidateId() {
+		return candidateId;
+	}
+
+	public void setCandidateId(int candidateId) {
+		this.candidateId = candidateId;
+	}
+
+	
+
 	public Personal(int personalId, PersonalDetails personalDetails, AddressDetails addressDetails,
-			DocumentDetails documentDetails, BankDetails bankDetails, SocialDetails socialDetails) {
+			DocumentDetails documentDetails, BankDetails bankDetails, SocialDetails socialDetails, int candidateId) {
 		super();
 		this.personalId = personalId;
 		this.personalDetails = personalDetails;
@@ -98,6 +110,11 @@ public class Personal {
 		this.documentDetails = documentDetails;
 		this.bankDetails = bankDetails;
 		this.socialDetails = socialDetails;
+		this.candidateId = candidateId;
+	}
+
+	public Personal() {
+		super();
 	}
 
 }

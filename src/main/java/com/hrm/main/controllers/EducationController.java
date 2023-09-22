@@ -26,9 +26,9 @@ public class EducationController {
 	@Autowired
 	IEducationService educationService;
 
-	@PostMapping("/AddEducation")
-	public ResponseEntity<String> createEducation(@RequestBody Education education) {
-		String result = this.educationService.createEducation(education);
+	@PostMapping("/AddEducation/{candidateId}")
+	public ResponseEntity<String> createEducation(@RequestBody Education education, @PathVariable int candidateId) {
+		String result = this.educationService.createEducation(education , candidateId);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 

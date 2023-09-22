@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hrm.main.models.Onboarding;
+import com.hrm.main.models.PersonalDetails;
 import com.hrm.main.models.Profile;
 import com.hrm.main.repositories.IOnboardingRepository;
 import com.hrm.main.repositories.IProfileRepository;
@@ -33,16 +34,15 @@ public class ProfileServiceImpl implements IProfileService {
 	}
 
 	@Override
-	public String createProfile(Profile profile) {
-		try {
-			Profile save = this.profileRepository.save(profile);
-			if (save.getProfileId() > 0) {
-				return "Profile details are added : " + save.getProfileId();
-			}
-		} catch (Exception e) {
-			e.getMessage();
-		}
-		return "Profile details are not added";
+	public int createProfile(Profile profile) {
+		Profile save = this.profileRepository.save(profile);
+		return save.getProfileId();
+	}
+
+	@Override
+	public int createPersonalDetails(PersonalDetails personalDetails) {
+		
+		return 0;
 	}
 
 }

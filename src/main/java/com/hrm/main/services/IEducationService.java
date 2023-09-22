@@ -6,7 +6,7 @@ import com.hrm.main.models.Document;
 import com.hrm.main.models.Education;
 
 public interface IEducationService {
-	String createEducation(Education education);
+	String createEducation(Education education, int candidateId);
 
 	List<Education> getAllEducation();
 

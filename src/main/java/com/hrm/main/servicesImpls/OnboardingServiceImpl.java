@@ -45,11 +45,12 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		onboarding.setBondBreakAmount(onboardingRequest.getBondBreakAmount());
 		onboarding.setCtc(onboardingRequest.getCtc());
 
-		onboarding.setStatus(Onboarding.Status.Pending);
+		onboarding.setStatus(onboardingRequest.getStatus());
 
 		Profile profile = new Profile();
-		profile.setOnboarding(onboarding);
-		onboarding.setProfile(profile);
+		/*
+		 * profile.setOnboarding(onboarding); onboarding.setProfile(profile);
+		 */
 
 		return onboardingRepository.save(onboarding);
 	}

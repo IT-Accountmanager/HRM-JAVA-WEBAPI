@@ -14,8 +14,9 @@ public class PersonalServiceImpl implements IPersonalService {
 	IPersonalRepository personalRepository;
 
 	@Override
-	public String addPersonal(Personal personal) {
+	public String addPersonal(Personal personal, Integer candidateId) {
 		try {
+			personal.setCandidateId(candidateId);
 			var fam = this.personalRepository.save(personal);
 			if (fam.getPersonalId() > 0) {
 				return "Personal details are added : " + fam.getPersonalId();

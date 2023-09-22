@@ -16,8 +16,9 @@ public class FamilyServiceImpl implements IFamilyService {
 	private IFamilyRepository familyRepo;
 
 	@Override
-	public String createFamily(Family family) {
+	public String createFamily(Family family, int candidateId) {
 		try {
+			family.setCandidateId(candidateId);
 			var fam = this.familyRepo.save(family);
 			if (fam.getFamilyId() > 0) {
 				return "Family details are added : " + fam.getFamilyId();

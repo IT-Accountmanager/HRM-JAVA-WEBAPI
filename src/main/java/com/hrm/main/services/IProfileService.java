@@ -4,6 +4,7 @@ package com.hrm.main.services;
 import java.util.List;
 
 import com.hrm.main.models.Onboarding;
+import com.hrm.main.models.PersonalDetails;
 import com.hrm.main.models.Profile;
 
 public interface IProfileService {
@@ -14,5 +15,7 @@ public interface IProfileService {
 
 	Onboarding getOnboardingById(Integer id);
 
-	String createProfile(Profile profile);
+	int createProfile(Profile profile);
+
+	int createPersonalDetails(PersonalDetails personalDetails);
 }

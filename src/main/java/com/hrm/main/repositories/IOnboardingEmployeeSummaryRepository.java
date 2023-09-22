@@ -24,16 +24,16 @@ public interface IOnboardingEmployeeSummaryRepository extends JpaRepository<Onbo
 	 * = d.department ORDER BY Department, ManagerName, EmployeeName;
 	 */
 
-	@Query("SELECT employeeName, designation FROM OnboardingEmployeeSummary WHERE department = 'MGMT' GROUP BY employeeName, designation")
+	@Query("SELECT employeeName, designation FROM OnboardingEmployeeSummary WHERE department = 'MGMT'and designation <> 'manager' GROUP BY employeeName, designation")
 	List<String> findMGMTEmployee();
 
-	@Query("SELECT employeeName, designation FROM OnboardingEmployeeSummary WHERE department = 'HR' GROUP BY employeeName, designation")
+	@Query("SELECT employeeName, designation FROM OnboardingEmployeeSummary WHERE department = 'HR' and designation <> 'manager' GROUP BY employeeName, designation")
 	List<String> findHREmployee();
 
-	@Query("SELECT employeeName, designation FROM OnboardingEmployeeSummary WHERE department = 'Finance' GROUP BY employeeName, designation")
+	@Query("SELECT employeeName, designation FROM OnboardingEmployeeSummary WHERE department = 'Finance' and designation <> 'manager' GROUP BY employeeName, designation")
 	List<String> findFinanceEmployee();
 
-	@Query("SELECT employeeName, designation FROM OnboardingEmployeeSummary WHERE department = 'Development' GROUP BY employeeName, designation")
+	@Query("SELECT employeeName, designation FROM OnboardingEmployeeSummary WHERE department = 'Development' and designation <> 'manager' GROUP BY employeeName, designation")
 	List<String> findDevelopmentEmployee();
 
 }

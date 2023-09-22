@@ -18,7 +18,7 @@ import com.hrm.main.services.IBasicInfoService;
 @CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
 
 @RestController
-@RequestMapping("/profession")
+@RequestMapping("/summary")
 public class BasicInfoController {
 
 	@Autowired

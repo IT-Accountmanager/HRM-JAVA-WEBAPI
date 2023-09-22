@@ -22,7 +22,7 @@ public class DocumentSeviceImpl implements IDocumentService {
 	public String createDocument(Document doc) {
 		try {
 
-			workServImpl.createWork(doc.getWork());
+			//workServImpl.createWork(doc.getWork());
 			var document1 = this.documentRepo.save(doc);
 
 			

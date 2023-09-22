@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hrm.main.models.Onboarding;
+import com.hrm.main.models.PersonalDetails;
 import com.hrm.main.models.Profile;
 import com.hrm.main.services.IProfileService;
 
@@ -46,8 +47,17 @@ public class ProfileController {
 	}
 
 	@PostMapping("/post")
-	public ResponseEntity<String> postProfile(@RequestBody Profile profile) {
-		String result = this.profileService.createProfile( profile);
-		return new ResponseEntity<String>(result, HttpStatus.CREATED);
+	public ResponseEntity<Integer> postProfile(@RequestBody Profile profile) {
+		int result = this.profileService.createProfile(profile);
+		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
 	}
+	
+	/*
+	 * @PostMapping("/post/personal") public ResponseEntity<Integer>
+	 * postProfile(@RequestBody PersonalDetails personalDetails) { int result =
+	 * this.profileService.createPersonalDetails(personalDetails); return new
+	 * ResponseEntity<Integer>(result, HttpStatus.CREATED); }
+	 */
+	
+	
 }

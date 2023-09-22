@@ -11,8 +11,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
+@Table(name = "onboarding", uniqueConstraints = @UniqueConstraint(columnNames = "candidateId"))
 public class Onboarding {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Onboarding_seq")
@@ -23,9 +26,9 @@ public class Onboarding {
 	private String candidateName;
 	private long contactNumber;
 	private String emailId;
-	private int bondPeriod;
+	private float bondPeriod;
 	private int bondBreakAmount;
-	private long ctc;
+	private float ctc;
 
 	public enum Status {
 		Review, Pending, Approved, Rejected
@@ -33,22 +36,25 @@ public class Onboarding {
 
 	private Status status;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	//private Profile profile;
 
-	@JoinTable(name = "o_p_id", joinColumns = {
+	/*
+	 * @OneToOne(cascade = CascadeType.ALL)
+	 * 
+	 * @JoinTable(name = "o_p_id", joinColumns = {
+	 * 
+	 * @JoinColumn(name = "o_id", referencedColumnName = "srNo") },
+	 * inverseJoinColumns = {
+	 * 
+	 * @JoinColumn(name = "p_id", referencedColumnName = "profileId") }) private
+	 * Profile profile;
+	 */
 
-			@JoinColumn(name = "o_id", referencedColumnName = "srNo") }, inverseJoinColumns = {
-
-					@JoinColumn(name = "p_id", referencedColumnName = "profileId") })
-	private Profile profile;
-
-	public Profile getProfile() {
-		return profile;
-	}
-
-	public void setProfile(Profile profile) {
-		this.profile = profile;
-	}
+	/*
+	 * public Profile getProfile() { return profile; }
+	 * 
+	 * public void setProfile(Profile profile) { this.profile = profile; }
+	 */
 
 	public Status getStatus() {
 		return status;
@@ -106,12 +112,20 @@ public class Onboarding {
 		this.emailId = emailId;
 	}
 
-	public int getBondPeriod() {
+	public float getBondPeriod() {
 		return bondPeriod;
 	}
 
-	public void setBondPeriod(int bondPeriod) {
+	public void setBondPeriod(float bondPeriod) {
 		this.bondPeriod = bondPeriod;
+	}
+
+	public float getCtc() {
+		return ctc;
+	}
+
+	public void setCtc(float ctc) {
+		this.ctc = ctc;
 	}
 
 	public int getBondBreakAmount() {
@@ -120,14 +134,6 @@ public class Onboarding {
 
 	public void setBondBreakAmount(int bondBreakAmount) {
 		this.bondBreakAmount = bondBreakAmount;
-	}
-
-	public long getCtc() {
-		return ctc;
-	}
-
-	public void setCtc(long ctc) {
-		this.ctc = ctc;
 	}
 
 }

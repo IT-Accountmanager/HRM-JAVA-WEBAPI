@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.Family;
 import com.hrm.main.services.IFamilyService;
 
-
 @CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
 @RestController
 @RequestMapping("/family")
@@ -27,10 +26,10 @@ public class FamilyController {
 	@Autowired
 	IFamilyService familyService;
 
-	@PostMapping("/AddFamily")
-	public ResponseEntity<String> createFamily(@RequestBody Family family) {
+	@PostMapping("/AddFamily/{candidateId}")
+	public ResponseEntity<String> createFamily(@RequestBody Family family, @PathVariable int candidateId) {
 
-		String result = this.familyService.createFamily(family);
+		String result = this.familyService.createFamily(family, candidateId);
 
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 
@@ -41,18 +40,19 @@ public class FamilyController {
 		List<Family> allFamily = this.familyService.getAllFamily();
 		return new ResponseEntity<List<Family>>(allFamily, HttpStatus.OK);
 	}
+
 	@GetMapping("/getFamily/{id}")
 	public Family getFamilyById(@PathVariable int id) {
 		Family famDetails = familyService.getFamilyById(id);
 		return famDetails;
 	}
-	
+
 	@PutMapping("/updateFamily/{id}")
-	public ResponseEntity<String> updateFamily (@RequestBody Family family,@PathVariable Integer id) {
+	public ResponseEntity<String> updateFamily(@RequestBody Family family, @PathVariable Integer id) {
 		String result = this.familyService.updateFamily(family, id);
-		return new ResponseEntity<>(result,HttpStatus.OK);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/deleteFamily/{id}")
 	public ResponseEntity<String> deleteFamily(@PathVariable Integer id) {
 		String result = this.familyService.deleteFamily(id);
