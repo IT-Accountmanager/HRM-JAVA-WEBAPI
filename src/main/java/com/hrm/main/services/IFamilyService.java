@@ -13,5 +13,5 @@ public interface IFamilyService {
 
 	String updateFamily(Family family, Integer id);
 
-	String deleteFamily(Integer id);
+	String deleteFamily(Integer family_id);
 }

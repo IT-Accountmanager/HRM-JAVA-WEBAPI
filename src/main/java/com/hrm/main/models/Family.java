@@ -2,19 +2,22 @@ package com.hrm.main.models;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+
 import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "family")
 public class Family {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Family_Id_Sequence")
 	@SequenceGenerator(name = "Family_Id_Sequence", initialValue = 1, allocationSize = 1, sequenceName = "Family_Id_Sequence")
+	@Column(name = "family_id")
 	private int familyId;
 	private String name;
 	private String relationship;
@@ -25,9 +28,11 @@ public class Family {
 	private String address;
 	private int candidateId;
 
-	@ManyToOne
-	@JoinColumn(name = "profile_id")
-	private Profile profile;
+	/*
+	 * @ManyToOne
+	 * 
+	 * @JoinColumn(name = "profile_id") private Profile profile;
+	 */
 
 	public int getFamilyId() {
 		return familyId;
@@ -93,14 +98,11 @@ public class Family {
 		this.address = address;
 	}
 
-	public Profile getProfile() {
-		return profile;
-	}
-
-	public void setProfile(Profile profile) {
-		this.profile = profile;
-	}
-
+	/*
+	 * public Profile getProfile() { return profile; }
+	 * 
+	 * public void setProfile(Profile profile) { this.profile = profile; }
+	 */
 	public int getCandidateId() {
 		return candidateId;
 	}

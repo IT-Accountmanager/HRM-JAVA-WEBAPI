@@ -53,9 +53,9 @@ public class FamilyController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/deleteFamily/{id}")
-	public ResponseEntity<String> deleteFamily(@PathVariable Integer id) {
-		String result = this.familyService.deleteFamily(id);
+	@DeleteMapping("/deleteFamily/{family_id}")
+	public ResponseEntity<String> deleteFamily(@PathVariable Integer family_id) {
+		String result = this.familyService.deleteFamily(family_id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 

@@ -31,7 +31,7 @@ public class FamilyServiceImpl implements IFamilyService {
 
 	@Override
 	public List<Family> getAllFamily() {
-		List<Family> allFam = familyRepo.findAll();
+		List<Family> allFam = this.familyRepo.findAll();
 		return allFam;
 	}
 
@@ -61,16 +61,16 @@ public class FamilyServiceImpl implements IFamilyService {
 	}
 
 	@Override
-	public String deleteFamily(Integer id) {
+	public String deleteFamily(Integer family_id) {
 		try {
-			familyRepo.deleteById(id);
+			familyRepo.deleteByFamilyId(family_id);
 
-			return "Id no. " + id + " is deleted succesfully. ";
+			return "Id no. " + family_id + " is deleted succesfully. ";
 
 		} catch (Exception e) {
 			e.getMessage();
 		}
-		return "Id no. " + id + " is not deleted. ";
+		return "Id no. " + family_id + " is not deleted. ";
 	}
 
 }

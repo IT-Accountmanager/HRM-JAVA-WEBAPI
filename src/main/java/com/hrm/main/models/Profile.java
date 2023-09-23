@@ -39,10 +39,10 @@ public class Profile {
 	@JoinColumn(name = "personalId")
 	private Personal personal;
 
-	@OneToMany(mappedBy = "profile")
-	//@JoinColumn(name = "familyId")
-	private Set<Family> family;
-
+	/*
+	 * @OneToMany(mappedBy = "profile") //@JoinColumn(name = "familyId") private
+	 * Set<Family> family;
+	 */
 	@OneToOne(cascade = CascadeType.ALL)
 
 	@JoinColumn(name = "educationId")
@@ -88,14 +88,11 @@ public class Profile {
 		this.personal = personal;
 	}
 
-	public Set<Family> getFamily() {
-		return family;
-	}
-
-	public void setFamily(Set<Family> family) {
-		this.family = family;
-	}
-
+	/*
+	 * public Set<Family> getFamily() { return family; }
+	 * 
+	 * public void setFamily(Set<Family> family) { this.family = family; }
+	 */
 	public Education getEducation() {
 		return education;
 	}
