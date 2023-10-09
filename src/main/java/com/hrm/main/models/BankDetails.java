@@ -25,7 +25,7 @@ public class BankDetails {
 	private String branchName;
 	private String branchCity;
 	@Lob
-	@Basic(fetch = FetchType.LAZY)
+	// @Basic(fetch = FetchType.LAZY)
 	@Column(columnDefinition = "LONGBLOB")
 	private byte[] bankDoc;
 	@Transient

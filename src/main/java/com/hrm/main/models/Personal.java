@@ -41,6 +41,7 @@ public class Personal {
 	@JoinColumn(name = "socialDetailsId")
 	private SocialDetails socialDetails;
 
+	@Column(name = "candidate_id")
 	private int candidateId;
 
 	public int getPersonalId() {
@@ -98,8 +99,6 @@ public class Personal {
 	public void setCandidateId(int candidateId) {
 		this.candidateId = candidateId;
 	}
-
-	
 
 	public Personal(int personalId, PersonalDetails personalDetails, AddressDetails addressDetails,
 			DocumentDetails documentDetails, BankDetails bankDetails, SocialDetails socialDetails, int candidateId) {

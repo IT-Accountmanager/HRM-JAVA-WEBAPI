@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "hr_executive")
-public class OnboardingHRExecutive {
+public class HRExecutive {
 
 	@Id
 	/*
@@ -22,9 +22,9 @@ public class OnboardingHRExecutive {
 	private String candidateName;
 	private long contactNumber;
 	private String emailId;
-	private int bondPeriod;
+	private float bondPeriod;
 	private int bondBreakAmount;
-	private long ctc;
+	private float ctc;
 
 	public enum Status {
 		Review, Pending, Approved, Rejected
@@ -80,11 +80,11 @@ public class OnboardingHRExecutive {
 		this.emailId = emailId;
 	}
 
-	public int getBondPeriod() {
+	public float getBondPeriod() {
 		return bondPeriod;
 	}
 
-	public void setBondPeriod(int bondPeriod) {
+	public void setBondPeriod(float bondPeriod) {
 		this.bondPeriod = bondPeriod;
 	}
 
@@ -96,11 +96,11 @@ public class OnboardingHRExecutive {
 		this.bondBreakAmount = bondBreakAmount;
 	}
 
-	public long getCtc() {
+	public float getCtc() {
 		return ctc;
 	}
 
-	public void setCtc(long ctc) {
+	public void setCtc(float ctc) {
 		this.ctc = ctc;
 	}
 
@@ -112,8 +112,8 @@ public class OnboardingHRExecutive {
 		this.status = status;
 	}
 
-	public OnboardingHRExecutive(int id, String jobTitle, int candidateId, String candidateName, long contactNumber,
-			String emailId, int bondPeriod, int bondBreakAmount, long ctc, Status status) {
+	public HRExecutive(int id, String jobTitle, int candidateId, String candidateName, long contactNumber,
+			String emailId, float bondPeriod, int bondBreakAmount, long ctc, Status status) {
 		super();
 		this.id = id;
 		this.jobTitle = jobTitle;
@@ -126,7 +126,8 @@ public class OnboardingHRExecutive {
 		this.ctc = ctc;
 		this.status = status;
 	}
-	
-	
+
+	public HRExecutive() {
+	}
 
 }

@@ -48,8 +48,8 @@ public class FamilyServiceImpl implements IFamilyService {
 		try {
 			if (this.familyRepo.existsById(id)) {
 				family.setFamilyId(id);
-				this.familyRepo.save(family);
-				return "Id no. " + id + " is updated. ";
+				Family save = this.familyRepo.save(family);
+				return "Id no. " + save.getCandidateId() + " is updated. ";
 			} else {
 				return "Id no. " + id + " is does not exists ";
 			}

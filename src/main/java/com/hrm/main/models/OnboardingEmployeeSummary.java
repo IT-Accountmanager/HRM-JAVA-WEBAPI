@@ -22,6 +22,7 @@ public class OnboardingEmployeeSummary {
 	private String designation;
 	private String department;
 	private String status;
+	private float relevantExperience;
 
 	public int getId() {
 		return id;
@@ -93,6 +94,14 @@ public class OnboardingEmployeeSummary {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public float getRelevantExperience() {
+		return relevantExperience;
+	}
+
+	public void setRelevantExperience(float relevantExperience) {
+		this.relevantExperience = relevantExperience;
 	}
 
 }
