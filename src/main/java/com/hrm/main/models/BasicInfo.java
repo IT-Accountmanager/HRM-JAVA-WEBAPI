@@ -2,6 +2,7 @@ package com.hrm.main.models;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +17,7 @@ public class BasicInfo {
 	private int id;
 	private int empId;
 	private LocalDate dateOfJoining;
+	@Column(name = "probation_period", nullable = false)
 	private int probationPeriod;
 	private String employeeType;
 	private String workLocation;

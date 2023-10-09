@@ -63,6 +63,7 @@ public class TeamDirectoryServiceImpl implements ITeamDirectoryService {
 			teamDirectoryRepo.deleteById(id);
 			
 			return "Id no. " + id + " is deleted successfully";
+			
 		} catch (Exception e) {
 			e.getMessage();
 		}

@@ -11,7 +11,7 @@ public class Family {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Family_Id_Sequence")
 	@SequenceGenerator(name = "Family_Id_Sequence", initialValue = 1, allocationSize = 1, sequenceName = "Family_Id_Sequence")
-	private int id;
+	private int familyId;
 	private String name;
 	private String relationship;
 	private int age;
@@ -20,12 +20,12 @@ public class Family {
 	private String emailId;
 	private String address;
 
-	public int getId() {
-		return id;
+	public int getFamilyId() {
+		return familyId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setFamilyId(int familyId) {
+		this.familyId = familyId;
 	}
 
 	public String getName() {

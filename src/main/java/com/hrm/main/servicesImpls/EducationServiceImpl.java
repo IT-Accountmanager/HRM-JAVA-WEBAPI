@@ -29,8 +29,8 @@ public class EducationServiceImpl implements IEducationService {
 			education.setCertificate(decoder.decode(education.base64Data));
 
 			var edu = this.educationRepo.save(education);
-			if (edu.getId() > 0) {
-				return "Education details are added : " + edu.getId();
+			if (edu.getEducationId() > 0) {
+				return "Education details are added : " + edu.getEducationId();
 			}
 		} catch (Exception e) {
 			e.getMessage();
@@ -70,7 +70,7 @@ public class EducationServiceImpl implements IEducationService {
 		try {
 			if (this.educationRepo.existsById(id)) {
 
-				edu.setId(id);
+				edu.setEducationId(id);
 				Decoder decoder = Base64.getDecoder();
 
 				while (edu.base64Data.length() % 4 != 0) {

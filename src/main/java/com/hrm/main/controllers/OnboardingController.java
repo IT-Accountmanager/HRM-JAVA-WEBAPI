@@ -26,10 +26,23 @@ public class OnboardingController {
 	@Autowired
 	IOnboardingService onboardingService;
 
+	/*
+	 * @PostMapping("/post") public ResponseEntity<String>
+	 * addOnboarding(@RequestBody Onboarding onboarding) { String createOnboarding =
+	 * this.onboardingService.createOnboarding(onboarding); return new
+	 * ResponseEntity<String>(createOnboarding, HttpStatus.CREATED); }
+	 */
+
 	@PostMapping("/post")
-	public ResponseEntity<String> addOnboarding(@RequestBody Onboarding onboarding) {
-		String createOnboarding = this.onboardingService.createOnboarding(onboarding);
-		return new ResponseEntity<String>(createOnboarding, HttpStatus.OK);
+	public ResponseEntity<Onboarding> addOnboarding(@RequestBody Onboarding onboardingRequest) {
+		Onboarding createOnboarding = this.onboardingService.createOnboarding(onboardingRequest);
+		return new ResponseEntity<Onboarding>(createOnboarding, HttpStatus.OK);
+	}
+
+	@PostMapping("/post/import")
+	public ResponseEntity<String> addOnboarding(@RequestBody List<Onboarding> onboardings) {
+		String result = this.onboardingService.createOnboarding(onboardings);
+		return new ResponseEntity<String>(result, HttpStatus.CREATED);
 	}
 
 	@GetMapping("/get")
@@ -58,7 +71,7 @@ public class OnboardingController {
 
 	@GetMapping("/getSrNo")
 	public Long getNextSerialNumberForAdd() {
-		return this.onboardingService.nextValue()+1;
+		return this.onboardingService.nextValue() + 1;
 
 	}
 

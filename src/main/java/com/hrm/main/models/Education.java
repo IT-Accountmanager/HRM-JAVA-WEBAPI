@@ -18,7 +18,7 @@ public class Education {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Education_Id_Sequence")
 	@SequenceGenerator(name = "Education_Id_Sequence", initialValue = 1, allocationSize = 1, sequenceName = "Education_Id_Sequence")
-	private int id;
+	private int educationId;
 	private String qualification;
 	private String courseType;
 	private String stream;
@@ -41,12 +41,12 @@ public class Education {
 		this.certificate = certificate;
 	}
 
-	public int getId() {
-		return id;
+	public int getEducationId() {
+		return educationId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setEducationId(int educationId) {
+		this.educationId = educationId;
 	}
 
 	public String getQualification() {

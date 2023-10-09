@@ -10,12 +10,13 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="personal_details")
+@Table(name = "personal_details")
 public class PersonalDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pdid_seq")
 	@SequenceGenerator(name = "pdid_seq", initialValue = 1, allocationSize = 1, sequenceName = "pdid_seq")
-	private Long id;
+
+	private int pdid;
 	private String firstName;
 	private String middleName;
 	private String lastName;
@@ -27,15 +28,15 @@ public class PersonalDetails {
 	private String personalMailId;
 	private Long phoneNo;
 	private Long alternativePhoneNo;
-	
+
 	@Column(columnDefinition = "LONGBLOB")
 	private byte[] imageData;
-	
+
 	public PersonalDetails(Long id, String firstName, String middleName, String lastName, String dateOfBirth,
 			String gender, String bloodGroup, String maritalStatus, String officialMailId, byte[] imageData,
-			String personalMailId, Long phoneNo, Long alternativePhoneNo) {
+			String personalMailId, Long phoneNo, Long alternativePhoneNo, int pdid) {
 		super();
-		this.id = id;
+		this.pdid = pdid;
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
@@ -58,8 +59,7 @@ public class PersonalDetails {
 		this.imageData = imageData;
 	}
 
-	
-	@Lob	
+	@Lob
 
 	/*
 	 * @OneToOne(mappedBy = "permanent", cascade = CascadeType.ALL) private
@@ -85,12 +85,12 @@ public class PersonalDetails {
 		return firstName;
 	}
 
-	public Long getId() {
-		return id;
+	public int getPdid() {
+		return pdid;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setPdid(int pdid) {
+		this.pdid = pdid;
 	}
 
 	public void setFirstName(String firstName) {

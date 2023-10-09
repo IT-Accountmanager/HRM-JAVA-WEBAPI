@@ -17,7 +17,7 @@ public class Work {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Work_Id_Sequence")
 	@SequenceGenerator(name = "Work_Id_Sequence", initialValue = 1, allocationSize = 1, sequenceName = "Work_Id_Sequence")
-	private int id;
+	private int workId;
 	private String comapanyName;
 	private String employeeId;
 	private String designation;
@@ -51,12 +51,14 @@ public class Work {
 	@Transient
 	public String relievedLetterBase64Data;
 
-	public int getId() {
-		return id;
+	
+
+	public int getWorkId() {
+		return workId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setWorkId(int workId) {
+		this.workId = workId;
 	}
 
 	public String getComapanyName() {

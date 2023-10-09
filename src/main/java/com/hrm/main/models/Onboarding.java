@@ -1,3 +1,4 @@
+
 package com.hrm.main.models;
 
 import jakarta.persistence.CascadeType;
@@ -6,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 
@@ -26,11 +28,17 @@ public class Onboarding {
 
 	public enum Status {
 		Review, Pending, Approved, Rejected
-	}
+	};
 
 	private Status status;
+
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn
+
+	@JoinTable(name = "o_p_id", joinColumns = {
+
+			@JoinColumn(name = "o_id", referencedColumnName = "srNo") }, inverseJoinColumns = {
+
+					@JoinColumn(name = "p_id", referencedColumnName = "profileId") })
 	private Profile profile;
 
 	public Profile getProfile() {

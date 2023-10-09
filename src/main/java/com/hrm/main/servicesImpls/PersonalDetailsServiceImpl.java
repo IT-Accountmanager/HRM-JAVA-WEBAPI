@@ -23,7 +23,7 @@ public class PersonalDetailsServiceImpl implements IPersonalDetailsService {
 
 	@Override	
 	public PersonalDetails uploadImage(String firstName,String middleName,String lastName,String dateOfBirth,String gender,String bloodGroup,String maritalStatus,String officialMailId, byte[]imageData) {
-		PersonalDetails personaldetails =new PersonalDetails(null, firstName, middleName, lastName, dateOfBirth, gender, bloodGroup, maritalStatus, officialMailId, imageData, officialMailId, null, null);
+		PersonalDetails personaldetails = new PersonalDetails(null, firstName, middleName, lastName, dateOfBirth, gender, bloodGroup, maritalStatus, officialMailId, imageData, officialMailId, null, null, 0);
 		personaldetails.setFirstName(firstName);
 		personaldetails.setMiddleName(middleName);
 		personaldetails.setLastName(lastName);
