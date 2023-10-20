@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hrm.main.models.Onboarding;
+import com.hrm.main.models.Onboarding.CandidatesStatus;
 import com.hrm.main.models.Profile;
 import com.hrm.main.models.Regularization;
 import com.hrm.main.repositories.IOnboardingRepository;
@@ -37,7 +38,8 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	public Onboarding createOnboarding(Onboarding onboardingRequest) {
 		Onboarding onboarding = new Onboarding();
 		onboarding.setJobTitle(onboardingRequest.getJobTitle());
-		onboarding.setCandidateId(onboardingRequest.getCandidateId());
+
+		onboarding.setCandidateId("EIS" + String.format("%06d", onboardingRepository.count() + 1));
 		onboarding.setCandidateName(onboardingRequest.getCandidateName());
 		onboarding.setContactNumber(onboardingRequest.getContactNumber());
 		onboarding.setEmailId(onboardingRequest.getEmailId());
@@ -45,9 +47,9 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		onboarding.setBondBreakAmount(onboardingRequest.getBondBreakAmount());
 		onboarding.setCtc(onboardingRequest.getCtc());
 
-		onboarding.setStatus(onboardingRequest.getStatus());
+		onboarding.setCandidatesStatus(CandidatesStatus.Pending);
 
-		Profile profile = new Profile();
+		// Profile profile = new Profile();
 		/*
 		 * profile.setOnboarding(onboarding); onboarding.setProfile(profile);
 		 */

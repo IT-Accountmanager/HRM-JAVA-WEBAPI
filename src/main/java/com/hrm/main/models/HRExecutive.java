@@ -1,7 +1,10 @@
 package com.hrm.main.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
@@ -9,16 +12,14 @@ import jakarta.persistence.Table;
 public class HRExecutive {
 
 	@Id
-	/*
-	 * @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
-	 * "HrExecutive_Id_Sequence")
-	 * 
-	 * @SequenceGenerator(name = "HrExecutive_Id_Sequence", initialValue = 1,
-	 * allocationSize = 1, sequenceName = "HrExecutive_Id_Sequence")
-	 */
+
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "HrExecutive_Id_Sequence")
+
+	@SequenceGenerator(name = "HrExecutive_Id_Sequence", initialValue = 1, allocationSize = 1, sequenceName = "HrExecutive_Id_Sequence")
+
 	private int id;
 	private String jobTitle;
-	private int candidateId;
+	private String candidateId;
 	private String candidateName;
 	private long contactNumber;
 	private String emailId;
@@ -26,11 +27,11 @@ public class HRExecutive {
 	private int bondBreakAmount;
 	private float ctc;
 
-	public enum Status {
+	public enum CandidatesStatus {
 		Review, Pending, Approved, Rejected
 	};
 
-	private Status status;
+	private com.hrm.main.models.Onboarding.CandidatesStatus status;
 
 	public int getId() {
 		return id;
@@ -48,11 +49,11 @@ public class HRExecutive {
 		this.jobTitle = jobTitle;
 	}
 
-	public int getCandidateId() {
+	public String getCandidateId() {
 		return candidateId;
 	}
 
-	public void setCandidateId(int candidateId) {
+	public void setCandidateId(String candidateId) {
 		this.candidateId = candidateId;
 	}
 
@@ -104,26 +105,11 @@ public class HRExecutive {
 		this.ctc = ctc;
 	}
 
-	public Status getStatus() {
+	public com.hrm.main.models.Onboarding.CandidatesStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
-	public HRExecutive(int id, String jobTitle, int candidateId, String candidateName, long contactNumber,
-			String emailId, float bondPeriod, int bondBreakAmount, long ctc, Status status) {
-		super();
-		this.id = id;
-		this.jobTitle = jobTitle;
-		this.candidateId = candidateId;
-		this.candidateName = candidateName;
-		this.contactNumber = contactNumber;
-		this.emailId = emailId;
-		this.bondPeriod = bondPeriod;
-		this.bondBreakAmount = bondBreakAmount;
-		this.ctc = ctc;
+	public void setStatus(com.hrm.main.models.Onboarding.CandidatesStatus status) {
 		this.status = status;
 	}
 

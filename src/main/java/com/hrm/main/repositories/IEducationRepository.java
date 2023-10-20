@@ -8,4 +8,6 @@ import com.hrm.main.models.Education;
 @Repository
 public interface IEducationRepository extends JpaRepository<Education, Integer> {
 
+	Education findByCandidateId(String candidateId);
+
 }

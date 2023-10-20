@@ -3,6 +3,8 @@ package com.hrm.main.services;
 import java.util.List;
 
 import com.hrm.main.models.HRExecutive;
+import com.hrm.main.models.Onboarding;
+import com.hrm.main.models.Onboarding.CandidatesStatus;
 import com.hrm.main.models.Personal;
 
 public interface IHRExecutiveService {
@@ -17,6 +19,12 @@ public interface IHRExecutiveService {
 
 	String deleteHrExecutive(Integer id);
 
-	String tranferProfileToHRExecutive();
+	// String tranferProfileToHRExecutive();
+
+	// List<Onboarding> getAllOnboarding(Status ststus);
+
+	boolean postCandidateInHrExecutive(CandidatesStatus status);
+
+	// List<Onboarding> getAllOnboarding();
 
 }

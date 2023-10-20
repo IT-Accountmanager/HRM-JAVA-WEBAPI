@@ -3,10 +3,11 @@ package com.hrm.main.services;
 import java.util.List;
 
 import com.hrm.main.models.Work;
+import com.hrm.main.payloads.WorkStatusResponse;
 
 public interface IWorkService {
 
-	String createWork(Work work, int candidateId);
+	String createWork(Work work, String candidateId);
 
 	List<Work> getAllWork();
 
@@ -17,5 +18,7 @@ public interface IWorkService {
 	String deleteWork(Integer id);
 
 	String getDocument(Integer id);
+
+	WorkStatusResponse getWorkStatusByCandidateId(String candidateId);
 
 }

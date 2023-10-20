@@ -1,6 +1,9 @@
 package com.hrm.main.models;
 
 import java.time.LocalDate;
+
+import com.hrm.main.models.Onboarding.CandidatesStatus;
+import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +27,10 @@ public class Family {
 	private long phoneNumber;
 	private String emailId;
 	private String address;
-	private int candidateId;
+
+	@Column(name = "candidate_id")
+	private String candidateId;
+	private DetailsSubmissionStatus familySubmissionStatus;
 
 	/*
 	 * @ManyToOne
@@ -96,17 +102,26 @@ public class Family {
 		this.address = address;
 	}
 
+	public String getCandidateId() {
+		return candidateId;
+	}
+
+	public void setCandidateId(String candidateId) {
+		this.candidateId = candidateId;
+	}
+
+	public DetailsSubmissionStatus getFamilySubmissionStatus() {
+		return familySubmissionStatus;
+	}
+
+	public void setFamilySubmissionStatus(DetailsSubmissionStatus familySubmissionStatus) {
+		this.familySubmissionStatus = familySubmissionStatus;
+	}
+
 	/*
 	 * public Profile getProfile() { return profile; }
 	 * 
 	 * public void setProfile(Profile profile) { this.profile = profile; }
 	 */
-	public int getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(int candidateId) {
-		this.candidateId = candidateId;
-	}
 
 }

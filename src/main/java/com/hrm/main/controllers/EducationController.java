@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hrm.main.models.Document;
 import com.hrm.main.models.Education;
+import com.hrm.main.payloads.EducationStatusResponse;
 import com.hrm.main.services.IEducationService;
 
 @CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
@@ -27,8 +28,8 @@ public class EducationController {
 	IEducationService educationService;
 
 	@PostMapping("/AddEducation/{candidateId}")
-	public ResponseEntity<String> createEducation(@RequestBody Education education, @PathVariable int candidateId) {
-		String result = this.educationService.createEducation(education , candidateId);
+	public ResponseEntity<String> createEducation(@RequestBody Education education, @PathVariable String candidateId) {
+		String result = this.educationService.createEducation(education, candidateId);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
@@ -54,6 +55,12 @@ public class EducationController {
 	public ResponseEntity<String> updateEducation(@RequestBody Education edu, @PathVariable Integer id) {
 		String result = this.educationService.updateEducation(edu, id);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+
+	@GetMapping("get/status/{candidateId}")
+	public ResponseEntity<EducationStatusResponse> getEducationStatusByCandidateId(@PathVariable String candidateId) {
+		EducationStatusResponse status = this.educationService.getEducationStatusByCandidateId(candidateId);
+		return new ResponseEntity<EducationStatusResponse>(status, HttpStatus.OK);
 	}
 
 }

@@ -2,16 +2,17 @@ package com.hrm.main.servicesImpls;
 
 import java.util.Base64;
 import java.util.Base64.Decoder;
-import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.hrm.main.models.BankDetails;
 import com.hrm.main.models.DocumentDetails;
 import com.hrm.main.models.DocumentUpload;
 import com.hrm.main.models.Personal;
 import com.hrm.main.models.PersonalDetails;
+import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
+import com.hrm.main.payloads.PersonalStatusResponse;
 import com.hrm.main.repositories.IPersonalRepository;
 import com.hrm.main.services.IPersonalService;
 
@@ -22,7 +23,7 @@ public class PersonalServiceImpl implements IPersonalService {
 	IPersonalRepository personalRepository;
 
 	@Override
-	public String addPersonal(Personal personal, Integer candidateId) {
+	public String addPersonal(Personal personal, String candidateId) {
 		try {
 			personal.setCandidateId(candidateId);
 			// ----------------------------------------------------------
@@ -31,8 +32,10 @@ public class PersonalServiceImpl implements IPersonalService {
 				personal.getPersonalDetails().base64Data += "=";
 			}
 			personal.getPersonalDetails().setProfilePhoto(decoder2.decode(personal.getPersonalDetails().base64Data));
+			personal.setPersonalSubmissionStatus(DetailsSubmissionStatus.submitted);
 
 			// ---------------------------------------------------------
+
 			Decoder decoder = Base64.getDecoder();
 			while (personal.getBankDetails().base64Data.length() % 4 != 0) {
 				personal.getBankDetails().base64Data += "=";
@@ -65,7 +68,7 @@ public class PersonalServiceImpl implements IPersonalService {
 	}
 
 	@Override
-	public Personal getPersonalDetailsByCandidateId(Integer candidateId) {
+	public Personal getPersonalDetailsByCandidateId(String candidateId) {
 		Personal findByCandidateId = this.personalRepository.findByCandidateId(candidateId);
 		return findByCandidateId;
 	}
@@ -84,4 +87,18 @@ public class PersonalServiceImpl implements IPersonalService {
 		return personal;
 	}
 
+	@Override
+	public PersonalStatusResponse getStatusByCandidateId(String candidateId) {
+
+		Personal personal = this.personalRepository.findByCandidateId(candidateId);
+		DetailsSubmissionStatus status = personal.getPersonalSubmissionStatus();
+		return new PersonalStatusResponse(status);
+	}
+
+	/*
+	 * @Override public Personal getStatusByCandidateId(String candidateId) {
+	 * Personal findPersonalSubmissionStatusByCandidateId = this.personalRepository
+	 * .findPersonalSubmissionStatusByCandidateId(candidateId); return
+	 * findPersonalSubmissionStatusByCandidateId; }
+	 */
 }

@@ -1,7 +1,7 @@
 package com.hrm.main.models;
 
 import java.time.LocalDate;
-
+import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,9 +11,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
 @Entity
+@Table(name = "education")
 public class Education {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Education_Id_Sequence")
@@ -26,13 +28,16 @@ public class Education {
 	private LocalDate endDate;
 	private float percentage;
 	private String collegeName;
-	private int candidateId;
+
+	@Column(name = "candidate_id")
+	private String candidateId;
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	@Column(columnDefinition = "LONGBLOB")
 	private byte[] certificate;
 	@Transient
 	public String base64Data;
+	private DetailsSubmissionStatus educationSubmissionStatus = DetailsSubmissionStatus.pending;
 
 	public byte[] getCertificate() {
 		return certificate;
@@ -106,12 +111,20 @@ public class Education {
 		this.collegeName = collegeName;
 	}
 
-	public int getCandidateId() {
+	public String getCandidateId() {
 		return candidateId;
 	}
 
-	public void setCandidateId(int candidateId) {
+	public void setCandidateId(String candidateId) {
 		this.candidateId = candidateId;
+	}
+
+	public DetailsSubmissionStatus getEducationSubmissionStatus() {
+		return educationSubmissionStatus;
+	}
+
+	public void setEducationSubmissionStatus(DetailsSubmissionStatus educationSubmissionStatus) {
+		this.educationSubmissionStatus = educationSubmissionStatus;
 	}
 
 }

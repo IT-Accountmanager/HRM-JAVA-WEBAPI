@@ -1,11 +1,11 @@
 package com.hrm.main.servicesImpls;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.hrm.main.models.Family;
+import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
+import com.hrm.main.payloads.FamilyStatusResponse;
 import com.hrm.main.repositories.IFamilyRepository;
 import com.hrm.main.services.IFamilyService;
 
@@ -16,10 +16,12 @@ public class FamilyServiceImpl implements IFamilyService {
 	private IFamilyRepository familyRepo;
 
 	@Override
-	public String createFamily(Family family, int candidateId) {
+	public String createFamily(Family family, String candidateId) {
 		try {
 			family.setCandidateId(candidateId);
+			family.setFamilySubmissionStatus(DetailsSubmissionStatus.submitted);
 			var fam = this.familyRepo.save(family);
+
 			if (fam.getFamilyId() > 0) {
 				return "Family details are added : " + fam.getFamilyId();
 			}
@@ -71,6 +73,21 @@ public class FamilyServiceImpl implements IFamilyService {
 			e.getMessage();
 		}
 		return "Id no. " + family_id + " is not deleted. ";
+	}
+
+	@Override
+	public FamilyStatusResponse getFamilyStatusByCandidateId(String candidateId) {
+		List<Family> family = this.familyRepo.findByCandidateId(candidateId);
+
+		boolean allSubmitted = family.stream()
+				.allMatch(f -> f.getFamilySubmissionStatus() == DetailsSubmissionStatus.submitted);
+
+		if (allSubmitted) {
+			return new FamilyStatusResponse(DetailsSubmissionStatus.submitted);
+		}
+
+		return new FamilyStatusResponse(DetailsSubmissionStatus.pending);
+
 	}
 
 }

@@ -3,12 +3,11 @@ package com.hrm.main.servicesImpls;
 import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.hrm.main.models.Work;
+import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
+import com.hrm.main.payloads.WorkStatusResponse;
 import com.hrm.main.repositories.IWorkRepository;
 import com.hrm.main.services.IWorkService;
 
@@ -19,9 +18,10 @@ public class WorkServiceImpl implements IWorkService {
 	private IWorkRepository workRepo;
 
 	@Override
-	public String createWork(Work work , int candidateId) {
+	public String createWork(Work work, String candidateId) {
 		try {
 			work.setCandidateId(candidateId);
+			work.setWorkSubmissionStatus(DetailsSubmissionStatus.submitted);
 			Decoder decoder = Base64.getDecoder();
 			while (work.offerLetterBase64Data.length() % 4 != 0) {
 				work.offerLetterBase64Data += "=";
@@ -110,6 +110,13 @@ public class WorkServiceImpl implements IWorkService {
 		byte[] relievedLetterBase64Data = workRepo.findById(id).get().getRelievedLetter();
 
 		return org.apache.tomcat.util.codec.binary.Base64.encodeBase64String(relievedLetterBase64Data);
+	}
+
+	@Override
+	public WorkStatusResponse getWorkStatusByCandidateId(String candidateId) {
+		Work work = this.workRepo.findByCandidateId(candidateId);
+		DetailsSubmissionStatus status = work.getWorkSubmissionStatus();
+		return new WorkStatusResponse(status);
 	}
 
 }

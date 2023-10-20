@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hrm.main.models.Family;
+import com.hrm.main.payloads.FamilyStatusResponse;
 import com.hrm.main.services.IFamilyService;
 
 @CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
@@ -27,7 +28,7 @@ public class FamilyController {
 	IFamilyService familyService;
 
 	@PostMapping("/AddFamily/{candidateId}")
-	public ResponseEntity<String> createFamily(@RequestBody Family family, @PathVariable int candidateId) {
+	public ResponseEntity<String> createFamily(@RequestBody Family family, @PathVariable String candidateId) {
 
 		String result = this.familyService.createFamily(family, candidateId);
 
@@ -57,6 +58,12 @@ public class FamilyController {
 	public ResponseEntity<String> deleteFamily(@PathVariable Integer family_id) {
 		String result = this.familyService.deleteFamily(family_id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@GetMapping("/get/status/{candidateId}")
+	public ResponseEntity<FamilyStatusResponse> getFamilyStatusByCandidateId(@PathVariable String candidateId) {
+		FamilyStatusResponse status = this.familyService.getFamilyStatusByCandidateId(candidateId);
+		return new ResponseEntity<FamilyStatusResponse>(status, HttpStatus.OK);
 	}
 
 }

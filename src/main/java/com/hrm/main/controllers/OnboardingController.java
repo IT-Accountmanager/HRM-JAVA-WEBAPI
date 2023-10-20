@@ -35,6 +35,7 @@ public class OnboardingController {
 
 	@PostMapping("/post")
 	public ResponseEntity<Onboarding> addOnboarding(@RequestBody Onboarding onboardingRequest) {
+		
 		Onboarding createOnboarding = this.onboardingService.createOnboarding(onboardingRequest);
 		return new ResponseEntity<Onboarding>(createOnboarding, HttpStatus.OK);
 	}

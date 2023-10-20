@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,14 +15,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.hrm.main.models.HRExecutive;
+import com.hrm.main.models.Onboarding;
+import com.hrm.main.models.Onboarding.CandidatesStatus;
 import com.hrm.main.models.Personal;
 import com.hrm.main.services.IHRExecutiveService;
 
 @CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
 @RestController
-@RequestMapping("/Onboarding")
+@RequestMapping("/HRExecutive")
 
 public class HRExecutiveController {
 
@@ -68,11 +70,35 @@ public class HRExecutiveController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
-	// Transfer ProfileCompleted Candidates in HR-Executive
-	@PostMapping("/transfer")
-	public ResponseEntity<String> checkAndTranfer() {
-		String personal = this.hRExecutiveService.tranferProfileToHRExecutive();
-		return new ResponseEntity<String>(personal, HttpStatus.OK);
+	// 1. Transfer ProfileCompleted Candidates in HR-Executive
+	/*
+	 * @PostMapping("/transfer") public ResponseEntity<String> checkAndTranfer() {
+	 * String personal = this.hRExecutiveService.tranferProfileToHRExecutive();
+	 * return new ResponseEntity<String>(personal, HttpStatus.OK); }
+	 */
+
+	// 2. Transfer ProfileCompleted Candidates in HR-Executive
+	/*
+	 * @GetMapping("/getAllCandidate") // @Transactional public List<Onboarding>
+	 * getAllOnboarding() {
+	 * 
+	 * List<Onboarding> result = this.hRExecutiveService.getAllOnboarding(); return
+	 * result; }
+	 */
+
+	// 3. Transfer ProfileCompleted Candidates in HR-Executive
+	/*
+	 * @GetMapping("/getCandidates/{status}") public
+	 * ResponseEntity<List<Onboarding>> candidates(@PathVariable Status status) {
+	 * List<Onboarding> allOnboarding =
+	 * this.hRExecutiveService.getAllOnboarding(status); return new
+	 * ResponseEntity<List<Onboarding>>(allOnboarding, HttpStatus.OK); }
+	 */
+
+	@PostMapping("/postToHrExecutive/{status}")
+	public ResponseEntity<Boolean> candidatesInHr(@PathVariable CandidatesStatus status) {
+		boolean result = this.hRExecutiveService.postCandidateInHrExecutive(status);
+		return new ResponseEntity<Boolean>(result, HttpStatus.OK);
 	}
 
 }

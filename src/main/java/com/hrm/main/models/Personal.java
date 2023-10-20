@@ -1,5 +1,6 @@
 package com.hrm.main.models;
 
+import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,7 +43,9 @@ public class Personal {
 	private SocialDetails socialDetails;
 
 	@Column(name = "candidate_id")
-	private int candidateId;
+	private String candidateId;
+
+	private DetailsSubmissionStatus personalSubmissionStatus = DetailsSubmissionStatus.pending;
 
 	public int getPersonalId() {
 		return personalId;
@@ -92,16 +95,24 @@ public class Personal {
 		this.socialDetails = socialDetails;
 	}
 
-	public int getCandidateId() {
+	public String getCandidateId() {
 		return candidateId;
 	}
 
-	public void setCandidateId(int candidateId) {
+	public void setCandidateId(String candidateId) {
 		this.candidateId = candidateId;
 	}
 
+	public DetailsSubmissionStatus getPersonalSubmissionStatus() {
+		return personalSubmissionStatus;
+	}
+
+	public void setPersonalSubmissionStatus(DetailsSubmissionStatus personalSubmissionStatus) {
+		this.personalSubmissionStatus = personalSubmissionStatus;
+	}
+
 	public Personal(int personalId, PersonalDetails personalDetails, AddressDetails addressDetails,
-			DocumentDetails documentDetails, BankDetails bankDetails, SocialDetails socialDetails, int candidateId) {
+			DocumentDetails documentDetails, BankDetails bankDetails, SocialDetails socialDetails, String candidateId) {
 		super();
 		this.personalId = personalId;
 		this.personalDetails = personalDetails;

@@ -2,6 +2,7 @@ package com.hrm.main.models;
 
 import java.time.LocalDate;
 
+import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,10 +12,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
 @Entity
-
+@Table(name = "work")
 public class Work {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Work_Id_Sequence")
@@ -32,7 +34,9 @@ public class Work {
 	private long contactNo;
 	private String emailId;
 	private String ctc;
-	private int candidateId;
+
+	@Column(name = "candidate_id")
+	private String candidateId;
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	@Column(columnDefinition = "LONGBLOB")
@@ -53,6 +57,7 @@ public class Work {
 	private byte[] relievedLetter;
 	@Transient
 	public String relievedLetterBase64Data;
+	private DetailsSubmissionStatus workSubmissionStatus;
 
 	public int getWorkId() {
 		return workId;
@@ -182,12 +187,20 @@ public class Work {
 		this.relievedLetter = relievedLetter;
 	}
 
-	public int getCandidateId() {
+	public String getCandidateId() {
 		return candidateId;
 	}
 
-	public void setCandidateId(int candidateId) {
+	public void setCandidateId(String candidateId) {
 		this.candidateId = candidateId;
+	}
+
+	public DetailsSubmissionStatus getWorkSubmissionStatus() {
+		return workSubmissionStatus;
+	}
+
+	public void setWorkSubmissionStatus(DetailsSubmissionStatus workSubmissionStatus) {
+		this.workSubmissionStatus = workSubmissionStatus;
 	}
 
 }

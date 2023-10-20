@@ -4,9 +4,10 @@ import java.util.List;
 
 import com.hrm.main.models.Document;
 import com.hrm.main.models.Education;
+import com.hrm.main.payloads.EducationStatusResponse;
 
 public interface IEducationService {
-	String createEducation(Education education, int candidateId);
+	String createEducation(Education education, String candidateId);
 
 	List<Education> getAllEducation();
 
@@ -15,5 +16,7 @@ public interface IEducationService {
 	String deleteEducation(Integer id);
 
 	String updateEducation(Education edu, Integer id);
+
+	EducationStatusResponse getEducationStatusByCandidateId(String candidateId);
 
 }

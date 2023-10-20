@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.hrm.main.models.Document;
 import com.hrm.main.models.Education;
+import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
+import com.hrm.main.payloads.EducationStatusResponse;
 import com.hrm.main.repositories.IEducationRepository;
 import com.hrm.main.services.IEducationService;
 
@@ -19,9 +21,10 @@ public class EducationServiceImpl implements IEducationService {
 	private IEducationRepository educationRepo;
 
 	@Override
-	public String createEducation(Education education , int candidateId) {
+	public String createEducation(Education education, String candidateId) {
 		try {
 			education.setCandidateId(candidateId);
+			education.setEducationSubmissionStatus(DetailsSubmissionStatus.submitted);
 			Decoder decoder = Base64.getDecoder();
 
 			while (education.base64Data.length() % 4 != 0) {
@@ -88,6 +91,14 @@ public class EducationServiceImpl implements IEducationService {
 			e.getMessage();
 		}
 		return "Id no. " + id + " is not updated. ";
+	}
+
+	@Override
+	public EducationStatusResponse getEducationStatusByCandidateId(String candidateId) {
+		DetailsSubmissionStatus status = this.educationRepo.findByCandidateId(candidateId)
+				.getEducationSubmissionStatus();
+		// DetailsSubmissionStatus status = education.getEducationSubmissionStatus();
+		return new EducationStatusResponse(status);
 	}
 
 }

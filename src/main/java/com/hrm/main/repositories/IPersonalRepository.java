@@ -2,10 +2,13 @@ package com.hrm.main.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.hrm.main.models.Personal;
 import com.hrm.main.models.PersonalDetails;
+import com.hrm.main.models.Helper.EnumCollection;
+import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 
 @Repository
 public interface IPersonalRepository extends JpaRepository<Personal, Integer> {
@@ -38,6 +41,14 @@ public interface IPersonalRepository extends JpaRepository<Personal, Integer> {
 	 * ") AS subquery\r\n" + "WHERE\r\n" + "    subquery.candidate_id = 101;\r\n" +
 	 * "")
 	 */
-	Personal findByCandidateId(Integer candidateId);
+	Personal findByCandidateId(String candidateId);
 
+
+	Personal findPersonalSubmissionStatusByCandidateId(String candidateId);
+
+	/*
+	 * @Query("SELECT p.detailsSubmissionStatus FROM Personal p WHERE p.candidateId = :candidateId"
+	 * ) EnumCollection.DetailsSubmissionStatus
+	 * findSubmissionStatusByCandidateId(@Param("candidateId") String candidateId);
+	 */
 }

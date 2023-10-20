@@ -2,6 +2,7 @@
 package com.hrm.main.models;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -15,28 +16,43 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "onboarding", uniqueConstraints = @UniqueConstraint(columnNames = "candidateId"))
+@Table(name = "onboarding", uniqueConstraints = @UniqueConstraint(columnNames = "candidate_id"))
 public class Onboarding {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Onboarding_seq")
 	@SequenceGenerator(name = "Onboarding_seq", initialValue = 1, allocationSize = 1, sequenceName = "Onboarding_seq")
 	private int srNo;
+	@Column(name = "job_title")
 	private String jobTitle;
-	private int candidateId;
+
+	@Column(name = "candidate_id")
+	private String candidateId;
+
+	@Column(name = "candidate_name")
 	private String candidateName;
+
+	@Column(name = "contact_number")
 	private long contactNumber;
+
+	@Column(name = "email_id")
 	private String emailId;
+
+	@Column(name = "bond_period")
 	private float bondPeriod;
+
+	@Column(name = "bond_break_amount")
 	private int bondBreakAmount;
+
+	@Column(name = "ctc")
 	private float ctc;
 
-	public enum Status {
-		Review, Pending, Approved, Rejected
+	public enum CandidatesStatus {
+		Pending, Inreview, Approved, Rejected
 	};
 
-	private Status status;
+	private CandidatesStatus candidatesStatus;
 
-	//private Profile profile;
+	// private Profile profile;
 
 	/*
 	 * @OneToOne(cascade = CascadeType.ALL)
@@ -56,14 +72,6 @@ public class Onboarding {
 	 * public void setProfile(Profile profile) { this.profile = profile; }
 	 */
 
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
 	public int getSrNo() {
 		return srNo;
 	}
@@ -80,11 +88,11 @@ public class Onboarding {
 		this.jobTitle = jobTitle;
 	}
 
-	public int getCandidateId() {
+	public String getCandidateId() {
 		return candidateId;
 	}
 
-	public void setCandidateId(int candidateId) {
+	public void setCandidateId(String candidateId) {
 		this.candidateId = candidateId;
 	}
 
@@ -134,6 +142,14 @@ public class Onboarding {
 
 	public void setBondBreakAmount(int bondBreakAmount) {
 		this.bondBreakAmount = bondBreakAmount;
+	}
+
+	public CandidatesStatus getCandidatesStatus() {
+		return candidatesStatus;
+	}
+
+	public void setCandidatesStatus(CandidatesStatus candidatesStatus) {
+		this.candidatesStatus = candidatesStatus;
 	}
 
 }

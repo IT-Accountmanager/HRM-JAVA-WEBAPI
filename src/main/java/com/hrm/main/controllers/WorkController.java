@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hrm.main.models.Work;
+import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
+import com.hrm.main.payloads.EducationStatusResponse;
+import com.hrm.main.payloads.WorkStatusResponse;
 import com.hrm.main.services.IWorkService;
 
 @CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
@@ -27,7 +30,7 @@ public class WorkController {
 	IWorkService workService;
 
 	@PostMapping("/AddWork/{candidateId}")
-	public ResponseEntity<String> createWork(@RequestBody Work work, @PathVariable int candidateId) {
+	public ResponseEntity<String> createWork(@RequestBody Work work, @PathVariable String candidateId) {
 		String result = this.workService.createWork(work, candidateId);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
@@ -60,6 +63,12 @@ public class WorkController {
 	public ResponseEntity<String> getDocument(@PathVariable Integer id) {
 		String result = this.workService.getDocument(id);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+
+	@GetMapping("/get/status/{candidateId}")
+	public ResponseEntity<WorkStatusResponse> getWorkStatusByCandidateId(@PathVariable String candidateId) {
+		WorkStatusResponse status = this.workService.getWorkStatusByCandidateId(candidateId);
+		return new ResponseEntity<WorkStatusResponse>(status, HttpStatus.OK);
 	}
 
 }
