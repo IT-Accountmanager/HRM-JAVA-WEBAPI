@@ -1,5 +1,6 @@
 package com.hrm.main.models;
 
+import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -21,31 +22,32 @@ public class Personal {
 	@SequenceGenerator(name = "personal_seq", initialValue = 1, allocationSize = 1, sequenceName = "personal_seq")
 	@Column(name = "pId")
 	private int personalId;
-
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "pdid")
 	private PersonalDetails personalDetails;
-
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "adId")
 	private AddressDetails addressDetails;
-
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "docId")
 	private DocumentDetails documentDetails;
-
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "bankDetId")
 	private BankDetails bankDetails;
-
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "socialDetailsId")
 	private SocialDetails socialDetails;
-
 	@Column(name = "candidate_id")
-	private String candidateId;
+	private long candidateId;
+	private DetailsSubmissionStatus personalSubmissionStatus = getPersonalSubmissionStatus().pending;
+	private ApprovalStatus hrExecutiveApprovalStatus;
+	private String hrExecutiveRemark;
+	private ApprovalStatus hrManagerApprovalStatus;
+	private String hrManagerRemark;
 
-	private DetailsSubmissionStatus personalSubmissionStatus = DetailsSubmissionStatus.pending;
+	public Personal() {
+		super();
+	}
 
 	public int getPersonalId() {
 		return personalId;
@@ -95,11 +97,11 @@ public class Personal {
 		this.socialDetails = socialDetails;
 	}
 
-	public String getCandidateId() {
+	public long getCandidateId() {
 		return candidateId;
 	}
 
-	public void setCandidateId(String candidateId) {
+	public void setCandidateId(long candidateId) {
 		this.candidateId = candidateId;
 	}
 
@@ -111,20 +113,35 @@ public class Personal {
 		this.personalSubmissionStatus = personalSubmissionStatus;
 	}
 
-	public Personal(int personalId, PersonalDetails personalDetails, AddressDetails addressDetails,
-			DocumentDetails documentDetails, BankDetails bankDetails, SocialDetails socialDetails, String candidateId) {
-		super();
-		this.personalId = personalId;
-		this.personalDetails = personalDetails;
-		this.addressDetails = addressDetails;
-		this.documentDetails = documentDetails;
-		this.bankDetails = bankDetails;
-		this.socialDetails = socialDetails;
-		this.candidateId = candidateId;
+	public ApprovalStatus getHrExecutiveApprovalStatus() {
+		return hrExecutiveApprovalStatus;
 	}
 
-	public Personal() {
-		super();
+	public void setHrExecutiveApprovalStatus(ApprovalStatus hrExecutiveApprovalStatus) {
+		this.hrExecutiveApprovalStatus = hrExecutiveApprovalStatus;
 	}
 
+	public String getHrExecutiveRemark() {
+		return hrExecutiveRemark;
+	}
+
+	public void setHrExecutiveRemark(String hrExecutiveRemark) {
+		this.hrExecutiveRemark = hrExecutiveRemark;
+	}
+
+	public ApprovalStatus getHrManagerApprovalStatus() {
+		return hrManagerApprovalStatus;
+	}
+
+	public void setHrManagerApprovalStatus(ApprovalStatus hrManagerApprovalStatus) {
+		this.hrManagerApprovalStatus = hrManagerApprovalStatus;
+	}
+
+	public String getHrManagerRemark() {
+		return hrManagerRemark;
+	}
+
+	public void setHrManagerRemark(String hrManagerRemark) {
+		this.hrManagerRemark = hrManagerRemark;
+	}
 }

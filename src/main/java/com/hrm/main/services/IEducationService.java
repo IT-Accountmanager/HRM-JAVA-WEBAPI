@@ -7,9 +7,9 @@ import com.hrm.main.models.Education;
 import com.hrm.main.payloads.EducationStatusResponse;
 
 public interface IEducationService {
-	String createEducation(Education education, String candidateId);
+	String createEducation(Education education, long candidateId);
 
-	List<Education> getAllEducation();
+	List<Education> getAllEducationByCandidateId(long candidateId);
 
 	Education getEducation(Integer id);
 
@@ -17,6 +17,6 @@ public interface IEducationService {
 
 	String updateEducation(Education edu, Integer id);
 
-	EducationStatusResponse getEducationStatusByCandidateId(String candidateId);
+	EducationStatusResponse getEducationStatusByCandidateId(long candidateId);
 
 }

@@ -1,5 +1,8 @@
 package com.hrm.main.models;
 
+import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
+import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +22,7 @@ public class HRExecutive {
 
 	private int id;
 	private String jobTitle;
-	private String candidateId;
+	private long candidateId;
 	private String candidateName;
 	private long contactNumber;
 	private String emailId;
@@ -27,11 +30,7 @@ public class HRExecutive {
 	private int bondBreakAmount;
 	private float ctc;
 
-	public enum CandidatesStatus {
-		Review, Pending, Approved, Rejected
-	};
-
-	private com.hrm.main.models.Onboarding.CandidatesStatus status;
+	private CandidatesStatus status;
 
 	public int getId() {
 		return id;
@@ -49,11 +48,11 @@ public class HRExecutive {
 		this.jobTitle = jobTitle;
 	}
 
-	public String getCandidateId() {
+	public long getCandidateId() {
 		return candidateId;
 	}
 
-	public void setCandidateId(String candidateId) {
+	public void setCandidateId(long candidateId) {
 		this.candidateId = candidateId;
 	}
 
@@ -105,11 +104,11 @@ public class HRExecutive {
 		this.ctc = ctc;
 	}
 
-	public com.hrm.main.models.Onboarding.CandidatesStatus getStatus() {
+	public CandidatesStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(com.hrm.main.models.Onboarding.CandidatesStatus status) {
+	public void setStatus(CandidatesStatus status) {
 		this.status = status;
 	}
 

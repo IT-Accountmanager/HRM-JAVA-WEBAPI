@@ -1,6 +1,8 @@
 
 package com.hrm.main.models;
 
+import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +28,7 @@ public class Onboarding {
 	private String jobTitle;
 
 	@Column(name = "candidate_id")
-	private String candidateId;
+	private long candidateId;
 
 	@Column(name = "candidate_name")
 	private String candidateName;
@@ -45,10 +47,6 @@ public class Onboarding {
 
 	@Column(name = "ctc")
 	private float ctc;
-
-	public enum CandidatesStatus {
-		Pending, Inreview, Approved, Rejected
-	};
 
 	private CandidatesStatus candidatesStatus;
 
@@ -88,11 +86,11 @@ public class Onboarding {
 		this.jobTitle = jobTitle;
 	}
 
-	public String getCandidateId() {
+	public long getCandidateId() {
 		return candidateId;
 	}
 
-	public void setCandidateId(String candidateId) {
+	public void setCandidateId(long candidateId) {
 		this.candidateId = candidateId;
 	}
 

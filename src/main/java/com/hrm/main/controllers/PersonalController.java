@@ -30,27 +30,26 @@ public class PersonalController {
 	IPersonalService personalService;
 
 	@PostMapping("/add/{candidateId}")
-	public ResponseEntity<String> addPersonal(@RequestBody Personal personal, @PathVariable String candidateId) {
+	public ResponseEntity<String> addPersonal(@RequestBody Personal personal, @PathVariable long candidateId) {
 
 		String result = this.personalService.addPersonal(personal, candidateId);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
-	/*
-	 * // Get personal details by candidate id
-	 * 
-	 * @GetMapping("/get/{candidateId}") public ResponseEntity<PersonalDetails>
-	 * getPersonalDetailsByCandidateId(@PathVariable Integer candidateId) {
-	 * PersonalDetails result =
-	 * this.personalService.getPersonalDetailsByCandidateId(candidateId); return new
-	 * ResponseEntity<PersonalDetails>(result, HttpStatus.OK); }
-	 */
+	// Get personal details by candidate id
 
-	@GetMapping("/get/{id}")
-	public ResponseEntity<Personal> getPersonalById(@PathVariable Integer id) {
-		Personal result = this.personalService.getPersonalById(id);
+	@GetMapping("/get/{candidateId}")
+	public ResponseEntity<Personal> getPersonalDetailsByCandidateId(@PathVariable Integer candidateId) {
+		Personal result = this.personalService.getPersonalDetailsByCandidateId(candidateId);
 		return new ResponseEntity<Personal>(result, HttpStatus.OK);
 	}
+
+	/*
+	 * @GetMapping("/get/{id}") public ResponseEntity<Personal>
+	 * getPersonalById(@PathVariable Integer id) { Personal result =
+	 * this.personalService.getPersonalById(id); return new
+	 * ResponseEntity<Personal>(result, HttpStatus.OK); }
+	 */
 
 	/*
 	 * @GetMapping("/get/status/{candidateId}") public ResponseEntity<Personal>
@@ -61,7 +60,7 @@ public class PersonalController {
 	 */
 
 	@GetMapping("/get/status/{candidateId}")
-	public ResponseEntity<PersonalStatusResponse> getStatusByCandidateId(@PathVariable String candidateId) {
+	public ResponseEntity<PersonalStatusResponse> getStatusByCandidateId(@PathVariable long candidateId) {
 		PersonalStatusResponse statusResponse = this.personalService.getStatusByCandidateId(candidateId);
 		return new ResponseEntity<PersonalStatusResponse>(statusResponse, HttpStatus.OK);
 

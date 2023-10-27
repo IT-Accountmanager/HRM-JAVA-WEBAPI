@@ -15,7 +15,7 @@ import com.hrm.main.models.Onboarding;
 @Repository
 public interface IHRExecutiveRepository extends JpaRepository<HRExecutive, Integer> {
 
-	HRExecutive findByCandidateId(String candidateId);
+	HRExecutive findByCandidateId(long candidateId);
 
 	/*
 	 * @Query("SELECT o.candidate_name FROM `actus-web-api`.onboarding o left join personal p on o.candidate_id =p.candidate_id \r\n"

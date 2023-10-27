@@ -2,7 +2,6 @@
 package com.hrm.main.controllers;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +13,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.hrm.main.models.Onboarding;
-import com.hrm.main.models.Onboarding.CandidatesStatus;
 import com.hrm.main.models.PersonalDetails;
 import com.hrm.main.models.Profile;
+import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.payloads.ProfileSummaryDto;
 import com.hrm.main.services.IProfileService;
 
@@ -37,9 +35,9 @@ public class ProfileController {
 	 * ResponseEntity<String>(result, HttpStatus.OK); }
 	 */
 
-	@GetMapping("/get")
-	public ResponseEntity<List<Onboarding>> getOnboarding() {
-		List<Onboarding> onboardings = this.profileService.getOnboardings();
+	@GetMapping("/getAll/{status}")
+	public ResponseEntity<List<Onboarding>> getPendingOnboarding(@PathVariable CandidatesStatus status) {
+		List<Onboarding> onboardings = this.profileService.getPendingOnboardings(status);
 		return new ResponseEntity<List<Onboarding>>(onboardings, HttpStatus.OK);
 	}
 
@@ -64,7 +62,7 @@ public class ProfileController {
 
 	// ____ Update Onboarding Status if Profile of Candidate is Submitted ____
 	@PutMapping("/update/status/{candidateId}")
-	public ResponseEntity<Integer> updatingCandidatesStatus(@PathVariable String candidateId) {
+	public ResponseEntity<Integer> updatingCandidatesStatus(@PathVariable long candidateId) {
 		int result = this.profileService.updatingCandidatesStatus(candidateId);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}

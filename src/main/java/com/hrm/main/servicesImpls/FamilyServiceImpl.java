@@ -16,7 +16,7 @@ public class FamilyServiceImpl implements IFamilyService {
 	private IFamilyRepository familyRepo;
 
 	@Override
-	public String createFamily(Family family, String candidateId) {
+	public String createFamily(Family family, long candidateId) {
 		try {
 			family.setCandidateId(candidateId);
 			family.setFamilySubmissionStatus(DetailsSubmissionStatus.submitted);
@@ -32,9 +32,9 @@ public class FamilyServiceImpl implements IFamilyService {
 	}
 
 	@Override
-	public List<Family> getAllFamily() {
-		List<Family> allFam = this.familyRepo.findAll();
-		return allFam;
+	public List<Family> getAllFamilyByCandidateId(long candidateId) {
+		List<Family> allFamily = this.familyRepo.findAllByCandidateId(candidateId);
+		return allFamily;
 	}
 
 	@Override
@@ -76,18 +76,19 @@ public class FamilyServiceImpl implements IFamilyService {
 	}
 
 	@Override
-	public FamilyStatusResponse getFamilyStatusByCandidateId(String candidateId) {
-		List<Family> family = this.familyRepo.findByCandidateId(candidateId);
+	public FamilyStatusResponse getFamilyStatusByCandidateId(long candidateId) {
+		List<Family> family = this.familyRepo.findAllByCandidateId(candidateId);
 
-		boolean allSubmitted = family.stream()
-				.allMatch(f -> f.getFamilySubmissionStatus() == DetailsSubmissionStatus.submitted);
+		if (family != null && !family.isEmpty()) {
+			boolean allSubmitted = family.stream()
+					.allMatch(f -> f.getFamilySubmissionStatus() == DetailsSubmissionStatus.submitted);
 
-		if (allSubmitted) {
-			return new FamilyStatusResponse(DetailsSubmissionStatus.submitted);
+			if (allSubmitted) {
+				return new FamilyStatusResponse(DetailsSubmissionStatus.submitted);
+			}
 		}
 
 		return new FamilyStatusResponse(DetailsSubmissionStatus.pending);
-
 	}
 
 }

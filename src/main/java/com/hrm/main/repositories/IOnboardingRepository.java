@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.hrm.main.models.Onboarding;
-import com.hrm.main.models.Onboarding.CandidatesStatus;
 import com.hrm.main.models.RegisterUserEntity;
+import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 
 @Repository
 public interface IOnboardingRepository extends JpaRepository<Onboarding, Integer> {
@@ -38,6 +38,6 @@ public interface IOnboardingRepository extends JpaRepository<Onboarding, Integer
 	// true)
 	List<Onboarding> findAllByCandidatesStatus(CandidatesStatus status);
 
-	Onboarding findByCandidateId(String candidateId);
+	Onboarding findByCandidateId(long candidateId);
 
 }

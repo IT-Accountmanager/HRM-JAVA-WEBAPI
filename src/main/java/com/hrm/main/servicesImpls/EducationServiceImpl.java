@@ -21,7 +21,7 @@ public class EducationServiceImpl implements IEducationService {
 	private IEducationRepository educationRepo;
 
 	@Override
-	public String createEducation(Education education, String candidateId) {
+	public String createEducation(Education education, long candidateId) {
 		try {
 			education.setCandidateId(candidateId);
 			education.setEducationSubmissionStatus(DetailsSubmissionStatus.submitted);
@@ -44,8 +44,8 @@ public class EducationServiceImpl implements IEducationService {
 	}
 
 	@Override
-	public List<Education> getAllEducation() {
-		List<Education> allEdu = educationRepo.findAll();
+	public List<Education> getAllEducationByCandidateId(long candidateId) {
+		List<Education> allEdu = educationRepo.findAllEducationByCandidateId(candidateId);
 		return allEdu;
 	}
 
@@ -94,11 +94,14 @@ public class EducationServiceImpl implements IEducationService {
 	}
 
 	@Override
-	public EducationStatusResponse getEducationStatusByCandidateId(String candidateId) {
-		DetailsSubmissionStatus status = this.educationRepo.findByCandidateId(candidateId)
-				.getEducationSubmissionStatus();
-		// DetailsSubmissionStatus status = education.getEducationSubmissionStatus();
-		return new EducationStatusResponse(status);
+	public EducationStatusResponse getEducationStatusByCandidateId(long candidateId) {
+		DetailsSubmissionStatus status;
+
+		Education education = this.educationRepo.findByCandidateId(candidateId);
+		if (education != null) {
+			return new EducationStatusResponse(DetailsSubmissionStatus.submitted);
+		}
+		return new EducationStatusResponse(DetailsSubmissionStatus.pending);
 	}
 
 }

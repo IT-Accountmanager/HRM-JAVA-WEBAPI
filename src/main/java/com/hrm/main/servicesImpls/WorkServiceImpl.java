@@ -18,7 +18,7 @@ public class WorkServiceImpl implements IWorkService {
 	private IWorkRepository workRepo;
 
 	@Override
-	public String createWork(Work work, String candidateId) {
+	public String createWork(Work work, long candidateId) {
 		try {
 			work.setCandidateId(candidateId);
 			work.setWorkSubmissionStatus(DetailsSubmissionStatus.submitted);
@@ -49,8 +49,8 @@ public class WorkServiceImpl implements IWorkService {
 	}
 
 	@Override
-	public List<Work> getAllWork() {
-		List<Work> allWork = workRepo.findAll();
+	public List<Work> getAllWorkByCandidateId(long candidateId) {
+		List<Work> allWork = workRepo.findAllWorkByCandidateId(candidateId);
 		return allWork;
 	}
 
@@ -113,10 +113,12 @@ public class WorkServiceImpl implements IWorkService {
 	}
 
 	@Override
-	public WorkStatusResponse getWorkStatusByCandidateId(String candidateId) {
+	public WorkStatusResponse getWorkStatusByCandidateId(long candidateId) {
 		Work work = this.workRepo.findByCandidateId(candidateId);
-		DetailsSubmissionStatus status = work.getWorkSubmissionStatus();
-		return new WorkStatusResponse(status);
+		if (work != null) {
+			return new WorkStatusResponse(DetailsSubmissionStatus.submitted);
+		}
+		return new WorkStatusResponse(DetailsSubmissionStatus.pending);
 	}
 
 }

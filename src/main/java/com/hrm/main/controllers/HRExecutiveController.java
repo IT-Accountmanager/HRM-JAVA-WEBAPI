@@ -17,8 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.HRExecutive;
 import com.hrm.main.models.Onboarding;
-import com.hrm.main.models.Onboarding.CandidatesStatus;
 import com.hrm.main.models.Personal;
+import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
+import com.hrm.main.payloads.HrExecutiveFamilyApprovalDto;
+import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
+import com.hrm.main.payloads.HrExecutiveWorkApprovalDto;
 import com.hrm.main.services.IHRExecutiveService;
 
 @CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
@@ -96,9 +100,40 @@ public class HRExecutiveController {
 	 */
 
 	@PostMapping("/postToHrExecutive/{status}")
-	public ResponseEntity<Boolean> candidatesInHr(@PathVariable CandidatesStatus status) {
+	public ResponseEntity<Boolean> addCandidatesInHrExecutive(@PathVariable CandidatesStatus status) {
 		boolean result = this.hRExecutiveService.postCandidateInHrExecutive(status);
 		return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+	}
+
+	@PostMapping("personalApproval/{candidateId}")
+	public ResponseEntity<HrExecutivePersonalApprovalDto> personalApproval(
+			@RequestBody HrExecutivePersonalApprovalDto hrExecutivePersonalApprovalDto,
+			@PathVariable long candidateId) {
+		HrExecutivePersonalApprovalDto result = this.hRExecutiveService.personalApproval(hrExecutivePersonalApprovalDto,
+				candidateId);
+		return new ResponseEntity<HrExecutivePersonalApprovalDto>(result, HttpStatus.OK);
+	}
+
+	@PostMapping("familyApproval/{candidateId}")
+	public ResponseEntity<HrExecutiveFamilyApprovalDto> familyApproval(
+			@RequestBody HrExecutiveFamilyApprovalDto hrExecutiveFamilyDto, @PathVariable long candidateId) {
+		HrExecutiveFamilyApprovalDto result = this.hRExecutiveService.familyApproval(hrExecutiveFamilyDto, candidateId);
+		return new ResponseEntity<HrExecutiveFamilyApprovalDto>(result, HttpStatus.OK);
+	}
+
+	@PostMapping("educationApproval/{candidateId}")
+	public ResponseEntity<HrExecutiveEducationApprovalDto> educationApproval(
+			@RequestBody HrExecutiveEducationApprovalDto hrExecutiveEducationDto, @PathVariable long candidateId) {
+		HrExecutiveEducationApprovalDto result = this.hRExecutiveService.educationApproval(hrExecutiveEducationDto,
+				candidateId);
+		return new ResponseEntity<HrExecutiveEducationApprovalDto>(result, HttpStatus.OK);
+	}
+
+	@PostMapping("workApproval/{candidateId}")
+	public ResponseEntity<HrExecutiveWorkApprovalDto> workApproval(
+			@RequestBody HrExecutiveWorkApprovalDto hrExecutiveWorkDto, @PathVariable long candidateId) {
+		HrExecutiveWorkApprovalDto result = this.hRExecutiveService.workApproval(hrExecutiveWorkDto, candidateId);
+		return new ResponseEntity<HrExecutiveWorkApprovalDto>(result, HttpStatus.OK);
 	}
 
 }

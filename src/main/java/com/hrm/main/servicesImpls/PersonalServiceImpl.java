@@ -23,7 +23,7 @@ public class PersonalServiceImpl implements IPersonalService {
 	IPersonalRepository personalRepository;
 
 	@Override
-	public String addPersonal(Personal personal, String candidateId) {
+	public String addPersonal(Personal personal, long candidateId) {
 		try {
 			personal.setCandidateId(candidateId);
 			// ----------------------------------------------------------
@@ -68,7 +68,7 @@ public class PersonalServiceImpl implements IPersonalService {
 	}
 
 	@Override
-	public Personal getPersonalDetailsByCandidateId(String candidateId) {
+	public Personal getPersonalDetailsByCandidateId(long candidateId) {
 		Personal findByCandidateId = this.personalRepository.findByCandidateId(candidateId);
 		return findByCandidateId;
 	}
@@ -88,10 +88,15 @@ public class PersonalServiceImpl implements IPersonalService {
 	}
 
 	@Override
-	public PersonalStatusResponse getStatusByCandidateId(String candidateId) {
-
+	public PersonalStatusResponse getStatusByCandidateId(long candidateId) {
+		DetailsSubmissionStatus status;
 		Personal personal = this.personalRepository.findByCandidateId(candidateId);
-		DetailsSubmissionStatus status = personal.getPersonalSubmissionStatus();
+
+		if (personal == null) {
+			status = DetailsSubmissionStatus.pending;
+		} else {
+			status = personal.getPersonalSubmissionStatus();
+		}
 		return new PersonalStatusResponse(status);
 	}
 

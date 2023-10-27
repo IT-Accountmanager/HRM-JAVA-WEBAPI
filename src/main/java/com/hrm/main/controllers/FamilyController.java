@@ -28,7 +28,7 @@ public class FamilyController {
 	IFamilyService familyService;
 
 	@PostMapping("/AddFamily/{candidateId}")
-	public ResponseEntity<String> createFamily(@RequestBody Family family, @PathVariable String candidateId) {
+	public ResponseEntity<String> createFamily(@RequestBody Family family, @PathVariable long candidateId) {
 
 		String result = this.familyService.createFamily(family, candidateId);
 
@@ -36,9 +36,9 @@ public class FamilyController {
 
 	}
 
-	@GetMapping("/getFamily")
-	public ResponseEntity<List<Family>> getAllFamily() {
-		List<Family> allFamily = this.familyService.getAllFamily();
+	@GetMapping("/getAllFamily/{candidateId}")
+	public ResponseEntity<List<Family>> getAllFamilyByCandidateId(@PathVariable long candidateId) {
+		List<Family> allFamily = this.familyService.getAllFamilyByCandidateId(candidateId);
 		return new ResponseEntity<List<Family>>(allFamily, HttpStatus.OK);
 	}
 
@@ -61,7 +61,7 @@ public class FamilyController {
 	}
 
 	@GetMapping("/get/status/{candidateId}")
-	public ResponseEntity<FamilyStatusResponse> getFamilyStatusByCandidateId(@PathVariable String candidateId) {
+	public ResponseEntity<FamilyStatusResponse> getFamilyStatusByCandidateId(@PathVariable long candidateId) {
 		FamilyStatusResponse status = this.familyService.getFamilyStatusByCandidateId(candidateId);
 		return new ResponseEntity<FamilyStatusResponse>(status, HttpStatus.OK);
 	}

@@ -2,7 +2,7 @@ package com.hrm.main.models;
 
 import java.time.LocalDate;
 
-import com.hrm.main.models.Onboarding.CandidatesStatus;
+import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,14 +29,26 @@ public class Family {
 	private String address;
 
 	@Column(name = "candidate_id")
-	private String candidateId;
+	private long candidateId;
 	private DetailsSubmissionStatus familySubmissionStatus;
+
+	private ApprovalStatus hrExecutiveApprovalStatus;
+
+	private String hrExecutiveRemark;
+
+	private ApprovalStatus hrManagerApprovalStatus;
+
+	private String hrManagerRemark;
 
 	/*
 	 * @ManyToOne
 	 * 
 	 * @JoinColumn(name = "profile_id") private Profile profile;
 	 */
+
+	public Family() {
+		super();
+	}
 
 	public int getFamilyId() {
 		return familyId;
@@ -102,11 +114,11 @@ public class Family {
 		this.address = address;
 	}
 
-	public String getCandidateId() {
+	public long getCandidateId() {
 		return candidateId;
 	}
 
-	public void setCandidateId(String candidateId) {
+	public void setCandidateId(long candidateId) {
 		this.candidateId = candidateId;
 	}
 
@@ -116,6 +128,38 @@ public class Family {
 
 	public void setFamilySubmissionStatus(DetailsSubmissionStatus familySubmissionStatus) {
 		this.familySubmissionStatus = familySubmissionStatus;
+	}
+
+	public ApprovalStatus getHrExecutiveApprovalStatus() {
+		return hrExecutiveApprovalStatus;
+	}
+
+	public void setHrExecutiveApprovalStatus(ApprovalStatus hrExecutiveApprovalStatus) {
+		this.hrExecutiveApprovalStatus = hrExecutiveApprovalStatus;
+	}
+
+	public String getHrExecutiveRemark() {
+		return hrExecutiveRemark;
+	}
+
+	public void setHrExecutiveRemark(String hrExecutiveRemark) {
+		this.hrExecutiveRemark = hrExecutiveRemark;
+	}
+
+	public ApprovalStatus getHrManagerApprovalStatus() {
+		return hrManagerApprovalStatus;
+	}
+
+	public void setHrManagerApprovalStatus(ApprovalStatus hrManagerApprovalStatus) {
+		this.hrManagerApprovalStatus = hrManagerApprovalStatus;
+	}
+
+	public String getHrManagerRemark() {
+		return hrManagerRemark;
+	}
+
+	public void setHrManagerRemark(String hrManagerRemark) {
+		this.hrManagerRemark = hrManagerRemark;
 	}
 
 	/*

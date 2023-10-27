@@ -41,10 +41,9 @@ public interface IPersonalRepository extends JpaRepository<Personal, Integer> {
 	 * ") AS subquery\r\n" + "WHERE\r\n" + "    subquery.candidate_id = 101;\r\n" +
 	 * "")
 	 */
-	Personal findByCandidateId(String candidateId);
+	Personal findByCandidateId(long candidateId);
 
-
-	Personal findPersonalSubmissionStatusByCandidateId(String candidateId);
+	Personal findPersonalSubmissionStatusByCandidateId(long candidateId);
 
 	/*
 	 * @Query("SELECT p.detailsSubmissionStatus FROM Personal p WHERE p.candidateId = :candidateId"

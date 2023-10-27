@@ -15,5 +15,7 @@ public interface IFamilyRepository extends JpaRepository<Family, Integer> {
 	@Transactional
 	void deleteByFamilyId(int family_id);
 
-	List<Family> findByCandidateId(String candidateId);
+	List<Family> findByCandidateId(long candidateId);
+
+	List<Family> findAllByCandidateId(long candidateId);
 }

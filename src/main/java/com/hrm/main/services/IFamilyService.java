@@ -6,9 +6,9 @@ import com.hrm.main.models.Family;
 import com.hrm.main.payloads.FamilyStatusResponse;
 
 public interface IFamilyService {
-	String createFamily(Family family, String candidateId);
+	String createFamily(Family family, long candidateId);
 
-	List<Family> getAllFamily();
+	List<Family> getAllFamilyByCandidateId(long candidateId);
 
 	Family getFamilyById(int id);
 
@@ -16,5 +16,5 @@ public interface IFamilyService {
 
 	String deleteFamily(Integer family_id);
 
-	FamilyStatusResponse getFamilyStatusByCandidateId(String candidateId);
+	FamilyStatusResponse getFamilyStatusByCandidateId(long candidateId);
 }

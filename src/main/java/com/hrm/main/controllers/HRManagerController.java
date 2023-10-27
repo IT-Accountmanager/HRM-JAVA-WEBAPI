@@ -1,7 +1,6 @@
 package com.hrm.main.controllers;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,49 +13,46 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.hrm.main.models.OnboardingHRManager;
-import com.hrm.main.services.IOnboardingHRManagerService;
+import com.hrm.main.models.HRManager;
+import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.services.IHRManagerService;
 
 @CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
 @RestController
 @RequestMapping("/HRManager")
 
-public class OnboardingHRManagerController {
+public class HRManagerController {
 
 	@Autowired
-	IOnboardingHRManagerService onboardingHRManagerService;
+	IHRManagerService hRManagerService;
 
-	@PostMapping("/AddManager")
-	public ResponseEntity<String> createHRManager(@RequestBody OnboardingHRManager hrManager) {
-
-		String result = this.onboardingHRManagerService.createHRManager(hrManager);
-
-		return new ResponseEntity<String>(result, HttpStatus.OK);
+	@GetMapping("/Add/{status}")
+	public ResponseEntity<Boolean> addCandidatesInHRManager(@PathVariable CandidatesStatus status) {
+		boolean result = this.hRManagerService.postCandidateInHrManager(status);
+		return new ResponseEntity<Boolean>(result, HttpStatus.OK);
 
 	}
 
 	@GetMapping("/getAllManager")
-	public ResponseEntity<List<OnboardingHRManager>> getAllManager() {
+	public ResponseEntity<List<HRManager>> getAllManager() {
 
-		List<OnboardingHRManager> allmanager = this.onboardingHRManagerService.getAllHRManager();
+		List<HRManager> allmanager = this.hRManagerService.getAllHRManager();
 
-		return new ResponseEntity<List<OnboardingHRManager>>(allmanager, HttpStatus.OK);
+		return new ResponseEntity<List<HRManager>>(allmanager, HttpStatus.OK);
 	}
 
 	@GetMapping("/getManagerById/{id}")
-	public OnboardingHRManager getManagerById(@PathVariable int id) {
+	public HRManager getManagerById(@PathVariable int id) {
 
-		OnboardingHRManager hr = onboardingHRManagerService.getHRManager(id);
+		HRManager hr = hRManagerService.getHRManager(id);
 
 		return hr;
 	}
 
 	@PutMapping("/updateManager/{id}")
-	public ResponseEntity<String> updateHRManager(@RequestBody OnboardingHRManager hrManager,
-			@PathVariable Integer id) {
+	public ResponseEntity<String> updateHRManager(@RequestBody HRManager hrManager, @PathVariable Integer id) {
 
-		String result = this.onboardingHRManagerService.updateHRManager(hrManager, id);
+		String result = this.hRManagerService.updateHRManager(hrManager, id);
 
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
@@ -64,14 +60,14 @@ public class OnboardingHRManagerController {
 	@DeleteMapping("/deleteManager/{id}")
 	public ResponseEntity<String> deleteHRManager(@PathVariable Integer id) {
 
-		String result = this.onboardingHRManagerService.deleteHRManager(id);
+		String result = this.hRManagerService.deleteHRManager(id);
 
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@GetMapping("/getSrNo")
 	public Long getNextSerialNumberForAdd() {
-		return this.onboardingHRManagerService.nextValue() + 1;
+		return this.hRManagerService.nextValue() + 1;
 
 	}
 

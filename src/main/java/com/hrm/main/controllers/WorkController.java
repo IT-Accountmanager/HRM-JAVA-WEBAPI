@@ -30,14 +30,14 @@ public class WorkController {
 	IWorkService workService;
 
 	@PostMapping("/AddWork/{candidateId}")
-	public ResponseEntity<String> createWork(@RequestBody Work work, @PathVariable String candidateId) {
+	public ResponseEntity<String> createWork(@RequestBody Work work, @PathVariable long candidateId) {
 		String result = this.workService.createWork(work, candidateId);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
-	@GetMapping("/getWork")
-	public ResponseEntity<List<Work>> getAllWork() {
-		List<Work> allWork = this.workService.getAllWork();
+	@GetMapping("/getAll/{candidateId}")
+	public ResponseEntity<List<Work>> getAllWork(@PathVariable long candidateId) {
+		List<Work> allWork = this.workService.getAllWorkByCandidateId(candidateId);
 		return new ResponseEntity<List<Work>>(allWork, HttpStatus.OK);
 	}
 
@@ -66,7 +66,7 @@ public class WorkController {
 	}
 
 	@GetMapping("/get/status/{candidateId}")
-	public ResponseEntity<WorkStatusResponse> getWorkStatusByCandidateId(@PathVariable String candidateId) {
+	public ResponseEntity<WorkStatusResponse> getWorkStatusByCandidateId(@PathVariable long candidateId) {
 		WorkStatusResponse status = this.workService.getWorkStatusByCandidateId(candidateId);
 		return new ResponseEntity<WorkStatusResponse>(status, HttpStatus.OK);
 	}

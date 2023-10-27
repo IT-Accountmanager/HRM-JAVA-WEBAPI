@@ -7,12 +7,12 @@ import com.hrm.main.payloads.PersonalStatusResponse;
 
 public interface IPersonalService {
 
-	String addPersonal(Personal personal, String candidateId);
+	String addPersonal(Personal personal, long candidateId);
 
-	Personal getPersonalDetailsByCandidateId(String candidateId);
+	Personal getPersonalDetailsByCandidateId(long candidateId);
 
 	Personal getPersonalById(Integer id);
 
-	PersonalStatusResponse getStatusByCandidateId(String candidateId);
+	PersonalStatusResponse getStatusByCandidateId(long candidateId);
 
 }

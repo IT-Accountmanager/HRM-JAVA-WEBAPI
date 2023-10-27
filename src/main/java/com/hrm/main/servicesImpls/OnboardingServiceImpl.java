@@ -4,9 +4,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hrm.main.models.Onboarding;
-import com.hrm.main.models.Onboarding.CandidatesStatus;
 import com.hrm.main.models.Profile;
 import com.hrm.main.models.Regularization;
+import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.repositories.IOnboardingRepository;
 import com.hrm.main.repositories.IProfileRepository;
 import com.hrm.main.services.IOnboardingService;
@@ -39,7 +39,7 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		Onboarding onboarding = new Onboarding();
 		onboarding.setJobTitle(onboardingRequest.getJobTitle());
 
-		onboarding.setCandidateId("EIS" + String.format("%06d", onboardingRepository.count() + 1));
+		onboarding.setCandidateId(onboardingRepository.count() + 1);
 		onboarding.setCandidateName(onboardingRequest.getCandidateName());
 		onboarding.setContactNumber(onboardingRequest.getContactNumber());
 		onboarding.setEmailId(onboardingRequest.getEmailId());
