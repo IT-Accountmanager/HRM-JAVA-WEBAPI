@@ -65,8 +65,8 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		 */ }
 
 	@Override
-	public List<HRManager> getAllHRManager() {
-		List<HRManager> allmanager = hRManagerRepository.findAll();
+	public List<Onboarding> getAllHRManager(CandidatesStatus status) {
+		List<Onboarding> allmanager = this.onboardingRepository.findAllByCandidatesStatus(status);
 		return allmanager;
 	}
 

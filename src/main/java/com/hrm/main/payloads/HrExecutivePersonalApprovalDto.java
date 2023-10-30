@@ -4,23 +4,23 @@ import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 
 public class HrExecutivePersonalApprovalDto {
 
-	private ApprovalStatus status;
-	private String remark;
+	private ApprovalStatus hrExecutiveApprovalStatus;
+	private String hrExecutiveRemark;
 
-	public ApprovalStatus getStatus() {
-		return status;
+	public ApprovalStatus getHrExecutiveApprovalStatus() {
+		return hrExecutiveApprovalStatus;
 	}
 
-	public void setStatus(ApprovalStatus status) {
-		this.status = status;
+	public void setHrExecutiveApprovalStatus(ApprovalStatus hrExecutiveApprovalStatus) {
+		this.hrExecutiveApprovalStatus = hrExecutiveApprovalStatus;
 	}
 
-	public String getRemark() {
-		return remark;
+	public String getHrExecutiveRemark() {
+		return hrExecutiveRemark;
 	}
 
-	public void setRemark(String remark) {
-		this.remark = remark;
+	public void setHrExecutiveRemark(String hrExecutiveRemark) {
+		this.hrExecutiveRemark = hrExecutiveRemark;
 	}
 
 }

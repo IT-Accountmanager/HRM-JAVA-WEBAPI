@@ -15,7 +15,7 @@ public interface IHRExecutiveService {
 
 	String createExecutive(HRExecutive hrExecutive);
 
-	List<HRExecutive> getAllExecutive();
+	List<Onboarding> getAllExecutive(CandidatesStatus status);
 
 	HRExecutive getExecutiveById(int id);
 
@@ -38,6 +38,16 @@ public interface IHRExecutiveService {
 	HrExecutiveWorkApprovalDto workApproval(HrExecutiveWorkApprovalDto hrExecutiveWorkDto, long candidateId);
 
 	HrExecutiveFamilyApprovalDto familyApproval(HrExecutiveFamilyApprovalDto hrExecutiveFamilyDto, long candidateId);
+
+	Onboarding getByCandidateId(long candidateId);
+
+	HrExecutivePersonalApprovalDto getPersonalApproval(long candidateId);
+
+	HrExecutiveFamilyApprovalDto getFamilyApproval(long candidateId);
+
+	HrExecutiveEducationApprovalDto getEducationApproval(long candidateId);
+
+	HrExecutiveWorkApprovalDto getWorkApproval(long candidateId);
 
 	// List<Onboarding> getAllOnboarding();
 

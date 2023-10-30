@@ -42,12 +42,10 @@ public class HRExecutiveController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
-	@GetMapping("/getAllExecutive")
-	public ResponseEntity<List<HRExecutive>> getAllExecutive() {
-
-		List<HRExecutive> allExecutive = this.hRExecutiveService.getAllExecutive();
-
-		return new ResponseEntity<List<HRExecutive>>(allExecutive, HttpStatus.OK);
+	@GetMapping("/getAllExecutive/{status}")
+	public ResponseEntity<List<Onboarding>> getAllExecutive(@PathVariable CandidatesStatus status) {
+		List<Onboarding> allExecutive = this.hRExecutiveService.getAllExecutive(status);
+		return new ResponseEntity<List<Onboarding>>(allExecutive, HttpStatus.OK);
 	}
 
 	@GetMapping("/getExecutveById/{id}")
@@ -114,10 +112,22 @@ public class HRExecutiveController {
 		return new ResponseEntity<HrExecutivePersonalApprovalDto>(result, HttpStatus.OK);
 	}
 
+	@GetMapping("getPersonalApproval/{candidateId}")
+	public ResponseEntity<HrExecutivePersonalApprovalDto> getPersonalApproval(@PathVariable long candidateId) {
+		HrExecutivePersonalApprovalDto result = this.hRExecutiveService.getPersonalApproval(candidateId);
+		return new ResponseEntity<HrExecutivePersonalApprovalDto>(result, HttpStatus.OK);
+	}
+
 	@PostMapping("familyApproval/{candidateId}")
 	public ResponseEntity<HrExecutiveFamilyApprovalDto> familyApproval(
 			@RequestBody HrExecutiveFamilyApprovalDto hrExecutiveFamilyDto, @PathVariable long candidateId) {
 		HrExecutiveFamilyApprovalDto result = this.hRExecutiveService.familyApproval(hrExecutiveFamilyDto, candidateId);
+		return new ResponseEntity<HrExecutiveFamilyApprovalDto>(result, HttpStatus.OK);
+	}
+
+	@GetMapping("getFamilyApproval/{candidateId}")
+	public ResponseEntity<HrExecutiveFamilyApprovalDto> getFamilyApproval(@PathVariable long candidateId) {
+		HrExecutiveFamilyApprovalDto result = this.hRExecutiveService.getFamilyApproval(candidateId);
 		return new ResponseEntity<HrExecutiveFamilyApprovalDto>(result, HttpStatus.OK);
 	}
 
@@ -129,11 +139,29 @@ public class HRExecutiveController {
 		return new ResponseEntity<HrExecutiveEducationApprovalDto>(result, HttpStatus.OK);
 	}
 
+	@GetMapping("getEducationApproval/{candidateId}")
+	public ResponseEntity<HrExecutiveEducationApprovalDto> getEducationApproval(@PathVariable long candidateId) {
+		HrExecutiveEducationApprovalDto result = this.hRExecutiveService.getEducationApproval(candidateId);
+		return new ResponseEntity<HrExecutiveEducationApprovalDto>(result, HttpStatus.OK);
+	}
+
 	@PostMapping("workApproval/{candidateId}")
 	public ResponseEntity<HrExecutiveWorkApprovalDto> workApproval(
 			@RequestBody HrExecutiveWorkApprovalDto hrExecutiveWorkDto, @PathVariable long candidateId) {
 		HrExecutiveWorkApprovalDto result = this.hRExecutiveService.workApproval(hrExecutiveWorkDto, candidateId);
 		return new ResponseEntity<HrExecutiveWorkApprovalDto>(result, HttpStatus.OK);
+	}
+
+	@GetMapping("getWorkApproval/{candidateId}")
+	public ResponseEntity<HrExecutiveWorkApprovalDto> getWorkApproval(@PathVariable long candidateId) {
+		HrExecutiveWorkApprovalDto result = this.hRExecutiveService.getWorkApproval(candidateId);
+		return new ResponseEntity<HrExecutiveWorkApprovalDto>(result, HttpStatus.OK);
+	}
+
+	@GetMapping("get/{candidateId}")
+	public ResponseEntity<Onboarding> getByCandidateId(@PathVariable long candidateId) {
+		Onboarding result = this.hRExecutiveService.getByCandidateId(candidateId);
+		return new ResponseEntity<Onboarding>(result, HttpStatus.OK);
 	}
 
 }

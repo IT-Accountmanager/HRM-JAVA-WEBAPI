@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.HRManager;
+import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.services.IHRManagerService;
 
@@ -33,12 +34,11 @@ public class HRManagerController {
 
 	}
 
-	@GetMapping("/getAllManager")
-	public ResponseEntity<List<HRManager>> getAllManager() {
+	@GetMapping("/getAll/{status}")
+	public ResponseEntity<List<Onboarding>> getAll(@PathVariable CandidatesStatus status) {
+		List<Onboarding> result = this.hRManagerService.getAllHRManager(status);
 
-		List<HRManager> allmanager = this.hRManagerService.getAllHRManager();
-
-		return new ResponseEntity<List<HRManager>>(allmanager, HttpStatus.OK);
+		return new ResponseEntity<List<Onboarding>>(result, HttpStatus.OK);
 	}
 
 	@GetMapping("/getManagerById/{id}")

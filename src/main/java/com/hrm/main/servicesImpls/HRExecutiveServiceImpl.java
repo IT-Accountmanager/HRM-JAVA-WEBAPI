@@ -66,8 +66,8 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 	}
 
 	@Override
-	public List<HRExecutive> getAllExecutive() {
-		List<HRExecutive> allExecutive = hRExecutiveRepository.findAll();
+	public List<Onboarding> getAllExecutive(CandidatesStatus status) {
+		List<Onboarding> allExecutive = this.onboardingRepository.findAllByCandidatesStatus(status);
 		return allExecutive;
 	}
 
@@ -270,6 +270,7 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 
 				hrExecutiveList.add(executive);
 				// id++;
+				System.out.println(executive.getCandidateId());
 			}
 		}
 		List<HRExecutive> success = this.hRExecutiveRepository.saveAll(hrExecutiveList);
@@ -293,23 +294,9 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 	@Override
 	public HrExecutivePersonalApprovalDto personalApproval(HrExecutivePersonalApprovalDto hrExecutivePersonalDto,
 			long candidateId) {
-		// Retrieve the existing Personal entity from the repository
 		Personal existingPersonal = personalRepository.findByCandidateId(candidateId);
-
-		/*
-		 * if (existingPersonal == null) { // Handle the case where the Personal entity
-		 * is not found throw new
-		 * EntityNotFoundException("Personal entity not found for candidateId: " +
-		 * candidateId); }
-		 */
-
-		// Use modelMapper to map values from hrExecutivePersonalDto to existingPersonal
 		modelMapper.map(hrExecutivePersonalDto, existingPersonal);
-
-		// Save the updated Personal entity back to the repository
-		personalRepository.save(existingPersonal);
-
-		// You can return the same DTO passed as an argument
+		this.personalRepository.save(existingPersonal);
 		return hrExecutivePersonalDto;
 	}
 
@@ -330,7 +317,7 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 
 		modelMapper.map(hrExecutiveWorkDto, exisitingWork);
 
-		workRepository.save(exisitingWork);
+		this.workRepository.save(exisitingWork);
 		return hrExecutiveWorkDto;
 	}
 
@@ -338,9 +325,47 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 	public HrExecutiveFamilyApprovalDto familyApproval(HrExecutiveFamilyApprovalDto hrExecutiveFamilyDto,
 			long candidateId) {
 		List<Family> existingFamily = this.familyRepository.findAllByCandidateId(candidateId);
-		modelMapper.map(hrExecutiveFamilyDto, existingFamily);
+		for (Family family : existingFamily) {
+			modelMapper.map(hrExecutiveFamilyDto, family);
+		}
 		this.familyRepository.saveAll(existingFamily);
 		return hrExecutiveFamilyDto;
+	}
+
+	@Override
+	public HrExecutiveFamilyApprovalDto getFamilyApproval(long candidateId) {
+		List<Family> list = this.familyRepository.findAllByCandidateId(candidateId);
+		for (Family family : list) {
+			HrExecutiveFamilyApprovalDto map = this.modelMapper.map(list, HrExecutiveFamilyApprovalDto.class);
+		}
+		return null;
+	}
+
+	@Override
+	public Onboarding getByCandidateId(long candidateId) {
+		Onboarding findByCandidateId = this.onboardingRepository.findByCandidateId(candidateId);
+		return findByCandidateId;
+	}
+
+	@Override
+	public HrExecutivePersonalApprovalDto getPersonalApproval(long candidateId) {
+		Personal candidate = this.personalRepository.findByCandidateId(candidateId);
+		HrExecutivePersonalApprovalDto map = this.modelMapper.map(candidate, HrExecutivePersonalApprovalDto.class);
+		return map;
+	}
+
+	@Override
+	public HrExecutiveEducationApprovalDto getEducationApproval(long candidateId) {
+		Education education = this.educationRepository.findByCandidateId(candidateId);
+		HrExecutiveEducationApprovalDto map = this.modelMapper.map(education, HrExecutiveEducationApprovalDto.class);
+		return map;
+	}
+
+	@Override
+	public HrExecutiveWorkApprovalDto getWorkApproval(long candidateId) {
+		Work work = this.workRepository.findByCandidateId(candidateId);
+		HrExecutiveWorkApprovalDto map = this.modelMapper.map(work, HrExecutiveWorkApprovalDto.class);
+		return map;
 	}
 
 }
