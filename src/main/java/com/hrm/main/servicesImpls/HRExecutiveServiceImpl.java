@@ -2,23 +2,19 @@ package com.hrm.main.servicesImpls;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.hrm.main.models.Education;
 import com.hrm.main.models.Family;
 import com.hrm.main.models.HRExecutive;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Personal;
 import com.hrm.main.models.Work;
+import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
+import com.hrm.main.models.Helper.EnumCollection.HrExecutiveSubmission;
 import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
 import com.hrm.main.payloads.HrExecutiveFamilyApprovalDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
@@ -304,10 +300,12 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 	public HrExecutiveEducationApprovalDto educationApproval(HrExecutiveEducationApprovalDto hrExecutiveEducationDto,
 			long candidateId) {
 		List<Education> existingEducation = this.educationRepository.findAllEducationByCandidateId(candidateId);
+		existingEducation.forEach(education -> {
+			education.setHrExecutiveApprovalStatus(hrExecutiveEducationDto.getHrExecutiveApprovalStatus());
+			education.setHrExecutiveRemark(hrExecutiveEducationDto.getHrExecutiveRemark());
+			this.educationRepository.save(education);
+		});
 
-		modelMapper.map(hrExecutiveEducationDto, existingEducation);
-
-		educationRepository.saveAll(existingEducation);
 		return hrExecutiveEducationDto;
 	}
 
@@ -324,21 +322,38 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 	@Override
 	public HrExecutiveFamilyApprovalDto familyApproval(HrExecutiveFamilyApprovalDto hrExecutiveFamilyDto,
 			long candidateId) {
-		List<Family> existingFamily = this.familyRepository.findAllByCandidateId(candidateId);
-		for (Family family : existingFamily) {
-			modelMapper.map(hrExecutiveFamilyDto, family);
-		}
-		this.familyRepository.saveAll(existingFamily);
+
+		List<Family> families = this.familyRepository.findAllByCandidateId(candidateId);
+		families.forEach(family -> {
+			family.setHrExecutiveApprovalStatus(hrExecutiveFamilyDto.getHrExecutiveApprovalStatus());
+			family.setHrExecutiveRemark(hrExecutiveFamilyDto.getHrExecutiveRemark());
+			this.familyRepository.save(family);
+		});
 		return hrExecutiveFamilyDto;
 	}
 
 	@Override
 	public HrExecutiveFamilyApprovalDto getFamilyApproval(long candidateId) {
-		List<Family> list = this.familyRepository.findAllByCandidateId(candidateId);
-		for (Family family : list) {
-			HrExecutiveFamilyApprovalDto map = this.modelMapper.map(list, HrExecutiveFamilyApprovalDto.class);
+		List<Family> listFamily = this.familyRepository.findAllByCandidateId(candidateId);
+		HrExecutiveFamilyApprovalDto approval = new HrExecutiveFamilyApprovalDto();
+		if (!listFamily.isEmpty()) {
+			Family firstFamily = listFamily.get(0);
+			approval.setHrExecutiveApprovalStatus(firstFamily.getHrExecutiveApprovalStatus());
+			approval.setHrExecutiveRemark(firstFamily.getHrExecutiveRemark());
 		}
-		return null;
+		return approval;
+	}
+
+	@Override
+	public HrExecutiveEducationApprovalDto getEducationApproval(long candidateId) {
+		List<Education> listEducation = this.educationRepository.findAllEducationByCandidateId(candidateId);
+		HrExecutiveEducationApprovalDto approval = new HrExecutiveEducationApprovalDto();
+		if (!listEducation.isEmpty()) {
+			Education firstEducation = listEducation.get(0);
+			approval.setHrExecutiveApprovalStatus(firstEducation.getHrExecutiveApprovalStatus());
+			approval.setHrExecutiveRemark(firstEducation.getHrExecutiveRemark());
+		}
+		return approval;
 	}
 
 	@Override
@@ -355,17 +370,50 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 	}
 
 	@Override
-	public HrExecutiveEducationApprovalDto getEducationApproval(long candidateId) {
-		Education education = this.educationRepository.findByCandidateId(candidateId);
-		HrExecutiveEducationApprovalDto map = this.modelMapper.map(education, HrExecutiveEducationApprovalDto.class);
-		return map;
-	}
-
-	@Override
 	public HrExecutiveWorkApprovalDto getWorkApproval(long candidateId) {
 		Work work = this.workRepository.findByCandidateId(candidateId);
 		HrExecutiveWorkApprovalDto map = this.modelMapper.map(work, HrExecutiveWorkApprovalDto.class);
 		return map;
+	}
+
+	@Override
+	public Integer submitHrExecutive(long candiateId) {
+
+		ApprovalStatus personalApprovalStatus = this.personalRepository.findByCandidateId(candiateId)
+				.getHrExecutiveApprovalStatus();
+
+		ApprovalStatus familyApprovalStatus = this.familyRepository.findAllByCandidateId(candiateId).get(0)
+				.getHrExecutiveApprovalStatus();
+
+		ApprovalStatus educationApprovalStatus = this.educationRepository.findAllEducationByCandidateId(candiateId)
+				.get(0).getHrExecutiveApprovalStatus();
+
+		ApprovalStatus workApprovalStatus = this.workRepository.findByCandidateId(candiateId)
+				.getHrExecutiveApprovalStatus();
+
+		if (personalApprovalStatus == ApprovalStatus.Approve && familyApprovalStatus == ApprovalStatus.Approve
+				&& educationApprovalStatus == ApprovalStatus.Approve && workApprovalStatus == ApprovalStatus.Approve) {
+			Onboarding candidate = this.onboardingRepository.findByCandidateId(candiateId);
+			candidate.setHrExecutiveSubmission(HrExecutiveSubmission.Submit);
+			this.onboardingRepository.save(candidate);
+			return 1;
+		}
+		return 0;
+	}
+
+	@Override
+	public Integer rejectHrExecutive(long candiateId) {
+
+		try {
+			Onboarding candidate = this.onboardingRepository.findByCandidateId(candiateId);
+			candidate.setHrExecutiveSubmission(HrExecutiveSubmission.Reject);
+			this.onboardingRepository.save(candidate);
+			return 1;
+
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return 0;
 	}
 
 }

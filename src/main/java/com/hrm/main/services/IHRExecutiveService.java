@@ -6,6 +6,7 @@ import com.hrm.main.models.HRExecutive;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Personal;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.models.Helper.EnumCollection.HrExecutiveSubmission;
 import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
 import com.hrm.main.payloads.HrExecutiveFamilyApprovalDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
@@ -48,6 +49,10 @@ public interface IHRExecutiveService {
 	HrExecutiveEducationApprovalDto getEducationApproval(long candidateId);
 
 	HrExecutiveWorkApprovalDto getWorkApproval(long candidateId);
+
+	Integer submitHrExecutive(long candiateId);
+
+	Integer rejectHrExecutive(long candiateId);
 
 	// List<Onboarding> getAllOnboarding();
 
