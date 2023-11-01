@@ -3,12 +3,9 @@ package com.hrm.main.repositories;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Onboarding.CandidatesStatus;
-import com.hrm.main.models.RegisterUserEntity;
 
 @Repository
 public interface IOnboardingRepository extends JpaRepository<Onboarding, Integer> {

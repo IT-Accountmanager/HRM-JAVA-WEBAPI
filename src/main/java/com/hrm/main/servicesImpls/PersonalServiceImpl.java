@@ -10,7 +10,7 @@ import com.hrm.main.models.BankDetails;
 import com.hrm.main.models.DocumentDetails;
 import com.hrm.main.models.DocumentUpload;
 import com.hrm.main.models.Personal;
-import com.hrm.main.models.PersonalDetails;
+
 import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 import com.hrm.main.payloads.PersonalStatusResponse;
 import com.hrm.main.repositories.IPersonalRepository;

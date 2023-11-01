@@ -3,9 +3,8 @@ package com.hrm.main.services;
 import java.util.List;
 
 import com.hrm.main.models.HRExecutive;
-import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Onboarding.CandidatesStatus;
-import com.hrm.main.models.Personal;
+
 
 public interface IHRExecutiveService {
 

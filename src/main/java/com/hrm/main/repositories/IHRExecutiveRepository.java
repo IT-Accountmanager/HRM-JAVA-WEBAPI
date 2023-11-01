@@ -1,16 +1,9 @@
 package com.hrm.main.repositories;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.query.Procedure;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.hrm.main.models.HRExecutive;
-import com.hrm.main.models.Onboarding;
+
 
 @Repository
 public interface IHRExecutiveRepository extends JpaRepository<HRExecutive, Integer> {

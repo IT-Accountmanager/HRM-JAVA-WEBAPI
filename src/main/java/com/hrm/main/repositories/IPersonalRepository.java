@@ -1,14 +1,8 @@
 package com.hrm.main.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
 import com.hrm.main.models.Personal;
-import com.hrm.main.models.PersonalDetails;
-import com.hrm.main.models.Helper.EnumCollection;
-import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 
 @Repository
 public interface IPersonalRepository extends JpaRepository<Personal, Integer> {

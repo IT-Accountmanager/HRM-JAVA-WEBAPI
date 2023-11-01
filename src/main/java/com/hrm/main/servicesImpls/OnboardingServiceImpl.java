@@ -5,8 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Onboarding.CandidatesStatus;
-import com.hrm.main.models.Profile;
-import com.hrm.main.models.Regularization;
 import com.hrm.main.repositories.IOnboardingRepository;
 import com.hrm.main.repositories.IProfileRepository;
 import com.hrm.main.services.IOnboardingService;

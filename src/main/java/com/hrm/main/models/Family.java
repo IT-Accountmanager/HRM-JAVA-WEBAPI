@@ -1,8 +1,6 @@
 package com.hrm.main.models;
 
 import java.time.LocalDate;
-
-import com.hrm.main.models.Onboarding.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

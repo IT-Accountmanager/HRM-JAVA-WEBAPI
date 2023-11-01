@@ -2,13 +2,11 @@ package com.hrm.main.servicesImpls;
 
 import java.util.Base64;
 import java.util.Base64.Decoder;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hrm.main.models.DocumentDetails;
 import com.hrm.main.models.DocumentUpload;
-import com.hrm.main.repositories.DocumentUploadRepository;
+import com.hrm.main.repositories.IDocumentUploadRepository;
 import com.hrm.main.repositories.IDocumentsDetailsRepository;
 import com.hrm.main.services.IDocumentsDetailsService;
 
@@ -18,7 +16,7 @@ public class DocumentsDetailsServiceImpl implements IDocumentsDetailsService {
 	@Autowired
 	IDocumentsDetailsRepository docRepo;
 	@Autowired
-	DocumentUploadRepository docUpRepo;
+	IDocumentUploadRepository docUpRepo;
 
 	@Override
 	public String addDocuments(DocumentDetails docDetails) {
