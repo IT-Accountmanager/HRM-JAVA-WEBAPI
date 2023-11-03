@@ -12,7 +12,6 @@ public interface IEducationRepository extends JpaRepository<Education, Integer> 
 
 	Education findByCandidateId(long candidateId);
 
-	List<Education> findAllEducationByCandidateId(long candidateId);
-	
+	List<Education> findAllByCandidateId(long candidateId);
 
 }

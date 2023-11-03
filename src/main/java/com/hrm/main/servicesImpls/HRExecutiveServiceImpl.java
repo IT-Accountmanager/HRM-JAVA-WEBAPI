@@ -2,6 +2,7 @@ package com.hrm.main.servicesImpls;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import com.hrm.main.models.Work;
 import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
-import com.hrm.main.models.Helper.EnumCollection.HrExecutiveSubmission;
+import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
 import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
 import com.hrm.main.payloads.HrExecutiveFamilyApprovalDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
@@ -64,7 +65,10 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 	@Override
 	public List<Onboarding> getAllExecutive(CandidatesStatus status) {
 		List<Onboarding> allExecutive = this.onboardingRepository.findAllByCandidatesStatus(status);
-		return allExecutive;
+
+		List<Onboarding> collect = allExecutive.stream()
+				.filter(t -> t.getHrExecutiveSubmission() != HrSubmission.Submit).collect(Collectors.toList());
+		return collect;
 	}
 
 	@Override
@@ -299,7 +303,7 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 	@Override
 	public HrExecutiveEducationApprovalDto educationApproval(HrExecutiveEducationApprovalDto hrExecutiveEducationDto,
 			long candidateId) {
-		List<Education> existingEducation = this.educationRepository.findAllEducationByCandidateId(candidateId);
+		List<Education> existingEducation = this.educationRepository.findAllByCandidateId(candidateId);
 		existingEducation.forEach(education -> {
 			education.setHrExecutiveApprovalStatus(hrExecutiveEducationDto.getHrExecutiveApprovalStatus());
 			education.setHrExecutiveRemark(hrExecutiveEducationDto.getHrExecutiveRemark());
@@ -346,7 +350,7 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 
 	@Override
 	public HrExecutiveEducationApprovalDto getEducationApproval(long candidateId) {
-		List<Education> listEducation = this.educationRepository.findAllEducationByCandidateId(candidateId);
+		List<Education> listEducation = this.educationRepository.findAllByCandidateId(candidateId);
 		HrExecutiveEducationApprovalDto approval = new HrExecutiveEducationApprovalDto();
 		if (!listEducation.isEmpty()) {
 			Education firstEducation = listEducation.get(0);
@@ -385,8 +389,8 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 		ApprovalStatus familyApprovalStatus = this.familyRepository.findAllByCandidateId(candiateId).get(0)
 				.getHrExecutiveApprovalStatus();
 
-		ApprovalStatus educationApprovalStatus = this.educationRepository.findAllEducationByCandidateId(candiateId)
-				.get(0).getHrExecutiveApprovalStatus();
+		ApprovalStatus educationApprovalStatus = this.educationRepository.findAllByCandidateId(candiateId).get(0)
+				.getHrExecutiveApprovalStatus();
 
 		ApprovalStatus workApprovalStatus = this.workRepository.findByCandidateId(candiateId)
 				.getHrExecutiveApprovalStatus();
@@ -394,7 +398,7 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 		if (personalApprovalStatus == ApprovalStatus.Approve && familyApprovalStatus == ApprovalStatus.Approve
 				&& educationApprovalStatus == ApprovalStatus.Approve && workApprovalStatus == ApprovalStatus.Approve) {
 			Onboarding candidate = this.onboardingRepository.findByCandidateId(candiateId);
-			candidate.setHrExecutiveSubmission(HrExecutiveSubmission.Submit);
+			candidate.setHrExecutiveSubmission(HrSubmission.Submit);
 			this.onboardingRepository.save(candidate);
 			return 1;
 		}
@@ -406,7 +410,8 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 
 		try {
 			Onboarding candidate = this.onboardingRepository.findByCandidateId(candiateId);
-			candidate.setHrExecutiveSubmission(HrExecutiveSubmission.Reject);
+			candidate.setHrExecutiveSubmission(HrSubmission.Reject);
+			candidate.setCandidatesStatus(CandidatesStatus.Rejected);
 			this.onboardingRepository.save(candidate);
 			return 1;
 

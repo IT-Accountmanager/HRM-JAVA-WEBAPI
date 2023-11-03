@@ -6,11 +6,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.hrm.main.models.Document;
 import com.hrm.main.models.Education;
+import com.hrm.main.models.Family;
 import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 import com.hrm.main.payloads.EducationStatusResponse;
+import com.hrm.main.payloads.FamilyStatusResponse;
 import com.hrm.main.repositories.IEducationRepository;
 import com.hrm.main.services.IEducationService;
 
@@ -45,7 +45,7 @@ public class EducationServiceImpl implements IEducationService {
 
 	@Override
 	public List<Education> getAllEducationByCandidateId(long candidateId) {
-		List<Education> allEdu = educationRepo.findAllEducationByCandidateId(candidateId);
+		List<Education> allEdu = educationRepo.findAllByCandidateId(candidateId);
 		return allEdu;
 	}
 
@@ -93,14 +93,29 @@ public class EducationServiceImpl implements IEducationService {
 		return "Id no. " + id + " is not updated. ";
 	}
 
+	/*
+	 * @Override public EducationStatusResponse getEducationStatusByCandidateId(long
+	 * candidateId) { DetailsSubmissionStatus status;
+	 * 
+	 * Education education = this.educationRepo.findByCandidateId(candidateId); if
+	 * (education != null) { return new
+	 * EducationStatusResponse(DetailsSubmissionStatus.submitted); } return new
+	 * EducationStatusResponse(DetailsSubmissionStatus.pending); }
+	 */
+
 	@Override
 	public EducationStatusResponse getEducationStatusByCandidateId(long candidateId) {
-		DetailsSubmissionStatus status;
+		List<Education> education = this.educationRepo.findAllByCandidateId(candidateId);
 
-		Education education = this.educationRepo.findByCandidateId(candidateId);
-		if (education != null) {
-			return new EducationStatusResponse(DetailsSubmissionStatus.submitted);
+		if (education != null && !education.isEmpty()) {
+			boolean allSubmitted = education.stream()
+					.allMatch(f -> f.getEducationSubmissionStatus() == DetailsSubmissionStatus.submitted);
+
+			if (allSubmitted) {
+				return new EducationStatusResponse(DetailsSubmissionStatus.submitted);
+			}
 		}
+
 		return new EducationStatusResponse(DetailsSubmissionStatus.pending);
 	}
 

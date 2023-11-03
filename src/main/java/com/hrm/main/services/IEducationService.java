@@ -17,6 +17,6 @@ public interface IEducationService {
 
 	String updateEducation(Education edu, Integer id);
 
-	EducationStatusResponse getEducationStatusByCandidateId(long candidateId);
+	public EducationStatusResponse getEducationStatusByCandidateId(long candidateId);
 
 }

@@ -14,7 +14,7 @@ public class EnumCollection {
 		Approve, Reject
 	}
 
-	public enum HrExecutiveSubmission {
+	public enum HrSubmission {
 		Reject, Submit
 	}
 }

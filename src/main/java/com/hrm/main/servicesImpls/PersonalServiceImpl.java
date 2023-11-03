@@ -24,47 +24,54 @@ public class PersonalServiceImpl implements IPersonalService {
 
 	@Override
 	public String addPersonal(Personal personal, long candidateId) {
-		try {
-			personal.setCandidateId(candidateId);
-			// ----------------------------------------------------------
-			Decoder decoder2 = Base64.getDecoder();
-			while (personal.getPersonalDetails().base64Data.length() % 4 != 0) {
-				personal.getPersonalDetails().base64Data += "=";
+
+		Boolean existsByCandidateId = this.personalRepository.existsByCandidateId(candidateId);
+		if (!existsByCandidateId) {
+			try {
+
+				personal.setCandidateId(candidateId);
+				// ----------------------------------------------------------
+				Decoder decoder2 = Base64.getDecoder();
+				while (personal.getPersonalDetails().base64Data.length() % 4 != 0) {
+					personal.getPersonalDetails().base64Data += "=";
+				}
+				personal.getPersonalDetails()
+						.setProfilePhoto(decoder2.decode(personal.getPersonalDetails().base64Data));
+				personal.setPersonalSubmissionStatus(DetailsSubmissionStatus.submitted);
+
+				// ---------------------------------------------------------
+
+				Decoder decoder = Base64.getDecoder();
+				while (personal.getBankDetails().base64Data.length() % 4 != 0) {
+					personal.getBankDetails().base64Data += "=";
+				}
+				personal.getBankDetails().setBankDoc(decoder.decode(personal.getBankDetails().base64Data));
+
+				// ----------------------------------------------------------
+				if (!personal.getDocumentDetails().getDocuUpload().isEmpty()
+						&& personal.getDocumentDetails().getDocuUpload().size() > 0) {
+					personal.getDocumentDetails().getDocuUpload().forEach(x -> {
+
+						Decoder decoder1 = Base64.getDecoder();
+						while (x.base64Data.length() % 4 != 0) {
+							x.base64Data += "=";
+						}
+						x.setContent(decoder1.decode(x.base64Data));
+					});
+				}
+
+				// -----------------------------------------------------------
+
+				Personal info = this.personalRepository.save(personal);
+				if (info.getPersonalId() > 0) {
+					return "Personal details are added : " + info.getPersonalId();
+				}
+			} catch (Exception e) {
+				e.getMessage();
 			}
-			personal.getPersonalDetails().setProfilePhoto(decoder2.decode(personal.getPersonalDetails().base64Data));
-			personal.setPersonalSubmissionStatus(DetailsSubmissionStatus.submitted);
-
-			// ---------------------------------------------------------
-
-			Decoder decoder = Base64.getDecoder();
-			while (personal.getBankDetails().base64Data.length() % 4 != 0) {
-				personal.getBankDetails().base64Data += "=";
-			}
-			personal.getBankDetails().setBankDoc(decoder.decode(personal.getBankDetails().base64Data));
-
-			// ----------------------------------------------------------
-			if (!personal.getDocumentDetails().getDocuUpload().isEmpty()
-					&& personal.getDocumentDetails().getDocuUpload().size() > 0) {
-				personal.getDocumentDetails().getDocuUpload().forEach(x -> {
-
-					Decoder decoder1 = Base64.getDecoder();
-					while (x.base64Data.length() % 4 != 0) {
-						x.base64Data += "=";
-					}
-					x.setContent(decoder1.decode(x.base64Data));
-				});
-			}
-
-			// -----------------------------------------------------------
-
-			Personal info = this.personalRepository.save(personal);
-			if (info.getPersonalId() > 0) {
-				return "Personal details are added : " + info.getPersonalId();
-			}
-		} catch (Exception e) {
-			e.getMessage();
 		}
-		return "Personal details are not added";
+
+		return "Personal details are Already added";
 	}
 
 	@Override

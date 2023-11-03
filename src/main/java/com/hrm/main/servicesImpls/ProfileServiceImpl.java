@@ -60,47 +60,75 @@ public class ProfileServiceImpl implements IProfileService {
 		return 0;
 	}
 
+	/*
+	 * @Override public int updatingCandidatesStatus(long candidateId) {
+	 * 
+	 * int result = 0; int p = 0; int f = 0; int e = 0; int w = 0; try { Personal
+	 * personal = this.personalRepository.findByCandidateId(candidateId);
+	 * DetailsSubmissionStatus personalSubmissionStatus =
+	 * personal.getPersonalSubmissionStatus();
+	 * 
+	 * if (personalSubmissionStatus == DetailsSubmissionStatus.submitted) { p = 1; }
+	 * 
+	 * List<Family> FamilyList =
+	 * this.familyRepository.findAllByCandidateId(candidateId);
+	 * 
+	 * boolean allFamilySubmitted = FamilyList.stream() .allMatch(family ->
+	 * family.getFamilySubmissionStatus() == DetailsSubmissionStatus.submitted);
+	 * 
+	 * if (allFamilySubmitted) { f = 1; }
+	 * 
+	 * List<Education> educationList =
+	 * this.educationRepository.findAllByCandidateId(candidateId); boolean
+	 * allEducationSubmitted = educationList.stream().allMatch( education ->
+	 * education.getEducationSubmissionStatus() ==
+	 * DetailsSubmissionStatus.submitted);
+	 * 
+	 * if (allEducationSubmitted) { e = 1; } List<Work> workList =
+	 * this.workRepository.findAllWorkByCandidateId(candidateId); boolean
+	 * allWorkSubmitted = workList.stream() .allMatch(work ->
+	 * work.getWorkSubmissionStatus() == DetailsSubmissionStatus.submitted);
+	 * 
+	 * if (allWorkSubmitted) { w = 1; }
+	 * 
+	 * if (p == 1 && f == 1 && e == 1 && w == 1) { result = 1; }
+	 * 
+	 * if (result == 1) { Onboarding onboarding =
+	 * this.onboardingRepository.findByCandidateId(candidateId);
+	 * onboarding.setCandidatesStatus(CandidatesStatus.Inreview);
+	 * this.onboardingRepository.save(onboarding); } } catch (Exception e2) {
+	 * e2.getMessage(); } return result; }
+	 */
+
 	@Override
 	public int updatingCandidatesStatus(long candidateId) {
 
 		int result = 0;
-		int p = 0;
-		int f = 0;
-		int e = 0;
-		int w = 0;
+
 		try {
 			Personal personal = this.personalRepository.findByCandidateId(candidateId);
 			DetailsSubmissionStatus personalSubmissionStatus = personal.getPersonalSubmissionStatus();
 
+			List<Family> familyList = this.familyRepository.findAllByCandidateId(candidateId);
+			List<Education> educationList = this.educationRepository.findAllByCandidateId(candidateId);
+			List<Work> workList = this.workRepository.findAllWorkByCandidateId(candidateId);
+
+			// Check if personal details are submitted
 			if (personalSubmissionStatus == DetailsSubmissionStatus.submitted) {
-				p = 1;
+				// Check if all other sections are also submitted
+				boolean allFamilySubmitted = !familyList.isEmpty() && familyList.stream()
+						.allMatch(family -> family.getFamilySubmissionStatus() == DetailsSubmissionStatus.submitted);
+
+				boolean allEducationSubmitted = !educationList.isEmpty() && educationList.stream().allMatch(
+						education -> education.getEducationSubmissionStatus() == DetailsSubmissionStatus.submitted);
+
+				boolean allWorkSubmitted = !workList.isEmpty() && workList.stream()
+						.allMatch(work -> work.getWorkSubmissionStatus() == DetailsSubmissionStatus.submitted);
+
+				if (allFamilySubmitted && allEducationSubmitted && allWorkSubmitted) {
+					result = 1;
+				}
 			}
-
-			List<Family> CandidatesFamilyList = this.familyRepository.findByCandidateId(candidateId);
-
-			boolean allSubmitted = CandidatesFamilyList.stream()
-					.allMatch(fl -> fl.getFamilySubmissionStatus() == DetailsSubmissionStatus.submitted);
-
-			if (allSubmitted) {
-				f = 1;
-			}
-
-			Education education = this.educationRepository.findByCandidateId(candidateId);
-			DetailsSubmissionStatus educationSubmissionStatus = education.getEducationSubmissionStatus();
-
-			if (educationSubmissionStatus == DetailsSubmissionStatus.submitted) {
-				e = 1;
-			}
-
-			Work work = this.workRepository.findByCandidateId(candidateId);
-			DetailsSubmissionStatus workSubmissionStatus = work.getWorkSubmissionStatus();
-
-			if (workSubmissionStatus == DetailsSubmissionStatus.submitted) {
-				w = 1;
-			}
-
-			if (p == 1 && f == 1 && e == 1 && w == 1)
-				result = 1;
 
 			if (result == 1) {
 				Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
@@ -108,7 +136,8 @@ public class ProfileServiceImpl implements IProfileService {
 				this.onboardingRepository.save(onboarding);
 			}
 		} catch (Exception e2) {
-			e2.getMessage();
+			// Handle the exception appropriately, e.g., log it or throw a custom exception
+			e2.printStackTrace();
 		}
 		return result;
 	}

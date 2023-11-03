@@ -5,19 +5,45 @@ import java.util.List;
 import com.hrm.main.models.HRManager;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
+import com.hrm.main.payloads.HrManagerDto;
+import com.hrm.main.payloads.HrManagerEducationApprovalDto;
+import com.hrm.main.payloads.HrManagerFamilyApprovalDto;
+import com.hrm.main.payloads.HrManagerPersonalApprovalDto;
+import com.hrm.main.payloads.HrManagerWorkApprovalDto;
 
 public interface IHRManagerService {
 
-	boolean postCandidateInHrManager(CandidatesStatus status);
+	boolean postCandidatesInHrManager(CandidatesStatus status);
 
-	List<Onboarding> getAllHRManager(CandidatesStatus status);
-
-	HRManager getHRManager(Integer id);
+	HrManagerDto getCandidate(long candidateId);
 
 	String updateHRManager(HRManager hrManager, Integer id);
 
 	String deleteHRManager(Integer id);
 
 	Long nextValue();
+
+	List<HrManagerDto> getAllCandidates(CandidatesStatus status);
+
+	HrManagerPersonalApprovalDto personalApproval(HrManagerPersonalApprovalDto hrManagerPersonalApprovalDto,
+			long candidateId);
+
+	HrManagerPersonalApprovalDto getPersonalApproval(long candidateId);
+
+	HrManagerFamilyApprovalDto familyApproval(HrManagerFamilyApprovalDto hrManagerFamilyApprovalDto, long candidateId);
+
+	HrManagerFamilyApprovalDto getFamilyApproval(long candidateId);
+
+	HrManagerEducationApprovalDto educationApproval(HrManagerEducationApprovalDto hrManagerEducationApprovalDto,
+			long candidateId);
+
+	HrManagerEducationApprovalDto getEducationApproval(long candidateId);
+
+	HrManagerWorkApprovalDto workApproval(HrManagerWorkApprovalDto hrManagerWorkApprovalDto, long candidateId);
+
+	HrManagerWorkApprovalDto getWorkApproval(long candidateId);
+
+	Integer rejectHrManager(long candiateId);
 
 }

@@ -19,7 +19,6 @@ import com.hrm.main.models.HRExecutive;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Personal;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
-import com.hrm.main.models.Helper.EnumCollection.HrExecutiveSubmission;
 import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
 import com.hrm.main.payloads.HrExecutiveFamilyApprovalDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
@@ -173,7 +172,7 @@ public class HRExecutiveController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 
-	// ------------------For Reject Hr Executive------------------
+	// ------------------For Reject by Hr Executive------------------
 	@PostMapping("reject/{candiateId}")
 	public ResponseEntity<Integer> rejectHrExecutive(@PathVariable long candiateId) {
 		Integer result = this.hRExecutiveService.rejectHrExecutive(candiateId);

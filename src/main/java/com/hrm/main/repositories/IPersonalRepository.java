@@ -45,6 +45,8 @@ public interface IPersonalRepository extends JpaRepository<Personal, Integer> {
 
 	Personal findPersonalSubmissionStatusByCandidateId(long candidateId);
 
+	Boolean existsByCandidateId(long candidateId);
+
 	/*
 	 * @Query("SELECT p.detailsSubmissionStatus FROM Personal p WHERE p.candidateId = :candidateId"
 	 * ) EnumCollection.DetailsSubmissionStatus

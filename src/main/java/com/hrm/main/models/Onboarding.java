@@ -2,7 +2,7 @@
 package com.hrm.main.models;
 
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
-import com.hrm.main.models.Helper.EnumCollection.HrExecutiveSubmission;
+import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -45,7 +45,8 @@ public class Onboarding {
 
 	private CandidatesStatus candidatesStatus;
 
-	private HrExecutiveSubmission hrExecutiveSubmission;
+	private HrSubmission hrExecutiveSubmission;
+	private HrSubmission hrManagerSubmission;
 
 	// private Profile profile;
 
@@ -147,12 +148,20 @@ public class Onboarding {
 		this.candidatesStatus = candidatesStatus;
 	}
 
-	public HrExecutiveSubmission getHrExecutiveSubmission() {
+	public HrSubmission getHrExecutiveSubmission() {
 		return hrExecutiveSubmission;
 	}
 
-	public void setHrExecutiveSubmission(HrExecutiveSubmission hrExecutiveSubmission) {
+	public void setHrExecutiveSubmission(HrSubmission hrExecutiveSubmission) {
 		this.hrExecutiveSubmission = hrExecutiveSubmission;
+	}
+
+	public HrSubmission getHrManagerSubmission() {
+		return hrManagerSubmission;
+	}
+
+	public void setHrManagerSubmission(HrSubmission hrManagerSubmission) {
+		this.hrManagerSubmission = hrManagerSubmission;
 	}
 
 }
