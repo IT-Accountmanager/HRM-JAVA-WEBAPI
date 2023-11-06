@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.hrm.main.models.Education;
 import com.hrm.main.models.Work;
+import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 import com.hrm.main.payloads.EducationStatusResponse;
 import com.hrm.main.payloads.WorkStatusResponse;
@@ -25,6 +26,7 @@ public class WorkServiceImpl implements IWorkService {
 		try {
 			work.setCandidateId(candidateId);
 			work.setWorkSubmissionStatus(DetailsSubmissionStatus.submitted);
+			work.setHrExecutiveApprovalStatus(ApprovalStatus.Pending);
 			Decoder decoder = Base64.getDecoder();
 			while (work.offerLetterBase64Data.length() % 4 != 0) {
 				work.offerLetterBase64Data += "=";

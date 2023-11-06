@@ -5,6 +5,7 @@ import java.util.List;
 import com.hrm.main.models.HRManager;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
 import com.hrm.main.payloads.HrManagerDto;
 import com.hrm.main.payloads.HrManagerEducationApprovalDto;
@@ -40,10 +41,12 @@ public interface IHRManagerService {
 
 	HrManagerEducationApprovalDto getEducationApproval(long candidateId);
 
-	HrManagerWorkApprovalDto workApproval(HrManagerWorkApprovalDto hrManagerWorkApprovalDto, long candidateId);
+	int workApproval(HrManagerWorkApprovalDto hrManagerWorkApprovalDto, long candidateId);
 
 	HrManagerWorkApprovalDto getWorkApproval(long candidateId);
 
 	Integer rejectHrManager(long candiateId);
+
+	EmployeeGenerateDto generateEmployee(long candidateId);
 
 }

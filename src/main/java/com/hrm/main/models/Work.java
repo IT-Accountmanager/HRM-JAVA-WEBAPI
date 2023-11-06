@@ -55,9 +55,9 @@ public class Work {
 	@Transient
 	public String relievedLetterBase64Data;
 	private DetailsSubmissionStatus workSubmissionStatus;
-	private ApprovalStatus hrExecutiveApprovalStatus;
+	private ApprovalStatus hrExecutiveApprovalStatus = getHrExecutiveApprovalStatus().Pending;
 	private String hrExecutiveRemark;
-	private ApprovalStatus hrManagerApprovalStatus;
+	private ApprovalStatus hrManagerApprovalStatus = getHrManagerApprovalStatus().Pending;
 	private String hrManagerRemark;
 
 	public Work() {

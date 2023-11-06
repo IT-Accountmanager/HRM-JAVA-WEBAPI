@@ -315,11 +315,15 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 
 	@Override
 	public HrExecutiveWorkApprovalDto workApproval(HrExecutiveWorkApprovalDto hrExecutiveWorkDto, long candidateId) {
-		Work exisitingWork = this.workRepository.findByCandidateId(candidateId);
+		List<Work> works = this.workRepository.findAllWorkByCandidateId(candidateId);
 
-		modelMapper.map(hrExecutiveWorkDto, exisitingWork);
+		works.forEach(work -> {
+			work.setHrExecutiveApprovalStatus(hrExecutiveWorkDto.getHrExecutiveApprovalStatus());
+			work.setHrExecutiveRemark(hrExecutiveWorkDto.getHrExecutiveRemark());
+			this.workRepository.save(work);
 
-		this.workRepository.save(exisitingWork);
+		});
+
 		return hrExecutiveWorkDto;
 	}
 
@@ -339,7 +343,9 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 	@Override
 	public HrExecutiveFamilyApprovalDto getFamilyApproval(long candidateId) {
 		List<Family> listFamily = this.familyRepository.findAllByCandidateId(candidateId);
+
 		HrExecutiveFamilyApprovalDto approval = new HrExecutiveFamilyApprovalDto();
+
 		if (!listFamily.isEmpty()) {
 			Family firstFamily = listFamily.get(0);
 			approval.setHrExecutiveApprovalStatus(firstFamily.getHrExecutiveApprovalStatus());
@@ -356,6 +362,8 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 			Education firstEducation = listEducation.get(0);
 			approval.setHrExecutiveApprovalStatus(firstEducation.getHrExecutiveApprovalStatus());
 			approval.setHrExecutiveRemark(firstEducation.getHrExecutiveRemark());
+		} else {
+			approval.setHrExecutiveApprovalStatus(ApprovalStatus.Pending);
 		}
 		return approval;
 	}
@@ -369,15 +377,35 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 	@Override
 	public HrExecutivePersonalApprovalDto getPersonalApproval(long candidateId) {
 		Personal candidate = this.personalRepository.findByCandidateId(candidateId);
+		if (candidate.getHrExecutiveApprovalStatus() == null) {
+			HrExecutivePersonalApprovalDto pendingDto = new HrExecutivePersonalApprovalDto();
+			// pendingDto.setHrExecutiveApprovalStatus(ApprovalStatus.Pending); // Set the
+			// status to "Pending"
+			return pendingDto;
+		}
 		HrExecutivePersonalApprovalDto map = this.modelMapper.map(candidate, HrExecutivePersonalApprovalDto.class);
 		return map;
 	}
 
+	/*
+	 * @Override public HrExecutiveWorkApprovalDto getWorkApproval(long candidateId)
+	 * { Work work = this.workRepository.findByCandidateId(candidateId);
+	 * HrExecutiveWorkApprovalDto map = this.modelMapper.map(work,
+	 * HrExecutiveWorkApprovalDto.class); return map; }
+	 */
+
 	@Override
 	public HrExecutiveWorkApprovalDto getWorkApproval(long candidateId) {
-		Work work = this.workRepository.findByCandidateId(candidateId);
-		HrExecutiveWorkApprovalDto map = this.modelMapper.map(work, HrExecutiveWorkApprovalDto.class);
-		return map;
+		List<Work> listWork = this.workRepository.findAllWorkByCandidateId(candidateId);
+		HrExecutiveWorkApprovalDto approval = new HrExecutiveWorkApprovalDto();
+		if (!listWork.isEmpty()) {
+			Work firstWork = listWork.get(0);
+			approval.setHrExecutiveApprovalStatus(firstWork.getHrExecutiveApprovalStatus());
+			approval.setHrExecutiveRemark(firstWork.getHrExecutiveRemark());
+		} else {
+			approval.setHrExecutiveApprovalStatus(ApprovalStatus.Pending);
+		}
+		return approval;
 	}
 
 	@Override
@@ -392,7 +420,7 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 		ApprovalStatus educationApprovalStatus = this.educationRepository.findAllByCandidateId(candiateId).get(0)
 				.getHrExecutiveApprovalStatus();
 
-		ApprovalStatus workApprovalStatus = this.workRepository.findByCandidateId(candiateId)
+		ApprovalStatus workApprovalStatus = this.workRepository.findAllWorkByCandidateId(candiateId).get(0)
 				.getHrExecutiveApprovalStatus();
 
 		if (personalApprovalStatus == ApprovalStatus.Approve && familyApprovalStatus == ApprovalStatus.Approve

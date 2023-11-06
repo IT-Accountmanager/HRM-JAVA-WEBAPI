@@ -11,7 +11,7 @@ public class EnumCollection {
 	}
 
 	public enum ApprovalStatus {
-		Approve, Reject
+		Pending, Approve, Reject
 	}
 
 	public enum HrSubmission {

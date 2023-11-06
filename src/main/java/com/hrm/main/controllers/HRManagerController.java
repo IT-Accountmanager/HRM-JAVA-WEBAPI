@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.HRManager;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
 import com.hrm.main.payloads.HrExecutiveFamilyApprovalDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
@@ -109,10 +110,10 @@ public class HRManagerController {
 	// ------------ Work Approval By Hr Manager-----------------
 	// ________________________POST________________________________
 	@PostMapping("workApproval/{candidateId}")
-	public ResponseEntity<HrManagerWorkApprovalDto> workApproval(
-			@RequestBody HrManagerWorkApprovalDto hrManagerWorkApprovalDto, @PathVariable long candidateId) {
-		HrManagerWorkApprovalDto result = this.hRManagerService.workApproval(hrManagerWorkApprovalDto, candidateId);
-		return new ResponseEntity<HrManagerWorkApprovalDto>(result, HttpStatus.OK);
+	public ResponseEntity<Integer> workApproval(@RequestBody HrManagerWorkApprovalDto hrManagerWorkApprovalDto,
+			@PathVariable long candidateId) {
+		int result = this.hRManagerService.workApproval(hrManagerWorkApprovalDto, candidateId);
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 
 	// ________________________GET____________________________
@@ -123,10 +124,17 @@ public class HRManagerController {
 	}
 
 	// ------------------For Reject by Hr Manager------------------
-	@PostMapping("reject/{candiateId}")
-	public ResponseEntity<Integer> rejectHrManager(@PathVariable long candiateId) {
-		Integer result = this.hRManagerService.rejectHrManager(candiateId);
+	@PostMapping("reject/{candidateId}")
+	public ResponseEntity<Integer> rejectHrManager(@PathVariable long candidateId) {
+		Integer result = this.hRManagerService.rejectHrManager(candidateId);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
+
+	// --------------------FOR GENERATE BY HR MANAGER-----------------------
+	@GetMapping("generate/{candidateId}")
+	public ResponseEntity<EmployeeGenerateDto> generateEmployee(@PathVariable long candidateId) {
+		EmployeeGenerateDto result = this.hRManagerService.generateEmployee(candidateId);
+		return new ResponseEntity<EmployeeGenerateDto>(result, HttpStatus.OK);
 	}
 
 	@GetMapping("/Add/{status}")

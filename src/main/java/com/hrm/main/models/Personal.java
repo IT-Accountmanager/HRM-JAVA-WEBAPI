@@ -40,9 +40,10 @@ public class Personal {
 	@Column(name = "candidate_id")
 	private long candidateId;
 	private DetailsSubmissionStatus personalSubmissionStatus = getPersonalSubmissionStatus().pending;
-	private ApprovalStatus hrExecutiveApprovalStatus;
+	private ApprovalStatus hrExecutiveApprovalStatus = getHrExecutiveApprovalStatus().Pending;
 	private String hrExecutiveRemark;
-	private ApprovalStatus hrManagerApprovalStatus;
+	private ApprovalStatus hrManagerApprovalStatus = getHrManagerApprovalStatus().Pending;
+
 	private String hrManagerRemark;
 
 	public Personal() {

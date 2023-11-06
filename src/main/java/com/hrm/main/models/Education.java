@@ -39,9 +39,9 @@ public class Education {
 	@Transient
 	public String base64Data;
 	private DetailsSubmissionStatus educationSubmissionStatus;
-	private ApprovalStatus hrExecutiveApprovalStatus;
+	private ApprovalStatus hrExecutiveApprovalStatus = getHrExecutiveApprovalStatus().Pending;
 	private String hrExecutiveRemark;
-	private ApprovalStatus hrManagerApprovalStatus;
+	private ApprovalStatus hrManagerApprovalStatus = getHrManagerApprovalStatus().Pending;
 	private String hrManagerRemark;
 
 	public Education() {

@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hrm.main.models.Family;
+import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 import com.hrm.main.payloads.FamilyStatusResponse;
 import com.hrm.main.repositories.IFamilyRepository;
@@ -20,6 +21,7 @@ public class FamilyServiceImpl implements IFamilyService {
 		try {
 			family.setCandidateId(candidateId);
 			family.setFamilySubmissionStatus(DetailsSubmissionStatus.submitted);
+			family.setHrExecutiveApprovalStatus(ApprovalStatus.Pending);
 			var fam = this.familyRepo.save(family);
 
 			if (fam.getFamilyId() > 0) {

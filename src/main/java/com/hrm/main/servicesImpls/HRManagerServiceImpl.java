@@ -6,13 +6,16 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hrm.main.models.Education;
+import com.hrm.main.models.Employee;
 import com.hrm.main.models.Family;
 import com.hrm.main.models.HRManager;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Personal;
 import com.hrm.main.models.Work;
+import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
+import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
 import com.hrm.main.payloads.HrExecutiveFamilyApprovalDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
@@ -23,6 +26,7 @@ import com.hrm.main.payloads.HrManagerFamilyApprovalDto;
 import com.hrm.main.payloads.HrManagerPersonalApprovalDto;
 import com.hrm.main.payloads.HrManagerWorkApprovalDto;
 import com.hrm.main.repositories.IEducationRepository;
+import com.hrm.main.repositories.IEmployeeRepository;
 import com.hrm.main.repositories.IFamilyRepository;
 import com.hrm.main.repositories.IHRManagerRepository;
 import com.hrm.main.repositories.IOnboardingRepository;
@@ -48,6 +52,8 @@ public class HRManagerServiceImpl implements IHRManagerService {
 	private IEducationRepository educationRepository;
 	@Autowired
 	private IWorkRepository workRepository;
+	@Autowired
+	private IEmployeeRepository employeeRepository;
 
 	@Override
 	public boolean postCandidatesInHrManager(CandidatesStatus status) {
@@ -221,20 +227,34 @@ public class HRManagerServiceImpl implements IHRManagerService {
 	}
 
 	@Override
-	public HrManagerWorkApprovalDto workApproval(HrManagerWorkApprovalDto hrManagerWorkApprovalDto, long candidateId) {
-		Work exisitingWork = this.workRepository.findByCandidateId(candidateId);
+	public int workApproval(HrManagerWorkApprovalDto hrManagerWorkApprovalDto, long candidateId) {
+		try {
+			List<Work> works = this.workRepository.findAllWorkByCandidateId(candidateId);
+			works.forEach(work -> {
+				work.setHrManagerApprovalStatus(hrManagerWorkApprovalDto.getHrManagerApprovalStatus());
+				work.setHrManagerRemark(hrManagerWorkApprovalDto.getHrManagerRemark());
+				this.workRepository.save(work);
+			});
+			return 1;
 
-		modelMapper.map(hrManagerWorkApprovalDto, exisitingWork);
-
-		this.workRepository.save(exisitingWork);
-		return hrManagerWorkApprovalDto;
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return 0;
 	}
 
 	@Override
 	public HrManagerWorkApprovalDto getWorkApproval(long candidateId) {
-		Work work = this.workRepository.findByCandidateId(candidateId);
-		HrManagerWorkApprovalDto map = this.modelMapper.map(work, HrManagerWorkApprovalDto.class);
-		return map;
+		List<Work> listWork = this.workRepository.findAllWorkByCandidateId(candidateId);
+		HrManagerWorkApprovalDto approval = new HrManagerWorkApprovalDto();
+		if (!listWork.isEmpty()) {
+			Work firstWork = listWork.get(0);
+			approval.setHrManagerApprovalStatus(firstWork.getHrManagerApprovalStatus());
+			approval.setHrManagerRemark(firstWork.getHrManagerRemark());
+		} else {
+			approval.setHrManagerApprovalStatus(ApprovalStatus.Pending);
+		}
+		return approval;
 	}
 
 	@Override
@@ -251,6 +271,19 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			e.getMessage();
 		}
 		return 0;
+	}
+
+	@Override
+	public EmployeeGenerateDto generateEmployee(long candidateId) {
+		Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
+		EmployeeGenerateDto employee = new EmployeeGenerateDto();
+		employee.setEmployeeId("EIS" + this.employeeRepository.count() + 1);
+		employee.setName(this.personalRepository.findByCandidateId(candidateId).getPersonalDetails().getFirstName()
+				+ this.personalRepository.findByCandidateId(candidateId).getPersonalDetails().getLastName());
+		employee.setDesignation(candidate.getJobTitle());
+		this.employeeRepository.save(this.modelMapper.map(employee, Employee.class));
+
+		return employee;
 	}
 
 }
