@@ -1,6 +1,8 @@
 
 package com.hrm.main.models;
 
+import java.time.LocalDate;
+
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
 import jakarta.persistence.Column;
@@ -47,6 +49,8 @@ public class Onboarding {
 
 	private HrSubmission hrExecutiveSubmission;
 	private HrSubmission hrManagerSubmission;
+	private LocalDate dateOfJoining;
+	private String workLocation;
 
 	// private Profile profile;
 
@@ -162,6 +166,22 @@ public class Onboarding {
 
 	public void setHrManagerSubmission(HrSubmission hrManagerSubmission) {
 		this.hrManagerSubmission = hrManagerSubmission;
+	}
+
+	public LocalDate getDateOfJoining() {
+		return dateOfJoining;
+	}
+
+	public void setDateOfJoining(LocalDate dateOfJoining) {
+		this.dateOfJoining = dateOfJoining;
+	}
+
+	public String getWorkLocation() {
+		return workLocation;
+	}
+
+	public void setWorkLocation(String workLocation) {
+		this.workLocation = workLocation;
 	}
 
 }

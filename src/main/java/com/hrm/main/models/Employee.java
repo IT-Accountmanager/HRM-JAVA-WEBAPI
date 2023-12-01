@@ -2,6 +2,7 @@ package com.hrm.main.models;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,11 +16,14 @@ public class Employee {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Employee_Id_Sequence")
 	@SequenceGenerator(name = "Employee_Id_Sequence", initialValue = 1, allocationSize = 1, sequenceName = "Employee_Id_Sequence")
 	private int employeeSn;
+	@Column(name = "candidate_id")
+	private long candidateId;
 	private String employeeId;
 	private String name;
+	private String workLocation;
 	private String designation;
-	private int workingMonths;
-	private float ctc;
+	private float bondPeriod;
+	private int ctc;
 	private LocalDate dateOfJoining;
 	private LocalDate dteOfReleasing;
 
@@ -33,6 +37,14 @@ public class Employee {
 
 	public void setEmployeeSn(int employeeSn) {
 		this.employeeSn = employeeSn;
+	}
+
+	public long getCandidateId() {
+		return candidateId;
+	}
+
+	public void setCandidateId(long candidateId) {
+		this.candidateId = candidateId;
 	}
 
 	public String getEmployeeId() {
@@ -51,6 +63,10 @@ public class Employee {
 		this.name = name;
 	}
 
+	public String getWorkLocation() {
+		return workLocation;
+	}
+
 	public String getDesignation() {
 		return designation;
 	}
@@ -59,19 +75,23 @@ public class Employee {
 		this.designation = designation;
 	}
 
-	public int getWorkingMonths() {
-		return workingMonths;
+	public float getBondPeriod() {
+		return bondPeriod;
 	}
 
-	public void setWorkingMonths(int workingMonths) {
-		this.workingMonths = workingMonths;
+	public void setBondPeriod(float bondPeriod) {
+		this.bondPeriod = bondPeriod;
 	}
 
-	public float getCtc() {
+	public void setWorkLocation(String workLocation) {
+		this.workLocation = workLocation;
+	}
+
+	public int getCtc() {
 		return ctc;
 	}
 
-	public void setCtc(float ctc) {
+	public void setCtc(int ctc) {
 		this.ctc = ctc;
 	}
 

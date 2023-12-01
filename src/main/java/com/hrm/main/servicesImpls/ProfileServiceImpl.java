@@ -4,6 +4,8 @@ package com.hrm.main.servicesImpls;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.hrm.main.models.Agreement;
 import com.hrm.main.models.Education;
 import com.hrm.main.models.Family;
 import com.hrm.main.models.Onboarding;
@@ -14,6 +16,7 @@ import com.hrm.main.models.Work;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 import com.hrm.main.payloads.ProfileSummaryDto;
+import com.hrm.main.repositories.IAgreementRepository;
 import com.hrm.main.repositories.IEducationRepository;
 import com.hrm.main.repositories.IFamilyRepository;
 import com.hrm.main.repositories.IOnboardingRepository;
@@ -37,6 +40,8 @@ public class ProfileServiceImpl implements IProfileService {
 	IEducationRepository educationRepository;
 	@Autowired
 	IWorkRepository workRepository;
+	@Autowired
+	IAgreementRepository agreementRepository;
 
 	@Override
 	public List<Onboarding> getPendingOnboardings(CandidatesStatus status) {
@@ -106,8 +111,10 @@ public class ProfileServiceImpl implements IProfileService {
 		int result = 0;
 
 		try {
-			Personal personal = this.personalRepository.findByCandidateId(candidateId);
-			DetailsSubmissionStatus personalSubmissionStatus = personal.getPersonalSubmissionStatus();
+			DetailsSubmissionStatus agreementSubmissionStatus = this.agreementRepository.findByCandidateId(candidateId)
+					.getAgreementSubmissionStatus();
+			DetailsSubmissionStatus personalSubmissionStatus = this.personalRepository.findByCandidateId(candidateId)
+					.getPersonalSubmissionStatus();
 
 			List<Family> familyList = this.familyRepository.findAllByCandidateId(candidateId);
 			List<Education> educationList = this.educationRepository.findAllByCandidateId(candidateId);
@@ -124,8 +131,10 @@ public class ProfileServiceImpl implements IProfileService {
 
 				boolean allWorkSubmitted = !workList.isEmpty() && workList.stream()
 						.allMatch(work -> work.getWorkSubmissionStatus() == DetailsSubmissionStatus.submitted);
+				// ________________________NEED TO CHECK_____________________
 
-				if (allFamilySubmitted && allEducationSubmitted && allWorkSubmitted) {
+				if (allFamilySubmitted && allEducationSubmitted && allWorkSubmitted
+						&& agreementSubmissionStatus == DetailsSubmissionStatus.submitted) {
 					result = 1;
 				}
 			}

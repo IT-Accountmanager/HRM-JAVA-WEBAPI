@@ -19,6 +19,7 @@ import com.hrm.main.models.HRExecutive;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Personal;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.payloads.HrExecutiveAgreementApprovalDto;
 import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
 import com.hrm.main.payloads.HrExecutiveFamilyApprovalDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
@@ -156,6 +157,21 @@ public class HRExecutiveController {
 	public ResponseEntity<HrExecutiveWorkApprovalDto> getWorkApproval(@PathVariable long candidateId) {
 		HrExecutiveWorkApprovalDto result = this.hRExecutiveService.getWorkApproval(candidateId);
 		return new ResponseEntity<HrExecutiveWorkApprovalDto>(result, HttpStatus.OK);
+	}
+
+	@PostMapping("agreementApproval/{candidateId}")
+	public ResponseEntity<HrExecutiveAgreementApprovalDto> agreementApproval(
+			@RequestBody HrExecutiveAgreementApprovalDto hrExecutiveAgreementApprovalDto,
+			@PathVariable long candidateId) {
+		HrExecutiveAgreementApprovalDto result = this.hRExecutiveService
+				.agreementApproval(hrExecutiveAgreementApprovalDto, candidateId);
+		return new ResponseEntity<HrExecutiveAgreementApprovalDto>(result, HttpStatus.OK);
+	}
+
+	@GetMapping("getAgreementApproval/{candidateId}")
+	public ResponseEntity<HrExecutiveAgreementApprovalDto> getAgreementApproval(@PathVariable long candidateId) {
+		HrExecutiveAgreementApprovalDto result = this.hRExecutiveService.getAgreementApproval(candidateId);
+		return new ResponseEntity<HrExecutiveAgreementApprovalDto>(result, HttpStatus.OK);
 	}
 
 	@GetMapping("get/{candidateId}")

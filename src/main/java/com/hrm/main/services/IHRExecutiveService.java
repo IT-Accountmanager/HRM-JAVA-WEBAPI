@@ -5,6 +5,7 @@ import java.util.List;
 import com.hrm.main.models.HRExecutive;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.payloads.HrExecutiveAgreementApprovalDto;
 import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
 import com.hrm.main.payloads.HrExecutiveFamilyApprovalDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
@@ -51,6 +52,11 @@ public interface IHRExecutiveService {
 	Integer submitHrExecutive(long candiateId);
 
 	Integer rejectHrExecutive(long candiateId);
+
+	HrExecutiveAgreementApprovalDto agreementApproval(HrExecutiveAgreementApprovalDto hrExecutiveAgreementApprovalDto,
+			long candidateId);
+
+	HrExecutiveAgreementApprovalDto getAgreementApproval(long candidateId);
 
 	// List<Onboarding> getAllOnboarding();
 

@@ -13,16 +13,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.OnboardingEmployeeSummary;
+import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.payloads.SummaryDto;
 import com.hrm.main.services.IOnboardingEmployeeSummaryService;
+import com.hrm.main.services.ISummaryService;
+import com.hrm.main.servicesImpls.OnboardingEmployeeSummaryServiceImpl;
 
 @CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
 @RestController
 @RequestMapping("/Summary")
 
-public class OnboardingEmployeeSummaryController {
+public class SummaryController {
 
 	@Autowired
+	ISummaryService summaryService;
+	@Autowired
 	IOnboardingEmployeeSummaryService onboardingEmployeeSummaryService;
+
+	// --------------------VIEW ALL EMPLOYEE IN SUMMARY TABLE---------------
+
+	@GetMapping("/getAll")
+	public ResponseEntity<List<SummaryDto>> getAllSummary() {
+
+		List<SummaryDto> allSummary = this.summaryService.getAll();
+
+		return new ResponseEntity<List<SummaryDto>>(allSummary, HttpStatus.OK);
+	}
 
 	@PostMapping("/AddSummary")
 	public ResponseEntity<String> createSummary(@RequestBody OnboardingEmployeeSummary summary) {
@@ -31,14 +47,6 @@ public class OnboardingEmployeeSummaryController {
 
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 
-	}
-
-	@GetMapping("/getAllSummary")
-	public ResponseEntity<List<OnboardingEmployeeSummary>> getAllSummary() {
-
-		List<OnboardingEmployeeSummary> allSummary = this.onboardingEmployeeSummaryService.getAllSummary();
-
-		return new ResponseEntity<List<OnboardingEmployeeSummary>>(allSummary, HttpStatus.OK);
 	}
 
 	@GetMapping("/getSummaryById/{id}")

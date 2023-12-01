@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.hrm.main.models.Agreement;
 import com.hrm.main.models.Education;
 import com.hrm.main.models.Employee;
 import com.hrm.main.models.Family;
@@ -20,11 +22,13 @@ import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
 import com.hrm.main.payloads.HrExecutiveFamilyApprovalDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
 import com.hrm.main.payloads.HrExecutiveWorkApprovalDto;
+import com.hrm.main.payloads.HrManagerAgreementApprovalDto;
 import com.hrm.main.payloads.HrManagerDto;
 import com.hrm.main.payloads.HrManagerEducationApprovalDto;
 import com.hrm.main.payloads.HrManagerFamilyApprovalDto;
 import com.hrm.main.payloads.HrManagerPersonalApprovalDto;
 import com.hrm.main.payloads.HrManagerWorkApprovalDto;
+import com.hrm.main.repositories.IAgreementRepository;
 import com.hrm.main.repositories.IEducationRepository;
 import com.hrm.main.repositories.IEmployeeRepository;
 import com.hrm.main.repositories.IFamilyRepository;
@@ -54,6 +58,8 @@ public class HRManagerServiceImpl implements IHRManagerService {
 	private IWorkRepository workRepository;
 	@Autowired
 	private IEmployeeRepository employeeRepository;
+	@Autowired
+	private IAgreementRepository agreementRepository;
 
 	@Override
 	public boolean postCandidatesInHrManager(CandidatesStatus status) {
@@ -258,6 +264,22 @@ public class HRManagerServiceImpl implements IHRManagerService {
 	}
 
 	@Override
+	public HrManagerAgreementApprovalDto agreementApproval(HrManagerAgreementApprovalDto hrManagerAgreementApprovalDto,
+			long candidateId) {
+		Agreement existingAgreement = this.agreementRepository.findByCandidateId(candidateId);
+		modelMapper.map(hrManagerAgreementApprovalDto, existingAgreement);
+		this.agreementRepository.save(existingAgreement);
+		return hrManagerAgreementApprovalDto;
+	}
+
+	@Override
+	public HrManagerAgreementApprovalDto getAgreementApproval(long candidateId) {
+		Agreement agreement = this.agreementRepository.findByCandidateId(candidateId);
+		HrManagerAgreementApprovalDto map = this.modelMapper.map(agreement, HrManagerAgreementApprovalDto.class);
+		return map;
+	}
+
+	@Override
 	public Integer rejectHrManager(long candiateId) {
 
 		try {
@@ -275,15 +297,51 @@ public class HRManagerServiceImpl implements IHRManagerService {
 
 	@Override
 	public EmployeeGenerateDto generateEmployee(long candidateId) {
-		Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
-		EmployeeGenerateDto employee = new EmployeeGenerateDto();
-		employee.setEmployeeId("EIS" + this.employeeRepository.count() + 1);
-		employee.setName(this.personalRepository.findByCandidateId(candidateId).getPersonalDetails().getFirstName()
-				+ this.personalRepository.findByCandidateId(candidateId).getPersonalDetails().getLastName());
-		employee.setDesignation(candidate.getJobTitle());
-		this.employeeRepository.save(this.modelMapper.map(employee, Employee.class));
 
-		return employee;
+		ApprovalStatus personalApprovalStatus = this.personalRepository.findByCandidateId(candidateId)
+				.getHrManagerApprovalStatus();
+
+		ApprovalStatus familyApprovalStatus = this.familyRepository.findAllByCandidateId(candidateId).get(0)
+				.getHrManagerApprovalStatus();
+
+		ApprovalStatus educationApprovalStatus = this.educationRepository.findAllByCandidateId(candidateId).get(0)
+				.getHrManagerApprovalStatus();
+
+		ApprovalStatus workApprovalStatus = this.workRepository.findAllWorkByCandidateId(candidateId).get(0)
+				.getHrManagerApprovalStatus();
+
+		ApprovalStatus agreementApprovalStatus = this.agreementRepository.findByCandidateId(candidateId)
+				.getHrManagerApprovalStatus();
+
+		if (agreementApprovalStatus == ApprovalStatus.Approve && personalApprovalStatus == ApprovalStatus.Approve
+				&& familyApprovalStatus == ApprovalStatus.Approve && educationApprovalStatus == ApprovalStatus.Approve
+				&& workApprovalStatus == ApprovalStatus.Approve)
+
+		{
+			Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
+			candidate.setCandidatesStatus(CandidatesStatus.Approved);
+			EmployeeGenerateDto employeeDto = new EmployeeGenerateDto();
+			long nextEmployeeIdNumber = this.employeeRepository.count() + 1;
+			employeeDto.setEmployeeId(String.format("EIS%05d", nextEmployeeIdNumber));
+
+			String firstName = this.personalRepository.findByCandidateId(candidateId).getPersonalDetails()
+					.getFirstName();
+			String lastName = this.personalRepository.findByCandidateId(candidateId).getPersonalDetails().getLastName();
+			employeeDto.setCandidateId(candidateId);
+			employeeDto.setName(firstName + " " + lastName);
+			employeeDto.setDesignation(candidate.getJobTitle());
+			employeeDto.setWorkLocation(candidate.getWorkLocation());
+			employeeDto.setDateOfJoining(candidate.getDateOfJoining());
+			employeeDto.setDteOfReleasing(this.workRepository.findAllWorkByCandidateId(candidateId).stream().findFirst()
+					.get().getRelievedDate());
+			employeeDto.setCtc(candidate.getCtc() * 100000f);
+			employeeDto.setBondPeriod(candidate.getBondPeriod());
+
+			this.employeeRepository.save(this.modelMapper.map(employeeDto, Employee.class));
+
+			return employeeDto;
+		}
+		return null;
 	}
 
 }

@@ -5,9 +5,11 @@ import java.time.LocalDate;
 public class EmployeeGenerateDto {
 
 	private String employeeId;
+	private long candidateId;
 	private String name;
+	private String workLocation;
 	private String designation;
-	private int workingMonths;
+	private float bondPeriod;
 	private float ctc;
 	private LocalDate dateOfJoining;
 	private LocalDate dteOfReleasing;
@@ -24,12 +26,28 @@ public class EmployeeGenerateDto {
 		this.employeeId = employeeId;
 	}
 
+	public long getCandidateId() {
+		return candidateId;
+	}
+
+	public void setCandidateId(long candidateId) {
+		this.candidateId = candidateId;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getWorkLocation() {
+		return workLocation;
+	}
+
+	public void setWorkLocation(String workLocation) {
+		this.workLocation = workLocation;
 	}
 
 	public String getDesignation() {
@@ -40,12 +58,12 @@ public class EmployeeGenerateDto {
 		this.designation = designation;
 	}
 
-	public int getWorkingMonths() {
-		return workingMonths;
+	public float getBondPeriod() {
+		return bondPeriod;
 	}
 
-	public void setWorkingMonths(int workingMonths) {
-		this.workingMonths = workingMonths;
+	public void setBondPeriod(float bondPeriod) {
+		this.bondPeriod = bondPeriod;
 	}
 
 	public float getCtc() {

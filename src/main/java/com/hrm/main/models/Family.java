@@ -32,11 +32,11 @@ public class Family {
 	private long candidateId;
 	private DetailsSubmissionStatus familySubmissionStatus;
 
-	private ApprovalStatus hrExecutiveApprovalStatus = getHrExecutiveApprovalStatus().Pending;
+	private ApprovalStatus hrExecutiveApprovalStatus;
 
 	private String hrExecutiveRemark;
 
-	private ApprovalStatus hrManagerApprovalStatus = getHrManagerApprovalStatus().Pending;
+	private ApprovalStatus hrManagerApprovalStatus;
 
 	private String hrManagerRemark;
 

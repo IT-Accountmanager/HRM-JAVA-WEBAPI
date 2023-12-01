@@ -21,6 +21,7 @@ import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
 import com.hrm.main.payloads.HrExecutiveFamilyApprovalDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
 import com.hrm.main.payloads.HrExecutiveWorkApprovalDto;
+import com.hrm.main.payloads.HrManagerAgreementApprovalDto;
 import com.hrm.main.payloads.HrManagerDto;
 import com.hrm.main.payloads.HrManagerEducationApprovalDto;
 import com.hrm.main.payloads.HrManagerFamilyApprovalDto;
@@ -53,8 +54,6 @@ public class HRManagerController {
 
 		return candidate;
 	}
-
-	// ------------ Agreement Approval By Hr Manager-----------------
 
 	// ------------ Personal Approval By Hr Manager-----------------
 	// __________________POST____________________
@@ -121,6 +120,23 @@ public class HRManagerController {
 	public ResponseEntity<HrManagerWorkApprovalDto> getWorkApproval(@PathVariable long candidateId) {
 		HrManagerWorkApprovalDto result = this.hRManagerService.getWorkApproval(candidateId);
 		return new ResponseEntity<HrManagerWorkApprovalDto>(result, HttpStatus.OK);
+	}
+
+	// ------------ Agreement Approval By Hr Manager-----------------
+	// __________________POST____________________
+	@PostMapping("agreementApproval/{candidateId}")
+	public ResponseEntity<HrManagerAgreementApprovalDto> agreementApproval(
+			@RequestBody HrManagerAgreementApprovalDto hrManagerAgreementApprovalDto, @PathVariable long candidateId) {
+		HrManagerAgreementApprovalDto result = this.hRManagerService.agreementApproval(hrManagerAgreementApprovalDto,
+				candidateId);
+		return new ResponseEntity<HrManagerAgreementApprovalDto>(result, HttpStatus.OK);
+	}
+
+	// ___________________GET____________________
+	@GetMapping("getAgreementApproval/{candidateId}")
+	public ResponseEntity<HrManagerAgreementApprovalDto> getAgreementApproval(@PathVariable long candidateId) {
+		HrManagerAgreementApprovalDto result = this.hRManagerService.getAgreementApproval(candidateId);
+		return new ResponseEntity<HrManagerAgreementApprovalDto>(result, HttpStatus.OK);
 	}
 
 	// ------------------For Reject by Hr Manager------------------

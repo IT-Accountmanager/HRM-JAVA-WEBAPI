@@ -7,6 +7,7 @@ import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
+import com.hrm.main.payloads.HrManagerAgreementApprovalDto;
 import com.hrm.main.payloads.HrManagerDto;
 import com.hrm.main.payloads.HrManagerEducationApprovalDto;
 import com.hrm.main.payloads.HrManagerFamilyApprovalDto;
@@ -48,5 +49,10 @@ public interface IHRManagerService {
 	Integer rejectHrManager(long candiateId);
 
 	EmployeeGenerateDto generateEmployee(long candidateId);
+
+	HrManagerAgreementApprovalDto agreementApproval(HrManagerAgreementApprovalDto hrManagerAgreementApprovalDto,
+			long candidateId);
+
+	HrManagerAgreementApprovalDto getAgreementApproval(long candidateId);
 
 }

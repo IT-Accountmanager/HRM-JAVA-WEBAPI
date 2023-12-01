@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.hrm.main.models.Agreement;
 import com.hrm.main.models.Education;
 import com.hrm.main.models.Family;
 import com.hrm.main.models.HRExecutive;
@@ -16,10 +18,12 @@ import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
+import com.hrm.main.payloads.HrExecutiveAgreementApprovalDto;
 import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
 import com.hrm.main.payloads.HrExecutiveFamilyApprovalDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
 import com.hrm.main.payloads.HrExecutiveWorkApprovalDto;
+import com.hrm.main.repositories.IAgreementRepository;
 import com.hrm.main.repositories.IEducationRepository;
 import com.hrm.main.repositories.IFamilyRepository;
 import com.hrm.main.repositories.IHRExecutiveRepository;
@@ -44,6 +48,8 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 	private IEducationRepository educationRepository;
 	@Autowired
 	private IWorkRepository workRepository;
+	@Autowired
+	private IAgreementRepository agreementRepository;
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -409,6 +415,28 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 	}
 
 	@Override
+	public HrExecutiveAgreementApprovalDto agreementApproval(
+			HrExecutiveAgreementApprovalDto hrExecutiveAgreementApprovalDto, long candidateId) {
+		Agreement agreement = this.agreementRepository.findByCandidateId(candidateId);
+		modelMapper.map(hrExecutiveAgreementApprovalDto, agreement);
+		this.agreementRepository.save(agreement);
+		return hrExecutiveAgreementApprovalDto;
+	}
+
+	@Override
+	public HrExecutiveAgreementApprovalDto getAgreementApproval(long candidateId) {
+		Agreement agreement = this.agreementRepository.findByCandidateId(candidateId);
+		if (agreement.getHrExecutiveApprovalStatus() == null) {
+			HrExecutiveAgreementApprovalDto pendingDto = new HrExecutiveAgreementApprovalDto();
+			// pendingDto.setHrExecutiveApprovalStatus(ApprovalStatus.Pending); // Set the
+			// status to "Pending"
+			return pendingDto;
+		}
+		HrExecutiveAgreementApprovalDto map = this.modelMapper.map(agreement, HrExecutiveAgreementApprovalDto.class);
+		return map;
+	}
+
+	@Override
 	public Integer submitHrExecutive(long candiateId) {
 
 		ApprovalStatus personalApprovalStatus = this.personalRepository.findByCandidateId(candiateId)
@@ -423,8 +451,12 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 		ApprovalStatus workApprovalStatus = this.workRepository.findAllWorkByCandidateId(candiateId).get(0)
 				.getHrExecutiveApprovalStatus();
 
+		ApprovalStatus agreementApprovalStatus = this.agreementRepository.findByCandidateId(candiateId)
+				.getHrExecutiveApprovalStatus();
+
 		if (personalApprovalStatus == ApprovalStatus.Approve && familyApprovalStatus == ApprovalStatus.Approve
-				&& educationApprovalStatus == ApprovalStatus.Approve && workApprovalStatus == ApprovalStatus.Approve) {
+				&& educationApprovalStatus == ApprovalStatus.Approve && workApprovalStatus == ApprovalStatus.Approve
+				&& agreementApprovalStatus == ApprovalStatus.Approve) {
 			Onboarding candidate = this.onboardingRepository.findByCandidateId(candiateId);
 			candidate.setHrExecutiveSubmission(HrSubmission.Submit);
 			this.onboardingRepository.save(candidate);
