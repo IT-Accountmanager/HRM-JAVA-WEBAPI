@@ -22,7 +22,7 @@ import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 import com.hrm.main.payloads.PersonalStatusResponse;
 import com.hrm.main.services.IPersonalService;
 
-@CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
+@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
 @RestController
 @RequestMapping("/Personal")
 public class PersonalController {

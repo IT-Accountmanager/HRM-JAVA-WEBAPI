@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hrm.main.models.Agreement;
 import com.hrm.main.payloads.AgreementDto;
+import com.hrm.main.payloads.AgreementStatusResponse;
 import com.hrm.main.services.IAgreementService;
 
-@CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
+@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
 @RestController
 @RequestMapping("/agreement")
 public class AgreementController {
@@ -42,9 +43,23 @@ public class AgreementController {
 	// --------------Get By Employee Id -----------------
 
 	@GetMapping("/getAgreement/{candidateId}")
-	public ResponseEntity<AgreementDto> getByCandidateId(@PathVariable long candidateId) {
-		AgreementDto result = this.agreementService.getByCandidateId(candidateId);
-		return new ResponseEntity<AgreementDto>(result, HttpStatus.OK);
+	public ResponseEntity<Agreement> getByCandidateId(@PathVariable long candidateId) {
+		Agreement result = this.agreementService.getByCandidateId(candidateId);
+		return new ResponseEntity<Agreement>(result, HttpStatus.OK);
+	}
+
+	@GetMapping("/getAgreementStatus/{candidateId}")
+	public ResponseEntity<AgreementStatusResponse> getAgreementStatus(@PathVariable long candidateId) {
+		AgreementStatusResponse result = this.agreementService.getStatusByCandidateId(candidateId);
+		return new ResponseEntity<AgreementStatusResponse>(result, HttpStatus.OK);
+	}
+
+	// -------------------Get Agreement pre Info---------------
+
+	@GetMapping("getPreAgreementInfo/{candidateId}")
+	public ResponseEntity<AgreementDto> getPreAgreementInfo(@PathVariable long candidateId) {
+		AgreementDto result = this.agreementService.getPreAgreementInfo(candidateId);
+	return new ResponseEntity<AgreementDto>(result, HttpStatus.OK);
 	}
 
 }

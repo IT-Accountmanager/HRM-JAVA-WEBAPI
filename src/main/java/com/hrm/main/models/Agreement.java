@@ -5,13 +5,17 @@ import java.time.LocalDate;
 import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "agreement")
@@ -23,30 +27,42 @@ public class Agreement {
 	private int agreementId;
 	@Column(name = "candidate_id")
 	private long candidateId;
+	private LocalDate agreementDate;
 	private String employeeName;
-	private String employeeAddress;
-	private String nationality;
+	private String employeeFathersOrHusbandName;
 	private int age;
+	private String religion;
+	private String state;
 	private String permanentAddress;
+	private float serviceCommitment;
+	private LocalDate tenureFrom;
+	private LocalDate tenureTo;
 	private static String employerName = "Envision Integrated Services Private Limited";
 	private static String corporateOfficeAddress = "#913, 9th floor, Manjeera Trinity Corporate Building, E-Seva lane, KPHB, Hyderabad – 500085";
 	private static String regOfficeAddress = "#8-3-940/5/501, Tirumala Apartments, Yellareddyguda Cross Roads, Ameerpet, Hyderabad, Telangana – 500038";
-	private int duration;
-	private LocalDate startDate;
-	private LocalDate endDate;
-	private int liquidatedDamagesAmount;
-	private boolean isTransferable;
-	private String arbitrationVenue;
-	private int noticePeriod;
-	private DetailsSubmissionStatus agreementSubmissionStatus;
+	/*
+	 * private float duration; private LocalDate startDate; private LocalDate
+	 * endDate;
+	 */
+	private long serviceBreakAmount;
+	private String custodyOf;
+	private DetailsSubmissionStatus agreementSubmissionStatus = getAgreementSubmissionStatus().Pending;
 	private ApprovalStatus hrExecutiveApprovalStatus = getHrExecutiveApprovalStatus().Pending;
 	private String hrExecutiveRemark;
 	private ApprovalStatus hrManagerApprovalStatus = getHrManagerApprovalStatus().Pending;
 	private String hrManagerRemark;
-
-	public Agreement() {
-		super();
-	}
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(columnDefinition = "LONGBLOB")
+	private byte[] sign;
+	@Transient
+	public String signBase64;
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(columnDefinition = "LONGBLOB")
+	private byte[] leftHandThumbImpression;
+	@Transient
+	public String leftHandThumbImpressionBase64;
 
 	public int getAgreementId() {
 		return agreementId;
@@ -64,6 +80,14 @@ public class Agreement {
 		this.candidateId = candidateId;
 	}
 
+	public LocalDate getAgreementDate() {
+		return agreementDate;
+	}
+
+	public void setAgreementDate(LocalDate agreementDate) {
+		this.agreementDate = agreementDate;
+	}
+
 	public String getEmployeeName() {
 		return employeeName;
 	}
@@ -72,20 +96,12 @@ public class Agreement {
 		this.employeeName = employeeName;
 	}
 
-	public String getEmployeeAddress() {
-		return employeeAddress;
+	public String getEmployeeFathersOrHusbandName() {
+		return employeeFathersOrHusbandName;
 	}
 
-	public void setEmployeeAddress(String employeeAddress) {
-		this.employeeAddress = employeeAddress;
-	}
-
-	public String getNationality() {
-		return nationality;
-	}
-
-	public void setNationality(String nationality) {
-		this.nationality = nationality;
+	public void setEmployeeFathersOrHusbandName(String employeeFathersOrHusbandName) {
+		this.employeeFathersOrHusbandName = employeeFathersOrHusbandName;
 	}
 
 	public int getAge() {
@@ -96,12 +112,52 @@ public class Agreement {
 		this.age = age;
 	}
 
+	public String getReligion() {
+		return religion;
+	}
+
+	public void setReligion(String religion) {
+		this.religion = religion;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
 	public String getPermanentAddress() {
 		return permanentAddress;
 	}
 
 	public void setPermanentAddress(String permanentAddress) {
 		this.permanentAddress = permanentAddress;
+	}
+
+	public float getServiceCommitment() {
+		return serviceCommitment;
+	}
+
+	public void setServiceCommitment(float serviceCommitment) {
+		this.serviceCommitment = serviceCommitment;
+	}
+
+	public LocalDate getTenureFrom() {
+		return tenureFrom;
+	}
+
+	public void setTenureFrom(LocalDate tenureFrom) {
+		this.tenureFrom = tenureFrom;
+	}
+
+	public LocalDate getTenureTo() {
+		return tenureTo;
+	}
+
+	public void setTenureTo(LocalDate tenureTo) {
+		this.tenureTo = tenureTo;
 	}
 
 	public static String getEmployerName() {
@@ -128,60 +184,34 @@ public class Agreement {
 		Agreement.regOfficeAddress = regOfficeAddress;
 	}
 
-	public int getDuration() {
-		return duration;
+	/*
+	 * public float getDuration() { return duration; }
+	 * 
+	 * public void setDuration(float duration) { this.duration = duration; }
+	 * 
+	 * public LocalDate getStartDate() { return startDate; }
+	 * 
+	 * public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
+	 * 
+	 * public LocalDate getEndDate() { return endDate; }
+	 * 
+	 * public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
+	 */
+
+	public long getServiceBreakAmount() {
+		return serviceBreakAmount;
 	}
 
-	public void setDuration(int duration) {
-		this.duration = duration;
+	public void setServiceBreakAmount(long serviceBreakAmount) {
+		this.serviceBreakAmount = serviceBreakAmount;
 	}
 
-	public LocalDate getStartDate() {
-		return startDate;
+	public String getCustodyOf() {
+		return custodyOf;
 	}
 
-	public void setStartDate(LocalDate startDate) {
-		this.startDate = startDate;
-	}
-
-	public LocalDate getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(LocalDate endDate) {
-		this.endDate = endDate;
-	}
-
-	public int getLiquidatedDamagesAmount() {
-		return liquidatedDamagesAmount;
-	}
-
-	public void setLiquidatedDamagesAmount(int liquidatedDamagesAmount) {
-		this.liquidatedDamagesAmount = liquidatedDamagesAmount;
-	}
-
-	public boolean isTransferable() {
-		return isTransferable;
-	}
-
-	public void setTransferable(boolean isTransferable) {
-		this.isTransferable = isTransferable;
-	}
-
-	public String getArbitrationVenue() {
-		return arbitrationVenue;
-	}
-
-	public void setArbitrationVenue(String arbitrationVenue) {
-		this.arbitrationVenue = arbitrationVenue;
-	}
-
-	public int getNoticePeriod() {
-		return noticePeriod;
-	}
-
-	public void setNoticePeriod(int noticePeriod) {
-		this.noticePeriod = noticePeriod;
+	public void setCustodyOf(String custodyOf) {
+		this.custodyOf = custodyOf;
 	}
 
 	public DetailsSubmissionStatus getAgreementSubmissionStatus() {
@@ -222,6 +252,22 @@ public class Agreement {
 
 	public void setHrManagerRemark(String hrManagerRemark) {
 		this.hrManagerRemark = hrManagerRemark;
+	}
+
+	public byte[] getSign() {
+		return sign;
+	}
+
+	public void setSign(byte[] sign) {
+		this.sign = sign;
+	}
+
+	public byte[] getLeftHandThumbImpression() {
+		return leftHandThumbImpression;
+	}
+
+	public void setLeftHandThumbImpression(byte[] leftHandThumbImpression) {
+		this.leftHandThumbImpression = leftHandThumbImpression;
 	}
 
 }

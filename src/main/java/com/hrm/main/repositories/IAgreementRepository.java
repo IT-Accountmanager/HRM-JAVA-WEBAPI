@@ -12,6 +12,8 @@ public interface IAgreementRepository extends JpaRepository<Agreement, Integer> 
 	// @Transactional
 	// void deleteByEmployeeId(String employeeId);
 
+	Boolean existsByCandidateId(long candidateId);
+
 	// Agreement findByEmployeeId(String employeeId);
 
 }

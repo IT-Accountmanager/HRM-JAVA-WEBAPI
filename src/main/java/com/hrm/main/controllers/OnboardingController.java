@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.Onboarding;
+import com.hrm.main.models.Helper.EnumCollection;
+import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.services.IOnboardingService;
 
-@CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
+@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
 @RestController
 @RequestMapping("/Onboarding")
 
@@ -35,7 +37,7 @@ public class OnboardingController {
 
 	@PostMapping("/post")
 	public ResponseEntity<Onboarding> addOnboarding(@RequestBody Onboarding onboardingRequest) {
-		
+
 		Onboarding createOnboarding = this.onboardingService.createOnboarding(onboardingRequest);
 		return new ResponseEntity<Onboarding>(createOnboarding, HttpStatus.OK);
 	}
@@ -52,10 +54,10 @@ public class OnboardingController {
 		return new ResponseEntity<List<Onboarding>>(allOnboarding, HttpStatus.OK);
 	}
 
-	@GetMapping("/get/{id}")
-	public ResponseEntity<Onboarding> getOnboarding(@PathVariable Integer id) {
-		Onboarding onboardingById = this.onboardingService.getOnboardingById(id);
-		return new ResponseEntity<Onboarding>(onboardingById, HttpStatus.OK);
+	@GetMapping("/get/{candidateId}")
+	public ResponseEntity<Onboarding> getOnboarding(@PathVariable long candidateId) {
+		Onboarding onboarding = this.onboardingService.getOnboardingByCandidateId(candidateId);
+		return new ResponseEntity<Onboarding>(onboarding, HttpStatus.OK);
 	}
 
 	@PutMapping("/update/{id}")
@@ -76,4 +78,25 @@ public class OnboardingController {
 
 	}
 
+	@GetMapping("/departments")
+	public String[] getDepartments() {
+		Departments[] departments = Departments.values();
+		return formatDepartments(departments);
+	}
+
+	private String[] formatDepartments(Departments[] departments) {
+		String[] formattedDepartments = new String[departments.length];
+
+		for (int i = 0; i < departments.length; i++) {
+			formattedDepartments[i] = formatDepartmentName(departments[i].name());
+		}
+
+		return formattedDepartments;
+	}
+
+	private String formatDepartmentName(String departmentName) {
+		// Replace camel case with spaces and capitalize each word
+		return departmentName.replaceAll(String.format("%s|%s|%s", "(?<=[A-Z])(?=[A-Z][a-z])", "(?<=[^A-Z])(?=[A-Z])",
+				"(?<=[A-Za-z])(?=[^A-Za-z])"), " ");
+	}
 }

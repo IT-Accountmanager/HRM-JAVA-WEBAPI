@@ -2,6 +2,8 @@ package com.hrm.main.payloads;
 
 import java.time.LocalDate;
 
+import com.hrm.main.models.Helper.EnumCollection.Departments;
+
 public class EmployeeGenerateDto {
 
 	private String employeeId;
@@ -12,7 +14,8 @@ public class EmployeeGenerateDto {
 	private float bondPeriod;
 	private float ctc;
 	private LocalDate dateOfJoining;
-	private LocalDate dteOfReleasing;
+	private LocalDate dateOfReleasing;
+	private Departments department;
 
 	public EmployeeGenerateDto() {
 		super();
@@ -82,12 +85,20 @@ public class EmployeeGenerateDto {
 		this.dateOfJoining = dateOfJoining;
 	}
 
-	public LocalDate getDteOfReleasing() {
-		return dteOfReleasing;
+	public LocalDate getDateOfReleasing() {
+		return dateOfReleasing;
 	}
 
-	public void setDteOfReleasing(LocalDate dteOfReleasing) {
-		this.dteOfReleasing = dteOfReleasing;
+	public void setDateOfReleasing(LocalDate dateOfReleasing) {
+		this.dateOfReleasing = dateOfReleasing;
+	}
+
+	public Departments getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Departments department) {
+		this.department = department;
 	}
 
 }

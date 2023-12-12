@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hrm.main.models.OnboardingEmployeeSummary;
+import com.hrm.main.repositories.IEmployeeRepository;
 import com.hrm.main.repositories.IOnboardingEmployeeSummaryRepository;
 import com.hrm.main.services.IOnboardingEmployeeSummaryService;
 
@@ -14,6 +15,9 @@ public class OnboardingEmployeeSummaryServiceImpl implements IOnboardingEmployee
 
 	@Autowired
 	private IOnboardingEmployeeSummaryRepository onboardingEmployeeSummaryRepository;
+
+	@Autowired
+	private IEmployeeRepository employeeRepository;
 
 	@Override
 	public String createSummary(OnboardingEmployeeSummary summary) {
@@ -32,12 +36,6 @@ public class OnboardingEmployeeSummaryServiceImpl implements IOnboardingEmployee
 	public List<OnboardingEmployeeSummary> getAllSummary() {
 		List<OnboardingEmployeeSummary> allSummary = onboardingEmployeeSummaryRepository.findAll();
 		return allSummary;
-	}
-
-	@Override
-	public OnboardingEmployeeSummary getSummaryById(int id) {
-		OnboardingEmployeeSummary employeeSummary = onboardingEmployeeSummaryRepository.findById(id).get();
-		return employeeSummary;
 	}
 
 	@Override
@@ -63,6 +61,41 @@ public class OnboardingEmployeeSummaryServiceImpl implements IOnboardingEmployee
 	@Override
 	public List<String> findHREmployee() {
 		return this.onboardingEmployeeSummaryRepository.findHREmployee();
+	}
+
+	@Override
+	public List<String> findDFSEmployee() {
+		return null;/* this.employeeRepository.findAllByDepartment(String ) */
+	}
+
+	@Override
+	public List<String> findITEmployee() {
+		return null;
+	}
+
+	@Override
+	public List<String> findBIMEmployee() {
+		return null;
+	}
+
+	@Override
+	public List<String> findEDSEmployee() {
+		return null;
+	}
+
+	@Override
+	public List<String> findSystemAdminEmployee() {
+		return null;
+	}
+
+	@Override
+	public List<String> findSalesEmployee() {
+		return null;
+	}
+
+	@Override
+	public List<String> findIASEmployee() {
+		return null;
 	}
 
 	/*

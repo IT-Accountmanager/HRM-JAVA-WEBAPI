@@ -68,13 +68,25 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 		return "All details are not added : ";
 	}
 
+	/*
+	 * @Override public List<Onboarding> getAllExecutive(CandidatesStatus status) {
+	 * List<Onboarding> allExecutive =
+	 * this.onboardingRepository.findAllByCandidatesStatus(status);
+	 * 
+	 * List<Onboarding> collect = allExecutive.stream() .filter(t ->
+	 * t.getHrExecutiveSubmission() !=
+	 * HrSubmission.Submit).collect(Collectors.toList()); return collect; }
+	 */
+
 	@Override
 	public List<Onboarding> getAllExecutive(CandidatesStatus status) {
 		List<Onboarding> allExecutive = this.onboardingRepository.findAllByCandidatesStatus(status);
 
-		List<Onboarding> collect = allExecutive.stream()
-				.filter(t -> t.getHrExecutiveSubmission() != HrSubmission.Submit).collect(Collectors.toList());
-		return collect;
+		List<Onboarding> nonSubmittedExecutiveList = allExecutive.stream()
+				.filter(onboarding -> onboarding.getHrExecutiveSubmission() != HrSubmission.Submit)
+				.collect(Collectors.toList());
+
+		return nonSubmittedExecutiveList;
 	}
 
 	@Override
@@ -269,8 +281,8 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 				executive.setCandidateName(onboarding.getCandidateName());
 				executive.setContactNumber(onboarding.getContactNumber());
 				executive.setEmailId(onboarding.getEmailId());
-				executive.setBondPeriod(onboarding.getBondPeriod());
-				executive.setBondBreakAmount(onboarding.getBondBreakAmount());
+				executive.setServiceCommitment(onboarding.getServiceCommitment());
+				executive.setServiceBreakAmount(onboarding.getServiceBreakAmount());
 				executive.setCtc(onboarding.getCtc());
 				executive.setStatus(onboarding.getCandidatesStatus());
 
@@ -423,6 +435,16 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 		return hrExecutiveAgreementApprovalDto;
 	}
 
+	/*
+	 * public HrExecutivePersonalApprovalDto
+	 * personalApproval(HrExecutivePersonalApprovalDto hrExecutivePersonalDto, long
+	 * candidateId) { Personal existingPersonal =
+	 * personalRepository.findByCandidateId(candidateId);
+	 * modelMapper.map(hrExecutivePersonalDto, existingPersonal);
+	 * this.personalRepository.save(existingPersonal); return
+	 * hrExecutivePersonalDto; }
+	 */
+
 	@Override
 	public HrExecutiveAgreementApprovalDto getAgreementApproval(long candidateId) {
 		Agreement agreement = this.agreementRepository.findByCandidateId(candidateId);
@@ -448,14 +470,20 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 		ApprovalStatus educationApprovalStatus = this.educationRepository.findAllByCandidateId(candiateId).get(0)
 				.getHrExecutiveApprovalStatus();
 
-		ApprovalStatus workApprovalStatus = this.workRepository.findAllWorkByCandidateId(candiateId).get(0)
-				.getHrExecutiveApprovalStatus();
+		/*
+		 * ApprovalStatus workApprovalStatus =
+		 * this.workRepository.findAllWorkByCandidateId(candiateId).get(0)
+		 * .getHrExecutiveApprovalStatus();
+		 */
 
 		ApprovalStatus agreementApprovalStatus = this.agreementRepository.findByCandidateId(candiateId)
 				.getHrExecutiveApprovalStatus();
 
 		if (personalApprovalStatus == ApprovalStatus.Approve && familyApprovalStatus == ApprovalStatus.Approve
-				&& educationApprovalStatus == ApprovalStatus.Approve && workApprovalStatus == ApprovalStatus.Approve
+				&& educationApprovalStatus == ApprovalStatus.Approve /*
+																		 * && workApprovalStatus ==
+																		 * ApprovalStatus.Approve
+																		 */
 				&& agreementApprovalStatus == ApprovalStatus.Approve) {
 			Onboarding candidate = this.onboardingRepository.findByCandidateId(candiateId);
 			candidate.setHrExecutiveSubmission(HrSubmission.Submit);

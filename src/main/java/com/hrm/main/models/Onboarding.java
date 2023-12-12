@@ -4,7 +4,9 @@ package com.hrm.main.models;
 import java.time.LocalDate;
 
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,11 +38,11 @@ public class Onboarding {
 	@Column(name = "email_id")
 	private String emailId;
 
-	@Column(name = "bond_period")
-	private float bondPeriod;
+	@Column(name = "service_commitment")
+	private float serviceCommitment;
 
-	@Column(name = "bond_break_amount")
-	private int bondBreakAmount;
+	@Column(name = "service_break_amount")
+	private long serviceBreakAmount;
 
 	@Column(name = "ctc")
 	private float ctc;
@@ -51,6 +53,7 @@ public class Onboarding {
 	private HrSubmission hrManagerSubmission;
 	private LocalDate dateOfJoining;
 	private String workLocation;
+	private Departments department;
 
 	// private Profile profile;
 
@@ -71,7 +74,6 @@ public class Onboarding {
 	 * 
 	 * public void setProfile(Profile profile) { this.profile = profile; }
 	 */
-
 	public int getSrNo() {
 		return srNo;
 	}
@@ -120,12 +122,20 @@ public class Onboarding {
 		this.emailId = emailId;
 	}
 
-	public float getBondPeriod() {
-		return bondPeriod;
+	public float getServiceCommitment() {
+		return serviceCommitment;
 	}
 
-	public void setBondPeriod(float bondPeriod) {
-		this.bondPeriod = bondPeriod;
+	public void setServiceCommitment(float serviceCommitment) {
+		this.serviceCommitment = serviceCommitment;
+	}
+
+	public long getServiceBreakAmount() {
+		return serviceBreakAmount;
+	}
+
+	public void setServiceBreakAmount(long serviceBreakAmount) {
+		this.serviceBreakAmount = serviceBreakAmount;
 	}
 
 	public float getCtc() {
@@ -134,14 +144,6 @@ public class Onboarding {
 
 	public void setCtc(float ctc) {
 		this.ctc = ctc;
-	}
-
-	public int getBondBreakAmount() {
-		return bondBreakAmount;
-	}
-
-	public void setBondBreakAmount(int bondBreakAmount) {
-		this.bondBreakAmount = bondBreakAmount;
 	}
 
 	public CandidatesStatus getCandidatesStatus() {
@@ -182,6 +184,14 @@ public class Onboarding {
 
 	public void setWorkLocation(String workLocation) {
 		this.workLocation = workLocation;
+	}
+
+	public Departments getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Departments department) {
+		this.department = department;
 	}
 
 }

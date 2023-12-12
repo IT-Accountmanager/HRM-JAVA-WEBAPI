@@ -13,7 +13,7 @@ public interface IOnboardingService {
 
 	List<Onboarding> getAllOnboarding();
 
-	Onboarding getOnboardingById(int id);
+	Onboarding getOnboardingByCandidateId(long candidateId);
 
 	String updateOnboarding(Onboarding onboarding, Integer id);
 

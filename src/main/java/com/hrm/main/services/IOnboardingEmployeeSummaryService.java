@@ -10,8 +10,6 @@ public interface IOnboardingEmployeeSummaryService {
 
 	List<OnboardingEmployeeSummary> getAllSummary();
 
-	OnboardingEmployeeSummary getSummaryById(int id);
-
 	// String updateSummary(OnboardingEmployeeSummary summary,Integer id);
 
 	// String deleteSummary(Integer id);
@@ -25,5 +23,19 @@ public interface IOnboardingEmployeeSummaryService {
 	List<String> findDevelopmentEmployee();
 
 	List<String> findHREmployee();
+
+	List<String> findDFSEmployee();
+
+	List<String> findITEmployee();
+
+	List<String> findBIMEmployee();
+
+	List<String> findEDSEmployee();
+
+	List<String> findSystemAdminEmployee();
+
+	List<String> findSalesEmployee();
+
+	List<String> findIASEmployee();
 
 }

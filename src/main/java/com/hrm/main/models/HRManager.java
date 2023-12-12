@@ -22,8 +22,8 @@ public class HRManager {
 	private String candidateName;
 	private long contactNumber;
 	private String emailId;
-	private float bondPeriod;
-	private int bondBreakAmount;
+	private float serviceCommitment;
+	private long serviceBreakAmount;
 	private float ctc;
 
 	private CandidatesStatus status;
@@ -80,20 +80,20 @@ public class HRManager {
 		this.emailId = emailId;
 	}
 
-	public float getBondPeriod() {
-		return bondPeriod;
+	public float getServiceCommitment() {
+		return serviceCommitment;
 	}
 
-	public void setBondPeriod(float bondPeriod) {
-		this.bondPeriod = bondPeriod;
+	public void setServiceCommitment(float serviceCommitment) {
+		this.serviceCommitment = serviceCommitment;
 	}
 
-	public int getBondBreakAmount() {
-		return bondBreakAmount;
+	public long getServiceBreakAmount() {
+		return serviceBreakAmount;
 	}
 
-	public void setBondBreakAmount(int bondBreakAmount) {
-		this.bondBreakAmount = bondBreakAmount;
+	public void setServiceBreakAmount(long serviceBreakAmount) {
+		this.serviceBreakAmount = serviceBreakAmount;
 	}
 
 	public float getCtc() {

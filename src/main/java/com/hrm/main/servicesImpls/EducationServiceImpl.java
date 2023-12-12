@@ -24,7 +24,7 @@ public class EducationServiceImpl implements IEducationService {
 	public String createEducation(Education education, long candidateId) {
 		try {
 			education.setCandidateId(candidateId);
-			education.setEducationSubmissionStatus(DetailsSubmissionStatus.submitted);
+			education.setEducationSubmissionStatus(DetailsSubmissionStatus.Submitted);
 			Decoder decoder = Base64.getDecoder();
 
 			while (education.base64Data.length() % 4 != 0) {
@@ -109,14 +109,14 @@ public class EducationServiceImpl implements IEducationService {
 
 		if (education != null && !education.isEmpty()) {
 			boolean allSubmitted = education.stream()
-					.allMatch(f -> f.getEducationSubmissionStatus() == DetailsSubmissionStatus.submitted);
+					.allMatch(f -> f.getEducationSubmissionStatus() == DetailsSubmissionStatus.Submitted);
 
 			if (allSubmitted) {
-				return new EducationStatusResponse(DetailsSubmissionStatus.submitted);
+				return new EducationStatusResponse(DetailsSubmissionStatus.Submitted);
 			}
 		}
 
-		return new EducationStatusResponse(DetailsSubmissionStatus.pending);
+		return new EducationStatusResponse(DetailsSubmissionStatus.Pending);
 	}
 
 }

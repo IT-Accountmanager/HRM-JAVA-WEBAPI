@@ -3,11 +3,15 @@ package com.hrm.main.models.Helper;
 public class EnumCollection {
 
 	public enum DetailsSubmissionStatus {
-		pending, submitted
+		Pending, Submitted
 	}
 
 	public enum CandidatesStatus {
-		Pending, Inreview, Approved, Rejected
+		Pending, In_Review, Approved, Rejected
+	}
+
+	public enum EmployeeStatus {
+		Active , Inactive
 	}
 
 	public enum ApprovalStatus {
@@ -16,5 +20,15 @@ public class EnumCollection {
 
 	public enum HrSubmission {
 		Reject, Submit
+	}
+
+	public enum AttendanceStatus {
+		Present, Absent, WFH
+	}
+
+	public enum Departments {
+		Management, DigitalFactorySolution, EngineeringDesignSolution, IndustrialAutomationSolution,
+		BuildingInformationModeling, InformationTechnologySolution, HumanResources, Finance, Sales, SystemAdmin,
+		Development, Recruitment, DigitalMarketing
 	}
 }

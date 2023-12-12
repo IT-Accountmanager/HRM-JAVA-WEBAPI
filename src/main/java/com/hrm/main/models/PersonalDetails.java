@@ -1,5 +1,7 @@
 package com.hrm.main.models;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +26,7 @@ public class PersonalDetails {
 	private String lastName;
 
 	@Column(name = "date_of_birth")
-	private String dateOfBirth;
+	private LocalDate dateOfBirth;
 
 	@Column(name = "gender")
 	private String gender;
@@ -104,11 +106,11 @@ public class PersonalDetails {
 		this.lastName = lastName;
 	}
 
-	public String getDateOfBirth() {
+	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(String dateOfBirth) {
+	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 

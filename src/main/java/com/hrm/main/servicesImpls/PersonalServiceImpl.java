@@ -3,16 +3,14 @@ package com.hrm.main.servicesImpls;
 import java.util.Base64;
 import java.util.Base64.Decoder;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.hrm.main.models.BankDetails;
-import com.hrm.main.models.DocumentDetails;
-import com.hrm.main.models.DocumentUpload;
+
+import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Personal;
-import com.hrm.main.models.PersonalDetails;
 import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 import com.hrm.main.payloads.PersonalStatusResponse;
+import com.hrm.main.repositories.IOnboardingRepository;
 import com.hrm.main.repositories.IPersonalRepository;
 import com.hrm.main.services.IPersonalService;
 
@@ -22,6 +20,9 @@ public class PersonalServiceImpl implements IPersonalService {
 	@Autowired
 	IPersonalRepository personalRepository;
 
+	@Autowired
+	IOnboardingRepository onboardingRepository;
+
 	@Override
 	public String addPersonal(Personal personal, long candidateId) {
 
@@ -30,6 +31,12 @@ public class PersonalServiceImpl implements IPersonalService {
 			try {
 
 				personal.setCandidateId(candidateId);
+
+				Onboarding onboardingcandidate = onboardingRepository.findByCandidateId(candidateId);
+				onboardingcandidate.setCandidateName(personal.getPersonalDetails().getFirstName() + " "
+						+ personal.getPersonalDetails().getMiddleName() + " "
+						+ personal.getPersonalDetails().getLastName());
+
 				// ----------------------------------------------------------
 				Decoder decoder2 = Base64.getDecoder();
 				while (personal.getPersonalDetails().base64Data.length() % 4 != 0) {
@@ -37,7 +44,7 @@ public class PersonalServiceImpl implements IPersonalService {
 				}
 				personal.getPersonalDetails()
 						.setProfilePhoto(decoder2.decode(personal.getPersonalDetails().base64Data));
-				personal.setPersonalSubmissionStatus(DetailsSubmissionStatus.submitted);
+				personal.setPersonalSubmissionStatus(DetailsSubmissionStatus.Submitted);
 
 				// ---------------------------------------------------------
 
@@ -100,7 +107,7 @@ public class PersonalServiceImpl implements IPersonalService {
 		Personal personal = this.personalRepository.findByCandidateId(candidateId);
 
 		if (personal == null) {
-			status = DetailsSubmissionStatus.pending;
+			status = DetailsSubmissionStatus.Pending;
 		} else {
 			status = personal.getPersonalSubmissionStatus();
 		}

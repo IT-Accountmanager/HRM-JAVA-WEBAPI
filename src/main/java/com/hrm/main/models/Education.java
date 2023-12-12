@@ -28,8 +28,8 @@ public class Education {
 	private String stream;
 	private LocalDate startDate;
 	private LocalDate endDate;
-	private float percentage;
-	private String collegeName;
+	private String percentageOrGrade;
+	private String collegeNameOrUniversity;
 	@Column(name = "candidate_id")
 	private long candidateId;
 	@Lob
@@ -38,7 +38,8 @@ public class Education {
 	private byte[] certificate;
 	@Transient
 	public String base64Data;
-	private DetailsSubmissionStatus educationSubmissionStatus;
+	private DetailsSubmissionStatus educationSubmissionStatus = getEducationSubmissionStatus().Pending;
+
 	private ApprovalStatus hrExecutiveApprovalStatus = getHrExecutiveApprovalStatus().Pending;
 	private String hrExecutiveRemark;
 	private ApprovalStatus hrManagerApprovalStatus = getHrManagerApprovalStatus().Pending;
@@ -104,20 +105,20 @@ public class Education {
 		this.endDate = endDate;
 	}
 
-	public float getPercentage() {
-		return percentage;
+	public String getPercentageOrGrade() {
+		return percentageOrGrade;
 	}
 
-	public void setPercentage(float percentage) {
-		this.percentage = percentage;
+	public void setPercentageOrGrade(String percentageOrGrade) {
+		this.percentageOrGrade = percentageOrGrade;
 	}
 
-	public String getCollegeName() {
-		return collegeName;
+	public String getCollegeNameOrUniversity() {
+		return collegeNameOrUniversity;
 	}
 
-	public void setCollegeName(String collegeName) {
-		this.collegeName = collegeName;
+	public void setCollegeNameOrUniversity(String collegeNameOrUniversity) {
+		this.collegeNameOrUniversity = collegeNameOrUniversity;
 	}
 
 	public long getCandidateId() {

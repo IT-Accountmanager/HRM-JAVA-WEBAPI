@@ -25,18 +25,18 @@ public class Family {
 	private int age;
 	private LocalDate dateOfBirth;
 	private long phoneNumber;
-	private String emailId;
 	private String address;
+	private String pincode;
 
 	@Column(name = "candidate_id")
 	private long candidateId;
-	private DetailsSubmissionStatus familySubmissionStatus;
+	private DetailsSubmissionStatus familySubmissionStatus = getFamilySubmissionStatus().Pending;
 
-	private ApprovalStatus hrExecutiveApprovalStatus;
+	private ApprovalStatus hrExecutiveApprovalStatus = getHrExecutiveApprovalStatus().Pending;
 
 	private String hrExecutiveRemark;
 
-	private ApprovalStatus hrManagerApprovalStatus;
+	private ApprovalStatus hrManagerApprovalStatus = getHrExecutiveApprovalStatus().Pending;
 
 	private String hrManagerRemark;
 
@@ -98,20 +98,20 @@ public class Family {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getEmailId() {
-		return emailId;
-	}
-
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-
 	public String getAddress() {
 		return address;
 	}
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getPincode() {
+		return pincode;
+	}
+
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
 	}
 
 	public long getCandidateId() {

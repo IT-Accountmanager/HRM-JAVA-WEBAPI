@@ -15,43 +15,43 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hrm.main.models.AttendanceSummary;
-import com.hrm.main.services.IAttendanceSummaryService;
+import com.hrm.main.models.Attendance;
+import com.hrm.main.services.IAttendanceService;
 @CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
 
 @RestController
 @RequestMapping("/attendance")
-public class AttendanceSummaryController {
+public class AttendanceController {
 
 	@Autowired
-	IAttendanceSummaryService attendanceService;
+	IAttendanceService attendanceService;
 
 	@PostMapping("/addattendance")
-	public ResponseEntity<String> addAttendance(@RequestBody AttendanceSummary attendance) {
+	public ResponseEntity<String> addAttendance(@RequestBody Attendance attendance) {
 		String result = this.attendanceService.addAttendence(attendance);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
 	@GetMapping("/allattendance")
-	public ResponseEntity<List<AttendanceSummary>> getAllAttendence() {
-		List<AttendanceSummary> allAttendance = this.attendanceService.allAttendance();
-		return new ResponseEntity<List<AttendanceSummary>>(allAttendance, HttpStatus.OK);
+	public ResponseEntity<List<Attendance>> getAllAttendence() {
+		List<Attendance> allAttendance = this.attendanceService.allAttendance();
+		return new ResponseEntity<List<Attendance>>(allAttendance, HttpStatus.OK);
 	}
 
 	@GetMapping("/attendance/{id}")
-	public ResponseEntity<AttendanceSummary> getAttendance(@PathVariable Integer id) {
+	public ResponseEntity<Attendance> getAttendance(@PathVariable Integer id) {
 
-		AttendanceSummary attendance = this.attendanceService.getAttendance(id);
-		return new ResponseEntity<AttendanceSummary>(attendance, HttpStatus.OK);
+		Attendance attendance = this.attendanceService.getAttendance(id);
+		return new ResponseEntity<Attendance>(attendance, HttpStatus.OK);
 	}
 
-	@PutMapping("/edit/{id}")
-	public ResponseEntity<String> editAttendance(@RequestBody AttendanceSummary attendance, @PathVariable Integer id) {
+	@PutMapping("/editattendance/{id}")
+	public ResponseEntity<String> editAttendance(@RequestBody Attendance attendance, @PathVariable Integer id) {
 		String editAttendance = this.attendanceService.editAttendance(attendance, id);
 		return new ResponseEntity<String>(editAttendance, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/deleteattendance/{id}")
 	public ResponseEntity<String> deletAttendance(@PathVariable int id) {
 		String result = this.attendanceService.deleteAttendance(id);
 		return new ResponseEntity<String>(result, HttpStatus.OK);

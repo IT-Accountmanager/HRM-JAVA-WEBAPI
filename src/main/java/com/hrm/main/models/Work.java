@@ -1,6 +1,7 @@
 package com.hrm.main.models;
 
 import java.time.LocalDate;
+
 import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 import jakarta.persistence.Basic;
@@ -23,38 +24,38 @@ public class Work {
 	@SequenceGenerator(name = "Work_Id_Sequence", initialValue = 1, allocationSize = 1, sequenceName = "Work_Id_Sequence")
 	private int workId;
 	private String comapanyName;
-	private String employeeId;
-	private String designation;
-	private String employeeType;
-	private String location;
-	private LocalDate joinedDate;
-	private LocalDate relievedDate;
-	private String tenure;
-	private String contactName;
-	private long contactNo;
-	private String emailId;
-	private String ctc;
+	private String previousDesignation;
+	private LocalDate tenureTo;
+	private LocalDate tenureFrom;
+	private long lastCTC;
+	private String lastReportingManagerName;
+	private long lastReportingManagerContactNo;
 	@Column(name = "candidate_id")
 	private long candidateId;
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	@Column(columnDefinition = "LONGBLOB")
-	private byte[] uploadOfferLetter;
-	@Transient
-	public String offerLetterBase64Data;
-	@Lob
-	@Basic(fetch = FetchType.LAZY)
-	@Column(columnDefinition = "LONGBLOB")
-	private byte[] appraisalLetter;
+	/*
+	 * private byte[] uploadOfferLetter;
+	 * 
+	 * @Transient public String offerLetterBase64Data;
+	 * 
+	 * @Lob
+	 * 
+	 * @Basic(fetch = FetchType.LAZY)
+	 * 
+	 * @Column(columnDefinition = "LONGBLOB")
+	 */
+	private byte[] lastAppraisalLetter;
 	@Transient
 	public String appraisalLetterBase64Data;
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	@Column(columnDefinition = "LONGBLOB")
-	private byte[] relievedLetter;
+	private byte[] lastMonthPaySlip;
 	@Transient
-	public String relievedLetterBase64Data;
-	private DetailsSubmissionStatus workSubmissionStatus;
+	public String paySlipBase64Data;
+	private DetailsSubmissionStatus workSubmissionStatus = getWorkSubmissionStatus().Pending;
 	private ApprovalStatus hrExecutiveApprovalStatus = getHrExecutiveApprovalStatus().Pending;
 	private String hrExecutiveRemark;
 	private ApprovalStatus hrManagerApprovalStatus = getHrManagerApprovalStatus().Pending;
@@ -80,116 +81,52 @@ public class Work {
 		this.comapanyName = comapanyName;
 	}
 
-	public String getEmployeeId() {
-		return employeeId;
+	public String getPreviousDesignation() {
+		return previousDesignation;
 	}
 
-	public void setEmployeeId(String employeeId) {
-		this.employeeId = employeeId;
+	public void setPreviousDesignation(String previousDesignation) {
+		this.previousDesignation = previousDesignation;
 	}
 
-	public String getDesignation() {
-		return designation;
+	public LocalDate getTenureTo() {
+		return tenureTo;
 	}
 
-	public void setDesignation(String designation) {
-		this.designation = designation;
+	public void setTenureTo(LocalDate tenureTo) {
+		this.tenureTo = tenureTo;
 	}
 
-	public String getEmployeeType() {
-		return employeeType;
+	public LocalDate getTenureFrom() {
+		return tenureFrom;
 	}
 
-	public void setEmployeeType(String employeeType) {
-		this.employeeType = employeeType;
+	public void setTenureFrom(LocalDate tenureFrom) {
+		this.tenureFrom = tenureFrom;
 	}
 
-	public String getLocation() {
-		return location;
+	public long getLastCTC() {
+		return lastCTC;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setLastCTC(long lastCTC) {
+		this.lastCTC = lastCTC;
 	}
 
-	public LocalDate getJoinedDate() {
-		return joinedDate;
+	public String getLastReportingManagerName() {
+		return lastReportingManagerName;
 	}
 
-	public void setJoinedDate(LocalDate joinedDate) {
-		this.joinedDate = joinedDate;
+	public void setLastReportingManagerName(String lastReportingManagerName) {
+		this.lastReportingManagerName = lastReportingManagerName;
 	}
 
-	public LocalDate getRelievedDate() {
-		return relievedDate;
+	public long getLastReportingManagerContactNo() {
+		return lastReportingManagerContactNo;
 	}
 
-	public void setRelievedDate(LocalDate relievedDate) {
-		this.relievedDate = relievedDate;
-	}
-
-	public String getTenure() {
-		return tenure;
-	}
-
-	public void setTenure(String tenure) {
-		this.tenure = tenure;
-	}
-
-	public String getContactName() {
-		return contactName;
-	}
-
-	public void setContactName(String contactName) {
-		this.contactName = contactName;
-	}
-
-	public long getContactNo() {
-		return contactNo;
-	}
-
-	public void setContactNo(long contactNo) {
-		this.contactNo = contactNo;
-	}
-
-	public String getEmailId() {
-		return emailId;
-	}
-
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-
-	public String getCtc() {
-		return ctc;
-	}
-
-	public void setCtc(String ctc) {
-		this.ctc = ctc;
-	}
-
-	public byte[] getUploadOfferLetter() {
-		return uploadOfferLetter;
-	}
-
-	public void setUploadOfferLetter(byte[] uploadOfferLetter) {
-		this.uploadOfferLetter = uploadOfferLetter;
-	}
-
-	public byte[] getAppraisalLetter() {
-		return appraisalLetter;
-	}
-
-	public void setAppraisalLetter(byte[] appraisalLetter) {
-		this.appraisalLetter = appraisalLetter;
-	}
-
-	public byte[] getRelievedLetter() {
-		return relievedLetter;
-	}
-
-	public void setRelievedLetter(byte[] relievedLetter) {
-		this.relievedLetter = relievedLetter;
+	public void setLastReportingManagerContactNo(long lastReportingManagerContactNo) {
+		this.lastReportingManagerContactNo = lastReportingManagerContactNo;
 	}
 
 	public long getCandidateId() {
@@ -198,6 +135,38 @@ public class Work {
 
 	public void setCandidateId(long candidateId) {
 		this.candidateId = candidateId;
+	}
+
+	public byte[] getLastAppraisalLetter() {
+		return lastAppraisalLetter;
+	}
+
+	public void setLastAppraisalLetter(byte[] lastAppraisalLetter) {
+		this.lastAppraisalLetter = lastAppraisalLetter;
+	}
+
+	public String getAppraisalLetterBase64Data() {
+		return appraisalLetterBase64Data;
+	}
+
+	public void setAppraisalLetterBase64Data(String appraisalLetterBase64Data) {
+		this.appraisalLetterBase64Data = appraisalLetterBase64Data;
+	}
+
+	public byte[] getLastMonthPaySlip() {
+		return lastMonthPaySlip;
+	}
+
+	public void setLastMonthPaySlip(byte[] lastMonthPaySlip) {
+		this.lastMonthPaySlip = lastMonthPaySlip;
+	}
+
+	public String getPaySlipBase64Data() {
+		return paySlipBase64Data;
+	}
+
+	public void setPaySlipBase64Data(String paySlipBase64Data) {
+		this.paySlipBase64Data = paySlipBase64Data;
 	}
 
 	public DetailsSubmissionStatus getWorkSubmissionStatus() {

@@ -85,8 +85,8 @@ public class HRManagerServiceImpl implements IHRManagerService {
 					hrManager.setCandidateName(onboarding.getCandidateName());
 					hrManager.setContactNumber(onboarding.getContactNumber());
 					hrManager.setEmailId(onboarding.getEmailId());
-					hrManager.setBondPeriod(onboarding.getBondPeriod());
-					hrManager.setBondBreakAmount(onboarding.getBondBreakAmount());
+					hrManager.setServiceCommitment(onboarding.getServiceCommitment());
+					hrManager.setServiceBreakAmount(onboarding.getServiceBreakAmount());
 					hrManager.setCtc(onboarding.getCtc());
 					hrManager.setStatus(onboarding.getCandidatesStatus());
 
@@ -298,6 +298,10 @@ public class HRManagerServiceImpl implements IHRManagerService {
 	@Override
 	public EmployeeGenerateDto generateEmployee(long candidateId) {
 
+		if (employeeRepository.existsByCandidateId(candidateId)) {
+			return null;
+		}
+
 		ApprovalStatus personalApprovalStatus = this.personalRepository.findByCandidateId(candidateId)
 				.getHrManagerApprovalStatus();
 
@@ -307,15 +311,18 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		ApprovalStatus educationApprovalStatus = this.educationRepository.findAllByCandidateId(candidateId).get(0)
 				.getHrManagerApprovalStatus();
 
-		ApprovalStatus workApprovalStatus = this.workRepository.findAllWorkByCandidateId(candidateId).get(0)
-				.getHrManagerApprovalStatus();
+		/*
+		 * ApprovalStatus workApprovalStatus =
+		 * this.workRepository.findAllWorkByCandidateId(candidateId).get(0)
+		 * .getHrManagerApprovalStatus();
+		 */
 
 		ApprovalStatus agreementApprovalStatus = this.agreementRepository.findByCandidateId(candidateId)
 				.getHrManagerApprovalStatus();
 
 		if (agreementApprovalStatus == ApprovalStatus.Approve && personalApprovalStatus == ApprovalStatus.Approve
 				&& familyApprovalStatus == ApprovalStatus.Approve && educationApprovalStatus == ApprovalStatus.Approve
-				&& workApprovalStatus == ApprovalStatus.Approve)
+		/* && workApprovalStatus == ApprovalStatus.Approve */)
 
 		{
 			Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
@@ -324,18 +331,18 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			long nextEmployeeIdNumber = this.employeeRepository.count() + 1;
 			employeeDto.setEmployeeId(String.format("EIS%05d", nextEmployeeIdNumber));
 
-			String firstName = this.personalRepository.findByCandidateId(candidateId).getPersonalDetails()
-					.getFirstName();
-			String lastName = this.personalRepository.findByCandidateId(candidateId).getPersonalDetails().getLastName();
-			employeeDto.setCandidateId(candidateId);
-			employeeDto.setName(firstName + " " + lastName);
+			
+			employeeDto.setName(candidate.getCandidateName());
 			employeeDto.setDesignation(candidate.getJobTitle());
 			employeeDto.setWorkLocation(candidate.getWorkLocation());
 			employeeDto.setDateOfJoining(candidate.getDateOfJoining());
-			employeeDto.setDteOfReleasing(this.workRepository.findAllWorkByCandidateId(candidateId).stream().findFirst()
-					.get().getRelievedDate());
-			employeeDto.setCtc(candidate.getCtc() * 100000f);
-			employeeDto.setBondPeriod(candidate.getBondPeriod());
+			employeeDto.setDepartment(candidate.getDepartment());
+			/*
+			 * employeeDto.setDteOfReleasing(this.workRepository.findAllWorkByCandidateId(
+			 * candidateId).stream().findFirst() .get().getRelievedDate());
+			 */
+			employeeDto.setCtc(candidate.getCtc());
+			employeeDto.setBondPeriod(candidate.getServiceCommitment());
 
 			this.employeeRepository.save(this.modelMapper.map(employeeDto, Employee.class));
 

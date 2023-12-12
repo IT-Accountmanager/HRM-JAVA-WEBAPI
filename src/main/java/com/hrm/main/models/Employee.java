@@ -2,6 +2,10 @@ package com.hrm.main.models;
 
 import java.time.LocalDate;
 
+import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.models.Helper.EnumCollection.Departments;
+import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,10 +26,17 @@ public class Employee {
 	private String name;
 	private String workLocation;
 	private String designation;
+	private Departments department;
+	private String assignTo;
 	private float bondPeriod;
-	private int ctc;
+	private long bondBreakAmount;
+	private float ctc;
 	private LocalDate dateOfJoining;
-	private LocalDate dteOfReleasing;
+	private LocalDate dateOfReleasing;
+	private long contactNumber;
+	private String emailId;
+	private EmployeeStatus employeeStatus;
+	private float relevantExperience;
 
 	public Employee() {
 		super();
@@ -75,6 +86,22 @@ public class Employee {
 		this.designation = designation;
 	}
 
+	public Departments getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Departments department) {
+		this.department = department;
+	}
+
+	public String getAssignTo() {
+		return assignTo;
+	}
+
+	public void setAssignTo(String assignTo) {
+		this.assignTo = assignTo;
+	}
+
 	public float getBondPeriod() {
 		return bondPeriod;
 	}
@@ -83,15 +110,23 @@ public class Employee {
 		this.bondPeriod = bondPeriod;
 	}
 
+	public long getBondBreakAmount() {
+		return bondBreakAmount;
+	}
+
+	public void setBondBreakAmount(long bondBreakAmount) {
+		this.bondBreakAmount = bondBreakAmount;
+	}
+
 	public void setWorkLocation(String workLocation) {
 		this.workLocation = workLocation;
 	}
 
-	public int getCtc() {
+	public float getCtc() {
 		return ctc;
 	}
 
-	public void setCtc(int ctc) {
+	public void setCtc(float ctc) {
 		this.ctc = ctc;
 	}
 
@@ -103,12 +138,44 @@ public class Employee {
 		this.dateOfJoining = dateOfJoining;
 	}
 
-	public LocalDate getDteOfReleasing() {
-		return dteOfReleasing;
+	public LocalDate getDateOfReleasing() {
+		return dateOfReleasing;
 	}
 
-	public void setDteOfReleasing(LocalDate dteOfReleasing) {
-		this.dteOfReleasing = dteOfReleasing;
+	public void setDateOfReleasing(LocalDate dateOfReleasing) {
+		this.dateOfReleasing = dateOfReleasing;
+	}
+
+	public long getContactNumber() {
+		return contactNumber;
+	}
+
+	public void setContactNumber(long contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+
+	public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
+	public EmployeeStatus getEmployeeStatus() {
+		return employeeStatus;
+	}
+
+	public void setEmployeeStatus(EmployeeStatus employeeStatus) {
+		this.employeeStatus = employeeStatus;
+	}
+
+	public float getRelevantExperience() {
+		return relevantExperience;
+	}
+
+	public void setRelevantExperience(float relevantExperience) {
+		this.relevantExperience = relevantExperience;
 	}
 
 }

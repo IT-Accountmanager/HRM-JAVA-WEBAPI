@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hrm.main.models.AttendanceSummary;
+import com.hrm.main.models.Attendance;
 import com.hrm.main.models.NewJobs;
 import com.hrm.main.repositories.INewJobsRepository;
 import com.hrm.main.services.INewJobsService;

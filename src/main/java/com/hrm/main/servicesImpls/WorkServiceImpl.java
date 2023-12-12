@@ -25,22 +25,23 @@ public class WorkServiceImpl implements IWorkService {
 	public String createWork(Work work, long candidateId) {
 		try {
 			work.setCandidateId(candidateId);
-			work.setWorkSubmissionStatus(DetailsSubmissionStatus.submitted);
+			work.setWorkSubmissionStatus(DetailsSubmissionStatus.Submitted);
 			work.setHrExecutiveApprovalStatus(ApprovalStatus.Pending);
 			Decoder decoder = Base64.getDecoder();
-			while (work.offerLetterBase64Data.length() % 4 != 0) {
-				work.offerLetterBase64Data += "=";
+			while (work.paySlipBase64Data.length() % 4 != 0) {
+				work.paySlipBase64Data += "=";
 			}
 			while (work.appraisalLetterBase64Data.length() % 4 != 0) {
 				work.appraisalLetterBase64Data += "=";
 			}
-			while (work.relievedLetterBase64Data.length() % 4 != 0) {
-				work.relievedLetterBase64Data += "=";
-			}
+			/*
+			 * while (work.relievedLetterBase64Data.length() % 4 != 0) {
+			 * work.relievedLetterBase64Data += "="; }
+			 */
 
-			work.setUploadOfferLetter(decoder.decode(work.offerLetterBase64Data));
-			work.setAppraisalLetter(decoder.decode(work.appraisalLetterBase64Data));
-			work.setRelievedLetter(decoder.decode(work.relievedLetterBase64Data));
+			// work.setUploadOfferLetter(decoder.decode(work.offerLetterBase64Data));
+			work.setLastAppraisalLetter(decoder.decode(work.appraisalLetterBase64Data));
+			work.setLastMonthPaySlip(decoder.decode(work.paySlipBase64Data));
 
 			var work1 = this.workRepo.save(work);
 			if (work1.getWorkId() > 0) {
@@ -71,19 +72,20 @@ public class WorkServiceImpl implements IWorkService {
 
 		try {
 			Decoder decoder = Base64.getDecoder();
-			while (work.offerLetterBase64Data.length() % 4 != 0) {
-				work.offerLetterBase64Data += "=";
+			while (work.paySlipBase64Data.length() % 4 != 0) {
+				work.paySlipBase64Data += "=";
 			}
 			while (work.appraisalLetterBase64Data.length() % 4 != 0) {
 				work.appraisalLetterBase64Data += "=";
 			}
-			while (work.relievedLetterBase64Data.length() % 4 != 0) {
-				work.relievedLetterBase64Data += "=";
-			}
+			/*
+			 * while (work.relievedLetterBase64Data.length() % 4 != 0) {
+			 * work.relievedLetterBase64Data += "="; }
+			 */
 
-			work.setUploadOfferLetter(decoder.decode(work.offerLetterBase64Data));
-			work.setAppraisalLetter(decoder.decode(work.appraisalLetterBase64Data));
-			work.setRelievedLetter(decoder.decode(work.relievedLetterBase64Data));
+			// work.setUploadOfferLetter(decoder.decode(work.offerLetterBase64Data));
+			work.setLastAppraisalLetter(decoder.decode(work.appraisalLetterBase64Data));
+			work.setLastMonthPaySlip(decoder.decode(work.paySlipBase64Data));
 			work.setWorkId(id);
 
 			workRepo.save(work);
@@ -112,9 +114,9 @@ public class WorkServiceImpl implements IWorkService {
 
 	@Override
 	public String getDocument(Integer id) {
-		byte[] relievedLetterBase64Data = workRepo.findById(id).get().getRelievedLetter();
+		byte[] appraisalLetterBase64Data = workRepo.findById(id).get().getLastAppraisalLetter();
 
-		return org.apache.tomcat.util.codec.binary.Base64.encodeBase64String(relievedLetterBase64Data);
+		return org.apache.tomcat.util.codec.binary.Base64.encodeBase64String(appraisalLetterBase64Data);
 	}
 
 	/*
@@ -131,14 +133,14 @@ public class WorkServiceImpl implements IWorkService {
 
 		if (work != null && !work.isEmpty()) {
 			boolean allSubmitted = work.stream()
-					.allMatch(f -> f.getWorkSubmissionStatus() == DetailsSubmissionStatus.submitted);
+					.allMatch(f -> f.getWorkSubmissionStatus() == DetailsSubmissionStatus.Submitted);
 
 			if (allSubmitted) {
-				return new WorkStatusResponse(DetailsSubmissionStatus.submitted);
+				return new WorkStatusResponse(DetailsSubmissionStatus.Submitted);
 			}
 		}
 
-		return new WorkStatusResponse(DetailsSubmissionStatus.pending);
+		return new WorkStatusResponse(DetailsSubmissionStatus.Pending);
 	}
 
 }

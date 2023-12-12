@@ -4,22 +4,22 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.hrm.main.models.AttendanceSummary;
-import com.hrm.main.repositories.IAttendanceSummaryRepository;
-import com.hrm.main.services.IAttendanceSummaryService;
+import com.hrm.main.models.Attendance;
+import com.hrm.main.repositories.IAttendanceRepository;
+import com.hrm.main.services.IAttendanceService;
 
 @Service
-public class AttendanceSummaryServiceImpl implements IAttendanceSummaryService {
+public class AttendanceServiceImpl implements IAttendanceService {
 
 	@Autowired
-	IAttendanceSummaryRepository attendanceRepo;
+	IAttendanceRepository attendanceRepo;
 
 	@Override
-	public String addAttendence(AttendanceSummary attendance) {
+	public String addAttendence(Attendance attendance) {
 
 		try {
 
-			AttendanceSummary addedAttendence = this.attendanceRepo.save(attendance);
+			Attendance addedAttendence = this.attendanceRepo.save(attendance);
 			if (addedAttendence.getId() > 0) {
 				return "Attendance of Id no. " + addedAttendence.getId() + " is Successfully Added!";
 			}
@@ -33,14 +33,14 @@ public class AttendanceSummaryServiceImpl implements IAttendanceSummaryService {
 	}
 
 	@Override
-	public List<AttendanceSummary> allAttendance() {
+	public List<Attendance> allAttendance() {
 		return this.attendanceRepo.findAll();
 
 	}
 
 	@Override
-	public AttendanceSummary getAttendance(Integer id) {
-		AttendanceSummary attendance = this.attendanceRepo.findById(id).get();
+	public Attendance getAttendance(Integer id) {
+		Attendance attendance = this.attendanceRepo.findById(id).get();
 		return attendance;
 	}
 
@@ -58,7 +58,7 @@ public class AttendanceSummaryServiceImpl implements IAttendanceSummaryService {
 	}
 
 	@Override
-	public String editAttendance(AttendanceSummary attendance, Integer id) {
+	public String editAttendance(Attendance attendance, Integer id) {
 
 		try {
 			if (this.attendanceRepo.existsById(id)) {

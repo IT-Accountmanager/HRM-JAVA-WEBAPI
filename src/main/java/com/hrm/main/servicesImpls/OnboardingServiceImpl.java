@@ -1,11 +1,11 @@
 package com.hrm.main.servicesImpls;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.hrm.main.models.Onboarding;
-import com.hrm.main.models.Profile;
-import com.hrm.main.models.Regularization;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.repositories.IOnboardingRepository;
 import com.hrm.main.repositories.IProfileRepository;
@@ -43,11 +43,13 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		onboarding.setCandidateName(onboardingRequest.getCandidateName());
 		onboarding.setContactNumber(onboardingRequest.getContactNumber());
 		onboarding.setEmailId(onboardingRequest.getEmailId());
-		onboarding.setBondPeriod(onboardingRequest.getBondPeriod());
-		onboarding.setBondBreakAmount(onboardingRequest.getBondBreakAmount());
+		onboarding.setServiceCommitment(onboardingRequest.getServiceCommitment());
+		onboarding.setServiceBreakAmount(onboardingRequest.getServiceBreakAmount());
 		onboarding.setCtc(onboardingRequest.getCtc());
-
+		onboarding.setDepartment(onboardingRequest.getDepartment());
 		onboarding.setCandidatesStatus(CandidatesStatus.Pending);
+		onboarding.setDateOfJoining(onboardingRequest.getDateOfJoining());
+		onboarding.setWorkLocation(onboardingRequest.getWorkLocation());
 
 		// Profile profile = new Profile();
 		/*
@@ -64,8 +66,8 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	}
 
 	@Override
-	public Onboarding getOnboardingById(int id) {
-		Onboarding onboarding = this.onboardingRepository.findById(id).get();
+	public Onboarding getOnboardingByCandidateId(long candidateId) {
+		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
 		return onboarding;
 	}
 
@@ -107,10 +109,55 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		return this.onboardingRepository.count();
 	}
 
+	/*
+	 * @Override public String createOnboarding(List<Onboarding> onboardings) {
+	 * Onboarding onboarding = new Onboarding();
+	 * 
+	 * for (Onboarding singleOnboarding : onboardings) {
+	 * onboarding.setJobTitle(singleOnboarding.getJobTitle());
+	 * 
+	 * onboarding.setCandidateId(onboardingRepository.count() + 1);
+	 * onboarding.setCandidateName(singleOnboarding.getCandidateName());
+	 * onboarding.setContactNumber(singleOnboarding.getContactNumber());
+	 * onboarding.setEmailId(singleOnboarding.getEmailId());
+	 * onboarding.setServiceCommitment(singleOnboarding.getServiceCommitment());
+	 * onboarding.setServiceBreakAmount(singleOnboarding.getServiceBreakAmount());
+	 * onboarding.setCtc(singleOnboarding.getCtc());
+	 * onboarding.setDepartment(singleOnboarding.getDepartment());
+	 * onboarding.setCandidatesStatus(CandidatesStatus.Pending);
+	 * onboarding.setDateOfJoining(singleOnboarding.getDateOfJoining());
+	 * onboarding.setWorkLocation(singleOnboarding.getWorkLocation()); }
+	 * this.onboardingRepository.saveAll(onboarding); return
+	 * "Added all Successfully"; }
+	 */
+
 	@Override
 	public String createOnboarding(List<Onboarding> onboardings) {
-		this.onboardingRepository.saveAll(onboardings);
-		return "Added all Successfully";
+		try {
+			for (Onboarding singleOnboarding : onboardings) {
+				Onboarding onboarding = new Onboarding(); // Create a new instance for each iteration
+
+				// Set values from the input Onboarding
+				onboarding.setJobTitle(singleOnboarding.getJobTitle());
+				onboarding.setCandidateId(onboardingRepository.count() + 1);
+				onboarding.setCandidateName(singleOnboarding.getCandidateName());
+				onboarding.setContactNumber(singleOnboarding.getContactNumber());
+				onboarding.setEmailId(singleOnboarding.getEmailId());
+				onboarding.setServiceCommitment(singleOnboarding.getServiceCommitment());
+				onboarding.setServiceBreakAmount(singleOnboarding.getServiceBreakAmount());
+				onboarding.setCtc(singleOnboarding.getCtc());
+				onboarding.setDepartment(singleOnboarding.getDepartment());
+				onboarding.setCandidatesStatus(CandidatesStatus.Pending);
+				onboarding.setDateOfJoining(singleOnboarding.getDateOfJoining());
+				onboarding.setWorkLocation(singleOnboarding.getWorkLocation());
+
+				onboardingRepository.save(onboarding);
+			}
+			return "Added all Successfully";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error adding onboarding data: " + e.getMessage();
+		}
 	}
 
 }

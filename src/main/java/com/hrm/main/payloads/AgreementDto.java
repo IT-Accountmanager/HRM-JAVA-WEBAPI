@@ -8,26 +8,34 @@ import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 public class AgreementDto {
 	private int agreementId;
 	private long candidateId;
+	private LocalDate agreementDate;
 	private String employeeName;
-	private String employeeAddress;
-	private String nationality;
+	private String employeeFathersOrHusbandName;
 	private int age;
+	private String religion;
+	private String state;
 	private String permanentAddress;
+	private float serviceCommitment;
+	private LocalDate tenureFrom;
+	private LocalDate tenureTo;
 	private String employerName;
 	private String corporateOfficeAddress;
 	private String regOfficeAddress;
-	private int duration;
-	private LocalDate startDate;
-	private LocalDate endDate;
-	private int liquidatedDamagesAmount;
-	private boolean isTransferable;
-	private String arbitrationVenue;
-	private int noticePeriod;
+	/*
+	 * private float duration; private LocalDate startDate; private LocalDate
+	 * endDate;
+	 */
+	private long serviceBreakAmount;
+	private String custodyOf;
 	private DetailsSubmissionStatus agreementSubmissionStatus;
 	private ApprovalStatus hrExecutiveApprovalStatus;
 	private String hrExecutiveRemark;
 	private ApprovalStatus hrManagerApprovalStatus;
 	private String hrManagerRemark;
+	private byte[] sign;
+	private String signBase64;
+	private byte[] leftHandThumbImpression;
+	private String leftHandThumbImpressionBase64;
 
 	public int getAgreementId() {
 		return agreementId;
@@ -45,6 +53,14 @@ public class AgreementDto {
 		this.candidateId = candidateId;
 	}
 
+	public LocalDate getAgreementDate() {
+		return agreementDate;
+	}
+
+	public void setAgreementDate(LocalDate agreementDate) {
+		this.agreementDate = agreementDate;
+	}
+
 	public String getEmployeeName() {
 		return employeeName;
 	}
@@ -53,20 +69,12 @@ public class AgreementDto {
 		this.employeeName = employeeName;
 	}
 
-	public String getEmployeeAddress() {
-		return employeeAddress;
+	public String getEmployeeFathersOrHusbandName() {
+		return employeeFathersOrHusbandName;
 	}
 
-	public void setEmployeeAddress(String employeeAddress) {
-		this.employeeAddress = employeeAddress;
-	}
-
-	public String getNationality() {
-		return nationality;
-	}
-
-	public void setNationality(String nationality) {
-		this.nationality = nationality;
+	public void setEmployeeFathersOrHusbandName(String employeeFathersOrHusbandName) {
+		this.employeeFathersOrHusbandName = employeeFathersOrHusbandName;
 	}
 
 	public int getAge() {
@@ -77,12 +85,52 @@ public class AgreementDto {
 		this.age = age;
 	}
 
+	public String getReligion() {
+		return religion;
+	}
+
+	public void setReligion(String religion) {
+		this.religion = religion;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
 	public String getPermanentAddress() {
 		return permanentAddress;
 	}
 
 	public void setPermanentAddress(String permanentAddress) {
 		this.permanentAddress = permanentAddress;
+	}
+
+	public float getServiceCommitment() {
+		return serviceCommitment;
+	}
+
+	public void setServiceCommitment(float serviceCommitment) {
+		this.serviceCommitment = serviceCommitment;
+	}
+
+	public LocalDate getTenureFrom() {
+		return tenureFrom;
+	}
+
+	public void setTenureFrom(LocalDate tenureFrom) {
+		this.tenureFrom = tenureFrom;
+	}
+
+	public LocalDate getTenureTo() {
+		return tenureTo;
+	}
+
+	public void setTenureTo(LocalDate tenureTo) {
+		this.tenureTo = tenureTo;
 	}
 
 	public String getEmployerName() {
@@ -109,60 +157,34 @@ public class AgreementDto {
 		this.regOfficeAddress = regOfficeAddress;
 	}
 
-	public int getDuration() {
-		return duration;
+	/*
+	 * public float getDuration() { return duration; }
+	 * 
+	 * public void setDuration(float duration) { this.duration = duration; }
+	 * 
+	 * public LocalDate getStartDate() { return startDate; }
+	 * 
+	 * public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
+	 * 
+	 * public LocalDate getEndDate() { return endDate; }
+	 * 
+	 * public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
+	 */
+
+	public long getServiceBreakAmount() {
+		return serviceBreakAmount;
 	}
 
-	public void setDuration(int duration) {
-		this.duration = duration;
+	public void setServiceBreakAmount(long serviceBreakAmount) {
+		this.serviceBreakAmount = serviceBreakAmount;
 	}
 
-	public LocalDate getStartDate() {
-		return startDate;
+	public String getCustodyOf() {
+		return custodyOf;
 	}
 
-	public void setStartDate(LocalDate startDate) {
-		this.startDate = startDate;
-	}
-
-	public LocalDate getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(LocalDate endDate) {
-		this.endDate = endDate;
-	}
-
-	public int getLiquidatedDamagesAmount() {
-		return liquidatedDamagesAmount;
-	}
-
-	public void setLiquidatedDamagesAmount(int liquidatedDamagesAmount) {
-		this.liquidatedDamagesAmount = liquidatedDamagesAmount;
-	}
-
-	public boolean isTransferable() {
-		return isTransferable;
-	}
-
-	public void setTransferable(boolean isTransferable) {
-		this.isTransferable = isTransferable;
-	}
-
-	public String getArbitrationVenue() {
-		return arbitrationVenue;
-	}
-
-	public void setArbitrationVenue(String arbitrationVenue) {
-		this.arbitrationVenue = arbitrationVenue;
-	}
-
-	public int getNoticePeriod() {
-		return noticePeriod;
-	}
-
-	public void setNoticePeriod(int noticePeriod) {
-		this.noticePeriod = noticePeriod;
+	public void setCustodyOf(String custodyOf) {
+		this.custodyOf = custodyOf;
 	}
 
 	public DetailsSubmissionStatus getAgreementSubmissionStatus() {
@@ -203,6 +225,38 @@ public class AgreementDto {
 
 	public void setHrManagerRemark(String hrManagerRemark) {
 		this.hrManagerRemark = hrManagerRemark;
+	}
+
+	public byte[] getSign() {
+		return sign;
+	}
+
+	public void setSign(byte[] sign) {
+		this.sign = sign;
+	}
+
+	public String getSignBase64() {
+		return signBase64;
+	}
+
+	public void setSignBase64(String signBase64) {
+		this.signBase64 = signBase64;
+	}
+
+	public byte[] getLeftHandThumbImpression() {
+		return leftHandThumbImpression;
+	}
+
+	public void setLeftHandThumbImpression(byte[] leftHandThumbImpression) {
+		this.leftHandThumbImpression = leftHandThumbImpression;
+	}
+
+	public String getLeftHandThumbImpressionBase64() {
+		return leftHandThumbImpressionBase64;
+	}
+
+	public void setLeftHandThumbImpressionBase64(String leftHandThumbImpressionBase64) {
+		this.leftHandThumbImpressionBase64 = leftHandThumbImpressionBase64;
 	}
 
 }

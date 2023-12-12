@@ -19,8 +19,11 @@ public class FamilyServiceImpl implements IFamilyService {
 	@Override
 	public String createFamily(Family family, long candidateId) {
 		try {
+			if (familyRepo.existsByPhoneNumber(family.getPhoneNumber())) {
+				return "Duplicate mobile number. Family details are not added";
+			}
 			family.setCandidateId(candidateId);
-			family.setFamilySubmissionStatus(DetailsSubmissionStatus.submitted);
+			family.setFamilySubmissionStatus(DetailsSubmissionStatus.Submitted);
 			family.setHrExecutiveApprovalStatus(ApprovalStatus.Pending);
 			var fam = this.familyRepo.save(family);
 
@@ -83,14 +86,14 @@ public class FamilyServiceImpl implements IFamilyService {
 
 		if (family != null && !family.isEmpty()) {
 			boolean allSubmitted = family.stream()
-					.allMatch(f -> f.getFamilySubmissionStatus() == DetailsSubmissionStatus.submitted);
+					.allMatch(f -> f.getFamilySubmissionStatus() == DetailsSubmissionStatus.Submitted);
 
 			if (allSubmitted) {
-				return new FamilyStatusResponse(DetailsSubmissionStatus.submitted);
+				return new FamilyStatusResponse(DetailsSubmissionStatus.Submitted);
 			}
 		}
 
-		return new FamilyStatusResponse(DetailsSubmissionStatus.pending);
+		return new FamilyStatusResponse(DetailsSubmissionStatus.Pending);
 	}
 
 }

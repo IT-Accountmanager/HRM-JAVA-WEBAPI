@@ -14,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.OnboardingEmployeeSummary;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.models.Helper.EnumCollection.Departments;
+import com.hrm.main.payloads.EmployeeViewDto;
+import com.hrm.main.payloads.EmployeesNameDto;
 import com.hrm.main.payloads.SummaryDto;
 import com.hrm.main.services.IOnboardingEmployeeSummaryService;
 import com.hrm.main.services.ISummaryService;
 import com.hrm.main.servicesImpls.OnboardingEmployeeSummaryServiceImpl;
 
-@CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
+@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
 @RestController
 @RequestMapping("/Summary")
 
@@ -40,19 +43,27 @@ public class SummaryController {
 		return new ResponseEntity<List<SummaryDto>>(allSummary, HttpStatus.OK);
 	}
 
-	@PostMapping("/AddSummary")
-	public ResponseEntity<String> createSummary(@RequestBody OnboardingEmployeeSummary summary) {
+	// ----------------------Import-------------------------------
+	@PostMapping("/import")
+	public ResponseEntity<String> createSummary(@RequestBody List<EmployeeViewDto> employees) {
 
-		String result = this.onboardingEmployeeSummaryService.createSummary(summary);
+		String result = this.summaryService.importEmployees(employees);
 
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 
 	}
 
-	@GetMapping("/getSummaryById/{id}")
-	public OnboardingEmployeeSummary getSummaryById(@PathVariable int id) {
-		OnboardingEmployeeSummary summary = onboardingEmployeeSummaryService.getSummaryById(id);
-		return summary;
+	// ------------Search Name For Manager-----------------------
+	@GetMapping("/import/listOfEmployee")
+	public ResponseEntity<List<EmployeesNameDto>> getListOfEmployees() {
+		List<EmployeesNameDto> list = this.summaryService.getListOfEmployees();
+		return new ResponseEntity<List<EmployeesNameDto>>(list, HttpStatus.OK);
+	}
+
+	@GetMapping("/getSummaryByCandidateId/{candidateId}")
+	public ResponseEntity<EmployeeViewDto> getSummaryByCandidateId(@PathVariable long candidateId) {
+		EmployeeViewDto result = summaryService.getSummaryByCandidateId(candidateId);
+		return new ResponseEntity<EmployeeViewDto>(result, HttpStatus.OK);
 	}
 
 	/*
@@ -97,4 +108,47 @@ public class SummaryController {
 		List<String> employee = this.onboardingEmployeeSummaryService.findMGMTEmployee();
 		return new ResponseEntity<List<String>>(employee, HttpStatus.OK);
 	}
+
+	@GetMapping("/getIASEmployee")
+	public ResponseEntity<List<String>> findIASEmployee() {
+		List<String> employee = this.onboardingEmployeeSummaryService.findIASEmployee();
+		return new ResponseEntity<List<String>>(employee, HttpStatus.OK);
+	}
+
+	@GetMapping("/getDFSEmployee")
+	public ResponseEntity<List<String>> findDFSEmployee() {
+		List<String> employee = this.onboardingEmployeeSummaryService.findDFSEmployee();
+		return new ResponseEntity<List<String>>(employee, HttpStatus.OK);
+	}
+
+	@GetMapping("/getITEmployee")
+	public ResponseEntity<List<String>> findITEmployee() {
+		List<String> employee = this.onboardingEmployeeSummaryService.findITEmployee();
+		return new ResponseEntity<List<String>>(employee, HttpStatus.OK);
+	}
+
+	@GetMapping("/getBIMEmployee")
+	public ResponseEntity<List<String>> findBIMEmployee() {
+		List<String> employee = this.onboardingEmployeeSummaryService.findBIMEmployee();
+		return new ResponseEntity<List<String>>(employee, HttpStatus.OK);
+	}
+
+	@GetMapping("/getEDSEmployee")
+	public ResponseEntity<List<String>> findEDSEmployee() {
+		List<String> employee = this.onboardingEmployeeSummaryService.findEDSEmployee();
+		return new ResponseEntity<List<String>>(employee, HttpStatus.OK);
+	}
+
+	@GetMapping("/getSystemAdminEmployee")
+	public ResponseEntity<List<String>> findSystemAdminEmployee() {
+		List<String> employee = this.onboardingEmployeeSummaryService.findSystemAdminEmployee();
+		return new ResponseEntity<List<String>>(employee, HttpStatus.OK);
+	}
+
+	@GetMapping("/getSalesEmployee")
+	public ResponseEntity<List<String>> findSalesEmployee() {
+		List<String> employee = this.onboardingEmployeeSummaryService.findSalesEmployee();
+		return new ResponseEntity<List<String>>(employee, HttpStatus.OK);
+	}
+
 }

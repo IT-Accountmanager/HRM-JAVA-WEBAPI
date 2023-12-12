@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.RegisterUserEntity;
 import com.hrm.main.services.IRegisterUserService;
 
-@CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
+@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
 
 @RestController
 @RequestMapping(value = "/RegisterUser")

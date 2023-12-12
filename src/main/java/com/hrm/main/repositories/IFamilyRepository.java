@@ -18,4 +18,7 @@ public interface IFamilyRepository extends JpaRepository<Family, Integer> {
 	List<Family> findByCandidateId(long candidateId);
 
 	List<Family> findAllByCandidateId(long candidateId);
+
+	boolean existsByPhoneNumber(long phoneNumber);
+
 }
