@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
+import com.hrm.main.models.Helper.EnumCollection.ResignationStatus;
+import com.hrm.main.models.Helper.EnumCollection.Sub_Department;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,9 +26,11 @@ public class Employee {
 	private long candidateId;
 	private String employeeId;
 	private String name;
+	private String jobTitle;
 	private String workLocation;
 	private String designation;
 	private Departments department;
+	private Sub_Department subDepartment;
 	private String assignTo;
 	private float bondPeriod;
 	private long bondBreakAmount;
@@ -37,6 +41,16 @@ public class Employee {
 	private String emailId;
 	private EmployeeStatus employeeStatus;
 	private float relevantExperience;
+	private int probationPeriod;
+	private String employeeType;
+	private LocalDate resignationDate;
+	private ResignationStatus resignationStatus;
+	private int noticePeriod;
+	private LocalDate lastWorkingDay;
+	private Departments previouDepartment;
+	private String previouDesignation;
+	private LocalDate previouWorkFrom;
+	private LocalDate previouWorkUpto;
 
 	public Employee() {
 		super();
@@ -176,6 +190,102 @@ public class Employee {
 
 	public void setRelevantExperience(float relevantExperience) {
 		this.relevantExperience = relevantExperience;
+	}
+
+	public int getProbationPeriod() {
+		return probationPeriod;
+	}
+
+	public void setProbationPeriod(int probationPeriod) {
+		this.probationPeriod = probationPeriod;
+	}
+
+	public String getEmployeeType() {
+		return employeeType;
+	}
+
+	public void setEmployeeType(String employeeType) {
+		this.employeeType = employeeType;
+	}
+
+	public String getJobTitle() {
+		return jobTitle;
+	}
+
+	public void setJobTitle(String jobTitle) {
+		this.jobTitle = jobTitle;
+	}
+
+	public Sub_Department getSubDepartment() {
+		return subDepartment;
+	}
+
+	public void setSubDepartment(Sub_Department subDepartment) {
+		this.subDepartment = subDepartment;
+	}
+
+	public LocalDate getResignationDate() {
+		return resignationDate;
+	}
+
+	public void setResignationDate(LocalDate resignationDate) {
+		this.resignationDate = resignationDate;
+	}
+
+	public ResignationStatus getResignationStatus() {
+		return resignationStatus;
+	}
+
+	public void setResignationStatus(ResignationStatus resignationStatus) {
+		this.resignationStatus = resignationStatus;
+	}
+
+	public int getNoticePeriod() {
+		return noticePeriod;
+	}
+
+	public void setNoticePeriod(int noticePeriod) {
+		this.noticePeriod = noticePeriod;
+	}
+
+	public LocalDate getLastWorkingDay() {
+		return lastWorkingDay;
+	}
+
+	public void setLastWorkingDay(LocalDate lastWorkingDay) {
+		this.lastWorkingDay = lastWorkingDay;
+	}
+
+	public Departments getPreviouDepartment() {
+		return previouDepartment;
+	}
+
+	public void setPreviouDepartment(Departments previouDepartment) {
+		this.previouDepartment = previouDepartment;
+	}
+
+	public String getPreviouDesignation() {
+		return previouDesignation;
+	}
+
+	public void setPreviouDesignation(String previouDesignation) {
+		this.previouDesignation = previouDesignation;
+	}
+
+	public LocalDate getPreviouWorkFrom() {
+		return previouWorkFrom;
+	}
+
+	public void setPreviouWorkFrom(LocalDate previouWorkFrom) {
+		this.previouWorkFrom = previouWorkFrom;
+	}
+
+	public LocalDate getPreviouWorkUpto() {
+		return previouWorkUpto;
+	}
+
+	public void setPreviouWorkUpto(LocalDate previouWorkUpto) {
+		this.previouWorkUpto = previouWorkUpto;
 	}
 
 }

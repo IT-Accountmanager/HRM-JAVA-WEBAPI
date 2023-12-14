@@ -21,4 +21,9 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 
 	boolean existsByContactNumber(long contactNumber);
 
+	List<Employee> findByNameContainingIgnoreCase(String searchTerm);
+
+	Employee findByEmployeeId(String employeeId);
+
+
 }

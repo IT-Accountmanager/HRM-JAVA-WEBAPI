@@ -2,11 +2,10 @@
 package com.hrm.main.models;
 
 import java.time.LocalDate;
-
+import java.time.format.DateTimeFormatter;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -53,7 +52,15 @@ public class Onboarding {
 	private HrSubmission hrManagerSubmission;
 	private LocalDate dateOfJoining;
 	private String workLocation;
-	private Departments department;
+	private String formattedDate;
+
+	public String getFormattedDate() {
+		return formattedDate;
+	}
+
+	public void setFormattedDate(String formattedDate) {
+		this.formattedDate = formattedDate;
+	}
 
 	// private Profile profile;
 
@@ -74,6 +81,15 @@ public class Onboarding {
 	 * 
 	 * public void setProfile(Profile profile) { this.profile = profile; }
 	 */
+
+	public String getFormattedDateOfJoining() {
+		if (dateOfJoining != null) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			return dateOfJoining.format(formatter);
+		}
+		return null; // or return an empty string or handle as appropriate
+	}
+
 	public int getSrNo() {
 		return srNo;
 	}
@@ -184,14 +200,6 @@ public class Onboarding {
 
 	public void setWorkLocation(String workLocation) {
 		this.workLocation = workLocation;
-	}
-
-	public Departments getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(Departments department) {
-		this.department = department;
 	}
 
 }

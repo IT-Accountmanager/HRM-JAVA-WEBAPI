@@ -28,4 +28,10 @@ public class StructureController {
 		return new ResponseEntity<List<String>>(employee, HttpStatus.OK);
 	}
 
+	@GetMapping("/getManagerByDepartment/{department}")
+	public ResponseEntity<List<String>> findManager(@PathVariable Departments department) {
+		List<String> manager = this.structureService.findManagerByDepartment(department);
+		return new ResponseEntity<List<String>>(manager, HttpStatus.OK);
+	}
+
 }

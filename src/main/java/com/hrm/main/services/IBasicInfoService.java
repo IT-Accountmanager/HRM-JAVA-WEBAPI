@@ -1,12 +1,12 @@
 package com.hrm.main.services;
 
-import com.hrm.main.models.BasicInfo;
+import com.hrm.main.payloads.BasicInfoDto;
 
 public interface IBasicInfoService {
 
-	String addBasicInfo(BasicInfo basicInfo);
+	String addBasicInfo(BasicInfoDto basicInfo);
 
-	String updateInfo(BasicInfo basicInfo, Integer id);
+	String updateInfo(BasicInfoDto basicInfo, Integer id);
 
-	BasicInfo getBasicInfo(Integer id);
+	BasicInfoDto getBasicInfo(Integer id);
 }

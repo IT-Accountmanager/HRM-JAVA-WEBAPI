@@ -1,5 +1,7 @@
 package com.hrm.main.servicesImpls;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +48,9 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		onboarding.setServiceCommitment(onboardingRequest.getServiceCommitment());
 		onboarding.setServiceBreakAmount(onboardingRequest.getServiceBreakAmount());
 		onboarding.setCtc(onboardingRequest.getCtc());
-		onboarding.setDepartment(onboardingRequest.getDepartment());
 		onboarding.setCandidatesStatus(CandidatesStatus.Pending);
-		onboarding.setDateOfJoining(onboardingRequest.getDateOfJoining());
+		onboarding.setDateOfJoining(LocalDate.parse(onboardingRequest.getFormattedDateOfJoining(),
+				DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 		onboarding.setWorkLocation(onboardingRequest.getWorkLocation());
 
 		// Profile profile = new Profile();
@@ -62,12 +64,24 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	@Override
 	public List<Onboarding> getAllOnboarding() {
 		List<Onboarding> allOnboarding = this.onboardingRepository.findAll();
+
+		// Populate formatted date for each Onboarding object
+		for (Onboarding onboarding : allOnboarding) {
+			onboarding.setFormattedDate(onboarding.getFormattedDateOfJoining());
+		}
+
 		return allOnboarding;
 	}
 
 	@Override
 	public Onboarding getOnboardingByCandidateId(long candidateId) {
 		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
+
+		// Populate formatted date for the retrieved Onboarding object
+		if (onboarding != null) {
+			onboarding.setFormattedDate(onboarding.getFormattedDateOfJoining());
+		}
+
 		return onboarding;
 	}
 
@@ -146,7 +160,6 @@ public class OnboardingServiceImpl implements IOnboardingService {
 				onboarding.setServiceCommitment(singleOnboarding.getServiceCommitment());
 				onboarding.setServiceBreakAmount(singleOnboarding.getServiceBreakAmount());
 				onboarding.setCtc(singleOnboarding.getCtc());
-				onboarding.setDepartment(singleOnboarding.getDepartment());
 				onboarding.setCandidatesStatus(CandidatesStatus.Pending);
 				onboarding.setDateOfJoining(singleOnboarding.getDateOfJoining());
 				onboarding.setWorkLocation(singleOnboarding.getWorkLocation());

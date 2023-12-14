@@ -1,12 +1,12 @@
 package com.hrm.main.services;
 
-import com.hrm.main.models.WorkHistory;
+import com.hrm.main.payloads.WorkHistoryDto;
 
 public interface IWorkHistoryService {
 
-	String addWorkHistory(WorkHistory workHistory);
+	String addWorkHistory(WorkHistoryDto workHistory);
 
-	String updateWorkHistory(WorkHistory workHistory, Integer id);
+	String updateWorkHistory(WorkHistoryDto workHistory, Integer id);
 
-	WorkHistory getWorkHistory(Integer id);
+	WorkHistoryDto getWorkHistory(Integer id);
 }

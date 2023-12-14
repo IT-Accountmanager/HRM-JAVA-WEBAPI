@@ -9,4 +9,6 @@ public interface IStructureService {
 
 	List<String> findEmployeesByDepartment(Departments department);
 
+	List<String> findManagerByDepartment(Departments department);
+
 }

@@ -1,41 +1,25 @@
-package com.hrm.main.models;
+package com.hrm.main.payloads;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
+import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 
-@Entity
-public class BasicInfo {
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "basic_info_id_seq")
-	@SequenceGenerator(name = "basic_info_id_seq", allocationSize = 1, initialValue = 1, sequenceName = "basic_info_id_seq")
-	private int id;
-	private int empId;
+public class BasicInfoDto {
+
+	private int employeeId;
 	private LocalDate dateOfJoining;
 	private int probationPeriod;
 	private String employeeType;
 	private String workLocation;
-	private String employeeStatus;
-	private String workExperience;
+	private EmployeeStatus employeeStatus;
+	private float workExperience;
 
-	public int getId() {
-		return id;
+	public int getEmployeeId() {
+		return employeeId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int getEmpId() {
-		return empId;
-	}
-
-	public void setEmpId(int empId) {
-		this.empId = empId;
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
 	}
 
 	public LocalDate getDateOfJoining() {
@@ -70,20 +54,21 @@ public class BasicInfo {
 		this.workLocation = workLocation;
 	}
 
-	public String getEmployeeStatus() {
+	public EmployeeStatus getEmployeeStatus() {
 		return employeeStatus;
 	}
 
-	public void setEmployeeStatus(String employeeStatus) {
+	public void setEmployeeStatus(EmployeeStatus employeeStatus) {
 		this.employeeStatus = employeeStatus;
 	}
 
-	public String getWorkExperience() {
+	public float getWorkExperience() {
 		return workExperience;
 	}
 
-	public void setWorkExperience(String workExperience) {
+	public void setWorkExperience(float workExperience) {
 		this.workExperience = workExperience;
 	}
 
+	
 }

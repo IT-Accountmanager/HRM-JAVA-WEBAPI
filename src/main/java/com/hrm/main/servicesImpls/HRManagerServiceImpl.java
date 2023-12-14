@@ -331,12 +331,10 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			long nextEmployeeIdNumber = this.employeeRepository.count() + 1;
 			employeeDto.setEmployeeId(String.format("EIS%05d", nextEmployeeIdNumber));
 
-			
 			employeeDto.setName(candidate.getCandidateName());
 			employeeDto.setDesignation(candidate.getJobTitle());
 			employeeDto.setWorkLocation(candidate.getWorkLocation());
 			employeeDto.setDateOfJoining(candidate.getDateOfJoining());
-			employeeDto.setDepartment(candidate.getDepartment());
 			/*
 			 * employeeDto.setDteOfReleasing(this.workRepository.findAllWorkByCandidateId(
 			 * candidateId).stream().findFirst() .get().getRelievedDate());

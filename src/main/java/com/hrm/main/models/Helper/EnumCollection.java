@@ -11,7 +11,7 @@ public class EnumCollection {
 	}
 
 	public enum EmployeeStatus {
-		Active , Inactive
+		Active, Inactive
 	}
 
 	public enum ApprovalStatus {
@@ -27,8 +27,16 @@ public class EnumCollection {
 	}
 
 	public enum Departments {
+		MES, OD, ITE
+	}
+
+	public enum Sub_Department {
 		Management, DigitalFactorySolution, EngineeringDesignSolution, IndustrialAutomationSolution,
-		BuildingInformationModeling, InformationTechnologySolution, HumanResources, Finance, Sales, SystemAdmin,
+		BuildingInformationModeling, FrontEnd, BackEnd, Testing, HumanResource, Finance, Sales, SystemAdmin,
 		Development, Recruitment, DigitalMarketing
+	}
+
+	public enum ResignationStatus {
+		SUBMITTED, APPROVED, REJECTED, PENDING_APPROVAL, WITHDRAWN
 	}
 }

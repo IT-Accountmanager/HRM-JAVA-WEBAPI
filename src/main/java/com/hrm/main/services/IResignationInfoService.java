@@ -1,12 +1,12 @@
 package com.hrm.main.services;
 
-import com.hrm.main.models.ResignationInfo;
+import com.hrm.main.payloads.ResignationInfoDto;
 
 public interface IResignationInfoService {
 
-	String addResignationInfo(ResignationInfo resignInfo);
+	String addResignationInfo(ResignationInfoDto resignInfo);
 
-	String updateResignationInfo(ResignationInfo resignInfo, Integer id);
+	String updateResignationInfo(ResignationInfoDto resignInfo, Integer id);
 
-	ResignationInfo getResignationInfo(Integer id);
+	ResignationInfoDto getResignationInfo(Integer id);
 }

@@ -1,12 +1,12 @@
 package com.hrm.main.services;
 
-import com.hrm.main.models.WorkInfo;
+import com.hrm.main.payloads.WorkInfoDto;
 
 public interface IWorkInfoService {
 
-	String addWorkInfo(WorkInfo workInfo);
+	String addWorkInfo(WorkInfoDto workInfo);
 
-	String updateInfo(WorkInfo workInfo, Integer id);
+	String updateInfo(WorkInfoDto workInfo, Integer id);
 
-	WorkInfo getWorkInfo(Integer id);
+	WorkInfoDto getWorkInfo(Integer id);
 }
