@@ -25,5 +25,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 
 	Employee findByEmployeeId(String employeeId);
 
+	boolean existsByEmailIdOrContactNumber(String emailId, long contactNumber);
+
 
 }

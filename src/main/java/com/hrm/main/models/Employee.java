@@ -40,6 +40,7 @@ public class Employee {
 	private long contactNumber;
 	private String emailId;
 	private EmployeeStatus employeeStatus;
+	private float workExperience;
 	private float relevantExperience;
 	private int probationPeriod;
 	private String employeeType;
@@ -286,6 +287,14 @@ public class Employee {
 
 	public void setPreviouWorkUpto(LocalDate previouWorkUpto) {
 		this.previouWorkUpto = previouWorkUpto;
+	}
+
+	public float getWorkExperience() {
+		return workExperience;
+	}
+
+	public void setWorkExperience(float workExperience) {
+		this.workExperience = workExperience;
 	}
 
 }

@@ -16,6 +16,7 @@ import com.hrm.main.models.Personal;
 import com.hrm.main.models.Work;
 import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
 import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
@@ -320,13 +321,20 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		ApprovalStatus agreementApprovalStatus = this.agreementRepository.findByCandidateId(candidateId)
 				.getHrManagerApprovalStatus();
 
-		if (agreementApprovalStatus == ApprovalStatus.Approve && personalApprovalStatus == ApprovalStatus.Approve
-				&& familyApprovalStatus == ApprovalStatus.Approve && educationApprovalStatus == ApprovalStatus.Approve
+		if (agreementApprovalStatus == ApprovalStatus.Approved && personalApprovalStatus == ApprovalStatus.Approved
+				&& familyApprovalStatus == ApprovalStatus.Approved && educationApprovalStatus == ApprovalStatus.Approved
 		/* && workApprovalStatus == ApprovalStatus.Approve */)
 
 		{
 			Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
 			candidate.setCandidatesStatus(CandidatesStatus.Approved);
+
+			if (employeeRepository.existsByEmailIdOrContactNumber(candidate.getEmailId(),
+					candidate.getContactNumber())) {
+				// Employee with the same email or contact number already exists, return the
+				// appropriate message
+				return null;
+			}
 			EmployeeGenerateDto employeeDto = new EmployeeGenerateDto();
 			long nextEmployeeIdNumber = this.employeeRepository.count() + 1;
 			employeeDto.setEmployeeId(String.format("EIS%05d", nextEmployeeIdNumber));
@@ -340,7 +348,11 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			 * candidateId).stream().findFirst() .get().getRelievedDate());
 			 */
 			employeeDto.setCtc(candidate.getCtc());
-			employeeDto.setBondPeriod(candidate.getServiceCommitment());
+			employeeDto.setServiceCommitment(candidate.getServiceCommitment());
+			employeeDto.setServiceBreakAmount(candidate.getServiceBreakAmount());
+			employeeDto.setEmailId(candidate.getEmailId());
+			employeeDto.setContactNumber(candidate.getContactNumber());
+			employeeDto.setStatus(EmployeeStatus.Active);
 
 			this.employeeRepository.save(this.modelMapper.map(employeeDto, Employee.class));
 

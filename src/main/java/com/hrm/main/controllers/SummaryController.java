@@ -1,7 +1,6 @@
 package com.hrm.main.controllers;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.hrm.main.payloads.BasicInfoDto;
 import com.hrm.main.payloads.EmployeeViewDto;
 import com.hrm.main.payloads.EmployeesNameDto;
@@ -111,7 +109,7 @@ public class SummaryController {
 	}
 
 	// ----------------------- Get Basic Info-------------------
-	@PostMapping("/basicInfo/get/{employeeId}")
+	@GetMapping("/basicInfo/get/{employeeId}")
 	public ResponseEntity<BasicInfoDto> getBasicInfo(@PathVariable String employeeId) {
 		BasicInfoDto result = this.summaryService.getBasicInfo(employeeId);
 		return new ResponseEntity<BasicInfoDto>(result, HttpStatus.OK);
@@ -125,7 +123,7 @@ public class SummaryController {
 	}
 
 	// ----------------------- Get Work Info-------------------
-	@PostMapping("/workInfo/get/{employeeId}")
+	@GetMapping("/workInfo/get/{employeeId}")
 	public ResponseEntity<WorkInfoDto> getWorkInfo(@PathVariable String employeeId) {
 		WorkInfoDto result = this.summaryService.getWorkInfo(employeeId);
 		return new ResponseEntity<WorkInfoDto>(result, HttpStatus.OK);
@@ -152,6 +150,13 @@ public class SummaryController {
 			@PathVariable String employeeId) {
 		String result = this.summaryService.addResignationInfo(resignationInfo, employeeId);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+
+	// ----------------------- Get Resignation Info-------------------
+	@GetMapping("/resignationInfo/get/{employeeId}")
+	public ResponseEntity<ResignationInfoDto> getResignationInfo(@PathVariable String employeeId) {
+		ResignationInfoDto result = this.summaryService.getResignationInfo(employeeId);
+		return new ResponseEntity<ResignationInfoDto>(result, HttpStatus.OK);
 	}
 
 }

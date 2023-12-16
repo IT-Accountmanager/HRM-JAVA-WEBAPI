@@ -479,12 +479,12 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 		ApprovalStatus agreementApprovalStatus = this.agreementRepository.findByCandidateId(candiateId)
 				.getHrExecutiveApprovalStatus();
 
-		if (personalApprovalStatus == ApprovalStatus.Approve && familyApprovalStatus == ApprovalStatus.Approve
-				&& educationApprovalStatus == ApprovalStatus.Approve /*
+		if (personalApprovalStatus == ApprovalStatus.Approved && familyApprovalStatus == ApprovalStatus.Approved
+				&& educationApprovalStatus == ApprovalStatus.Approved /*
 																		 * && workApprovalStatus ==
 																		 * ApprovalStatus.Approve
 																		 */
-				&& agreementApprovalStatus == ApprovalStatus.Approve) {
+				&& agreementApprovalStatus == ApprovalStatus.Approved) {
 			Onboarding candidate = this.onboardingRepository.findByCandidateId(candiateId);
 			candidate.setHrExecutiveSubmission(HrSubmission.Submit);
 			this.onboardingRepository.save(candidate);

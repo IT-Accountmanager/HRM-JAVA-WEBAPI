@@ -133,8 +133,7 @@ public class ProfileServiceImpl implements IProfileService {
 						.allMatch(work -> work.getWorkSubmissionStatus() == DetailsSubmissionStatus.Submitted);
 				// ________________________NEED TO CHECK_____________________
 
-				if (allFamilySubmitted
-						&& allEducationSubmitted /* && allWorkSubmitted */
+				if (allFamilySubmitted && allEducationSubmitted /* && allWorkSubmitted */
 						&& agreementSubmissionStatus == DetailsSubmissionStatus.Submitted) {
 					result = 1;
 				}
@@ -142,7 +141,7 @@ public class ProfileServiceImpl implements IProfileService {
 
 			if (result == 1) {
 				Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
-				onboarding.setCandidatesStatus(CandidatesStatus.In_Review);
+				onboarding.setCandidatesStatus(CandidatesStatus.InReview);
 				this.onboardingRepository.save(onboarding);
 			}
 		} catch (Exception e2) {

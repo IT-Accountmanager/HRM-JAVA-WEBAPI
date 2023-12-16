@@ -13,14 +13,14 @@ public class PersonalDetailsServiceImpl implements IPersonalDetailsService {
 
 	@Autowired
 	IPersonalDetailsRepository personalDetailsRepo;
-	
+
 	@Autowired
 	IOnboardingRepository onboardingRepository;
 
 	@Override
 	public String addPersonalDetails(PersonalDetails personalDetails) {
 
-		PersonalDetails details = personalDetailsRepo.save(personalDetails);
+		personalDetailsRepo.save(personalDetails);
 
 		return "Personal Details Added Successfully";
 	}

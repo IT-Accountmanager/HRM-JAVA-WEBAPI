@@ -199,11 +199,15 @@ public class AgreementServiceImpl implements IAgreementService {
 		AgreementDto preAgreementInfo = new AgreementDto();
 		preAgreementInfo.setAgreementDate(LocalDate.now());
 		preAgreementInfo.setEmployeeName(onboarding.getCandidateName());
-		preAgreementInfo.setEmployeeFathersOrHusbandName(null);
 		preAgreementInfo
 				.setAge(Period.between(personal.getPersonalDetails().getDateOfBirth(), LocalDate.now()).getYears());
 		preAgreementInfo.setReligion("Hindu");
-		preAgreementInfo.setState(personal.getAddressDetails().getPermanetAdd().getState());
+		preAgreementInfo.setState((personal.getAddressDetails().getPresentAdd().getHouseNo()) + ", "
+				+ (personal.getAddressDetails().getPresentAdd().getArea()) + ", near "
+				+ (personal.getAddressDetails().getPresentAdd().getLandmark()) + ", "
+				+ (personal.getAddressDetails().getPresentAdd().getCity()) + ", "
+				+ (personal.getAddressDetails().getPresentAdd().getState()) + ", "
+				+ (personal.getAddressDetails().getPresentAdd().getPincode()));
 		preAgreementInfo.setPermanentAddress((personal.getAddressDetails().getPermanetAdd().getHouseNo()) + ", "
 				+ (personal.getAddressDetails().getPermanetAdd().getArea()) + ", near "
 				+ (personal.getAddressDetails().getPermanetAdd().getLandmark()) + ", "
@@ -211,6 +215,7 @@ public class AgreementServiceImpl implements IAgreementService {
 				+ (personal.getAddressDetails().getPermanetAdd().getState()) + ", "
 				+ (personal.getAddressDetails().getPermanetAdd().getPincode()));
 		preAgreementInfo.setServiceCommitment(onboarding.getServiceCommitment());
+		preAgreementInfo.setEmployeeFathersName(personal.getPersonalDetails().getFathersName());
 		preAgreementInfo.setTenureFrom(LocalDate.now());
 		int months = (int) onboarding.getServiceCommitment() * 12;
 

@@ -2,13 +2,16 @@ package com.hrm.main.servicesImpls;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.repositories.IOnboardingRepository;
 import com.hrm.main.repositories.IProfileRepository;
 import com.hrm.main.services.IOnboardingService;
@@ -21,6 +24,8 @@ public class OnboardingServiceImpl implements IOnboardingService {
 
 	@Autowired
 	IProfileRepository profileRepository;
+	@Autowired
+	ModelMapper modelMapper;
 
 	/*
 	 * @Override public String createOnboarding(Onboarding onboarding) { try {
@@ -62,15 +67,17 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	}
 
 	@Override
-	public List<Onboarding> getAllOnboarding() {
+	public List<OnboardingDto> getAllOnboarding() {
 		List<Onboarding> allOnboarding = this.onboardingRepository.findAll();
 
-		// Populate formatted date for each Onboarding object
+		List<OnboardingDto> onboardingDtos = new ArrayList<OnboardingDto>();
+
 		for (Onboarding onboarding : allOnboarding) {
-			onboarding.setFormattedDate(onboarding.getFormattedDateOfJoining());
+			OnboardingDto map = this.modelMapper.map(onboarding, OnboardingDto.class);
+			onboardingDtos.add(map);
 		}
 
-		return allOnboarding;
+		return onboardingDtos;
 	}
 
 	@Override

@@ -7,15 +7,15 @@ public class EnumCollection {
 	}
 
 	public enum CandidatesStatus {
-		Pending, In_Review, Approved, Rejected
+		Pending, InReview, Approved, Rejected
 	}
 
 	public enum EmployeeStatus {
-		Active, Inactive
+		Active, Inactive, Absconded, NoticePeriod, ProbationPeriod, TrainingPeriod
 	}
 
 	public enum ApprovalStatus {
-		Pending, Approve, Reject
+		Pending, Approved, Rejected
 	}
 
 	public enum HrSubmission {
@@ -23,7 +23,7 @@ public class EnumCollection {
 	}
 
 	public enum AttendanceStatus {
-		Present, Absent, WFH
+		Present, Anomaly, WeekOff, Holiday, Leave
 	}
 
 	public enum Departments {

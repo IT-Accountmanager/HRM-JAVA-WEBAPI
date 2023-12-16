@@ -40,4 +40,6 @@ public interface ISummaryService {
 
 	WorkHistoryDto getWorkHistory(String employeeId);
 
+	ResignationInfoDto getResignationInfo(String employeeId);
+
 }

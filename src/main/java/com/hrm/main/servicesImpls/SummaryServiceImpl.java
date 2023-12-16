@@ -52,12 +52,13 @@ public class SummaryServiceImpl implements ISummaryService {
 			summaryDto.setContactNumber(employee.getContactNumber());
 			summaryDto.setEmailId(employee.getEmailId());
 			summaryDto.setDateOfJoining(employee.getDateOfJoining());
-			summaryDto.setBondBreakAmount(employee.getBondBreakAmount());
+			// summaryDto.setBondBreakAmount(employee.getBondBreakAmount());
 			summaryDto.setDesignation(employee.getDesignation());
 			summaryDto.setDepartment(employee.getDepartment());
 			summaryDto.setEmployeeStatus(employee.getEmployeeStatus());
 			summaryDto.setRelevantExperience(employee.getRelevantExperience());
 			summaryDto.setAssignTo(employee.getAssignTo());
+			summaryDto.setWorkLocation(employee.getWorkLocation());
 
 			summaryDtoList.add(summaryDto);
 
@@ -112,6 +113,7 @@ public class SummaryServiceImpl implements ISummaryService {
 				employee.setRelevantExperience(singleEmployee.getRelevantExperience());
 				employee.setAssignTo(singleEmployee.getAssignTo());
 				employee.setBondBreakAmount(singleEmployee.getBondBreakAmount());
+				employee.setWorkLocation(singleEmployee.getWorkLocation());
 
 				// Save the employee using your service/repository
 				this.employeeRepository.save(employee);
@@ -222,7 +224,16 @@ public class SummaryServiceImpl implements ISummaryService {
 			Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
 			if (employee != null) {
 
-				return modelMapper.map(employee, WorkInfoDto.class);
+				WorkInfoDto workInfo = new WorkInfoDto();
+
+				workInfo.setAssignTo(employee.getAssignTo());
+				workInfo.setDepartment(employee.getDepartment());
+				workInfo.setDesignation(employee.getDesignation());
+				workInfo.setJobTitle(employee.getJobTitle());
+				workInfo.setSubDepartment(employee.getSubDepartment());
+
+				return workInfo;
+
 			} else {
 				long candidateId = employee.getCandidateId();
 				Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
@@ -243,9 +254,20 @@ public class SummaryServiceImpl implements ISummaryService {
 	public BasicInfoDto getBasicInfo(String employeeId) {
 		try {
 			Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
+
 			if (employee != null) {
 
-				return modelMapper.map(employee, BasicInfoDto.class);
+				BasicInfoDto basicInfo = new BasicInfoDto();
+
+				basicInfo.setDateOfJoining(employee.getDateOfJoining());
+				basicInfo.setWorkLocation(employee.getWorkLocation());
+				basicInfo.setEmployeeId(employee.getEmployeeId());
+				basicInfo.setEmployeeStatus(employee.getEmployeeStatus());
+				basicInfo.setEmployeeType(employee.getEmployeeType());
+				basicInfo.setProbationPeriod(employee.getProbationPeriod());
+				basicInfo.setWorkExperience(employee.getWorkExperience());
+
+				return basicInfo;
 			} else {
 				long candidateId = employee.getCandidateId();
 				Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
@@ -268,8 +290,14 @@ public class SummaryServiceImpl implements ISummaryService {
 		try {
 			Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
 			if (employee != null) {
+				WorkHistoryDto workHistory = new WorkHistoryDto();
+				workHistory.setPreviouDepartment(employee.getPreviouDepartment());
+				workHistory.setPreviouDesignation(employee.getPreviouDesignation());
+				workHistory.setPreviouWorkFrom(employee.getPreviouWorkFrom());
+				workHistory.setPreviouWorkUpto(employee.getPreviouWorkUpto());
 
-				return modelMapper.map(employee, WorkHistoryDto.class);
+				return workHistory;
+
 			} else {
 				long candidateId = employee.getCandidateId();
 				Work work = this.workRepository.findByCandidateId(candidateId);
@@ -280,6 +308,14 @@ public class SummaryServiceImpl implements ISummaryService {
 			return null;
 
 		}
+	}
+
+	@Override
+	public ResignationInfoDto getResignationInfo(String employeeId) {
+
+		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
+
+		return modelMapper.map(employee, ResignationInfoDto.class);
 	}
 
 }

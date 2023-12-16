@@ -6,7 +6,7 @@ import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 
 public class BasicInfoDto {
 
-	private int employeeId;
+	private String employeeId;
 	private LocalDate dateOfJoining;
 	private int probationPeriod;
 	private String employeeType;
@@ -14,11 +14,11 @@ public class BasicInfoDto {
 	private EmployeeStatus employeeStatus;
 	private float workExperience;
 
-	public int getEmployeeId() {
+	public String getEmployeeId() {
 		return employeeId;
 	}
 
-	public void setEmployeeId(int employeeId) {
+	public void setEmployeeId(String employeeId) {
 		this.employeeId = employeeId;
 	}
 
@@ -70,5 +70,4 @@ public class BasicInfoDto {
 		this.workExperience = workExperience;
 	}
 
-	
 }

@@ -19,6 +19,7 @@ public class EmployeeViewDto {
 	private float relevantExperience;
 	private String assignTo;
 	private long bondBreakAmount;
+	private String workLocation;
 
 	public String getEmployeeId() {
 		return employeeId;
@@ -106,6 +107,14 @@ public class EmployeeViewDto {
 
 	public void setBondBreakAmount(long bondBreakAmount) {
 		this.bondBreakAmount = bondBreakAmount;
+	}
+
+	public String getWorkLocation() {
+		return workLocation;
+	}
+
+	public void setWorkLocation(String workLocation) {
+		this.workLocation = workLocation;
 	}
 
 }

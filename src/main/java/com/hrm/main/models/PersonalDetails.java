@@ -25,6 +25,10 @@ public class PersonalDetails {
 	@Column(name = "last_name")
 	private String lastName;
 
+	private String fathersName;
+
+	private String mothersName;
+
 	@Column(name = "date_of_birth")
 	private LocalDate dateOfBirth;
 
@@ -36,9 +40,6 @@ public class PersonalDetails {
 
 	@Column(name = "marital_status")
 	private String maritalStatus;
-
-	@Column(name = "official_mail_id")
-	private String officialMailId;
 
 	@Column(name = "personal_mail_id")
 	private String personalMailId;
@@ -138,14 +139,6 @@ public class PersonalDetails {
 		this.maritalStatus = maritalStatus;
 	}
 
-	public String getOfficialMailId() {
-		return officialMailId;
-	}
-
-	public void setOfficialMailId(String officialMailId) {
-		this.officialMailId = officialMailId;
-	}
-
 	public String getPersonalMailId() {
 		return personalMailId;
 	}
@@ -176,6 +169,22 @@ public class PersonalDetails {
 
 	public void setProfilePhoto(byte[] profilePhoto) {
 		this.profilePhoto = profilePhoto;
+	}
+
+	public String getFathersName() {
+		return fathersName;
+	}
+
+	public void setFathersName(String fathersName) {
+		this.fathersName = fathersName;
+	}
+
+	public String getMothersName() {
+		return mothersName;
+	}
+
+	public void setMothersName(String mothersName) {
+		this.mothersName = mothersName;
 	}
 
 }

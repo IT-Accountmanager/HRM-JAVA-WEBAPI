@@ -7,17 +7,18 @@ import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 
 public class SummaryDto {
-	private String employeeId;// E
-	private String name;// E
-	private long contactNumber;// O
-	private String emailId;// O
-	private LocalDate dateOfJoining;// O
-	private long bondBreakAmount;// O
+	private String employeeId;
+	private String name;
+	private long contactNumber;
+	private String emailId;
+	private LocalDate dateOfJoining;
+	// private long serviceBreakAmount;
 	private float relevantExperience = 0.0f;
-	private String designation;// E
+	private String designation;
 	private Departments department;
 	private String assignTo;
-	private EmployeeStatus employeeStatus;// O
+	private EmployeeStatus employeeStatus;
+	private String workLocation;
 
 	public SummaryDto() {
 		super();
@@ -45,14 +46,6 @@ public class SummaryDto {
 
 	public void setDateOfJoining(LocalDate dateOfJoining) {
 		this.dateOfJoining = dateOfJoining;
-	}
-
-	public long getBondBreakAmount() {
-		return bondBreakAmount;
-	}
-
-	public void setBondBreakAmount(long bondBreakAmount) {
-		this.bondBreakAmount = bondBreakAmount;
 	}
 
 	public float getRelevantExperience() {
@@ -110,5 +103,21 @@ public class SummaryDto {
 	public void setEmployeeStatus(EmployeeStatus employeeStatus) {
 		this.employeeStatus = employeeStatus;
 	}
+
+	public String getWorkLocation() {
+		return workLocation;
+	}
+
+	public void setWorkLocation(String workLocation) {
+		this.workLocation = workLocation;
+	}
+
+	/*
+	 * public long getServiceBreakAmount() { return serviceBreakAmount; }
+	 * 
+	 * public void setServiceBreakAmount(long serviceBreakAmount) {
+	 * this.serviceBreakAmount = serviceBreakAmount; }
+	 */
+	
 
 }

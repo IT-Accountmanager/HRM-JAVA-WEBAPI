@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 
-public class HrManagerDto {
+public class OnboardingDto {
 	private String jobTitle;
 	private long candidateId;
 	private String candidateName;
@@ -13,12 +13,9 @@ public class HrManagerDto {
 	private float serviceCommitment;
 	private long serviceBreakAmount;
 	private float ctc;
-	private CandidatesStatus status;
+	private CandidatesStatus candidatesStatus;
 	private LocalDate dateOfJoining;
-
-	public HrManagerDto() {
-		super();
-	}
+	private String workLocation;
 
 	public String getJobTitle() {
 		return jobTitle;
@@ -84,12 +81,12 @@ public class HrManagerDto {
 		this.ctc = ctc;
 	}
 
-	public CandidatesStatus getStatus() {
-		return status;
+	public CandidatesStatus getCandidatesStatus() {
+		return candidatesStatus;
 	}
 
-	public void setStatus(CandidatesStatus status) {
-		this.status = status;
+	public void setCandidatesStatus(CandidatesStatus candidatesStatus) {
+		this.candidatesStatus = candidatesStatus;
 	}
 
 	public LocalDate getDateOfJoining() {
@@ -98,6 +95,14 @@ public class HrManagerDto {
 
 	public void setDateOfJoining(LocalDate dateOfJoining) {
 		this.dateOfJoining = dateOfJoining;
+	}
+
+	public String getWorkLocation() {
+		return workLocation;
+	}
+
+	public void setWorkLocation(String workLocation) {
+		this.workLocation = workLocation;
 	}
 
 }

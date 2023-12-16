@@ -2,6 +2,7 @@ package com.hrm.main.services;
 
 import java.util.List;
 import com.hrm.main.models.Onboarding;
+import com.hrm.main.payloads.OnboardingDto;
 
 public interface IOnboardingService {
 
@@ -11,7 +12,7 @@ public interface IOnboardingService {
 
 	String createOnboarding(List<Onboarding> onboardings);
 
-	List<Onboarding> getAllOnboarding();
+	List<OnboardingDto> getAllOnboarding();
 
 	Onboarding getOnboardingByCandidateId(long candidateId);
 

@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
+import com.hrm.main.models.Helper.EnumCollection.Sub_Department;
+import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.services.IOnboardingService;
 
 @CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
@@ -49,9 +51,9 @@ public class OnboardingController {
 	}
 
 	@GetMapping("/get")
-	public ResponseEntity<List<Onboarding>> getAllOnboarding() {
-		List<Onboarding> allOnboarding = this.onboardingService.getAllOnboarding();
-		return new ResponseEntity<List<Onboarding>>(allOnboarding, HttpStatus.OK);
+	public ResponseEntity<List<OnboardingDto>> getAllOnboarding() {
+		List<OnboardingDto> allOnboarding = this.onboardingService.getAllOnboarding();
+		return new ResponseEntity<List<OnboardingDto>>(allOnboarding, HttpStatus.OK);
 	}
 
 	@GetMapping("/get/{candidateId}")
@@ -82,6 +84,12 @@ public class OnboardingController {
 	public String[] getDepartments() {
 		Departments[] departments = Departments.values();
 		return formatDepartments(departments);
+	}
+
+	@GetMapping("/subDepartments")
+	public Sub_Department[] getSubDepartments() {
+		Sub_Department[] subDepartments = Sub_Department.values();
+		return subDepartments;
 	}
 
 	private String[] formatDepartments(Departments[] departments) {

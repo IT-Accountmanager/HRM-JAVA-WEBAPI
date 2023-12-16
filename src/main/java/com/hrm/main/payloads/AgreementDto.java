@@ -10,7 +10,7 @@ public class AgreementDto {
 	private long candidateId;
 	private LocalDate agreementDate;
 	private String employeeName;
-	private String employeeFathersOrHusbandName;
+	private String employeeFathersName;
 	private int age;
 	private String religion;
 	private String state;
@@ -21,6 +21,7 @@ public class AgreementDto {
 	private String employerName;
 	private String corporateOfficeAddress;
 	private String regOfficeAddress;
+
 	/*
 	 * private float duration; private LocalDate startDate; private LocalDate
 	 * endDate;
@@ -69,12 +70,12 @@ public class AgreementDto {
 		this.employeeName = employeeName;
 	}
 
-	public String getEmployeeFathersOrHusbandName() {
-		return employeeFathersOrHusbandName;
+	public String getEmployeeFathersName() {
+		return employeeFathersName;
 	}
 
-	public void setEmployeeFathersOrHusbandName(String employeeFathersOrHusbandName) {
-		this.employeeFathersOrHusbandName = employeeFathersOrHusbandName;
+	public void setEmployeeFathersName(String employeeFathersName) {
+		this.employeeFathersName = employeeFathersName;
 	}
 
 	public int getAge() {
