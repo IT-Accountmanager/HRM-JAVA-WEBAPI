@@ -5,12 +5,9 @@ import java.util.Base64.Decoder;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.hrm.main.models.Education;
 import com.hrm.main.models.Work;
 import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
-import com.hrm.main.payloads.EducationStatusResponse;
 import com.hrm.main.payloads.WorkStatusResponse;
 import com.hrm.main.repositories.IWorkRepository;
 import com.hrm.main.services.IWorkService;

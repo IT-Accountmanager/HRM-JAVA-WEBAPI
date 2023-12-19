@@ -5,6 +5,7 @@ import java.util.List;
 import com.hrm.main.models.HRManager;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.payloads.AuthorizedSignDto;
 import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
 import com.hrm.main.payloads.HrManagerAgreementApprovalDto;
@@ -54,5 +55,7 @@ public interface IHRManagerService {
 			long candidateId);
 
 	HrManagerAgreementApprovalDto getAgreementApproval(long candidateId);
+
+	String addAuthorizedSign(AuthorizedSignDto authorizedSign, long candidateId);
 
 }

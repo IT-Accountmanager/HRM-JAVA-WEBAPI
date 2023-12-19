@@ -13,7 +13,7 @@ public class AgreementDto {
 	private String employeeFathersName;
 	private int age;
 	private String religion;
-	private String state;
+	private String presentAddress;
 	private String permanentAddress;
 	private float serviceCommitment;
 	private LocalDate tenureFrom;
@@ -94,12 +94,12 @@ public class AgreementDto {
 		this.religion = religion;
 	}
 
-	public String getState() {
-		return state;
+	public String getPresentAddress() {
+		return presentAddress;
 	}
 
-	public void setState(String state) {
-		this.state = state;
+	public void setPresentAddress(String presentAddress) {
+		this.presentAddress = presentAddress;
 	}
 
 	public String getPermanentAddress() {

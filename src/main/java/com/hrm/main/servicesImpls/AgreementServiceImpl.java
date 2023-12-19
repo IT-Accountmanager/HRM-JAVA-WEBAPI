@@ -52,7 +52,12 @@ public class AgreementServiceImpl implements IAgreementService {
 
 				agreement.setEmployeeFathersOrHusbandName(agreement.getEmployeeFathersOrHusbandName());
 
-				agreement.setState(personal.getAddressDetails().getPresentAdd().getState());
+				agreement.setPresentAddress((personal.getAddressDetails().getPresentAdd().getHouseNo()) + ", "
+						+ (personal.getAddressDetails().getPresentAdd().getArea()) + ", near "
+						+ (personal.getAddressDetails().getPresentAdd().getLandmark()) + ", "
+						+ (personal.getAddressDetails().getPresentAdd().getCity()) + ", "
+						+ (personal.getAddressDetails().getPresentAdd().getState()) + ", "
+						+ (personal.getAddressDetails().getPresentAdd().getPincode()));
 
 				agreement.setPermanentAddress((personal.getAddressDetails().getPermanetAdd().getHouseNo()) + ", "
 						+ (personal.getAddressDetails().getPermanetAdd().getArea()) + ", near "
@@ -202,7 +207,7 @@ public class AgreementServiceImpl implements IAgreementService {
 		preAgreementInfo
 				.setAge(Period.between(personal.getPersonalDetails().getDateOfBirth(), LocalDate.now()).getYears());
 		preAgreementInfo.setReligion("Hindu");
-		preAgreementInfo.setState((personal.getAddressDetails().getPresentAdd().getHouseNo()) + ", "
+		preAgreementInfo.setPresentAddress((personal.getAddressDetails().getPresentAdd().getHouseNo()) + ", "
 				+ (personal.getAddressDetails().getPresentAdd().getArea()) + ", near "
 				+ (personal.getAddressDetails().getPresentAdd().getLandmark()) + ", "
 				+ (personal.getAddressDetails().getPresentAdd().getCity()) + ", "

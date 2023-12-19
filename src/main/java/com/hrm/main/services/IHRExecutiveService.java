@@ -2,10 +2,12 @@ package com.hrm.main.services;
 
 import java.util.List;
 
+import com.hrm.main.models.BackgroundVerification;
 import com.hrm.main.models.HRExecutive;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.payloads.HrExecutiveAgreementApprovalDto;
+import com.hrm.main.payloads.HrExecutiveBgvSubmissionDto;
 import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
 import com.hrm.main.payloads.HrExecutiveFamilyApprovalDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
@@ -57,6 +59,10 @@ public interface IHRExecutiveService {
 			long candidateId);
 
 	HrExecutiveAgreementApprovalDto getAgreementApproval(long candidateId);
+
+	String postBgv(BackgroundVerification bgv, long candidateId);
+
+	HrExecutiveBgvSubmissionDto getBgvApproval(long candidateId);
 
 	// List<Onboarding> getAllOnboarding();
 

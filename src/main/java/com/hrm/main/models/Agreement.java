@@ -32,7 +32,7 @@ public class Agreement {
 	private String employeeFathersOrHusbandName;
 	private int age;
 	private String religion;
-	private String state;
+	private String presentAddress;
 	private String permanentAddress;
 	private float serviceCommitment;
 	private LocalDate tenureFrom;
@@ -46,6 +46,7 @@ public class Agreement {
 	 */
 	private long serviceBreakAmount;
 	private String custodyOf;
+	private String chequeNo;
 	private DetailsSubmissionStatus agreementSubmissionStatus = getAgreementSubmissionStatus().Pending;
 	private ApprovalStatus hrExecutiveApprovalStatus = getHrExecutiveApprovalStatus().Pending;
 	private String hrExecutiveRemark;
@@ -120,12 +121,12 @@ public class Agreement {
 		this.religion = religion;
 	}
 
-	public String getState() {
-		return state;
+	public String getPresentAddress() {
+		return presentAddress;
 	}
 
-	public void setState(String state) {
-		this.state = state;
+	public void setPresentAddress(String presentAddress) {
+		this.presentAddress = presentAddress;
 	}
 
 	public String getPermanentAddress() {
@@ -212,6 +213,14 @@ public class Agreement {
 
 	public void setCustodyOf(String custodyOf) {
 		this.custodyOf = custodyOf;
+	}
+
+	public String getChequeNo() {
+		return chequeNo;
+	}
+
+	public void setChequeNo(String chequeNo) {
+		this.chequeNo = chequeNo;
 	}
 
 	public DetailsSubmissionStatus getAgreementSubmissionStatus() {

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +14,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.hrm.main.models.BackgroundVerification;
 import com.hrm.main.models.HRExecutive;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Personal;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.payloads.HrExecutiveAgreementApprovalDto;
+import com.hrm.main.payloads.HrExecutiveBgvSubmissionDto;
 import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
 import com.hrm.main.payloads.HrExecutiveFamilyApprovalDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
@@ -173,6 +175,34 @@ public class HRExecutiveController {
 		HrExecutiveAgreementApprovalDto result = this.hRExecutiveService.getAgreementApproval(candidateId);
 		return new ResponseEntity<HrExecutiveAgreementApprovalDto>(result, HttpStatus.OK);
 	}
+
+	// ---------------------------Post BGV checkbox--------------------
+	@PostMapping("post/bgv/{candidateId}")
+	public ResponseEntity<String> postBgv(@RequestBody BackgroundVerification bgv, @PathVariable long candidateId) {
+		String result = this.hRExecutiveService.postBgv(bgv, candidateId);
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+
+	@GetMapping("get/bgvApproval/{candidateId}")
+	public ResponseEntity<HrExecutiveBgvSubmissionDto> getBgvApproval(@PathVariable long candidateId) {
+		HrExecutiveBgvSubmissionDto result = this.hRExecutiveService.getBgvApproval(candidateId);
+		return new ResponseEntity<HrExecutiveBgvSubmissionDto>(result, HttpStatus.OK);
+	}
+
+	/*
+	 * //----------------------------POST BGV
+	 * Approval---------------------------------
+	 * 
+	 * @PostMapping("bgvApproval/{candidateId}") public
+	 * ResponseEntity<HrExecutiveAgreementApprovalDto> agreementApproval(
+	 * 
+	 * @RequestBody HrExecutiveAgreementApprovalDto hrExecutiveAgreementApprovalDto,
+	 * 
+	 * @PathVariable long candidateId) { HrExecutiveAgreementApprovalDto result =
+	 * this.hRExecutiveService .agreementApproval(hrExecutiveAgreementApprovalDto,
+	 * candidateId); return new
+	 * ResponseEntity<HrExecutiveAgreementApprovalDto>(result, HttpStatus.OK); }
+	 */
 
 	@GetMapping("get/{candidateId}")
 	public ResponseEntity<Onboarding> getByCandidateId(@PathVariable long candidateId) {

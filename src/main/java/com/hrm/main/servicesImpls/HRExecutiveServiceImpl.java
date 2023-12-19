@@ -3,11 +3,14 @@ package com.hrm.main.servicesImpls;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hrm.main.models.Agreement;
+import com.hrm.main.models.BackgroundVerification;
 import com.hrm.main.models.Education;
 import com.hrm.main.models.Family;
 import com.hrm.main.models.HRExecutive;
@@ -19,11 +22,13 @@ import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
 import com.hrm.main.payloads.HrExecutiveAgreementApprovalDto;
+import com.hrm.main.payloads.HrExecutiveBgvSubmissionDto;
 import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
 import com.hrm.main.payloads.HrExecutiveFamilyApprovalDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
 import com.hrm.main.payloads.HrExecutiveWorkApprovalDto;
 import com.hrm.main.repositories.IAgreementRepository;
+import com.hrm.main.repositories.IBackgroundVerificationRepository;
 import com.hrm.main.repositories.IEducationRepository;
 import com.hrm.main.repositories.IFamilyRepository;
 import com.hrm.main.repositories.IHRExecutiveRepository;
@@ -50,6 +55,8 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 	private IWorkRepository workRepository;
 	@Autowired
 	private IAgreementRepository agreementRepository;
+	@Autowired
+	private IBackgroundVerificationRepository backgroundVerificationRepository;
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -507,6 +514,33 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 			e.getMessage();
 		}
 		return 0;
+	}
+
+	@Override
+	public String postBgv(BackgroundVerification bgv, long candidateId) {
+
+		long trueChecksCount = Stream
+				.of(bgv.isCheck1(), bgv.isCheck2(), bgv.isCheck3(), bgv.isCheck4(), bgv.isCheck5(), bgv.isCheck6(),
+						bgv.isCheck7(), bgv.isCheck8(), bgv.isCheck9(), bgv.isCheck10())
+				.filter(Boolean::valueOf).count();
+
+		bgv.setBackgroundVerificationSubmissionStatus(
+				trueChecksCount >= 8 ? DetailsSubmissionStatus.Submitted : DetailsSubmissionStatus.Pending);
+
+		try {
+			this.backgroundVerificationRepository.save(bgv);
+			return "BGV Added";
+		} catch (Exception e) {
+			// Handle the exception, log it, and return an appropriate error message
+			return "Error adding BGV: " + e.getMessage();
+		}
+	}
+
+	@Override
+	public HrExecutiveBgvSubmissionDto getBgvApproval(long candidateId) {
+		BackgroundVerification result = this.backgroundVerificationRepository.findByCandidateId(candidateId);
+		HrExecutiveBgvSubmissionDto map = modelMapper.map(result, HrExecutiveBgvSubmissionDto.class);
+		return map;
 	}
 
 }

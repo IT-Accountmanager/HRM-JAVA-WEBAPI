@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.hrm.main.models.Agreement;
 import com.hrm.main.models.Education;
 import com.hrm.main.models.Employee;
@@ -18,11 +17,8 @@ import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
+import com.hrm.main.payloads.AuthorizedSignDto;
 import com.hrm.main.payloads.EmployeeGenerateDto;
-import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
-import com.hrm.main.payloads.HrExecutiveFamilyApprovalDto;
-import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
-import com.hrm.main.payloads.HrExecutiveWorkApprovalDto;
 import com.hrm.main.payloads.HrManagerAgreementApprovalDto;
 import com.hrm.main.payloads.HrManagerDto;
 import com.hrm.main.payloads.HrManagerEducationApprovalDto;
@@ -38,6 +34,8 @@ import com.hrm.main.repositories.IOnboardingRepository;
 import com.hrm.main.repositories.IPersonalRepository;
 import com.hrm.main.repositories.IWorkRepository;
 import com.hrm.main.services.IHRManagerService;
+
+import jakarta.websocket.Decoder;
 
 @Service
 
@@ -353,12 +351,39 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			employeeDto.setEmailId(candidate.getEmailId());
 			employeeDto.setContactNumber(candidate.getContactNumber());
 			employeeDto.setStatus(EmployeeStatus.Active);
+			employeeDto.setSign(this.agreementRepository.findByCandidateId(candidateId).getSign());
 
 			this.employeeRepository.save(this.modelMapper.map(employeeDto, Employee.class));
 
 			return employeeDto;
 		}
 		return null;
+	}
+
+	@Override
+	public String addAuthorizedSign(AuthorizedSignDto authorizedSign, long candidateId) { // Check if the candidate
+																							// exists
+		Employee employee = this.employeeRepository.findByCandidateId(candidateId);
+		if (employee == null) {
+			return "Candidate not found";
+		}
+
+		while (authorizedSign.base64Data.length() % 4 != 0) {
+			authorizedSign.base64Data += "=";
+		}
+
+		try {
+			java.util.Base64.Decoder decoder = java.util.Base64.getDecoder();
+
+			employee.setAuthorisedSignature(decoder.decode(authorizedSign.base64Data));
+
+			this.employeeRepository.save(employee);
+
+			return "Authorized signature added successfully";
+		} catch (IllegalArgumentException e) {
+
+			return "Error decoding Base64 data: " + e.getMessage();
+		}
 	}
 
 }

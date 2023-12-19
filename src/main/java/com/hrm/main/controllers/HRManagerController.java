@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.HRManager;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.payloads.AuthorizedSignDto;
 import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
 import com.hrm.main.payloads.HrExecutiveFamilyApprovalDto;
@@ -29,6 +30,8 @@ import com.hrm.main.payloads.HrManagerPersonalApprovalDto;
 import com.hrm.main.payloads.HrManagerWorkApprovalDto;
 import com.hrm.main.services.IHRExecutiveService;
 import com.hrm.main.services.IHRManagerService;
+
+import jakarta.websocket.server.PathParam;
 
 @CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
 @RestController
@@ -151,6 +154,14 @@ public class HRManagerController {
 	public ResponseEntity<EmployeeGenerateDto> generateEmployee(@PathVariable long candidateId) {
 		EmployeeGenerateDto result = this.hRManagerService.generateEmployee(candidateId);
 		return new ResponseEntity<EmployeeGenerateDto>(result, HttpStatus.OK);
+	}
+
+	// ----------------Appointment Letter------------------------
+	@PostMapping("authorizedSign/{candidateId}")
+	public ResponseEntity<String> addAuthorizedSign(@RequestBody AuthorizedSignDto authorizedSign,
+			@PathVariable long candidateId) {
+		String result = this.hRManagerService.addAuthorizedSign(authorizedSign, candidateId);
+		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
 	@GetMapping("/Add/{status}")

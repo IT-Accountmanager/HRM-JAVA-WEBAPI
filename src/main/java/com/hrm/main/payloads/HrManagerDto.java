@@ -15,6 +15,7 @@ public class HrManagerDto {
 	private float ctc;
 	private CandidatesStatus status;
 	private LocalDate dateOfJoining;
+	
 
 	public HrManagerDto() {
 		super();

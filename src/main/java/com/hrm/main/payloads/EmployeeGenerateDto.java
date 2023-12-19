@@ -21,6 +21,7 @@ public class EmployeeGenerateDto {
 	private String emailId;
 	private long contactNumber;
 	private EmployeeStatus status;
+	private byte[] sign;
 
 	public EmployeeGenerateDto() {
 		super();
@@ -136,6 +137,14 @@ public class EmployeeGenerateDto {
 
 	public void setStatus(EmployeeStatus status) {
 		this.status = status;
+	}
+
+	public byte[] getSign() {
+		return sign;
+	}
+
+	public void setSign(byte[] sign) {
+		this.sign = sign;
 	}
 
 }

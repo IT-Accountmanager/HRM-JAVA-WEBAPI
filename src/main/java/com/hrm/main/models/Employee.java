@@ -52,6 +52,9 @@ public class Employee {
 	private String previouDesignation;
 	private LocalDate previouWorkFrom;
 	private LocalDate previouWorkUpto;
+	private byte[] authorisedSignature;
+	public String base64Data;
+	private byte[] sign;
 
 	public Employee() {
 		super();
@@ -295,6 +298,22 @@ public class Employee {
 
 	public void setWorkExperience(float workExperience) {
 		this.workExperience = workExperience;
+	}
+
+	public byte[] getAuthorisedSignature() {
+		return authorisedSignature;
+	}
+
+	public void setAuthorisedSignature(byte[] authorisedSignature) {
+		this.authorisedSignature = authorisedSignature;
+	}
+
+	public byte[] getSign() {
+		return sign;
+	}
+
+	public void setSign(byte[] sign) {
+		this.sign = sign;
 	}
 
 }
