@@ -29,4 +29,6 @@ public class AddressDetailsController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 
 	}
+	//
+	
 }
