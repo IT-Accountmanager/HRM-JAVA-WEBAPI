@@ -9,6 +9,7 @@ import com.hrm.main.payloads.AuthorizedSignDto;
 import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
 import com.hrm.main.payloads.HrManagerAgreementApprovalDto;
+import com.hrm.main.payloads.HrManagerBackgroundVerificationDto;
 import com.hrm.main.payloads.HrManagerDto;
 import com.hrm.main.payloads.HrManagerEducationApprovalDto;
 import com.hrm.main.payloads.HrManagerFamilyApprovalDto;
@@ -49,13 +50,25 @@ public interface IHRManagerService {
 
 	Integer rejectHrManager(long candiateId);
 
-	EmployeeGenerateDto generateEmployee(long candidateId);
+	EmployeeGenerateDto getAppointmentLetter(long candidateId);
 
 	HrManagerAgreementApprovalDto agreementApproval(HrManagerAgreementApprovalDto hrManagerAgreementApprovalDto,
 			long candidateId);
 
 	HrManagerAgreementApprovalDto getAgreementApproval(long candidateId);
 
-	String addAuthorizedSign(AuthorizedSignDto authorizedSign, long candidateId);
+	// String addAuthorizedSign(AuthorizedSignDto authorizedSign, long candidateId);
+
+	String bgvApproval(HrManagerBackgroundVerificationDto bgv, long candidateId);
+
+	HrManagerBackgroundVerificationDto getBgvApproval(long candidateId);
+
+	String editAppointment(EmployeeGenerateDto appointmentInfo, long candidateId);
+
+	String releaseAppointmentLetter(long candidateId);
+
+	EmployeeGenerateDto getReleaseAppointmentLetter(long candidateId);
+
+	String createAppointmentLetter(long candidateId);
 
 }

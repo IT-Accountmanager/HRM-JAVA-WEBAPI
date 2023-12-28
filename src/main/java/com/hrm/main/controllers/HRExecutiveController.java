@@ -45,9 +45,11 @@ public class HRExecutiveController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
-	@GetMapping("/getAllExecutive/{status}")
-	public ResponseEntity<List<Onboarding>> getAllExecutive(@PathVariable CandidatesStatus status) {
-		List<Onboarding> allExecutive = this.hRExecutiveService.getAllExecutive(status);
+	@GetMapping("/getAllExecutive/{inReview}/{hrManagerRejected}")
+	public ResponseEntity<List<Onboarding>> getAllExecutive(@PathVariable CandidatesStatus inReview,
+			@PathVariable CandidatesStatus hrManagerRejected) {
+		List<Onboarding> allExecutive = this.hRExecutiveService.getAllExecutive(inReview, hrManagerRejected);
+
 		return new ResponseEntity<List<Onboarding>>(allExecutive, HttpStatus.OK);
 	}
 
@@ -181,6 +183,14 @@ public class HRExecutiveController {
 	public ResponseEntity<String> postBgv(@RequestBody BackgroundVerification bgv, @PathVariable long candidateId) {
 		String result = this.hRExecutiveService.postBgv(bgv, candidateId);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+
+	// ---------------------------Get BGV checkbox--------------------
+	@GetMapping("get/bgv/{candidateId}")
+	public ResponseEntity<BackgroundVerification> getBgv(@PathVariable long candidateId) {
+		BackgroundVerification result = this.hRExecutiveService.getBgv(candidateId);
+		return new ResponseEntity<BackgroundVerification>(result, HttpStatus.OK);
+
 	}
 
 	@GetMapping("get/bgvApproval/{candidateId}")

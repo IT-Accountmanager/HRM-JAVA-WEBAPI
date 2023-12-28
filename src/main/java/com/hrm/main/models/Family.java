@@ -36,7 +36,7 @@ public class Family {
 
 	private String hrExecutiveRemark;
 
-	private ApprovalStatus hrManagerApprovalStatus = getHrExecutiveApprovalStatus().Pending;
+	private ApprovalStatus hrManagerApprovalStatus = getHrManagerApprovalStatus().Pending;
 
 	private String hrManagerRemark;
 

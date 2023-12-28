@@ -1,6 +1,7 @@
 package com.hrm.main.servicesImpls;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -17,6 +18,7 @@ import com.hrm.main.models.HRExecutive;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Personal;
 import com.hrm.main.models.Work;
+import com.hrm.main.models.Helper.EnumCollection;
 import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
@@ -86,14 +88,26 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 	 */
 
 	@Override
-	public List<Onboarding> getAllExecutive(CandidatesStatus status) {
-		List<Onboarding> allExecutive = this.onboardingRepository.findAllByCandidatesStatus(status);
+	public List<Onboarding> getAllExecutive(CandidatesStatus inReview, CandidatesStatus hRManagerRejected) {
 
-		List<Onboarding> nonSubmittedExecutiveList = allExecutive.stream()
-				.filter(onboarding -> onboarding.getHrExecutiveSubmission() != HrSubmission.Submit)
-				.collect(Collectors.toList());
+		List<EnumCollection.CandidatesStatus> statusList = Arrays.asList(inReview, hRManagerRejected);
+		List<Onboarding> findAll = this.onboardingRepository.findAllByCandidatesStatusIn(statusList);
+		System.out.println(findAll);
 
-		return nonSubmittedExecutiveList;
+		List<Onboarding> listForHrExecutive = new ArrayList<>();
+
+		for (Onboarding onboarding : findAll) {
+
+			HrSubmission managerStatus = onboarding.getHrManagerSubmission();
+			HrSubmission executiveStatus = onboarding.getHrExecutiveSubmission();
+
+			if (managerStatus == HrSubmission.Pending || managerStatus == HrSubmission.Reject
+			/* || executiveStatus == HrSubmission.Submit */) {
+				listForHrExecutive.add(onboarding);
+			}
+		}
+
+		return listForHrExecutive;
 	}
 
 	@Override
@@ -506,7 +520,7 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 		try {
 			Onboarding candidate = this.onboardingRepository.findByCandidateId(candiateId);
 			candidate.setHrExecutiveSubmission(HrSubmission.Reject);
-			candidate.setCandidatesStatus(CandidatesStatus.Rejected);
+			candidate.setCandidatesStatus(CandidatesStatus.HrExecutiveRejected);
 			this.onboardingRepository.save(candidate);
 			return 1;
 
@@ -541,6 +555,11 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 		BackgroundVerification result = this.backgroundVerificationRepository.findByCandidateId(candidateId);
 		HrExecutiveBgvSubmissionDto map = modelMapper.map(result, HrExecutiveBgvSubmissionDto.class);
 		return map;
+	}
+
+	@Override
+	public BackgroundVerification getBgv(long candidateId) {
+		return this.backgroundVerificationRepository.findByCandidateId(candidateId);
 	}
 
 }

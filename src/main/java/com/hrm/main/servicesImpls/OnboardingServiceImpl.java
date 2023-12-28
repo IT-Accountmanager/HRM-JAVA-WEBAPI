@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
 import com.hrm.main.payloads.OnboardingDto;
+import com.hrm.main.payloads.OnboardingEditDto;
 import com.hrm.main.repositories.IOnboardingRepository;
 import com.hrm.main.repositories.IProfileRepository;
 import com.hrm.main.services.IOnboardingService;
@@ -54,6 +56,8 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		onboarding.setServiceBreakAmount(onboardingRequest.getServiceBreakAmount());
 		onboarding.setCtc(onboardingRequest.getCtc());
 		onboarding.setCandidatesStatus(CandidatesStatus.Pending);
+		onboarding.setHrExecutiveSubmission(HrSubmission.Pending);
+		onboarding.setHrManagerSubmission(HrSubmission.Pending);
 		onboarding.setDateOfJoining(LocalDate.parse(onboardingRequest.getFormattedDateOfJoining(),
 				DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 		onboarding.setWorkLocation(onboardingRequest.getWorkLocation());
@@ -93,21 +97,18 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	}
 
 	@Override
-	public String updateOnboarding(Onboarding onboarding, Integer id) {
+	public String updateOnboarding(OnboardingEditDto onboardingDto, long candidateId) {
+		Onboarding existingCandidate = this.onboardingRepository.findByCandidateId(candidateId);
 
-		try {
-			if (this.onboardingRepository.existsById(id)) {
-				onboarding.setSrNo(id);
-				this.onboardingRepository.save(onboarding);
-				return "Id no. " + id + " is updated. ";
-			} else {
-				return "Id no. " + id + " is does not exists ";
-			}
+		if (existingCandidate != null) {
+			modelMapper.map(onboardingDto, existingCandidate);
 
-		} catch (Exception e) {
-			e.getMessage();
+			this.onboardingRepository.save(existingCandidate);
+
+			return "Candidate is updated : " + candidateId;
+		} else {
+			return "Candidate not found with id: " + candidateId;
 		}
-		return "Id no. " + id + " is not updated. ";
 	}
 
 	@Override
@@ -168,6 +169,8 @@ public class OnboardingServiceImpl implements IOnboardingService {
 				onboarding.setServiceBreakAmount(singleOnboarding.getServiceBreakAmount());
 				onboarding.setCtc(singleOnboarding.getCtc());
 				onboarding.setCandidatesStatus(CandidatesStatus.Pending);
+				onboarding.setHrExecutiveSubmission(HrSubmission.Pending);
+				onboarding.setHrManagerSubmission(HrSubmission.Pending);
 				onboarding.setDateOfJoining(singleOnboarding.getDateOfJoining());
 				onboarding.setWorkLocation(singleOnboarding.getWorkLocation());
 

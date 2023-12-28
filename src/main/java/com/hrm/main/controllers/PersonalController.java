@@ -39,7 +39,7 @@ public class PersonalController {
 	// Get personal details by candidate id
 
 	@GetMapping("/get/{candidateId}")
-	public ResponseEntity<Personal> getPersonalDetailsByCandidateId(@PathVariable Integer candidateId) {
+	public ResponseEntity<Personal> getPersonalDetailsByCandidateId(@PathVariable long candidateId) {
 		Personal result = this.personalService.getPersonalDetailsByCandidateId(candidateId);
 		return new ResponseEntity<Personal>(result, HttpStatus.OK);
 	}

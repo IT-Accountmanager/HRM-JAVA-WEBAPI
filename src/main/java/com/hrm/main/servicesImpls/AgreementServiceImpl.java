@@ -227,6 +227,7 @@ public class AgreementServiceImpl implements IAgreementService {
 		preAgreementInfo.setTenureTo(LocalDate.now().plusMonths(months));
 		preAgreementInfo.setServiceBreakAmount(onboarding.getServiceBreakAmount());
 		preAgreementInfo.setCustodyOf("HR");
+		// preAgreementInfo.setChequeNo(null);
 
 		return preAgreementInfo;
 	}

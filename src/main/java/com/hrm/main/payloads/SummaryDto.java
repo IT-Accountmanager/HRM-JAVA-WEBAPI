@@ -19,6 +19,7 @@ public class SummaryDto {
 	private String assignTo;
 	private EmployeeStatus employeeStatus;
 	private String workLocation;
+	private byte[] appointmentLetter;
 
 	public SummaryDto() {
 		super();
@@ -112,12 +113,19 @@ public class SummaryDto {
 		this.workLocation = workLocation;
 	}
 
+	public byte[] getAppointmentLetter() {
+		return appointmentLetter;
+	}
+
+	public void setAppointmentLetter(byte[] appointmentLetter) {
+		this.appointmentLetter = appointmentLetter;
+	}
+
 	/*
 	 * public long getServiceBreakAmount() { return serviceBreakAmount; }
 	 * 
 	 * public void setServiceBreakAmount(long serviceBreakAmount) {
 	 * this.serviceBreakAmount = serviceBreakAmount; }
 	 */
-	
 
 }

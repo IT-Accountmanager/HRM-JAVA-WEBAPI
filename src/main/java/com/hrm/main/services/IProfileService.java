@@ -7,15 +7,16 @@ import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.PersonalDetails;
 import com.hrm.main.models.Profile;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
 import com.hrm.main.payloads.ProfileSummaryDto;
 
 public interface IProfileService {
 
 	/* String changeStatus(Integer id, String status); */
 
-	List<Onboarding> getPendingOnboardings(CandidatesStatus status);
+	List<Onboarding> getPendingOnboardings();
 
-	Onboarding getOnboardingById(Integer id);
+	Onboarding getOnboardingByCandidateId(long candidateId);
 
 	int createProfile(Profile profile);
 

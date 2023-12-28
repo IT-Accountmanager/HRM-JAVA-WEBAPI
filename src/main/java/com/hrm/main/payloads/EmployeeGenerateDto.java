@@ -14,14 +14,29 @@ public class EmployeeGenerateDto {
 	private String designation;
 	private float serviceCommitment;
 	private long serviceBreakAmount;
-	private float ctc;
+	private long ctc;
 	private LocalDate dateOfJoining;
 	private LocalDate dateOfReleasing;
 	private Departments department;
 	private String emailId;
 	private long contactNumber;
-	private EmployeeStatus status;
+	private EmployeeStatus employeeStatus;
+
 	private byte[] sign;
+
+	private byte[] appointmentLetter;
+	public String appointmentLetterBase64;
+
+	private byte[] authorisedSignature;
+	public String authorisedSignatureBase64;
+
+	public byte[] getAuthorisedSignature() {
+		return authorisedSignature;
+	}
+
+	public void setAuthorisedSignature(byte[] authorisedSignature) {
+		this.authorisedSignature = authorisedSignature;
+	}
 
 	public EmployeeGenerateDto() {
 		super();
@@ -67,11 +82,11 @@ public class EmployeeGenerateDto {
 		this.designation = designation;
 	}
 
-	public float getCtc() {
+	public long getCtc() {
 		return ctc;
 	}
 
-	public void setCtc(float ctc) {
+	public void setCtc(long ctc) {
 		this.ctc = ctc;
 	}
 
@@ -131,12 +146,12 @@ public class EmployeeGenerateDto {
 		this.contactNumber = contactNumber;
 	}
 
-	public EmployeeStatus getStatus() {
-		return status;
+	public EmployeeStatus getEmployeeStatus() {
+		return employeeStatus;
 	}
 
-	public void setStatus(EmployeeStatus status) {
-		this.status = status;
+	public void setEmployeeStatus(EmployeeStatus employeeStatus) {
+		this.employeeStatus = employeeStatus;
 	}
 
 	public byte[] getSign() {
@@ -145,6 +160,14 @@ public class EmployeeGenerateDto {
 
 	public void setSign(byte[] sign) {
 		this.sign = sign;
+	}
+
+	public byte[] getAppointmentLetter() {
+		return appointmentLetter;
+	}
+
+	public void setAppointmentLetter(byte[] appointmentLetter) {
+		this.appointmentLetter = appointmentLetter;
 	}
 
 }

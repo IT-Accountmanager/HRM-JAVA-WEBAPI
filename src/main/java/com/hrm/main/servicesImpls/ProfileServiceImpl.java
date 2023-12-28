@@ -1,6 +1,8 @@
 
 package com.hrm.main.servicesImpls;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import com.hrm.main.models.Profile;
 import com.hrm.main.models.Work;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
+import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
 import com.hrm.main.payloads.ProfileSummaryDto;
 import com.hrm.main.repositories.IAgreementRepository;
 import com.hrm.main.repositories.IEducationRepository;
@@ -44,13 +47,26 @@ public class ProfileServiceImpl implements IProfileService {
 	IAgreementRepository agreementRepository;
 
 	@Override
-	public List<Onboarding> getPendingOnboardings(CandidatesStatus status) {
-		return this.onboardingRepository.findAllByCandidatesStatus(status);
+	public List<Onboarding> getPendingOnboardings() {
+
+		List<Onboarding> findAll = this.onboardingRepository.findAll();
+		List<Onboarding> listForProfile = new ArrayList<>();
+
+		for (Onboarding onboarding : findAll) {
+
+			HrSubmission submissionStatus = onboarding.getHrExecutiveSubmission();
+
+			if (submissionStatus == HrSubmission.Pending || submissionStatus == HrSubmission.Reject) {
+				listForProfile.add(onboarding);
+			}
+		}
+
+		return listForProfile;
 	}
 
 	@Override
-	public Onboarding getOnboardingById(Integer id) {
-		return this.onboardingRepository.findById(id).get();
+	public Onboarding getOnboardingByCandidateId(long candidateId) {
+		return this.onboardingRepository.findByCandidateId(candidateId);
 	}
 
 	@Override

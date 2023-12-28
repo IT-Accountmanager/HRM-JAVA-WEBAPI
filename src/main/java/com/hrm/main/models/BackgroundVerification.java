@@ -1,5 +1,6 @@
 package com.hrm.main.models;
 
+import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 
 import jakarta.persistence.Entity;
@@ -21,8 +22,9 @@ public class BackgroundVerification {
 	private boolean check8;
 	private boolean check9;
 	private boolean check10;
-
 	private DetailsSubmissionStatus backgroundVerificationSubmissionStatus = getBackgroundVerificationSubmissionStatus().Pending;
+	private ApprovalStatus hrManagerApprovalStatus = getHrManagerApprovalStatus().Pending;
+	private String hrManagerRemark;
 
 	public long getCandidateId() {
 		return candidateId;
@@ -119,6 +121,22 @@ public class BackgroundVerification {
 	public void setBackgroundVerificationSubmissionStatus(
 			DetailsSubmissionStatus backgroundVerificationSubmissionStatus) {
 		this.backgroundVerificationSubmissionStatus = backgroundVerificationSubmissionStatus;
+	}
+
+	public ApprovalStatus getHrManagerApprovalStatus() {
+		return hrManagerApprovalStatus;
+	}
+
+	public void setHrManagerApprovalStatus(ApprovalStatus hrManagerApprovalStatus) {
+		this.hrManagerApprovalStatus = hrManagerApprovalStatus;
+	}
+
+	public String getHrManagerRemark() {
+		return hrManagerRemark;
+	}
+
+	public void setHrManagerRemark(String hrManagerRemark) {
+		this.hrManagerRemark = hrManagerRemark;
 	}
 
 }

@@ -1,11 +1,13 @@
 package com.hrm.main.servicesImpls;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hrm.main.models.Agreement;
+import com.hrm.main.models.BackgroundVerification;
 import com.hrm.main.models.Education;
 import com.hrm.main.models.Employee;
 import com.hrm.main.models.Family;
@@ -20,12 +22,14 @@ import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
 import com.hrm.main.payloads.AuthorizedSignDto;
 import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.HrManagerAgreementApprovalDto;
+import com.hrm.main.payloads.HrManagerBackgroundVerificationDto;
 import com.hrm.main.payloads.HrManagerDto;
 import com.hrm.main.payloads.HrManagerEducationApprovalDto;
 import com.hrm.main.payloads.HrManagerFamilyApprovalDto;
 import com.hrm.main.payloads.HrManagerPersonalApprovalDto;
 import com.hrm.main.payloads.HrManagerWorkApprovalDto;
 import com.hrm.main.repositories.IAgreementRepository;
+import com.hrm.main.repositories.IBackgroundVerificationRepository;
 import com.hrm.main.repositories.IEducationRepository;
 import com.hrm.main.repositories.IEmployeeRepository;
 import com.hrm.main.repositories.IFamilyRepository;
@@ -59,6 +63,8 @@ public class HRManagerServiceImpl implements IHRManagerService {
 	private IEmployeeRepository employeeRepository;
 	@Autowired
 	private IAgreementRepository agreementRepository;
+	@Autowired
+	private IBackgroundVerificationRepository backgroundVerificationRepository;
 
 	@Override
 	public boolean postCandidatesInHrManager(CandidatesStatus status) {
@@ -284,7 +290,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		try {
 			Onboarding candidate = this.onboardingRepository.findByCandidateId(candiateId);
 			candidate.setHrExecutiveSubmission(HrSubmission.Reject);
-			candidate.setCandidatesStatus(CandidatesStatus.Rejected);
+			candidate.setCandidatesStatus(CandidatesStatus.HRManagerRejected);
 			this.onboardingRepository.save(candidate);
 			return 1;
 
@@ -295,7 +301,9 @@ public class HRManagerServiceImpl implements IHRManagerService {
 	}
 
 	@Override
-	public EmployeeGenerateDto generateEmployee(long candidateId) {
+	public EmployeeGenerateDto getAppointmentLetter(long candidateId) {
+
+		// ---------------------------------------------------------------------------------------------------------------------
 
 		if (employeeRepository.existsByCandidateId(candidateId)) {
 			return null;
@@ -311,17 +319,23 @@ public class HRManagerServiceImpl implements IHRManagerService {
 				.getHrManagerApprovalStatus();
 
 		/*
-		 * ApprovalStatus workApprovalStatus =
-		 * this.workRepository.findAllWorkByCandidateId(candidateId).get(0)
-		 * .getHrManagerApprovalStatus();
+		 * List<Work> workList =
+		 * this.workRepository.findAllWorkByCandidateId(candidateId);
+		 * 
+		 * if (!workList.isEmpty()) { ApprovalStatus workApprovalStatus =
+		 * workList.get(0).getHrManagerApprovalStatus(); } else { return
+		 * "Work details not found for the candidate"; }
 		 */
 
 		ApprovalStatus agreementApprovalStatus = this.agreementRepository.findByCandidateId(candidateId)
 				.getHrManagerApprovalStatus();
 
+		ApprovalStatus bgvApprovalStatus = this.backgroundVerificationRepository.findByCandidateId(candidateId)
+				.getHrManagerApprovalStatus();
+
 		if (agreementApprovalStatus == ApprovalStatus.Approved && personalApprovalStatus == ApprovalStatus.Approved
 				&& familyApprovalStatus == ApprovalStatus.Approved && educationApprovalStatus == ApprovalStatus.Approved
-		/* && workApprovalStatus == ApprovalStatus.Approve */)
+				/* && workApprovalStatus == ApprovalStatus.Approved */ && bgvApprovalStatus == ApprovalStatus.Approved)
 
 		{
 			Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
@@ -329,61 +343,397 @@ public class HRManagerServiceImpl implements IHRManagerService {
 
 			if (employeeRepository.existsByEmailIdOrContactNumber(candidate.getEmailId(),
 					candidate.getContactNumber())) {
-				// Employee with the same email or contact number already exists, return the
-				// appropriate message
 				return null;
 			}
-			EmployeeGenerateDto employeeDto = new EmployeeGenerateDto();
-			long nextEmployeeIdNumber = this.employeeRepository.count() + 1;
-			employeeDto.setEmployeeId(String.format("EIS%05d", nextEmployeeIdNumber));
 
+			EmployeeGenerateDto employeeDto = new EmployeeGenerateDto();
+			/*
+			 * long nextEmployeeIdNumber = this.employeeRepository.count() + 1;
+			 * employeeDto.setEmployeeId(String.format("EIS%05d", nextEmployeeIdNumber));
+			 */
 			employeeDto.setName(candidate.getCandidateName());
+			employeeDto.setCandidateId(candidateId);
 			employeeDto.setDesignation(candidate.getJobTitle());
 			employeeDto.setWorkLocation(candidate.getWorkLocation());
 			employeeDto.setDateOfJoining(candidate.getDateOfJoining());
-			/*
-			 * employeeDto.setDteOfReleasing(this.workRepository.findAllWorkByCandidateId(
-			 * candidateId).stream().findFirst() .get().getRelievedDate());
-			 */
 			employeeDto.setCtc(candidate.getCtc());
 			employeeDto.setServiceCommitment(candidate.getServiceCommitment());
 			employeeDto.setServiceBreakAmount(candidate.getServiceBreakAmount());
 			employeeDto.setEmailId(candidate.getEmailId());
 			employeeDto.setContactNumber(candidate.getContactNumber());
-			employeeDto.setStatus(EmployeeStatus.Active);
-			employeeDto.setSign(this.agreementRepository.findByCandidateId(candidateId).getSign());
+			employeeDto.setEmployeeStatus(EmployeeStatus.Active);
 
-			this.employeeRepository.save(this.modelMapper.map(employeeDto, Employee.class));
+			Agreement agreement = this.agreementRepository.findByCandidateId(candidateId);
+			if (agreement == null) {
+				return null;
+			}
+
+			byte[] sign = agreement.getSign();
+			if (sign == null) {
+				return null;
+			}
+
+			employeeDto.setSign(sign);
+
+			// java.util.Base64.Decoder decoder = Base64.getDecoder();
+
+			/*
+			 * if (appointmentLetter.appointmentLetterBase64 != null) { while
+			 * (appointmentLetter.appointmentLetterBase64.length() % 4 != 0) {
+			 * appointmentLetter.appointmentLetterBase64 += "="; }
+			 * employeeDto.setAppointmentLetter(decoder.decode(appointmentLetter.
+			 * appointmentLetterBase64)); } else { return null; }
+			 */
+
+			// Continue with the rest of your logic...
+
+			/*
+			 * while (employeeDto.signBase64.length() % 4 != 0) { employeeDto.signBase64 +=
+			 * "="; }
+			 */
+
+			// employeeDto.setSign(decoder.decode(employeeDto.signBase64));
+
+			// this.employeeRepository.save(this.modelMapper.map(employeeDto,
+			// Employee.class));
 
 			return employeeDto;
 		}
 		return null;
+
+		// ----------------------------------------------------------------------
+
+		/*
+		 * EmployeeGenerateDto generate = new EmployeeGenerateDto();
+		 * 
+		 * Onboarding onboarding =
+		 * this.onboardingRepository.findByCandidateId(candidateId);
+		 * 
+		 * generate.setCandidateId(candidateId);generate.setContactNumber(onboarding.
+		 * getContactNumber());generate.setCtc(onboarding.getCtc());generate.
+		 * setDateOfJoining(onboarding.getDateOfJoining());generate.setDesignation(
+		 * onboarding.getJobTitle());generate.setEmailId(onboarding.getEmailId());
+		 * generate.setName(onboarding.getCandidateName());generate.
+		 * setServiceBreakAmount(onboarding.getServiceBreakAmount());generate.
+		 * setServiceCommitment(onboarding.getServiceCommitment());generate.setSign(this
+		 * .agreementRepository.findByCandidateId(candidateId).getSign());generate.
+		 * setWorkLocation(onboarding.getWorkLocation());
+		 * 
+		 * return generate;
+		 */
+	}
+
+	// --------------------------------------------------------------------------------------------------------------------
+
+	@Override
+	public String editAppointment(EmployeeGenerateDto appointmentInfo, long candidateId) {
+
+		Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
+
+		candidate.setCandidateId(candidateId);
+		candidate.setCandidateName(appointmentInfo.getName());
+		candidate.setJobTitle(appointmentInfo.getDesignation());
+		candidate.setWorkLocation(appointmentInfo.getWorkLocation());
+		candidate.setDateOfJoining(appointmentInfo.getDateOfJoining());
+		candidate.setCtc(appointmentInfo.getCtc());
+		candidate.setServiceCommitment(appointmentInfo.getServiceCommitment());
+		candidate.setServiceBreakAmount(appointmentInfo.getServiceBreakAmount());
+		candidate.setEmailId(appointmentInfo.getEmailId());
+		candidate.setContactNumber(appointmentInfo.getContactNumber());
+
+		this.onboardingRepository.save(candidate);
+
+		return "Appointment saved";
+	}
+
+	// --------------------------------------------------------------------------------------------------------------------
+
+	/*
+	 * @Override public String editAppointment(EmployeeGenerateDto appointmentInfo,
+	 * long candidateId) {
+	 * 
+	 * if (employeeRepository.existsByCandidateId(candidateId)) { return
+	 * "Candidate Already Existed"; }
+	 * 
+	 * if (appointmentInfo == null) { return "Invalid appointmentInfo"; }
+	 * 
+	 * Onboarding onboarding =
+	 * this.onboardingRepository.findByCandidateId(candidateId);
+	 * 
+	 * if (onboarding == null) { return
+	 * "Onboarding record not found for candidateId: " + candidateId; }
+	 * 
+	 * try {
+	 * 
+	 * onboarding.setCandidateId(candidateId);
+	 * 
+	 * Employee employee = new Employee();
+	 * 
+	 * employee.setCandidateId(candidateId); long nextEmployeeIdNumber =
+	 * this.employeeRepository.count() + 1;
+	 * employee.setEmployeeId(String.format("EIS%05d", nextEmployeeIdNumber));
+	 * 
+	 * employee.setContactNumber(appointmentInfo.getContactNumber());
+	 * employee.setCtc(appointmentInfo.getCtc());
+	 * employee.setDateOfJoining(appointmentInfo.getDateOfJoining());
+	 * employee.setJobTitle(appointmentInfo.getDesignation());
+	 * employee.setName(appointmentInfo.getName());
+	 * onboarding.setServiceBreakAmount(appointmentInfo.getServiceBreakAmount()); //
+	 * Employee Generate
+	 * onboarding.setServiceCommitment(appointmentInfo.getServiceCommitment());//
+	 * Employee Generate
+	 * employee.setWorkLocation(appointmentInfo.getWorkLocation());
+	 * 
+	 * while (appointmentInfo.authorisedSignatureBase64.length() % 4 != 0) {
+	 * appointmentInfo.authorisedSignatureBase64 += "="; }
+	 * 
+	 * Base64.Decoder decoder = Base64.getDecoder();
+	 * employee.setAuthorisedSignature(decoder.decode(appointmentInfo.
+	 * authorisedSignatureBase64));
+	 * 
+	 * this.onboardingRepository.save(onboarding);
+	 * this.employeeRepository.save(employee);
+	 * 
+	 * return "Appointment Saved"; } catch (Exception e) { return
+	 * "Error updating appointment: " + e.getMessage(); } }
+	 */
+
+	// ____________________________________________________________________________________________________________
+
+	/*
+	 * @Override public EmployeeGenerateDto generateEmployee(long candidateId) {
+	 * 
+	 * 
+	 * if (employeeRepository.existsByCandidateId(candidateId)) { return null; }
+	 * 
+	 * 
+	 * ApprovalStatus personalApprovalStatus =
+	 * this.personalRepository.findByCandidateId(candidateId)
+	 * .getHrManagerApprovalStatus();
+	 * 
+	 * ApprovalStatus familyApprovalStatus =
+	 * this.familyRepository.findAllByCandidateId(candidateId).get(0)
+	 * .getHrManagerApprovalStatus();
+	 * 
+	 * ApprovalStatus educationApprovalStatus =
+	 * this.educationRepository.findAllByCandidateId(candidateId).get(0)
+	 * .getHrManagerApprovalStatus();
+	 * 
+	 * 
+	 * ApprovalStatus workApprovalStatus =
+	 * this.workRepository.findAllWorkByCandidateId(candidateId).get(0)
+	 * .getHrManagerApprovalStatus();
+	 * 
+	 * 
+	 * ApprovalStatus agreementApprovalStatus =
+	 * this.agreementRepository.findByCandidateId(candidateId)
+	 * .getHrManagerApprovalStatus();
+	 * 
+	 * if (agreementApprovalStatus == ApprovalStatus.Approved &&
+	 * personalApprovalStatus == ApprovalStatus.Approved && familyApprovalStatus ==
+	 * ApprovalStatus.Approved && educationApprovalStatus == ApprovalStatus.Approved
+	 * && workApprovalStatus == ApprovalStatus.Approve )
+	 * 
+	 * { Onboarding candidate =
+	 * this.onboardingRepository.findByCandidateId(candidateId); //
+	 * candidate.setCandidatesStatus(CandidatesStatus.Approved);
+	 * 
+	 * if (employeeRepository.existsByEmailIdOrContactNumber(candidate.getEmailId(),
+	 * candidate.getContactNumber())) { // Employee with the same email or contact
+	 * number already exists, return the // appropriate message return null; }
+	 * EmployeeGenerateDto employeeDto = new EmployeeGenerateDto(); long
+	 * nextEmployeeIdNumber = this.employeeRepository.count() + 1;
+	 * employeeDto.setEmployeeId(String.format("EIS%05d", nextEmployeeIdNumber));
+	 * 
+	 * employeeDto.setName(candidate.getCandidateName());
+	 * employeeDto.setDesignation(candidate.getJobTitle());
+	 * employeeDto.setWorkLocation(candidate.getWorkLocation());
+	 * employeeDto.setDateOfJoining(candidate.getDateOfJoining());
+	 * 
+	 * employeeDto.setDteOfReleasing(this.workRepository.findAllWorkByCandidateId(
+	 * candidateId).stream().findFirst() .get().getRelievedDate());
+	 * 
+	 * employeeDto.setCtc(candidate.getCtc());
+	 * employeeDto.setServiceCommitment(candidate.getServiceCommitment());
+	 * employeeDto.setServiceBreakAmount(candidate.getServiceBreakAmount());
+	 * employeeDto.setEmailId(candidate.getEmailId());
+	 * employeeDto.setContactNumber(candidate.getContactNumber());
+	 * employeeDto.setStatus(EmployeeStatus.Active);
+	 * employeeDto.setSign(this.agreementRepository.findByCandidateId(candidateId).
+	 * getSign());
+	 * 
+	 * this.employeeRepository.save(this.modelMapper.map(employeeDto,
+	 * Employee.class));
+	 * 
+	 * return employeeDto; } return null; }
+	 */
+
+	// ___________________________________________________________________________________________________
+
+	@Override
+	public String bgvApproval(HrManagerBackgroundVerificationDto bgv, long candidateId) {
+		BackgroundVerification existingBgv = this.backgroundVerificationRepository.findByCandidateId(candidateId);
+		modelMapper.map(bgv, existingBgv);
+		this.backgroundVerificationRepository.save(existingBgv);
+		return "Successfully added";
 	}
 
 	@Override
-	public String addAuthorizedSign(AuthorizedSignDto authorizedSign, long candidateId) { // Check if the candidate
-																							// exists
-		Employee employee = this.employeeRepository.findByCandidateId(candidateId);
-		if (employee == null) {
-			return "Candidate not found";
+	public HrManagerBackgroundVerificationDto getBgvApproval(long candidateId) {
+		BackgroundVerification backgroundVerification = this.backgroundVerificationRepository
+				.findByCandidateId(candidateId);
+		HrManagerBackgroundVerificationDto map = this.modelMapper.map(backgroundVerification,
+				HrManagerBackgroundVerificationDto.class);
+		return map;
+	}
+
+	@Override
+	public String releaseAppointmentLetter(long candidateId) {
+
+		ApprovalStatus personalApprovalStatus = this.personalRepository.findByCandidateId(candidateId)
+				.getHrManagerApprovalStatus();
+
+		ApprovalStatus familyApprovalStatus = this.familyRepository.findAllByCandidateId(candidateId).get(0)
+				.getHrManagerApprovalStatus();
+		ApprovalStatus educationApprovalStatus = this.educationRepository.findAllByCandidateId(candidateId).get(0)
+				.getHrManagerApprovalStatus();
+
+		/*
+		 * List<Work> workList =
+		 * this.workRepository.findAllWorkByCandidateId(candidateId);
+		 * 
+		 * if (!workList.isEmpty()) { ApprovalStatus workApprovalStatus =
+		 * workList.get(0).getHrManagerApprovalStatus(); } else { return
+		 * "Work details not found for the candidate"; }
+		 */
+
+		ApprovalStatus agreementApprovalStatus = this.agreementRepository.findByCandidateId(candidateId)
+				.getHrManagerApprovalStatus();
+
+		if (agreementApprovalStatus == ApprovalStatus.Approved && personalApprovalStatus == ApprovalStatus.Approved
+				&& familyApprovalStatus == ApprovalStatus.Approved && educationApprovalStatus == ApprovalStatus.Approved
+		/* && workApprovalStatus == ApprovalStatus.Approved */)
+
+		{
+			Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId); //
+			candidate.setCandidatesStatus(CandidatesStatus.Approved);
+
+			if (employeeRepository.existsByEmailIdOrContactNumber(candidate.getEmailId(),
+					candidate.getContactNumber())) {
+				return "Employee with the same email or contact number already exists !";
+			}
+
+			EmployeeGenerateDto employeeDto = new EmployeeGenerateDto();
+
+			employeeDto.setName(candidate.getCandidateName());
+			// employeeDto.setCandidateId(candidateId);
+			employeeDto.setDesignation(candidate.getJobTitle());
+			employeeDto.setWorkLocation(candidate.getWorkLocation());
+			employeeDto.setDateOfJoining(candidate.getDateOfJoining());
+			employeeDto.setCtc(candidate.getCtc());
+			employeeDto.setServiceCommitment(candidate.getServiceCommitment());
+			employeeDto.setServiceBreakAmount(candidate.getServiceBreakAmount());
+			employeeDto.setEmailId(candidate.getEmailId());
+			employeeDto.setContactNumber(candidate.getContactNumber());
+			employeeDto.setEmployeeStatus(EmployeeStatus.Active);
+
+			Agreement agreement = this.agreementRepository.findByCandidateId(candidateId);
+			if (agreement == null) {
+				return "Agreement details not found for the candidate";
+			}
+
+			byte[] sign = agreement.getSign();
+			if (sign == null) {
+				return "Sign details not found for the candidate";
+			}
+
+			employeeDto.setSign(sign);
+
+			java.util.Base64.Decoder decoder = Base64.getDecoder();
+
+			// ___________________Appointment Letter______________________
+
+			/*
+			 * if (appointmentLetter.appointmentLetterBase64 != null) { while
+			 * (appointmentLetter.appointmentLetterBase64.length() % 4 != 0) {
+			 * appointmentLetter.appointmentLetterBase64 += "="; }
+			 * employeeDto.setAppointmentLetter(decoder.decode(appointmentLetter.
+			 * appointmentLetterBase64)); } else { return
+			 * "Appointment letter details not found for the candidate"; }
+			 */
+
+			// _____________________________________________________________
+
+			// Continue with the rest of your logic...
+
+			/*
+			 * while (employeeDto.signBase64.length() % 4 != 0) { employeeDto.signBase64 +=
+			 * "="; }
+			 */
+
+			// employeeDto.setSign(decoder.decode(employeeDto.signBase64));
+
+			this.employeeRepository.save(this.modelMapper.map(employeeDto, Employee.class));
+
+			return "Employee Added";
+		}
+		return "Employee not Added";
+	}
+
+	/*
+	 * @Override public EmployeeGenerateDto getReleaseAppointmentLetter(long
+	 * candidateId) {
+	 * 
+	 * Employee employee = this.employeeRepository.findByCandidateId(candidateId);
+	 * 
+	 * if (employee == null) { return null; }
+	 * 
+	 * EmployeeGenerateDto employeeGenerateDto = modelMapper.map(employee,
+	 * EmployeeGenerateDto.class);
+	 * 
+	 * return employeeGenerateDto; }
+	 */
+
+	@Override
+	public EmployeeGenerateDto getReleaseAppointmentLetter(long candidateId) {
+		// Retrieve an Employee entity from the repository based on candidateId
+		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
+
+		// Check if the employee is not found
+		if (onboarding == null) {
+			return null; // Return null if the employee is not found
 		}
 
-		while (authorizedSign.base64Data.length() % 4 != 0) {
-			authorizedSign.base64Data += "=";
-		}
+		// Map the Employee entity to an EmployeeGenerateDto using ModelMapper
+		EmployeeGenerateDto employeeGenerateDto = modelMapper.map(onboarding, EmployeeGenerateDto.class);
 
-		try {
-			java.util.Base64.Decoder decoder = java.util.Base64.getDecoder();
+		// Return the generated EmployeeGenerateDto
+		return employeeGenerateDto;
+	}
 
-			employee.setAuthorisedSignature(decoder.decode(authorizedSign.base64Data));
+	@Override
+	public String createAppointmentLetter(long candidateId) {
 
-			this.employeeRepository.save(employee);
+		Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
 
-			return "Authorized signature added successfully";
-		} catch (IllegalArgumentException e) {
+		Employee employee = new Employee();
 
-			return "Error decoding Base64 data: " + e.getMessage();
-		}
+		employee.setCandidateId(candidateId);
+		long nextEmployeeIdNumber = this.employeeRepository.count() + 1;
+		employee.setEmployeeId(String.format("EIS%05d", nextEmployeeIdNumber));
+		employee.setName(candidate.getCandidateName());
+		employee.setJobTitle(candidate.getJobTitle());
+		employee.setWorkLocation(candidate.getWorkLocation());
+		employee.setDateOfJoining(candidate.getDateOfJoining());
+		employee.setCtc(candidate.getCtc());
+		employee.setBondPeriod(candidate.getServiceCommitment());
+		employee.setBondBreakAmount(candidate.getServiceBreakAmount());
+		employee.setEmailId(candidate.getEmailId());
+		employee.setContactNumber(candidate.getContactNumber());
+
+		this.employeeRepository.save(employee);
+
+		return "Appointment Letter Created";
 	}
 
 }

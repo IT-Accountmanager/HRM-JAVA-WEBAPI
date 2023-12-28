@@ -17,7 +17,7 @@ public interface IHRExecutiveService {
 
 	String createExecutive(HRExecutive hrExecutive);
 
-	List<Onboarding> getAllExecutive(CandidatesStatus status);
+	List<Onboarding> getAllExecutive(CandidatesStatus inReview, CandidatesStatus hRManagerRejected);
 
 	HRExecutive getExecutiveById(int id);
 
@@ -63,6 +63,8 @@ public interface IHRExecutiveService {
 	String postBgv(BackgroundVerification bgv, long candidateId);
 
 	HrExecutiveBgvSubmissionDto getBgvApproval(long candidateId);
+
+	BackgroundVerification getBgv(long candidateId);
 
 	// List<Onboarding> getAllOnboarding();
 

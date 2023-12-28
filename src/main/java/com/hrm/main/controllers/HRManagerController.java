@@ -23,6 +23,7 @@ import com.hrm.main.payloads.HrExecutiveFamilyApprovalDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
 import com.hrm.main.payloads.HrExecutiveWorkApprovalDto;
 import com.hrm.main.payloads.HrManagerAgreementApprovalDto;
+import com.hrm.main.payloads.HrManagerBackgroundVerificationDto;
 import com.hrm.main.payloads.HrManagerDto;
 import com.hrm.main.payloads.HrManagerEducationApprovalDto;
 import com.hrm.main.payloads.HrManagerFamilyApprovalDto;
@@ -142,6 +143,24 @@ public class HRManagerController {
 		return new ResponseEntity<HrManagerAgreementApprovalDto>(result, HttpStatus.OK);
 	}
 
+	// ---------------------------BGV Approval By Hr
+	// Manager-------------------------------
+	// _______________________________POST______________________________________________
+
+	@PostMapping("BgvApproval/{candidateId}")
+	public ResponseEntity<String> bgvApproval(@RequestBody HrManagerBackgroundVerificationDto bgv,
+			@PathVariable long candidateId) {
+		String result = this.hRManagerService.bgvApproval(bgv, candidateId);
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+
+	// _________________________________GET________________________________
+	@GetMapping("getBgvApproval/{candidateId}")
+	public ResponseEntity<HrManagerBackgroundVerificationDto> getBgvApproval(@PathVariable long candidateId) {
+		HrManagerBackgroundVerificationDto result = this.hRManagerService.getBgvApproval(candidateId);
+		return new ResponseEntity<HrManagerBackgroundVerificationDto>(result, HttpStatus.OK);
+	}
+
 	// ------------------For Reject by Hr Manager------------------
 	@PostMapping("reject/{candidateId}")
 	public ResponseEntity<Integer> rejectHrManager(@PathVariable long candidateId) {
@@ -149,19 +168,42 @@ public class HRManagerController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 
-	// --------------------FOR GENERATE BY HR MANAGER-----------------------
-	@GetMapping("generate/{candidateId}")
-	public ResponseEntity<EmployeeGenerateDto> generateEmployee(@PathVariable long candidateId) {
-		EmployeeGenerateDto result = this.hRManagerService.generateEmployee(candidateId);
+	// --------------------FOR APPOINTMENT LETTER INFO HR
+	// MANAGER-----------------------
+	@GetMapping("getAppointmentLetterInfo/{candidateId}")
+	public ResponseEntity<EmployeeGenerateDto> getAppointmentLetter(@PathVariable long candidateId) {
+		EmployeeGenerateDto result = this.hRManagerService.getAppointmentLetter(candidateId);
 		return new ResponseEntity<EmployeeGenerateDto>(result, HttpStatus.OK);
 	}
 
-	// ----------------Appointment Letter------------------------
-	@PostMapping("authorizedSign/{candidateId}")
-	public ResponseEntity<String> addAuthorizedSign(@RequestBody AuthorizedSignDto authorizedSign,
+	// --------------------Edit And Save Appointment Letter---------------------
+	@PostMapping("Edit/AppointmentLetterInfo/{candidateId}")
+	public ResponseEntity<String> editAppointment(@RequestBody EmployeeGenerateDto appointmentInfo,
 			@PathVariable long candidateId) {
-		String result = this.hRManagerService.addAuthorizedSign(authorizedSign, candidateId);
+		String result = this.hRManagerService.editAppointment(appointmentInfo, candidateId);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+
+	// ----------------Create Appointment Letter------------------------
+
+	@PostMapping("Create/{candidateId}")
+	public ResponseEntity<String> createAppointmentLetter(@PathVariable long candidateId) {
+		String result = this.hRManagerService.createAppointmentLetter(candidateId);
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+
+	// -------------------------------RELEASE----------------------------------------
+	@PostMapping("release/{candidateId}")
+	public ResponseEntity<String> releaseAppointmentLetter(@PathVariable long candidateId) {
+		String result = this.hRManagerService.releaseAppointmentLetter(candidateId);
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+
+	// ------------------------------RELEASE GET-----------------------------------
+	@GetMapping("getRelease/{candidateId}")
+	public ResponseEntity<EmployeeGenerateDto> getReleaseAppointmentLetter(@PathVariable long candidateId) {
+		EmployeeGenerateDto result = this.hRManagerService.getReleaseAppointmentLetter(candidateId);
+		return new ResponseEntity<EmployeeGenerateDto>(result, HttpStatus.OK);
 	}
 
 	@GetMapping("/Add/{status}")

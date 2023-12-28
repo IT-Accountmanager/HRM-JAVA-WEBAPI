@@ -3,6 +3,7 @@ package com.hrm.main.services;
 import java.util.List;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.payloads.OnboardingDto;
+import com.hrm.main.payloads.OnboardingEditDto;
 
 public interface IOnboardingService {
 
@@ -16,7 +17,7 @@ public interface IOnboardingService {
 
 	Onboarding getOnboardingByCandidateId(long candidateId);
 
-	String updateOnboarding(Onboarding onboarding, Integer id);
+	String updateOnboarding(OnboardingEditDto onboardingDto, long candidateId);
 
 	String deleteOnboarding(Integer id);
 

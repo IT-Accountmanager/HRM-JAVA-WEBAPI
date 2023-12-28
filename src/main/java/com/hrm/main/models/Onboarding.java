@@ -44,12 +44,14 @@ public class Onboarding {
 	private long serviceBreakAmount;
 
 	@Column(name = "ctc")
-	private float ctc;
+	private long ctc;
 
 	private CandidatesStatus candidatesStatus;
 
 	private HrSubmission hrExecutiveSubmission;
+	
 	private HrSubmission hrManagerSubmission;
+	
 	private LocalDate dateOfJoining;
 	private String workLocation;
 	private String formattedDate;
@@ -154,11 +156,11 @@ public class Onboarding {
 		this.serviceBreakAmount = serviceBreakAmount;
 	}
 
-	public float getCtc() {
+	public long getCtc() {
 		return ctc;
 	}
 
-	public void setCtc(float ctc) {
+	public void setCtc(long ctc) {
 		this.ctc = ctc;
 	}
 

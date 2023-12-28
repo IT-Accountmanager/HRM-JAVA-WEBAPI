@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.PersonalDetails;
 import com.hrm.main.models.Profile;
+import com.hrm.main.models.Helper.EnumCollection;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
 import com.hrm.main.payloads.ProfileSummaryDto;
 import com.hrm.main.services.IProfileService;
 
@@ -35,16 +37,16 @@ public class ProfileController {
 	 * ResponseEntity<String>(result, HttpStatus.OK); }
 	 */
 
-	@GetMapping("/getAll/{status}")
-	public ResponseEntity<List<Onboarding>> getPendingOnboarding(@PathVariable CandidatesStatus status) {
-		List<Onboarding> onboardings = this.profileService.getPendingOnboardings(status);
+	@GetMapping("/getAll")
+	public ResponseEntity<List<Onboarding>> getPendingOnboarding() {
+		List<Onboarding> onboardings = this.profileService.getPendingOnboardings();
 		return new ResponseEntity<List<Onboarding>>(onboardings, HttpStatus.OK);
 	}
 
-	@GetMapping("/get/{id}")
-	public ResponseEntity<Onboarding> getOnboarding(@PathVariable Integer id) {
-		Onboarding onboardingById = this.profileService.getOnboardingById(id);
-		return new ResponseEntity<Onboarding>(onboardingById, HttpStatus.OK);
+	@GetMapping("/get/{candidateId}")
+	public ResponseEntity<Onboarding> getOnboarding(@PathVariable long candidateId) {
+		Onboarding onboarding = this.profileService.getOnboardingByCandidateId(candidateId);
+		return new ResponseEntity<Onboarding>(onboarding, HttpStatus.OK);
 	}
 
 	@PostMapping("/post")

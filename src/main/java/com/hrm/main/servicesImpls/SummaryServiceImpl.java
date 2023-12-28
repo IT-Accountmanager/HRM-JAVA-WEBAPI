@@ -59,6 +59,7 @@ public class SummaryServiceImpl implements ISummaryService {
 			summaryDto.setRelevantExperience(employee.getRelevantExperience());
 			summaryDto.setAssignTo(employee.getAssignTo());
 			summaryDto.setWorkLocation(employee.getWorkLocation());
+			summaryDto.setAppointmentLetter(employee.getAppointmentLetter());
 
 			summaryDtoList.add(summaryDto);
 

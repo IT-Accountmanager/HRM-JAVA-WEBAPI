@@ -21,6 +21,7 @@ public class AgreementDto {
 	private String employerName;
 	private String corporateOfficeAddress;
 	private String regOfficeAddress;
+	private String chequeNo;
 
 	/*
 	 * private float duration; private LocalDate startDate; private LocalDate
@@ -258,6 +259,14 @@ public class AgreementDto {
 
 	public void setLeftHandThumbImpressionBase64(String leftHandThumbImpressionBase64) {
 		this.leftHandThumbImpressionBase64 = leftHandThumbImpressionBase64;
+	}
+
+	public String getChequeNo() {
+		return chequeNo;
+	}
+
+	public void setChequeNo(String chequeNo) {
+		this.chequeNo = chequeNo;
 	}
 
 }

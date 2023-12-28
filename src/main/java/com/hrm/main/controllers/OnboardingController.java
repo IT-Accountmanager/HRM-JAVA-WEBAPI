@@ -19,6 +19,7 @@ import com.hrm.main.models.Helper.EnumCollection;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.Sub_Department;
 import com.hrm.main.payloads.OnboardingDto;
+import com.hrm.main.payloads.OnboardingEditDto;
 import com.hrm.main.services.IOnboardingService;
 
 @CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
@@ -62,9 +63,10 @@ public class OnboardingController {
 		return new ResponseEntity<Onboarding>(onboarding, HttpStatus.OK);
 	}
 
-	@PutMapping("/update/{id}")
-	public ResponseEntity<String> getOnboarding(@RequestBody Onboarding onboarding, @PathVariable Integer id) {
-		String updateOnboarding = this.onboardingService.updateOnboarding(onboarding, id);
+	@PostMapping("/update/{candidateId}")
+	public ResponseEntity<String> getOnboarding(@RequestBody OnboardingEditDto onboardingDto,
+			@PathVariable long candidateId) {
+		String updateOnboarding = this.onboardingService.updateOnboarding(onboardingDto, candidateId);
 		return new ResponseEntity<String>(updateOnboarding, HttpStatus.OK);
 	}
 

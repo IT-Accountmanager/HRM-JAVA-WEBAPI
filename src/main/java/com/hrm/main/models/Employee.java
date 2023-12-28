@@ -8,11 +8,14 @@ import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 import com.hrm.main.models.Helper.EnumCollection.ResignationStatus;
 import com.hrm.main.models.Helper.EnumCollection.Sub_Department;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity
@@ -52,9 +55,19 @@ public class Employee {
 	private String previouDesignation;
 	private LocalDate previouWorkFrom;
 	private LocalDate previouWorkUpto;
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(columnDefinition = "LONGBLOB")
 	private byte[] authorisedSignature;
 	public String base64Data;
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(columnDefinition = "LONGBLOB")
 	private byte[] sign;
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(columnDefinition = "LONGBLOB")
+	private byte[] appointmentLetter;
 
 	public Employee() {
 		super();
@@ -314,6 +327,14 @@ public class Employee {
 
 	public void setSign(byte[] sign) {
 		this.sign = sign;
+	}
+
+	public byte[] getAppointmentLetter() {
+		return appointmentLetter;
+	}
+
+	public void setAppointmentLetter(byte[] appointmentLetter) {
+		this.appointmentLetter = appointmentLetter;
 	}
 
 }

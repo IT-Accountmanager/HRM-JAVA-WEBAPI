@@ -7,7 +7,7 @@ public class EnumCollection {
 	}
 
 	public enum CandidatesStatus {
-		Pending, InReview, Approved, Rejected
+		Pending, InReview, Approved, Rejected, HrExecutiveRejected, HRManagerRejected
 	}
 
 	public enum EmployeeStatus {
@@ -19,7 +19,7 @@ public class EnumCollection {
 	}
 
 	public enum HrSubmission {
-		Reject, Submit
+		Pending, Submit, Reject
 	}
 
 	public enum AttendanceStatus {
