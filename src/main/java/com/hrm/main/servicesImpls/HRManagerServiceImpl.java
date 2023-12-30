@@ -602,7 +602,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 	}
 
 	@Override
-	public String releaseAppointmentLetter(long candidateId) {
+	public String releaseAppointmentLetter(long candidateId, CreateAppointmentLetterDto appointmentLetterDto) {
 
 		ApprovalStatus personalApprovalStatus = this.personalRepository.findByCandidateId(candidateId)
 				.getHrManagerApprovalStatus();
@@ -643,6 +643,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			Employee employee = this.employeeRepository.findByCandidateId(candidateId);
 
 			employee.setEmployeeStatus(EmployeeStatus.Active);
+			employee.setAppointmentLetter(appointmentLetterDto.getAppointmentLetter());
 
 			this.employeeRepository.save(employee);
 			// this.employeeRepository.save(this.modelMapper.map(employeeDto,
@@ -744,7 +745,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		employee.setDesignation(this.onboardingRepository.findByCandidateId(candidateId).getJobTitle());
 		employee.setAuthorisedSignature(appointmentLetterDto.getAuthorisedSignature());
 		employee.setSign(appointmentLetterDto.getSign());
-		employee.setAppointmentLetter(appointmentLetterDto.getAppointmentLetter());
+		// employee.setAppointmentLetter(appointmentLetterDto.getAppointmentLetter());
 
 		this.employeeRepository.save(employee);
 

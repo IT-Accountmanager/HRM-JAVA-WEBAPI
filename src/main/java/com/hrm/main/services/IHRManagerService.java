@@ -66,7 +66,7 @@ public interface IHRManagerService {
 
 	String editAppointment(EmployeeGenerateDto appointmentInfo, long candidateId);
 
-	String releaseAppointmentLetter(long candidateId);
+	String releaseAppointmentLetter(long candidateId, CreateAppointmentLetterDto appointmentLetterDto);
 
 	EmployeeGenerateDto getReleaseAppointmentLetter(long candidateId);
 

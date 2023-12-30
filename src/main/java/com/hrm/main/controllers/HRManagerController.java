@@ -199,8 +199,9 @@ public class HRManagerController {
 
 	// -------------------------------RELEASE----------------------------------------
 	@PostMapping("release/{candidateId}")
-	public ResponseEntity<String> releaseAppointmentLetter(@PathVariable long candidateId) {
-		String result = this.hRManagerService.releaseAppointmentLetter(candidateId);
+	public ResponseEntity<String> releaseAppointmentLetter(@PathVariable long candidateId,
+			@RequestBody CreateAppointmentLetterDto appointmentLetterDto) {
+		String result = this.hRManagerService.releaseAppointmentLetter(candidateId, appointmentLetterDto);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
