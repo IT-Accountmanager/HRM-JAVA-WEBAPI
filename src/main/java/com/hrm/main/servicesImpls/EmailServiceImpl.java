@@ -51,7 +51,7 @@ public class EmailServiceImpl implements IEmailService {
 		try {
 			MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
-			mimeMessageHelper.setFrom(email.getSender());
+			mimeMessageHelper.setFrom(sender);
 			mimeMessageHelper.setTo(email.getRecipient());
 			mimeMessageHelper.setSubject(email.getSubject());
 			mimeMessageHelper.setText(email.getMsgBody());

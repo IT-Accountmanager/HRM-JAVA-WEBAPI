@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hrm.main.models.Employee;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Work;
+import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 import com.hrm.main.payloads.BasicInfoDto;
+import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.EmployeeViewDto;
 import com.hrm.main.payloads.EmployeesNameDto;
 import com.hrm.main.payloads.ResignationInfoDto;
@@ -40,7 +42,11 @@ public class SummaryServiceImpl implements ISummaryService {
 	@Override
 	public List<SummaryDto> getAll() {
 
+		// List<Employee> findAll =
+		// this.employeeRepository.findByEmployeeStatus(EmployeeStatus.Active);
+
 		List<Employee> findAll = this.employeeRepository.findAll();
+
 		List<SummaryDto> summaryDtoList = new ArrayList<>();
 
 		for (Employee employee : findAll) {
@@ -53,7 +59,14 @@ public class SummaryServiceImpl implements ISummaryService {
 			summaryDto.setEmailId(employee.getEmailId());
 			summaryDto.setDateOfJoining(employee.getDateOfJoining());
 			// summaryDto.setBondBreakAmount(employee.getBondBreakAmount());
-			summaryDto.setDesignation(employee.getDesignation());
+
+			/*
+			 * summaryDto.setDesignation(
+			 * this.onboardingRepository.findByCandidateId(employee.getCandidateId()).
+			 * getJobTitle());
+			 */
+			long candiId = employee.getCandidateId();
+			summaryDto.setDesignation(this.onboardingRepository.findByCandidateId(candiId).getJobTitle());
 			summaryDto.setDepartment(employee.getDepartment());
 			summaryDto.setEmployeeStatus(employee.getEmployeeStatus());
 			summaryDto.setRelevantExperience(employee.getRelevantExperience());
@@ -82,6 +95,10 @@ public class SummaryServiceImpl implements ISummaryService {
 		employeeDto.setEmployeeStatus(employee.getEmployeeStatus());
 		employeeDto.setRelevantExperience(employee.getRelevantExperience());
 		employeeDto.setAssignTo(employee.getAssignTo());
+
+		System.out.println("___________________________________________________");
+		System.out.println(employee.getCandidateId());
+		System.out.println("___________________________________________________");
 
 		return employeeDto;
 	}
@@ -317,6 +334,14 @@ public class SummaryServiceImpl implements ISummaryService {
 		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
 
 		return modelMapper.map(employee, ResignationInfoDto.class);
+	}
+
+	@Override
+	public String changeEmployeeStatus(String employeeId, EmployeeGenerateDto status) {
+		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
+		employee.setEmployeeStatus(status.getEmployeeStatus());
+		this.employeeRepository.save(employee);
+		return "Status has been changed of Candidate Id : " + employeeId;
 	}
 
 }

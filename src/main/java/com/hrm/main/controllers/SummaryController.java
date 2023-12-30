@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 import com.hrm.main.payloads.BasicInfoDto;
+import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.EmployeeViewDto;
 import com.hrm.main.payloads.EmployeesNameDto;
 import com.hrm.main.payloads.ResignationInfoDto;
@@ -157,6 +160,21 @@ public class SummaryController {
 	public ResponseEntity<ResignationInfoDto> getResignationInfo(@PathVariable String employeeId) {
 		ResignationInfoDto result = this.summaryService.getResignationInfo(employeeId);
 		return new ResponseEntity<ResignationInfoDto>(result, HttpStatus.OK);
+	}
+
+	// ----------------------Set Employee Status----------------------
+	@PostMapping("employeeStatus/{employeeId}")
+	public ResponseEntity<String> changeEmployeeStatus(@PathVariable String employeeId,
+			@RequestBody EmployeeGenerateDto status) {
+		String result = this.summaryService.changeEmployeeStatus(employeeId, status);
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+
+	// -----------------Employee Status List---------------------------------
+	@GetMapping("/get/employeeStatusList")
+	public EmployeeStatus[] getEmployeeStatusList() {
+		EmployeeStatus[] status = EmployeeStatus.values();
+		return status;
 	}
 
 }

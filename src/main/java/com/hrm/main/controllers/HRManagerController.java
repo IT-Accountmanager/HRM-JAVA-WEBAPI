@@ -13,9 +13,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.hrm.main.models.CreateAppointmentLetterDto;
 import com.hrm.main.models.HRManager;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.models.Helper.EnumCollection.Departments;
+import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 import com.hrm.main.payloads.AuthorizedSignDto;
 import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
@@ -187,8 +191,9 @@ public class HRManagerController {
 	// ----------------Create Appointment Letter------------------------
 
 	@PostMapping("Create/{candidateId}")
-	public ResponseEntity<String> createAppointmentLetter(@PathVariable long candidateId) {
-		String result = this.hRManagerService.createAppointmentLetter(candidateId);
+	public ResponseEntity<String> createAppointmentLetter(@RequestBody CreateAppointmentLetterDto appointmentLetterDto,
+			@PathVariable long candidateId) {
+		String result = this.hRManagerService.createAppointmentLetter(appointmentLetterDto, candidateId);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
@@ -227,12 +232,6 @@ public class HRManagerController {
 		String result = this.hRManagerService.deleteHRManager(id);
 
 		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
-
-	@GetMapping("/getSrNo")
-	public Long getNextSerialNumberForAdd() {
-		return this.hRManagerService.nextValue() + 1;
-
 	}
 
 }

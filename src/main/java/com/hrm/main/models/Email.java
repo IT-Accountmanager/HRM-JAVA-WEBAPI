@@ -1,7 +1,12 @@
 package com.hrm.main.models;
 
 public class Email {
-    private String sender;
+	private String sender;
+	private String recipient;
+	private String msgBody;
+	private String subject;
+	private String attachment;
+
 	public String getSender() {
 		return sender;
 	}
@@ -9,11 +14,6 @@ public class Email {
 	public void setSender(String sender) {
 		this.sender = sender;
 	}
-
-	private String recipient;
-	private String msgBody;
-	private String subject;
-	private String attachment;
 
 	public String getRecipient() {
 		return recipient;
@@ -53,7 +53,7 @@ public class Email {
 
 	public Email(String sender, String recipient, String msgBody, String subject, String attachment) {
 		super();
-		this.sender =sender;
+		this.sender = sender;
 		this.recipient = recipient;
 		this.msgBody = msgBody;
 		this.subject = subject;

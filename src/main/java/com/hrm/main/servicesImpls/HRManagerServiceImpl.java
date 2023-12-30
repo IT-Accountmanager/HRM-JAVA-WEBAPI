@@ -1,13 +1,19 @@
 package com.hrm.main.servicesImpls;
 
+import java.io.File;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import com.hrm.main.models.Agreement;
 import com.hrm.main.models.BackgroundVerification;
+import com.hrm.main.models.CreateAppointmentLetterDto;
 import com.hrm.main.models.Education;
 import com.hrm.main.models.Employee;
 import com.hrm.main.models.Family;
@@ -19,6 +25,7 @@ import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
+import com.hrm.main.payloads.AppointmentLetterReleaseOrRejectDto;
 import com.hrm.main.payloads.AuthorizedSignDto;
 import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.HrManagerAgreementApprovalDto;
@@ -38,8 +45,11 @@ import com.hrm.main.repositories.IOnboardingRepository;
 import com.hrm.main.repositories.IPersonalRepository;
 import com.hrm.main.repositories.IWorkRepository;
 import com.hrm.main.services.IHRManagerService;
-
+import javax.mail.util.ByteArrayDataSource;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.websocket.Decoder;
+import javax.activation.DataSource;
 
 @Service
 
@@ -65,6 +75,10 @@ public class HRManagerServiceImpl implements IHRManagerService {
 	private IAgreementRepository agreementRepository;
 	@Autowired
 	private IBackgroundVerificationRepository backgroundVerificationRepository;
+	@Autowired
+	JavaMailSender javaMailSender;
+	@Value("${spring.mail.username}")
+	private String sender;
 
 	@Override
 	public boolean postCandidatesInHrManager(CandidatesStatus status) {
@@ -618,118 +632,119 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId); //
 			candidate.setCandidatesStatus(CandidatesStatus.Approved);
 
-			if (employeeRepository.existsByEmailIdOrContactNumber(candidate.getEmailId(),
-					candidate.getContactNumber())) {
-				return "Employee with the same email or contact number already exists !";
-			}
-
-			EmployeeGenerateDto employeeDto = new EmployeeGenerateDto();
-
-			employeeDto.setName(candidate.getCandidateName());
-			// employeeDto.setCandidateId(candidateId);
-			employeeDto.setDesignation(candidate.getJobTitle());
-			employeeDto.setWorkLocation(candidate.getWorkLocation());
-			employeeDto.setDateOfJoining(candidate.getDateOfJoining());
-			employeeDto.setCtc(candidate.getCtc());
-			employeeDto.setServiceCommitment(candidate.getServiceCommitment());
-			employeeDto.setServiceBreakAmount(candidate.getServiceBreakAmount());
-			employeeDto.setEmailId(candidate.getEmailId());
-			employeeDto.setContactNumber(candidate.getContactNumber());
-			employeeDto.setEmployeeStatus(EmployeeStatus.Active);
-
-			Agreement agreement = this.agreementRepository.findByCandidateId(candidateId);
-			if (agreement == null) {
-				return "Agreement details not found for the candidate";
-			}
-
-			byte[] sign = agreement.getSign();
-			if (sign == null) {
-				return "Sign details not found for the candidate";
-			}
-
-			employeeDto.setSign(sign);
-
-			java.util.Base64.Decoder decoder = Base64.getDecoder();
-
-			// ___________________Appointment Letter______________________
-
 			/*
-			 * if (appointmentLetter.appointmentLetterBase64 != null) { while
-			 * (appointmentLetter.appointmentLetterBase64.length() % 4 != 0) {
-			 * appointmentLetter.appointmentLetterBase64 += "="; }
-			 * employeeDto.setAppointmentLetter(decoder.decode(appointmentLetter.
-			 * appointmentLetterBase64)); } else { return
-			 * "Appointment letter details not found for the candidate"; }
+			 * if (employeeRepository.existsByEmailIdOrContactNumber(candidate.getEmailId(),
+			 * candidate.getContactNumber())) { return
+			 * "Employee with the same email or contact number already exists !"; }
 			 */
 
-			// _____________________________________________________________
+			AppointmentLetterReleaseOrRejectDto employeeDto = new AppointmentLetterReleaseOrRejectDto();
 
-			// Continue with the rest of your logic...
+			Employee employee = this.employeeRepository.findByCandidateId(candidateId);
 
-			/*
-			 * while (employeeDto.signBase64.length() % 4 != 0) { employeeDto.signBase64 +=
-			 * "="; }
-			 */
+			employee.setEmployeeStatus(EmployeeStatus.Active);
 
-			// employeeDto.setSign(decoder.decode(employeeDto.signBase64));
+			this.employeeRepository.save(employee);
+			// this.employeeRepository.save(this.modelMapper.map(employeeDto,
+			// Employee.class));
 
-			this.employeeRepository.save(this.modelMapper.map(employeeDto, Employee.class));
-
-			return "Employee Added";
+			return "Appointment Letter Release";
 		}
-		return "Employee not Added";
+		return "Error in releasing Appointment Letter";
 	}
-
-	/*
-	 * @Override public EmployeeGenerateDto getReleaseAppointmentLetter(long
-	 * candidateId) {
-	 * 
-	 * Employee employee = this.employeeRepository.findByCandidateId(candidateId);
-	 * 
-	 * if (employee == null) { return null; }
-	 * 
-	 * EmployeeGenerateDto employeeGenerateDto = modelMapper.map(employee,
-	 * EmployeeGenerateDto.class);
-	 * 
-	 * return employeeGenerateDto; }
-	 */
 
 	@Override
 	public EmployeeGenerateDto getReleaseAppointmentLetter(long candidateId) {
-		// Retrieve an Employee entity from the repository based on candidateId
-		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
 
-		// Check if the employee is not found
-		if (onboarding == null) {
-			return null; // Return null if the employee is not found
+		Employee employee = this.employeeRepository.findByCandidateId(candidateId);
+
+		if (employee == null) {
+			return null;
 		}
 
-		// Map the Employee entity to an EmployeeGenerateDto using ModelMapper
-		EmployeeGenerateDto employeeGenerateDto = modelMapper.map(onboarding, EmployeeGenerateDto.class);
+		EmployeeGenerateDto employeeGenerateDto = modelMapper.map(employee, EmployeeGenerateDto.class);
 
-		// Return the generated EmployeeGenerateDto
 		return employeeGenerateDto;
 	}
 
+	/*
+	 * @Override public String getReleaseAppointmentLetter(long candidateId) {
+	 * 
+	 * Onboarding onboarding =
+	 * this.onboardingRepository.findByCandidateId(candidateId);
+	 * 
+	 * if (onboarding == null) { return "Employee Not Found"; } else {
+	 * 
+	 * MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+	 * 
+	 * try { MimeMessageHelper mimeMessageHelper = new
+	 * MimeMessageHelper(mimeMessage, true);
+	 * 
+	 * mimeMessageHelper.setFrom(sender);
+	 * mimeMessageHelper.setTo(onboarding.getEmailId());
+	 * mimeMessageHelper.setSubject("Appointment Letter");
+	 * 
+	 * mimeMessageHelper.addAttachment(this.employeeRepository.findByCandidateId(
+	 * candidateId). getAppointmentLetter());
+	 * 
+	 * 
+	 * // Get the byte array content of the appointment letter byte[]
+	 * appointmentLetterBytes =
+	 * this.employeeRepository.findByCandidateId(candidateId)
+	 * .getAppointmentLetter();
+	 * 
+	 * // Convert byte array to DataSource DataSource dataSource = new
+	 * ByteArrayDataSource(appointmentLetterBytes, "application/octet-stream");
+	 * 
+	 * // Add the attachment with a file name (e.g., "appointment_letter.pdf")
+	 * 
+	 * mimeMessageHelper.addAttachment("appointment_letter.pdf",
+	 * (jakarta.activation.DataSource) dataSource);
+	 * 
+	 * 
+	 * FileSystemResource fileSystemResource = new FileSystemResource(new
+	 * File(this.employeeRepository.findByCandidateId(candidateId).
+	 * getAppointmentLetter()));
+	 * 
+	 * mimeMessageHelper.addAttachment(fileSystemResource.getFilename(),
+	 * fileSystemResource);
+	 * 
+	 * 
+	 * javaMailSender.send(mimeMessage); return "Mail Sent Successfully"; } catch
+	 * (MessagingException e) { e.printStackTrace(); }
+	 * 
+	 * return "Error while sending mail!!!";
+	 * 
+	 * }
+	 * 
+	 * }
+	 */
+
 	@Override
-	public String createAppointmentLetter(long candidateId) {
+	public String createAppointmentLetter(CreateAppointmentLetterDto appointmentLetterDto, long candidateId) {
+		Boolean existed = this.employeeRepository.existsByCandidateId(candidateId);
 
-		Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
-
+		if (existed) {
+			return "Employee Already Existed of Candidate Id : " + candidateId;
+		}
 		Employee employee = new Employee();
 
 		employee.setCandidateId(candidateId);
 		long nextEmployeeIdNumber = this.employeeRepository.count() + 1;
 		employee.setEmployeeId(String.format("EIS%05d", nextEmployeeIdNumber));
-		employee.setName(candidate.getCandidateName());
-		employee.setJobTitle(candidate.getJobTitle());
-		employee.setWorkLocation(candidate.getWorkLocation());
-		employee.setDateOfJoining(candidate.getDateOfJoining());
-		employee.setCtc(candidate.getCtc());
-		employee.setBondPeriod(candidate.getServiceCommitment());
-		employee.setBondBreakAmount(candidate.getServiceBreakAmount());
-		employee.setEmailId(candidate.getEmailId());
-		employee.setContactNumber(candidate.getContactNumber());
+		employee.setName(appointmentLetterDto.getName());
+		employee.setJobTitle(appointmentLetterDto.getJobTitle());
+		employee.setWorkLocation(appointmentLetterDto.getWorkLocation());
+		employee.setDateOfJoining(appointmentLetterDto.getDateOfJoining());
+		employee.setCtc(appointmentLetterDto.getCtc());
+		employee.setBondPeriod(appointmentLetterDto.getBondPeriod());
+		employee.setBondBreakAmount(appointmentLetterDto.getBondBreakAmount());
+		employee.setEmailId(appointmentLetterDto.getEmailId());
+		employee.setContactNumber(appointmentLetterDto.getContactNumber());
+		employee.setDesignation(this.onboardingRepository.findByCandidateId(candidateId).getJobTitle());
+		employee.setAuthorisedSignature(appointmentLetterDto.getAuthorisedSignature());
+		employee.setSign(appointmentLetterDto.getSign());
+		employee.setAppointmentLetter(appointmentLetterDto.getAppointmentLetter());
 
 		this.employeeRepository.save(employee);
 

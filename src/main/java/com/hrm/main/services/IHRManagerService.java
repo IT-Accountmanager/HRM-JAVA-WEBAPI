@@ -2,6 +2,7 @@ package com.hrm.main.services;
 
 import java.util.List;
 
+import com.hrm.main.models.CreateAppointmentLetterDto;
 import com.hrm.main.models.HRManager;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
@@ -69,6 +70,6 @@ public interface IHRManagerService {
 
 	EmployeeGenerateDto getReleaseAppointmentLetter(long candidateId);
 
-	String createAppointmentLetter(long candidateId);
+	String createAppointmentLetter(CreateAppointmentLetterDto appointmentLetterDto, long candidateId);
 
 }

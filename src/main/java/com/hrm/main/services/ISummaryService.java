@@ -3,7 +3,9 @@ package com.hrm.main.services;
 import java.util.List;
 
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 import com.hrm.main.payloads.BasicInfoDto;
+import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.EmployeeViewDto;
 import com.hrm.main.payloads.EmployeesNameDto;
 import com.hrm.main.payloads.ResignationInfoDto;
@@ -41,5 +43,7 @@ public interface ISummaryService {
 	WorkHistoryDto getWorkHistory(String employeeId);
 
 	ResignationInfoDto getResignationInfo(String employeeId);
+
+	String changeEmployeeStatus(String employeeId, EmployeeGenerateDto status);
 
 }

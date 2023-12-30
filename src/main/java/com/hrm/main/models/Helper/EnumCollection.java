@@ -33,7 +33,7 @@ public class EnumCollection {
 	public enum Sub_Department {
 		Management, DigitalFactorySolution, EngineeringDesignSolution, IndustrialAutomationSolution,
 		BuildingInformationModeling, FrontEnd, BackEnd, Testing, HumanResource, Finance, Sales, SystemAdmin,
-		Development, Recruitment, DigitalMarketing
+		Development, Recruitment, DigitalMarketing, Tag, Dm
 	}
 
 	public enum ResignationStatus {
