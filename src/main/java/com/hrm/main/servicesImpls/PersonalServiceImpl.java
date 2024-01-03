@@ -76,9 +76,50 @@ public class PersonalServiceImpl implements IPersonalService {
 			} catch (Exception e) {
 				e.getMessage();
 			}
+
+		}
+		if (existsByCandidateId) {
+			try {
+				Personal existingPersonal = personalRepository.findByCandidateId(candidateId);
+
+				Decoder decoder2 = Base64.getDecoder();
+				while (personal.getPersonalDetails().base64Data.length() % 4 != 0) {
+					personal.getPersonalDetails().base64Data += "=";
+				}
+				personal.getPersonalDetails()
+						.setProfilePhoto(decoder2.decode(personal.getPersonalDetails().base64Data));
+
+				Decoder decoder = Base64.getDecoder();
+				while (personal.getBankDetails().base64Data.length() % 4 != 0) {
+					personal.getBankDetails().base64Data += "=";
+				}
+				personal.getBankDetails().setBankDoc(decoder.decode(personal.getBankDetails().base64Data));
+
+				if (!personal.getDocumentDetails().getDocuUpload().isEmpty()
+						&& personal.getDocumentDetails().getDocuUpload().size() > 0) {
+					personal.getDocumentDetails().getDocuUpload().forEach(x -> {
+
+						Decoder decoder1 = Base64.getDecoder();
+						while (x.base64Data.length() % 4 != 0) {
+							x.base64Data += "=";
+						}
+						x.setContent(decoder1.decode(x.base64Data));
+					});
+				}
+
+				existingPersonal.updateFrom(personal);
+
+				personalRepository.save(existingPersonal);
+
+				return "Personal details updated successfully for candidateId: " + candidateId;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "Error updating personal details";
+			}
+		} else {
+			return "Personal details not found for candidateId: " + candidateId;
 		}
 
-		return "Personal details are Already added";
 	}
 
 	@Override

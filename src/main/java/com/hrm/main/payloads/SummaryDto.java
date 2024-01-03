@@ -7,6 +7,7 @@ import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 
 public class SummaryDto {
+	private long candidateId;
 	private String employeeId;
 	private String name;
 	private long contactNumber;
@@ -19,10 +20,18 @@ public class SummaryDto {
 	private String assignTo;
 	private EmployeeStatus employeeStatus;
 	private String workLocation;
-	private byte[] appointmentLetter;
+	/* private byte[] appointmentLetter; */
 
 	public SummaryDto() {
 		super();
+	}
+
+	public long getCandidateId() {
+		return candidateId;
+	}
+
+	public void setCandidateId(long candidateId) {
+		this.candidateId = candidateId;
 	}
 
 	public String getEmployeeId() {
@@ -113,13 +122,12 @@ public class SummaryDto {
 		this.workLocation = workLocation;
 	}
 
-	public byte[] getAppointmentLetter() {
-		return appointmentLetter;
-	}
-
-	public void setAppointmentLetter(byte[] appointmentLetter) {
-		this.appointmentLetter = appointmentLetter;
-	}
+	/*
+	 * public byte[] getAppointmentLetter() { return appointmentLetter; }
+	 * 
+	 * public void setAppointmentLetter(byte[] appointmentLetter) {
+	 * this.appointmentLetter = appointmentLetter; }
+	 */
 
 	/*
 	 * public long getServiceBreakAmount() { return serviceBreakAmount; }

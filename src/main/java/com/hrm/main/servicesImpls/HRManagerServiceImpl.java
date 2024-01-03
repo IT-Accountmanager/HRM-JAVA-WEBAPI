@@ -319,9 +319,9 @@ public class HRManagerServiceImpl implements IHRManagerService {
 
 		// ---------------------------------------------------------------------------------------------------------------------
 
-		if (employeeRepository.existsByCandidateId(candidateId)) {
-			return null;
-		}
+		/*
+		 * if (employeeRepository.existsByCandidateId(candidateId)) { return null; }
+		 */
 
 		ApprovalStatus personalApprovalStatus = this.personalRepository.findByCandidateId(candidateId)
 				.getHrManagerApprovalStatus();
@@ -355,10 +355,10 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
 			candidate.setCandidatesStatus(CandidatesStatus.Approved);
 
-			if (employeeRepository.existsByEmailIdOrContactNumber(candidate.getEmailId(),
-					candidate.getContactNumber())) {
-				return null;
-			}
+			/*
+			 * if (employeeRepository.existsByEmailIdOrContactNumber(candidate.getEmailId(),
+			 * candidate.getContactNumber())) { return null; }
+			 */
 
 			EmployeeGenerateDto employeeDto = new EmployeeGenerateDto();
 			/*
@@ -367,7 +367,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			 */
 			employeeDto.setName(candidate.getCandidateName());
 			employeeDto.setCandidateId(candidateId);
-			employeeDto.setDesignation(candidate.getJobTitle());
+			employeeDto.setDesignation(candidate.getDesignation());
 			employeeDto.setWorkLocation(candidate.getWorkLocation());
 			employeeDto.setDateOfJoining(candidate.getDateOfJoining());
 			employeeDto.setCtc(candidate.getCtc());
@@ -378,14 +378,14 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			employeeDto.setEmployeeStatus(EmployeeStatus.Active);
 
 			Agreement agreement = this.agreementRepository.findByCandidateId(candidateId);
-			if (agreement == null) {
-				return null;
-			}
+			/*
+			 * if (agreement == null) { return null; }
+			 */
 
 			byte[] sign = agreement.getSign();
-			if (sign == null) {
-				return null;
-			}
+			/*
+			 * if (sign == null) { return null; }
+			 */
 
 			employeeDto.setSign(sign);
 
@@ -446,7 +446,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 
 		candidate.setCandidateId(candidateId);
 		candidate.setCandidateName(appointmentInfo.getName());
-		candidate.setJobTitle(appointmentInfo.getDesignation());
+		candidate.setJobTitle(appointmentInfo.getJobTitle());
 		candidate.setWorkLocation(appointmentInfo.getWorkLocation());
 		candidate.setDateOfJoining(appointmentInfo.getDateOfJoining());
 		candidate.setCtc(appointmentInfo.getCtc());
@@ -609,6 +609,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 
 		ApprovalStatus familyApprovalStatus = this.familyRepository.findAllByCandidateId(candidateId).get(0)
 				.getHrManagerApprovalStatus();
+
 		ApprovalStatus educationApprovalStatus = this.educationRepository.findAllByCandidateId(candidateId).get(0)
 				.getHrManagerApprovalStatus();
 
@@ -629,7 +630,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		/* && workApprovalStatus == ApprovalStatus.Approved */)
 
 		{
-			Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId); //
+			Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
 			candidate.setCandidatesStatus(CandidatesStatus.Approved);
 
 			/*
@@ -638,7 +639,8 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			 * "Employee with the same email or contact number already exists !"; }
 			 */
 
-			AppointmentLetterReleaseOrRejectDto employeeDto = new AppointmentLetterReleaseOrRejectDto();
+			// AppointmentLetterReleaseOrRejectDto employeeDto = new
+			// AppointmentLetterReleaseOrRejectDto();
 
 			Employee employee = this.employeeRepository.findByCandidateId(candidateId);
 
@@ -734,7 +736,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		long nextEmployeeIdNumber = this.employeeRepository.count() + 1;
 		employee.setEmployeeId(String.format("EIS%05d", nextEmployeeIdNumber));
 		employee.setName(appointmentLetterDto.getName());
-		employee.setJobTitle(appointmentLetterDto.getJobTitle());
+		employee.setDesignation(appointmentLetterDto.getDesignation());
 		employee.setWorkLocation(appointmentLetterDto.getWorkLocation());
 		employee.setDateOfJoining(appointmentLetterDto.getDateOfJoining());
 		employee.setCtc(appointmentLetterDto.getCtc());
@@ -742,7 +744,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		employee.setBondBreakAmount(appointmentLetterDto.getBondBreakAmount());
 		employee.setEmailId(appointmentLetterDto.getEmailId());
 		employee.setContactNumber(appointmentLetterDto.getContactNumber());
-		employee.setDesignation(this.onboardingRepository.findByCandidateId(candidateId).getJobTitle());
+		employee.setDesignation(appointmentLetterDto.getDesignation());
 		employee.setAuthorisedSignature(appointmentLetterDto.getAuthorisedSignature());
 		employee.setSign(appointmentLetterDto.getSign());
 		// employee.setAppointmentLetter(appointmentLetterDto.getAppointmentLetter());

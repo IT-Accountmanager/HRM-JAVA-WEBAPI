@@ -47,6 +47,7 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	public Onboarding createOnboarding(Onboarding onboardingRequest) {
 		Onboarding onboarding = new Onboarding();
 		onboarding.setJobTitle(onboardingRequest.getJobTitle());
+		onboarding.setDesignation(onboardingRequest.getDesignation());
 
 		onboarding.setCandidateId(onboardingRepository.count() + 1);
 		onboarding.setCandidateName(onboardingRequest.getCandidateName());
@@ -161,6 +162,7 @@ public class OnboardingServiceImpl implements IOnboardingService {
 
 				// Set values from the input Onboarding
 				onboarding.setJobTitle(singleOnboarding.getJobTitle());
+				onboarding.setDesignation(singleOnboarding.getDesignation());
 				onboarding.setCandidateId(onboardingRepository.count() + 1);
 				onboarding.setCandidateName(singleOnboarding.getCandidateName());
 				onboarding.setContactNumber(singleOnboarding.getContactNumber());

@@ -9,6 +9,7 @@ public class CreateAppointmentLetterDto {
 	private String employeeId;
 	private String name;
 	private String jobTitle;
+	private String designation;
 	private String workLocation;
 	private LocalDate dateOfJoining;
 	private float ctc;
@@ -45,12 +46,12 @@ public class CreateAppointmentLetterDto {
 		this.name = name;
 	}
 
-	public String getJobTitle() {
-		return jobTitle;
+	public String getDesignation() {
+		return designation;
 	}
 
-	public void setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
+	public void setDesignation(String designation) {
+		this.designation = designation;
 	}
 
 	public String getWorkLocation() {
@@ -139,6 +140,14 @@ public class CreateAppointmentLetterDto {
 
 	public void setAppointmentLetter(byte[] appointmentLetter) {
 		this.appointmentLetter = appointmentLetter;
+	}
+
+	public String getJobTitle() {
+		return jobTitle;
+	}
+
+	public void setJobTitle(String jobTitle) {
+		this.jobTitle = jobTitle;
 	}
 
 }

@@ -11,6 +11,7 @@ public class EmployeeGenerateDto {
 	private long candidateId;
 	private String name;
 	private String workLocation;
+	private String jobTitle;
 	private String designation;
 	private float serviceCommitment;
 	private long serviceBreakAmount;
@@ -25,10 +26,8 @@ public class EmployeeGenerateDto {
 	private byte[] sign;
 
 	private byte[] appointmentLetter;
-	public String appointmentLetterBase64;
 
 	private byte[] authorisedSignature;
-	public String authorisedSignatureBase64;
 
 	public byte[] getAuthorisedSignature() {
 		return authorisedSignature;
@@ -74,12 +73,12 @@ public class EmployeeGenerateDto {
 		this.workLocation = workLocation;
 	}
 
-	public String getDesignation() {
-		return designation;
+	public String getJobTitle() {
+		return jobTitle;
 	}
 
-	public void setDesignation(String designation) {
-		this.designation = designation;
+	public void setJobTitle(String jobTitle) {
+		this.jobTitle = jobTitle;
 	}
 
 	public long getCtc() {
@@ -168,6 +167,14 @@ public class EmployeeGenerateDto {
 
 	public void setAppointmentLetter(byte[] appointmentLetter) {
 		this.appointmentLetter = appointmentLetter;
+	}
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
 	}
 
 }

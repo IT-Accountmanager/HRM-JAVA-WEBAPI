@@ -25,6 +25,8 @@ public class Onboarding {
 	@Column(name = "job_title")
 	private String jobTitle;
 
+	private String designation;
+
 	@Column(name = "candidate_id")
 	private long candidateId;
 
@@ -49,9 +51,9 @@ public class Onboarding {
 	private CandidatesStatus candidatesStatus;
 
 	private HrSubmission hrExecutiveSubmission;
-	
+
 	private HrSubmission hrManagerSubmission;
-	
+
 	private LocalDate dateOfJoining;
 	private String workLocation;
 	private String formattedDate;
@@ -202,6 +204,14 @@ public class Onboarding {
 
 	public void setWorkLocation(String workLocation) {
 		this.workLocation = workLocation;
+	}
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
 	}
 
 }

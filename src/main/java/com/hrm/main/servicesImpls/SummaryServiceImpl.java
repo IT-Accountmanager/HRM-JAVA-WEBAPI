@@ -53,6 +53,7 @@ public class SummaryServiceImpl implements ISummaryService {
 
 			SummaryDto summaryDto = new SummaryDto();
 
+			summaryDto.setCandidateId(employee.getCandidateId());
 			summaryDto.setEmployeeId(employee.getEmployeeId());
 			summaryDto.setName(employee.getName());
 			summaryDto.setContactNumber(employee.getContactNumber());
@@ -65,14 +66,15 @@ public class SummaryServiceImpl implements ISummaryService {
 			 * this.onboardingRepository.findByCandidateId(employee.getCandidateId()).
 			 * getJobTitle());
 			 */
-			long candiId = employee.getCandidateId();
-			summaryDto.setDesignation(this.onboardingRepository.findByCandidateId(candiId).getJobTitle());
+			// long candiId = employee.getCandidateId();
+			// summaryDto.setDesignation(this.onboardingRepository.findByCandidateId(candiId).getJobTitle());
 			summaryDto.setDepartment(employee.getDepartment());
 			summaryDto.setEmployeeStatus(employee.getEmployeeStatus());
 			summaryDto.setRelevantExperience(employee.getRelevantExperience());
 			summaryDto.setAssignTo(employee.getAssignTo());
 			summaryDto.setWorkLocation(employee.getWorkLocation());
-			summaryDto.setAppointmentLetter(employee.getAppointmentLetter());
+			summaryDto.setDesignation(employee.getDesignation());
+			// summaryDto.setAppointmentLetter(employee.getAppointmentLetter());
 
 			summaryDtoList.add(summaryDto);
 
@@ -95,10 +97,6 @@ public class SummaryServiceImpl implements ISummaryService {
 		employeeDto.setEmployeeStatus(employee.getEmployeeStatus());
 		employeeDto.setRelevantExperience(employee.getRelevantExperience());
 		employeeDto.setAssignTo(employee.getAssignTo());
-
-		System.out.println("___________________________________________________");
-		System.out.println(employee.getCandidateId());
-		System.out.println("___________________________________________________");
 
 		return employeeDto;
 	}

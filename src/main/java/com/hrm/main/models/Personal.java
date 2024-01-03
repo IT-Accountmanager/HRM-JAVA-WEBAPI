@@ -39,10 +39,10 @@ public class Personal {
 	private SocialDetails socialDetails;
 	@Column(name = "candidate_id")
 	private long candidateId;
-	private DetailsSubmissionStatus personalSubmissionStatus = getPersonalSubmissionStatus().Pending;
-	private ApprovalStatus hrExecutiveApprovalStatus = getHrExecutiveApprovalStatus().Pending;
+	private DetailsSubmissionStatus personalSubmissionStatus = DetailsSubmissionStatus.Pending;
+	private ApprovalStatus hrExecutiveApprovalStatus = ApprovalStatus.Pending;
 	private String hrExecutiveRemark;
-	private ApprovalStatus hrManagerApprovalStatus = getHrManagerApprovalStatus().Pending;
+	private ApprovalStatus hrManagerApprovalStatus = ApprovalStatus.Pending;
 
 	private String hrManagerRemark;
 
@@ -144,5 +144,23 @@ public class Personal {
 
 	public void setHrManagerRemark(String hrManagerRemark) {
 		this.hrManagerRemark = hrManagerRemark;
+	}
+
+	public void updateFrom(Personal newPersonal) {
+		if (newPersonal.getPersonalDetails() != null) {
+			this.setPersonalDetails(newPersonal.getPersonalDetails());
+		}
+		if (newPersonal.getAddressDetails() != null) {
+			this.setAddressDetails(newPersonal.getAddressDetails());
+		}
+		if (newPersonal.getDocumentDetails() != null) {
+			this.setDocumentDetails(newPersonal.getDocumentDetails());
+		}
+		if (newPersonal.getBankDetails() != null) {
+			this.setBankDetails(newPersonal.getBankDetails());
+		}
+		if (newPersonal.getSocialDetails() != null) {
+			this.setSocialDetails(newPersonal.getSocialDetails());
+		}
 	}
 }
