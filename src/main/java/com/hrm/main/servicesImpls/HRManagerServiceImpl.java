@@ -99,7 +99,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 
 				.map(onboarding -> {
 					HRManager hrManager = new HRManager();
-					hrManager.setJobTitle(onboarding.getJobTitle());
+					hrManager.setJobTitle(onboarding.getJobTitleDesignation());
 					hrManager.setCandidateId(onboarding.getCandidateId());
 					hrManager.setCandidateName(onboarding.getCandidateName());
 					hrManager.setContactNumber(onboarding.getContactNumber());
@@ -367,7 +367,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			 */
 			employeeDto.setName(candidate.getCandidateName());
 			employeeDto.setCandidateId(candidateId);
-			employeeDto.setDesignation(candidate.getDesignation());
+			employeeDto.setJobTitleDesignation(candidate.getJobTitleDesignation());
 			employeeDto.setWorkLocation(candidate.getWorkLocation());
 			employeeDto.setDateOfJoining(candidate.getDateOfJoining());
 			employeeDto.setCtc(candidate.getCtc());
@@ -446,7 +446,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 
 		candidate.setCandidateId(candidateId);
 		candidate.setCandidateName(appointmentInfo.getName());
-		candidate.setJobTitle(appointmentInfo.getJobTitle());
+		candidate.setJobTitleDesignation(appointmentInfo.getJobTitleDesignation());
 		candidate.setWorkLocation(appointmentInfo.getWorkLocation());
 		candidate.setDateOfJoining(appointmentInfo.getDateOfJoining());
 		candidate.setCtc(appointmentInfo.getCtc());
@@ -745,6 +745,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		employee.setEmailId(appointmentLetterDto.getEmailId());
 		employee.setContactNumber(appointmentLetterDto.getContactNumber());
 		employee.setDesignation(appointmentLetterDto.getDesignation());
+		employee.setJobTitle(appointmentLetterDto.getJobTitle());
 		employee.setAuthorisedSignature(appointmentLetterDto.getAuthorisedSignature());
 		employee.setSign(appointmentLetterDto.getSign());
 		// employee.setAppointmentLetter(appointmentLetterDto.getAppointmentLetter());

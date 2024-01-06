@@ -297,7 +297,7 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 			if (existingExecutive == null) {
 				HRExecutive executive = new HRExecutive();
 				// executive.setId(id);
-				executive.setJobTitle(onboarding.getJobTitle());
+				executive.setJobTitleDesignation(onboarding.getJobTitleDesignation());
 				executive.setCandidateId(onboarding.getCandidateId());
 				executive.setCandidateName(onboarding.getCandidateName());
 				executive.setContactNumber(onboarding.getContactNumber());

@@ -10,7 +10,6 @@ public class BasicInfoDto {
 	private LocalDate dateOfJoining;
 	private int probationPeriod;
 	private String employeeType;
-	private String workLocation;
 	private EmployeeStatus employeeStatus;
 	private float workExperience;
 
@@ -44,14 +43,6 @@ public class BasicInfoDto {
 
 	public void setEmployeeType(String employeeType) {
 		this.employeeType = employeeType;
-	}
-
-	public String getWorkLocation() {
-		return workLocation;
-	}
-
-	public void setWorkLocation(String workLocation) {
-		this.workLocation = workLocation;
 	}
 
 	public EmployeeStatus getEmployeeStatus() {

@@ -26,17 +26,30 @@ public class EnumCollection {
 		Present, Anomaly, WeekOff, Holiday, Leave
 	}
 
-	public enum Departments {
-		MES, OD, ITE
-	}
+	
 
-	public enum Sub_Department {
-		Management, DigitalFactorySolution, EngineeringDesignSolution, IndustrialAutomationSolution,
-		BuildingInformationModeling, FrontEnd, BackEnd, Testing, HumanResource, Finance, Sales, SystemAdmin,
-		Development, Recruitment, DigitalMarketing, Tag, Dm
+	public enum Departments {
+		MES(Department.DFS, Department.IAS, Department.EDS, Department.BIM),
+		OD(Department.TAG, Department.HR, Department.FINANCE, Department.SALES, Department.SYSTEM_ADMIN),
+		RD(Department.IT, Department.DIGITAL_MARKETING, Department.DEVELOPMENT);
+
+		private final Department[] subdepartments;
+
+		Departments(Department... subdepartments) {
+			this.subdepartments = subdepartments;
+		}
+
+		public Department[] getSubdepartments() {
+			return subdepartments;
+		}
+
+		public enum Department {
+			DFS, IAS, EDS, BIM, TAG, HR, FINANCE, SALES, SYSTEM_ADMIN, IT, DIGITAL_MARKETING, DEVELOPMENT
+		}
 	}
 
 	public enum ResignationStatus {
 		SUBMITTED, APPROVED, REJECTED, PENDING_APPROVAL, WITHDRAWN
 	}
+
 }

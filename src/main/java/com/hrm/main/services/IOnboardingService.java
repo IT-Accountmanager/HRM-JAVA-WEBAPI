@@ -7,11 +7,9 @@ import com.hrm.main.payloads.OnboardingEditDto;
 
 public interface IOnboardingService {
 
-	// String createOnboarding(Onboarding onboarding);
-
 	Onboarding createOnboarding(Onboarding onboardingRequest);
 
-	String createOnboarding(List<Onboarding> onboardings);
+	Long createOnboarding(List<Onboarding> onboardings);
 
 	List<OnboardingDto> getAllOnboarding();
 
@@ -22,5 +20,7 @@ public interface IOnboardingService {
 	String deleteOnboarding(Integer id);
 
 	Long nextValue();
+
+	String sendSmstoCandidate(long candidateId);
 
 }

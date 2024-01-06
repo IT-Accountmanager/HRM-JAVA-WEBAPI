@@ -5,8 +5,7 @@ import java.time.LocalDate;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 
 public class OnboardingDto {
-	private String jobTitle;
-	private String designation;
+	private String jobTitleDesignation;
 	private long candidateId;
 	private String candidateName;
 	private long contactNumber;
@@ -18,12 +17,12 @@ public class OnboardingDto {
 	private LocalDate dateOfJoining;
 	private String workLocation;
 
-	public String getJobTitle() {
-		return jobTitle;
+	public String getJobTitleDesignation() {
+		return jobTitleDesignation;
 	}
 
-	public void setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
+	public void setJobTitleDesignation(String jobTitleDesignation) {
+		this.jobTitleDesignation = jobTitleDesignation;
 	}
 
 	public long getCandidateId() {
@@ -104,14 +103,6 @@ public class OnboardingDto {
 
 	public void setWorkLocation(String workLocation) {
 		this.workLocation = workLocation;
-	}
-
-	public String getDesignation() {
-		return designation;
-	}
-
-	public void setDesignation(String designation) {
-		this.designation = designation;
 	}
 
 }

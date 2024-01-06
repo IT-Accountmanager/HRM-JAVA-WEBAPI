@@ -1,9 +1,10 @@
 package com.hrm.main.payloads;
+
 import java.time.LocalDate;
 
 public class OnboardingEditDto {
 
-	private String jobTitle;
+	private String jobTitleDesignation;
 	private long candidateId;
 	private String candidateName;
 	private long contactNumber;
@@ -14,12 +15,12 @@ public class OnboardingEditDto {
 	private LocalDate dateOfJoining;
 	private String workLocation;
 
-	public String getJobTitle() {
-		return jobTitle;
+	public String getJobTitleDesignation() {
+		return jobTitleDesignation;
 	}
 
-	public void setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
+	public void setJobTitleDesignation(String jobTitleDesignation) {
+		this.jobTitleDesignation = jobTitleDesignation;
 	}
 
 	public long getCandidateId() {

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
-import com.hrm.main.models.Helper.EnumCollection.Sub_Department;
 import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
 import com.hrm.main.services.IOnboardingService;
@@ -46,9 +45,9 @@ public class OnboardingController {
 	}
 
 	@PostMapping("/post/import")
-	public ResponseEntity<String> addOnboarding(@RequestBody List<Onboarding> onboardings) {
-		String result = this.onboardingService.createOnboarding(onboardings);
-		return new ResponseEntity<String>(result, HttpStatus.CREATED);
+	public ResponseEntity<Long> addOnboarding(@RequestBody List<Onboarding> onboardings) {
+		Long result = this.onboardingService.createOnboarding(onboardings);
+		return new ResponseEntity<Long>(result, HttpStatus.CREATED);
 	}
 
 	@GetMapping("/get")
@@ -76,10 +75,10 @@ public class OnboardingController {
 		return new ResponseEntity<String>(deleteOnboarding, HttpStatus.OK);
 	}
 
-	@GetMapping("/getSrNo")
-	public Long getNextSerialNumberForAdd() {
-		return this.onboardingService.nextValue() + 1;
-
+	@GetMapping("/sms/{candidateId}")
+	public String sendSmsToCandidate(@PathVariable long candidateId) {
+		String result = this.onboardingService.sendSmstoCandidate(candidateId);
+		return result;
 	}
 
 	@GetMapping("/departments")
@@ -88,10 +87,15 @@ public class OnboardingController {
 		return formatDepartments(departments);
 	}
 
-	@GetMapping("/subDepartments")
-	public Sub_Department[] getSubDepartments() {
-		Sub_Department[] subDepartments = Sub_Department.values();
-		return subDepartments;
+	/*
+	 * @GetMapping("/subDepartments/{department}") public Departments[]
+	 * getSubDepartments(@PathVariable("department") Departments department) {
+	 * return department.getSubdepartments(); }
+	 */
+
+	@GetMapping("/subDepartments/{department}")
+	public Departments.Department[] getSubDepartments(@PathVariable("department") Departments department) {
+		return department.getSubdepartments();
 	}
 
 	private String[] formatDepartments(Departments[] departments) {

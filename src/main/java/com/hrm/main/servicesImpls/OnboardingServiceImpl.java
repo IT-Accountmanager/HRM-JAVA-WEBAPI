@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
+import com.hrm.main.models.Helper.SendSMS;
 import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
 import com.hrm.main.repositories.IOnboardingRepository;
@@ -46,9 +47,7 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	@Override
 	public Onboarding createOnboarding(Onboarding onboardingRequest) {
 		Onboarding onboarding = new Onboarding();
-		onboarding.setJobTitle(onboardingRequest.getJobTitle());
-		onboarding.setDesignation(onboardingRequest.getDesignation());
-
+		onboarding.setJobTitleDesignation(onboardingRequest.getJobTitleDesignation());
 		onboarding.setCandidateId(onboardingRepository.count() + 1);
 		onboarding.setCandidateName(onboardingRequest.getCandidateName());
 		onboarding.setContactNumber(onboardingRequest.getContactNumber());
@@ -89,7 +88,6 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	public Onboarding getOnboardingByCandidateId(long candidateId) {
 		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
 
-		// Populate formatted date for the retrieved Onboarding object
 		if (onboarding != null) {
 			onboarding.setFormattedDate(onboarding.getFormattedDateOfJoining());
 		}
@@ -155,14 +153,13 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	 */
 
 	@Override
-	public String createOnboarding(List<Onboarding> onboardings) {
+	public Long createOnboarding(List<Onboarding> onboardings) {
 		try {
 			for (Onboarding singleOnboarding : onboardings) {
 				Onboarding onboarding = new Onboarding(); // Create a new instance for each iteration
 
 				// Set values from the input Onboarding
-				onboarding.setJobTitle(singleOnboarding.getJobTitle());
-				onboarding.setDesignation(singleOnboarding.getDesignation());
+				onboarding.setJobTitleDesignation(singleOnboarding.getJobTitleDesignation());
 				onboarding.setCandidateId(onboardingRepository.count() + 1);
 				onboarding.setCandidateName(singleOnboarding.getCandidateName());
 				onboarding.setContactNumber(singleOnboarding.getContactNumber());
@@ -176,13 +173,44 @@ public class OnboardingServiceImpl implements IOnboardingService {
 				onboarding.setDateOfJoining(singleOnboarding.getDateOfJoining());
 				onboarding.setWorkLocation(singleOnboarding.getWorkLocation());
 
-				onboardingRepository.save(onboarding);
+				Onboarding savedOnboarding = onboardingRepository.save(onboarding);
+
+				singleOnboarding.setCandidateId(savedOnboarding.getCandidateId());
 			}
-			return "Added all Successfully";
+
+			return onboardings.isEmpty() ? null : onboardings.get(0).getCandidateId();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "Error adding onboarding data: " + e.getMessage();
+			return null;
 		}
 	}
 
+	/*
+	 * @Override public String sendSmstoCandidate(long candidateId) { Onboarding
+	 * onboarding = this.onboardingRepository.findByCandidateId(candidateId); long
+	 * contactNumber = onboarding.getContactNumber(); SendSMS.sendSMS("Hello",
+	 * contactNumber); return "message sent"; }
+	 */
+
+	@Override
+	public String sendSmstoCandidate(long candidateId) {
+		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
+
+		if (onboarding == null) {
+			// Handle the case where no Onboarding record is found for the given candidateId
+			// You might want to log this event or return a different message
+			return "No Onboarding record found for candidateId: " + candidateId;
+		}
+
+		long contactNumber = onboarding.getContactNumber();
+
+		try {
+			SendSMS.sendSMS("Hello");
+			// Log success if needed
+			return "Message sent successfully";
+		} catch (Exception e) {
+			e.printStackTrace(); // Log the exception details
+			return "Failed to send message";
+		}
+	}
 }

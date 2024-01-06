@@ -19,7 +19,7 @@ public class HRExecutive {
 	@SequenceGenerator(name = "HrExecutive_Id_Sequence", initialValue = 1, allocationSize = 1, sequenceName = "HrExecutive_Id_Sequence")
 
 	private int id;
-	private String jobTitle;
+	private String jobTitleDesignation;
 	private long candidateId;
 	private String candidateName;
 	private long contactNumber;
@@ -38,12 +38,12 @@ public class HRExecutive {
 		this.id = id;
 	}
 
-	public String getJobTitle() {
-		return jobTitle;
+	public String getJobTitleDesignation() {
+		return jobTitleDesignation;
 	}
 
-	public void setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
+	public void setJobTitleDesignation(String jobTitleDesignation) {
+		this.jobTitleDesignation = jobTitleDesignation;
 	}
 
 	public long getCandidateId() {

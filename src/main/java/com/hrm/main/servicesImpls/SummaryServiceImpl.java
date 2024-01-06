@@ -245,8 +245,8 @@ public class SummaryServiceImpl implements ISummaryService {
 				workInfo.setAssignTo(employee.getAssignTo());
 				workInfo.setDepartment(employee.getDepartment());
 				workInfo.setDesignation(employee.getDesignation());
-				workInfo.setJobTitle(employee.getJobTitle());
-				workInfo.setSubDepartment(employee.getSubDepartment());
+				// workInfo.setSubDepartment(employee.getSubDepartment());
+				workInfo.setWorkLocation(employee.getWorkLocation());
 
 				return workInfo;
 
@@ -256,7 +256,8 @@ public class SummaryServiceImpl implements ISummaryService {
 
 				WorkInfoDto workInfo = new WorkInfoDto();
 
-				workInfo.setJobTitle(onboarding.getJobTitle());
+				workInfo.setDesignation(onboarding.getJobTitleDesignation());
+				workInfo.setWorkLocation(onboarding.getWorkLocation());
 
 				return workInfo;
 			}
@@ -276,7 +277,6 @@ public class SummaryServiceImpl implements ISummaryService {
 				BasicInfoDto basicInfo = new BasicInfoDto();
 
 				basicInfo.setDateOfJoining(employee.getDateOfJoining());
-				basicInfo.setWorkLocation(employee.getWorkLocation());
 				basicInfo.setEmployeeId(employee.getEmployeeId());
 				basicInfo.setEmployeeStatus(employee.getEmployeeStatus());
 				basicInfo.setEmployeeType(employee.getEmployeeType());
@@ -291,7 +291,6 @@ public class SummaryServiceImpl implements ISummaryService {
 				BasicInfoDto basicInfo = new BasicInfoDto();
 
 				basicInfo.setDateOfJoining(onboarding.getDateOfJoining());
-				basicInfo.setWorkLocation(onboarding.getWorkLocation());
 
 				return basicInfo;
 			}

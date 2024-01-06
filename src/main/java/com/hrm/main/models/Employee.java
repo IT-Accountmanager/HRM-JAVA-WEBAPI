@@ -1,13 +1,9 @@
 package com.hrm.main.models;
 
 import java.time.LocalDate;
-
-import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 import com.hrm.main.models.Helper.EnumCollection.ResignationStatus;
-import com.hrm.main.models.Helper.EnumCollection.Sub_Department;
-
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,8 +29,9 @@ public class Employee {
 	private String workLocation;
 	private String designation;
 	private Departments department;
-	private Sub_Department subDepartment;
-	private String assignTo;
+	/*
+	 * private Sub_Department subDepartment;
+	 */ private String assignTo;
 	private float bondPeriod;
 	private long bondBreakAmount;
 	private float ctc;
@@ -233,13 +230,12 @@ public class Employee {
 		this.jobTitle = jobTitle;
 	}
 
-	public Sub_Department getSubDepartment() {
-		return subDepartment;
-	}
-
-	public void setSubDepartment(Sub_Department subDepartment) {
-		this.subDepartment = subDepartment;
-	}
+	/*
+	 * public Sub_Department getSubDepartment() { return subDepartment; }
+	 * 
+	 * public void setSubDepartment(Sub_Department subDepartment) {
+	 * this.subDepartment = subDepartment; }
+	 */
 
 	public LocalDate getResignationDate() {
 		return resignationDate;

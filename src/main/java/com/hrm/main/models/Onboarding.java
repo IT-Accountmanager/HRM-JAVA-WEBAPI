@@ -22,10 +22,8 @@ public class Onboarding {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Onboarding_seq")
 	@SequenceGenerator(name = "Onboarding_seq", initialValue = 1, allocationSize = 1, sequenceName = "Onboarding_seq")
 	private int srNo;
-	@Column(name = "job_title")
-	private String jobTitle;
-
-	private String designation;
+	@Column(name = "job_title_designation")
+	private String jobTitleDesignation;
 
 	@Column(name = "candidate_id")
 	private long candidateId;
@@ -102,12 +100,12 @@ public class Onboarding {
 		this.srNo = srNo;
 	}
 
-	public String getJobTitle() {
-		return jobTitle;
+	public String getJobTitleDesignation() {
+		return jobTitleDesignation;
 	}
 
-	public void setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
+	public void setJobTitleDesignation(String jobTitleDesignation) {
+		this.jobTitleDesignation = jobTitleDesignation;
 	}
 
 	public long getCandidateId() {
@@ -204,14 +202,6 @@ public class Onboarding {
 
 	public void setWorkLocation(String workLocation) {
 		this.workLocation = workLocation;
-	}
-
-	public String getDesignation() {
-		return designation;
-	}
-
-	public void setDesignation(String designation) {
-		this.designation = designation;
 	}
 
 }
