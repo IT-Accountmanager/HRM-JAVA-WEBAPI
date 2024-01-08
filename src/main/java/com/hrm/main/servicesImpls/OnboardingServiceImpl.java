@@ -9,15 +9,21 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hrm.main.config.TwilioConfig;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
+import com.hrm.main.models.Helper.EnumCollection.SmsStatus;
 import com.hrm.main.models.Helper.SendSMS;
+import com.hrm.main.payloads.LinkRequestDto;
 import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
+import com.hrm.main.payloads.SMSResponseDto;
 import com.hrm.main.repositories.IOnboardingRepository;
 import com.hrm.main.repositories.IProfileRepository;
 import com.hrm.main.services.IOnboardingService;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 
 @Service
 public class OnboardingServiceImpl implements IOnboardingService {
@@ -29,6 +35,8 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	IProfileRepository profileRepository;
 	@Autowired
 	ModelMapper modelMapper;
+	@Autowired
+	TwilioConfig twilioConfig;
 
 	/*
 	 * @Override public String createOnboarding(Onboarding onboarding) { try {
@@ -212,5 +220,33 @@ public class OnboardingServiceImpl implements IOnboardingService {
 			e.printStackTrace(); // Log the exception details
 			return "Failed to send message";
 		}
+	}
+
+	@Override
+	public SMSResponseDto sendSMS(LinkRequestDto linkRequest, long canidateId) {
+		SMSResponseDto smsResponseDto = null;
+
+		try {
+			Onboarding candidate = this.onboardingRepository.findByCandidateId(canidateId);
+
+			long candidatePhoneNumber = candidate.getContactNumber();
+			String link = "http://envisionis.in/";
+			String name = candidate.getCandidateName();
+
+			PhoneNumber to = new PhoneNumber("+91" + String.valueOf(candidatePhoneNumber));
+			PhoneNumber from = new PhoneNumber(twilioConfig.getPhoneNumber());
+
+			String smsBody = "Dear " + name + "," + "\n\r"+ "\n\r"
+					+ "Your profile has been selected for Envision Integrated Services. Please click the link below and fill your information. "
+					+ "\n\r" + "\n\r" + "Link : " + link;
+			Message message = Message.creator(to, from, smsBody).create();
+
+			smsResponseDto = new SMSResponseDto(SmsStatus.DELIVERED, smsBody);
+		} catch (Exception e) {
+			e.printStackTrace();
+			smsResponseDto = new SMSResponseDto(SmsStatus.FAILED, e.getMessage());
+		}
+
+		return smsResponseDto;
 	}
 }

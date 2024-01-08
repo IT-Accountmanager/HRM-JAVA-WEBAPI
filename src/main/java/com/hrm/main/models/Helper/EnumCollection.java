@@ -26,8 +26,6 @@ public class EnumCollection {
 		Present, Anomaly, WeekOff, Holiday, Leave
 	}
 
-	
-
 	public enum Departments {
 		MES(Department.DFS, Department.IAS, Department.EDS, Department.BIM),
 		OD(Department.TAG, Department.HR, Department.FINANCE, Department.SALES, Department.SYSTEM_ADMIN),
@@ -50,6 +48,10 @@ public class EnumCollection {
 
 	public enum ResignationStatus {
 		SUBMITTED, APPROVED, REJECTED, PENDING_APPROVAL, WITHDRAWN
+	}
+
+	public enum SmsStatus {
+		DELIVERED, FAILED
 	}
 
 }

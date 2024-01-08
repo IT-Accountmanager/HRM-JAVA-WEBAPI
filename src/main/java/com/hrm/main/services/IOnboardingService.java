@@ -2,8 +2,10 @@ package com.hrm.main.services;
 
 import java.util.List;
 import com.hrm.main.models.Onboarding;
+import com.hrm.main.payloads.LinkRequestDto;
 import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
+import com.hrm.main.payloads.SMSResponseDto;
 
 public interface IOnboardingService {
 
@@ -22,5 +24,7 @@ public interface IOnboardingService {
 	Long nextValue();
 
 	String sendSmstoCandidate(long candidateId);
+
+	SMSResponseDto sendSMS(LinkRequestDto linkRequest, long canidateId);
 
 }

@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
+import com.hrm.main.payloads.LinkRequestDto;
 import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
+import com.hrm.main.payloads.SMSResponseDto;
 import com.hrm.main.services.IOnboardingService;
 
 @CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
@@ -81,6 +83,12 @@ public class OnboardingController {
 		return result;
 	}
 
+	@PostMapping("send-link/{candidateId}")
+	public SMSResponseDto sendLink(@RequestBody LinkRequestDto linkRequest, @PathVariable long candidateId) {
+		return this.onboardingService.sendSMS(linkRequest, candidateId);
+
+	}
+
 	@GetMapping("/departments")
 	public String[] getDepartments() {
 		Departments[] departments = Departments.values();
@@ -113,4 +121,5 @@ public class OnboardingController {
 		return departmentName.replaceAll(String.format("%s|%s|%s", "(?<=[A-Z])(?=[A-Z][a-z])", "(?<=[^A-Z])(?=[A-Z])",
 				"(?<=[A-Za-z])(?=[^A-Za-z])"), " ");
 	}
+
 }
