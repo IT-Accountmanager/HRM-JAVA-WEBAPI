@@ -2,6 +2,8 @@
 package com.hrm.main.models;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
@@ -55,6 +57,13 @@ public class Onboarding {
 	private LocalDate dateOfJoining;
 	private String workLocation;
 	private String formattedDate;
+	private static final long OTP_VALID_DURATION = 5 * 60 * 1000; // 5 minutes
+
+	@Column(name = "one_time_password")
+	private String oneTimePassword;
+
+	@Column(name = "otp_requested_time")
+	private LocalDateTime otpRequestedTime;
 
 	public String getFormattedDate() {
 		return formattedDate;
@@ -202,6 +211,42 @@ public class Onboarding {
 
 	public void setWorkLocation(String workLocation) {
 		this.workLocation = workLocation;
+	}
+
+	public String getOneTimePassword() {
+		return oneTimePassword;
+	}
+
+	public void setOneTimePassword(String oneTimePassword) {
+		this.oneTimePassword = oneTimePassword;
+	}
+
+	public LocalDateTime getOtpRequestedTime() {
+		return otpRequestedTime;
+	}
+
+	public void setOtpRequestedTime(LocalDateTime otpRequestedTime) {
+		this.otpRequestedTime = otpRequestedTime;
+	}
+
+	public static long getOtpValidDuration() {
+		return OTP_VALID_DURATION;
+	}
+
+	public boolean isOTPRequired() {
+		if (this.getOneTimePassword() == null) {
+			return false;
+		}
+
+		long currentTimeInMillis = System.currentTimeMillis();
+		long otpRequestedTimeInMillis = otpRequestedTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+
+		if (otpRequestedTimeInMillis + OTP_VALID_DURATION < currentTimeInMillis) {
+			// OTP expires
+			return false;
+		}
+
+		return true;
 	}
 
 }

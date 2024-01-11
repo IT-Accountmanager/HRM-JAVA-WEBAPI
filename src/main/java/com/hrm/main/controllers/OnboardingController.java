@@ -21,6 +21,7 @@ import com.hrm.main.payloads.LinkRequestDto;
 import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
 import com.hrm.main.payloads.SMSResponseDto;
+import com.hrm.main.payloads.VerifyOtpDto;
 import com.hrm.main.services.IOnboardingService;
 
 @CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
@@ -86,7 +87,17 @@ public class OnboardingController {
 	@PostMapping("send-link/{candidateId}")
 	public SMSResponseDto sendLink(@RequestBody LinkRequestDto linkRequest, @PathVariable long candidateId) {
 		return this.onboardingService.sendSMS(linkRequest, candidateId);
+	}
 
+	@PostMapping("send-otp/{candidateId}")
+	public SMSResponseDto sendOtp(@PathVariable long candidateId) {
+		return this.onboardingService.sendOtp(candidateId);
+	}
+
+	@PostMapping("verify-otp/{candidateId}")
+	public String verifyOtp(@RequestBody VerifyOtpDto verifyOtpDto, @PathVariable long candidateId) {
+
+		return this.onboardingService.verifyOtp(verifyOtpDto, candidateId);
 	}
 
 	@GetMapping("/departments")

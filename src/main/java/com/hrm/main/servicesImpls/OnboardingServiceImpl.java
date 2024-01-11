@@ -1,14 +1,14 @@
 package com.hrm.main.servicesImpls;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.hrm.main.config.TwilioConfig;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
@@ -19,6 +19,7 @@ import com.hrm.main.payloads.LinkRequestDto;
 import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
 import com.hrm.main.payloads.SMSResponseDto;
+import com.hrm.main.payloads.VerifyOtpDto;
 import com.hrm.main.repositories.IOnboardingRepository;
 import com.hrm.main.repositories.IProfileRepository;
 import com.hrm.main.services.IOnboardingService;
@@ -223,11 +224,11 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	}
 
 	@Override
-	public SMSResponseDto sendSMS(LinkRequestDto linkRequest, long canidateId) {
+	public SMSResponseDto sendSMS(LinkRequestDto linkRequest, long candidateId) {
 		SMSResponseDto smsResponseDto = null;
 
 		try {
-			Onboarding candidate = this.onboardingRepository.findByCandidateId(canidateId);
+			Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
 
 			long candidatePhoneNumber = candidate.getContactNumber();
 			String link = "http://envisionis.in/";
@@ -236,7 +237,7 @@ public class OnboardingServiceImpl implements IOnboardingService {
 			PhoneNumber to = new PhoneNumber("+91" + String.valueOf(candidatePhoneNumber));
 			PhoneNumber from = new PhoneNumber(twilioConfig.getPhoneNumber());
 
-			String smsBody = "Dear " + name + "," + "\n\r"+ "\n\r"
+			String smsBody = "Dear " + name + "," + "\n\r" + "\n\r"
 					+ "Your profile has been selected for Envision Integrated Services. Please click the link below and fill your information. "
 					+ "\n\r" + "\n\r" + "Link : " + link;
 			Message message = Message.creator(to, from, smsBody).create();
@@ -248,5 +249,68 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		}
 
 		return smsResponseDto;
+	}
+
+	@Override
+	public SMSResponseDto sendOtp(long candidateId) {
+		SMSResponseDto smsResponseDto = null;
+
+		Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
+
+		try {
+
+			long candidatePhoneNumber = candidate.getContactNumber();
+
+			PhoneNumber to = new PhoneNumber("+91" + String.valueOf(candidatePhoneNumber));
+			PhoneNumber from = new PhoneNumber(twilioConfig.getPhoneNumber());
+			int randomPin = (int) (Math.random() * 999999) + 100000;
+			String otp = String.valueOf(randomPin);
+			LocalDateTime requestTime = LocalDateTime.now();
+
+			candidate.setOneTimePassword(otp);
+			candidate.setOtpRequestedTime(requestTime);
+
+			this.onboardingRepository.save(candidate);
+
+			String smsBody = "Your ACTUS verification code is : " + otp;
+
+			System.out.println("_____________________________________________");
+			System.out.println("OTP : " + otp);
+			System.out.println("Request Time : " + requestTime);
+
+			System.out.println("_____________________________________________");
+
+			// 1 Message.creator(to, from, smsBody).create();
+
+			// 2 smsResponseDto = new SMSResponseDto(SmsStatus.DELIVERED, smsBody);
+		} catch (Exception e) {
+			e.printStackTrace();
+			// 3 smsResponseDto = new SMSResponseDto(SmsStatus.FAILED, e.getMessage());
+		}
+
+		return smsResponseDto;
+	}
+
+	@Override
+	public String verifyOtp(VerifyOtpDto verifyOtpDto, long candidateId) {
+		Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
+
+		String otp = candidate.getOneTimePassword();
+		LocalDateTime otpRequestTime = candidate.getOtpRequestedTime();
+		LocalDateTime verifyRequestTime = LocalDateTime.now();
+		Duration duration = Duration.between(otpRequestTime, verifyRequestTime);
+
+		if (duration.getSeconds() < 90) {
+			if (otp.equals(verifyOtpDto.getOneTimePassword())) {
+				return "Verified !";
+			} else {
+				return "You have entered wrong OTP! Please verify again.";
+			}
+		} /*
+			 * else { return
+			 * "Your time limit exceed, Please verify again before 90 second."; }
+			 */
+
+		return "Your time limit exceed, Please verify again before 90 second.";
 	}
 }
