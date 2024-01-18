@@ -8,4 +8,6 @@ import com.hrm.main.models.Attendance;
 @Repository
 public interface IAttendanceRepository extends JpaRepository<Attendance, Integer> {
 
+	Attendance findByEmployeeId(String employeeId);
+
 }

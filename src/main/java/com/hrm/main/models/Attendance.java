@@ -1,8 +1,11 @@
 package com.hrm.main.models;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
+
 import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.AttendanceStatus;
 import jakarta.persistence.Entity;
@@ -13,18 +16,23 @@ import jakarta.persistence.SequenceGenerator;
 
 @Entity
 public class Attendance {
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "attendance_id_seq")
-	@SequenceGenerator(name = "attendance_id_seq", initialValue = 1, allocationSize = 1, sequenceName = "attendance_id_seq")
-	private int id;
-
+	/*
+	 * @Id
+	 * 
+	 * @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+	 * "attendance_id_seq")
+	 * 
+	 * @SequenceGenerator(name = "attendance_id_seq", initialValue = 1,
+	 * allocationSize = 1, sequenceName = "attendance_id_seq") private int id;
+	 */
 	// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
+	@Id
 	private String employeeId;
-	private LocalDateTime month;
+	private Month month;
 	private LocalDate date;
 	private LocalTime inTime;
 	private LocalTime outTime;
-	private float workHrs;
+	private Duration workHrs;
 	private AttendanceStatus attendanceStatus;
 	private String manager;
 	private String projectId;
@@ -32,14 +40,6 @@ public class Attendance {
 	private float approvedHrsForBilling;
 	private float regularizedHours;
 	private ApprovalStatus status;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getEmployeeId() {
 		return employeeId;
@@ -49,11 +49,11 @@ public class Attendance {
 		this.employeeId = employeeId;
 	}
 
-	public LocalDateTime getMonth() {
+	public Month getMonth() {
 		return month;
 	}
 
-	public void setMonth(LocalDateTime month) {
+	public void setMonth(Month month) {
 		this.month = month;
 	}
 
@@ -81,11 +81,11 @@ public class Attendance {
 		this.outTime = outTime;
 	}
 
-	public float getWorkHrs() {
+	public Duration getWorkHrs() {
 		return workHrs;
 	}
 
-	public void setWorkHrs(float workHrs) {
+	public void setWorkHrs(Duration workHrs) {
 		this.workHrs = workHrs;
 	}
 

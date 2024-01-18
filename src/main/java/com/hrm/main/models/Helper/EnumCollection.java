@@ -11,7 +11,8 @@ public class EnumCollection {
 	}
 
 	public enum EmployeeStatus {
-		Active, Inactive, Absconded, NoticePeriod, ProbationPeriod, TrainingPeriod
+		Active, Inactive, Terminated, Absconded, Not_Reporting, Bench, Long_Leave, contractual, Probation_Period,
+		Training_Period, Notice_Period
 	}
 
 	public enum ApprovalStatus {
@@ -48,6 +49,15 @@ public class EnumCollection {
 
 	public enum ResignationStatus {
 		SUBMITTED, APPROVED, REJECTED, PENDING_APPROVAL, WITHDRAWN
+	}
+
+	public enum Designation {
+		JUNIOR_ENGINEER, JUNIOR_EXECUTIVE, ASSOCIATE_ENGINEER, ASSOCIATE_EXECUTIVE, SENIOR_ENGINEER, SENIOR_EXECUTIVE,
+		TEAM_LEAD, PROJECT_MANAGER, PROGRAM_MANAGER, CXO
+	}
+
+	public enum BloodGroup {
+		A_POSITIVE, A_NEGATIVE, B_POSITIVE, B_NEGATIVE, AB_POSITIVE, AB_NEGATIVE, O_POSITIVE, O_NEGATIVE
 	}
 
 	public enum SmsStatus {

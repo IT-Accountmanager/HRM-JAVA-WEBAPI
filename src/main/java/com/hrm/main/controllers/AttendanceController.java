@@ -1,7 +1,6 @@
 package com.hrm.main.controllers;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +13,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.hrm.main.models.Attendance;
 import com.hrm.main.services.IAttendanceService;
+
 @CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
 
 @RestController
@@ -26,9 +25,26 @@ public class AttendanceController {
 	@Autowired
 	IAttendanceService attendanceService;
 
-	@PostMapping("/addattendance")
-	public ResponseEntity<String> addAttendance(@RequestBody Attendance attendance) {
-		String result = this.attendanceService.addAttendence(attendance);
+	// ----------------FOR CLOCK IN------------------
+	@PostMapping("/clockIn/{employeeId}")
+	public ResponseEntity<String> addInTime(@PathVariable String employeeId) {
+		String result = this.attendanceService.clockIn(employeeId);
+
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+
+	// ----------------FOR GET CLOCK IN------------------
+	@GetMapping("/getClockIn/{employeeId}")
+	public ResponseEntity<Attendance> getAttendance(@PathVariable String employeeId) {
+		Attendance attendance = this.attendanceService.getAttendance(employeeId);
+		return new ResponseEntity<Attendance>(attendance, HttpStatus.OK);
+	}
+
+	// ----------------FOR CLOCK OUT------------------
+	@PostMapping("/clockOut/{employeeId}")
+	public ResponseEntity<String> addOutTime(@PathVariable String employeeId) {
+		String result = this.attendanceService.clockOut(employeeId);
+
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
@@ -36,13 +52,6 @@ public class AttendanceController {
 	public ResponseEntity<List<Attendance>> getAllAttendence() {
 		List<Attendance> allAttendance = this.attendanceService.allAttendance();
 		return new ResponseEntity<List<Attendance>>(allAttendance, HttpStatus.OK);
-	}
-
-	@GetMapping("/attendance/{id}")
-	public ResponseEntity<Attendance> getAttendance(@PathVariable Integer id) {
-
-		Attendance attendance = this.attendanceService.getAttendance(id);
-		return new ResponseEntity<Attendance>(attendance, HttpStatus.OK);
 	}
 
 	@PutMapping("/editattendance/{id}")

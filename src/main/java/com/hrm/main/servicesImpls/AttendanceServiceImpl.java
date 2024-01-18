@@ -1,10 +1,15 @@
 package com.hrm.main.servicesImpls;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hrm.main.models.Attendance;
+import com.hrm.main.models.Helper.EnumCollection.AttendanceStatus;
 import com.hrm.main.repositories.IAttendanceRepository;
 import com.hrm.main.services.IAttendanceService;
 
@@ -15,21 +20,24 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	IAttendanceRepository attendanceRepo;
 
 	@Override
-	public String addAttendence(Attendance attendance) {
+	public String clockIn(String employeeId) {
+		Attendance attendance = new Attendance();
+		attendance.setEmployeeId(employeeId);
+		attendance.setInTime(LocalTime.now());
+		attendance.setMonth(LocalDateTime.now().getMonth());
+		attendance.setDate(LocalDate.now());
+		attendance.setAttendanceStatus(AttendanceStatus.Present);
+		this.attendanceRepo.save(attendance);
+		return "attendence added of Employee Id : " + employeeId;
+	}
 
-		try {
-
-			Attendance addedAttendence = this.attendanceRepo.save(attendance);
-			if (addedAttendence.getId() > 0) {
-				return "Attendance of Id no. " + addedAttendence.getId() + " is Successfully Added!";
-			}
-			return "Attendance is not Added!";
-
-		} catch (Exception e) {
-			e.getMessage();
-		}
-		return "Attendance is not added!";
-
+	@Override
+	public String clockOut(String employeeId) {
+		Attendance attendance = this.attendanceRepo.findByEmployeeId(employeeId);
+		attendance.setOutTime(LocalTime.now());
+		attendance.setWorkHrs(Duration.between(attendance.getOutTime(), attendance.getInTime()));
+		this.attendanceRepo.save(attendance);
+		return "Check Out of Employee Id " + employeeId + " at " + attendance.getOutTime();
 	}
 
 	@Override
@@ -39,8 +47,8 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	}
 
 	@Override
-	public Attendance getAttendance(Integer id) {
-		Attendance attendance = this.attendanceRepo.findById(id).get();
+	public Attendance getAttendance(String employeeId) {
+		Attendance attendance = this.attendanceRepo.findByEmployeeId(employeeId);
 		return attendance;
 	}
 
@@ -62,7 +70,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 		try {
 			if (this.attendanceRepo.existsById(id)) {
-				attendance.setId(id);
+				// attendance.setId(id);
 				this.attendanceRepo.save(attendance);
 				return "Id no. " + id + " is updated. ";
 			} else {
