@@ -65,6 +65,8 @@ public class Onboarding {
 	@Column(name = "otp_requested_time")
 	private LocalDateTime otpRequestedTime;
 
+	private String password;
+
 	public String getFormattedDate() {
 		return formattedDate;
 	}
@@ -231,6 +233,14 @@ public class Onboarding {
 
 	public static long getOtpValidDuration() {
 		return OTP_VALID_DURATION;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public boolean isOTPRequired() {

@@ -20,6 +20,7 @@ import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
 import com.hrm.main.payloads.SMSResponseDto;
 import com.hrm.main.payloads.VerifyOtpDto;
+import com.hrm.main.payloads.passwordDto;
 import com.hrm.main.repositories.IOnboardingRepository;
 import com.hrm.main.repositories.IProfileRepository;
 import com.hrm.main.services.IOnboardingService;
@@ -224,14 +225,14 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	}
 
 	@Override
-	public SMSResponseDto sendSMS(LinkRequestDto linkRequest, long candidateId) {
+	public SMSResponseDto sendSMS(long candidateId) {
 		SMSResponseDto smsResponseDto = null;
 
 		try {
 			Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
 
 			long candidatePhoneNumber = candidate.getContactNumber();
-			String link = "http://envisionis.in/";
+			String link = "http://10.10.20.9:8082/welcome";
 			String name = candidate.getCandidateName();
 
 			PhoneNumber to = new PhoneNumber("+91" + String.valueOf(candidatePhoneNumber));
@@ -280,12 +281,12 @@ public class OnboardingServiceImpl implements IOnboardingService {
 
 			System.out.println("_____________________________________________");
 
-			// 1 Message.creator(to, from, smsBody).create();
+			Message.creator(to, from, smsBody).create();
 
-			// 2 smsResponseDto = new SMSResponseDto(SmsStatus.DELIVERED, smsBody);
+			smsResponseDto = new SMSResponseDto(SmsStatus.DELIVERED, smsBody);
 		} catch (Exception e) {
 			e.printStackTrace();
-			// 3 smsResponseDto = new SMSResponseDto(SmsStatus.FAILED, e.getMessage());
+			smsResponseDto = new SMSResponseDto(SmsStatus.FAILED, e.getMessage());
 		}
 
 		return smsResponseDto;
@@ -312,5 +313,19 @@ public class OnboardingServiceImpl implements IOnboardingService {
 			 */
 
 		return "Your time limit exceed, Please verify again before 90 second.";
+	}
+
+	@Override
+	public String addPassword(passwordDto passwordDto, long candidateId) {
+
+		try {
+			Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
+			candidate.setPassword(passwordDto.getPassword());
+			this.onboardingRepository.save(candidate);
+			return "password saved";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "password not saved";
+		}
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,6 +23,7 @@ import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
 import com.hrm.main.payloads.SMSResponseDto;
 import com.hrm.main.payloads.VerifyOtpDto;
+import com.hrm.main.payloads.passwordDto;
 import com.hrm.main.services.IOnboardingService;
 
 @CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
@@ -85,8 +87,8 @@ public class OnboardingController {
 	}
 
 	@PostMapping("send-link/{candidateId}")
-	public SMSResponseDto sendLink(@RequestBody LinkRequestDto linkRequest, @PathVariable long candidateId) {
-		return this.onboardingService.sendSMS(linkRequest, candidateId);
+	public SMSResponseDto sendLink(@PathVariable long candidateId) {
+		return this.onboardingService.sendSMS(candidateId);
 	}
 
 	@PostMapping("send-otp/{candidateId}")
@@ -96,8 +98,13 @@ public class OnboardingController {
 
 	@PostMapping("verify-otp/{candidateId}")
 	public String verifyOtp(@RequestBody VerifyOtpDto verifyOtpDto, @PathVariable long candidateId) {
-
 		return this.onboardingService.verifyOtp(verifyOtpDto, candidateId);
+	}
+
+	@PostMapping("add-password/{candidateId}")
+	public ResponseEntity<String> addPassword(@RequestBody passwordDto passwordDto, @PathVariable long candidateId) {
+		String result = this.onboardingService.addPassword(passwordDto, candidateId);
+		return new ResponseEntity<String>(result, HttpStatus.CREATED);
 	}
 
 	@GetMapping("/departments")

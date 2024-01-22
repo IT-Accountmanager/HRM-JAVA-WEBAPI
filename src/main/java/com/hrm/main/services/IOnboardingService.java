@@ -7,6 +7,7 @@ import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
 import com.hrm.main.payloads.SMSResponseDto;
 import com.hrm.main.payloads.VerifyOtpDto;
+import com.hrm.main.payloads.passwordDto;
 
 public interface IOnboardingService {
 
@@ -26,10 +27,12 @@ public interface IOnboardingService {
 
 	String sendSmstoCandidate(long candidateId);
 
-	SMSResponseDto sendSMS(LinkRequestDto linkRequest, long canidateId);
+	SMSResponseDto sendSMS(long canidateId);
 
 	SMSResponseDto sendOtp(long candidateId);
 
 	String verifyOtp(VerifyOtpDto verifyOtpDto, long candidateId);
+
+	String addPassword(passwordDto passwordDto, long candidateId);
 
 }
