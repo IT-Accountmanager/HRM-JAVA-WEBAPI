@@ -1,5 +1,7 @@
 package com.hrm.main.servicesImpls;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.hrm.main.models.Employee;
 import com.hrm.main.models.Onboarding;
+import com.hrm.main.models.Personal;
+import com.hrm.main.models.PersonalDetails;
 import com.hrm.main.models.Work;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 import com.hrm.main.payloads.BasicInfoDto;
@@ -22,6 +26,7 @@ import com.hrm.main.payloads.WorkHistoryDto;
 import com.hrm.main.payloads.WorkInfoDto;
 import com.hrm.main.repositories.IEmployeeRepository;
 import com.hrm.main.repositories.IOnboardingRepository;
+import com.hrm.main.repositories.IPersonalRepository;
 import com.hrm.main.repositories.IWorkRepository;
 import com.hrm.main.services.ISummaryService;
 
@@ -37,6 +42,8 @@ public class SummaryServiceImpl implements ISummaryService {
 	@Autowired
 	IWorkRepository workRepository;
 	@Autowired
+	IPersonalRepository personalRepository;
+	@Autowired
 	ModelMapper modelMapper;
 
 	@Override
@@ -51,30 +58,54 @@ public class SummaryServiceImpl implements ISummaryService {
 
 		for (Employee employee : findAll) {
 
+			Onboarding candidate = this.onboardingRepository.findByCandidateId(employee.getCandidateId());
+			Personal details = this.personalRepository.findByCandidateId(employee.getCandidateId());
 			SummaryDto summaryDto = new SummaryDto();
 
 			summaryDto.setCandidateId(employee.getCandidateId());
 			summaryDto.setEmployeeId(employee.getEmployeeId());
 			summaryDto.setName(employee.getName());
+			summaryDto.setEmployeeStatus(employee.getEmployeeStatus());
 			summaryDto.setContactNumber(employee.getContactNumber());
 			summaryDto.setEmailId(employee.getEmailId());
 			summaryDto.setDateOfJoining(employee.getDateOfJoining());
-			// summaryDto.setBondBreakAmount(employee.getBondBreakAmount());
-
-			/*
-			 * summaryDto.setDesignation(
-			 * this.onboardingRepository.findByCandidateId(employee.getCandidateId()).
-			 * getJobTitle());
-			 */
-			// long candiId = employee.getCandidateId();
-			// summaryDto.setDesignation(this.onboardingRepository.findByCandidateId(candiId).getJobTitle());
 			summaryDto.setDepartment(employee.getDepartment());
-			summaryDto.setEmployeeStatus(employee.getEmployeeStatus());
-			summaryDto.setRelevantExperience(employee.getRelevantExperience());
+			// summaryDto.setSubDepartment(employee.getSubDepartment);
 			summaryDto.setAssignTo(employee.getAssignTo());
-			summaryDto.setWorkLocation(employee.getWorkLocation());
 			summaryDto.setDesignation(employee.getDesignation());
-			// summaryDto.setAppointmentLetter(employee.getAppointmentLetter());
+			// summaryDto.setTotalExperience();
+			summaryDto.setJoinedCtc(candidate.getCtc());
+			// summaryDto.setCurrentCtc();
+			summaryDto.setServiceCommitment(candidate.getServiceCommitment());
+			// summaryDto.setNumberOfWorkingDays();
+			// summaryDto.setNextApprisalQuater();
+			summaryDto.setDateOfBirth(details.getPersonalDetails().getDateOfBirth());
+			summaryDto.setBloodGroup(details.getPersonalDetails().getBloodGroup());
+			summaryDto.setFatherName(details.getPersonalDetails().getFathersName());
+			// summaryDto.setEmergencyContact();
+			summaryDto.setPermanentAddress((details.getAddressDetails().getPermanetAdd().getHouseNo()) + ", "
+					+ (details.getAddressDetails().getPermanetAdd().getArea()) + ", near "
+					+ (details.getAddressDetails().getPermanetAdd().getLandmark()) + ", "
+					+ (details.getAddressDetails().getPermanetAdd().getCity()) + ", "
+					+ (details.getAddressDetails().getPermanetAdd().getState()) + ", "
+					+ (details.getAddressDetails().getPermanetAdd().getPincode()));
+			summaryDto.setTemporaryAddress((details.getAddressDetails().getPresentAdd().getHouseNo()) + ", "
+					+ (details.getAddressDetails().getPresentAdd().getArea()) + ", near "
+					+ (details.getAddressDetails().getPresentAdd().getLandmark()) + ", "
+					+ (details.getAddressDetails().getPresentAdd().getCity()) + ", "
+					+ (details.getAddressDetails().getPresentAdd().getState()) + ", "
+					+ (details.getAddressDetails().getPresentAdd().getPincode()));
+			summaryDto.setAadharCardNumber(details.getDocumentDetails().getAdharCardNo());
+			summaryDto.setPanCardNumber(details.getDocumentDetails().getPanCardNo());
+			// summaryDto.setUanNumber();
+			summaryDto.setBankAccountNumber(details.getBankDetails().getAccountNo());
+			// summaryDto.setQualification();
+			// summaryDto.setSpecialization();
+			// summaryDto.setYearOfPassout();
+			// summaryDto.setResignationDate();
+			// summaryDto.setActualLastWorkingDay();
+			summaryDto.setRelevantExperience(employee.getRelevantExperience());
+			summaryDto.setWorkLocation(employee.getWorkLocation());
 
 			summaryDtoList.add(summaryDto);
 
@@ -275,22 +306,34 @@ public class SummaryServiceImpl implements ISummaryService {
 			if (employee != null) {
 
 				BasicInfoDto basicInfo = new BasicInfoDto();
+				Personal details = this.personalRepository.findByCandidateId(employee.getCandidateId());
 
-				basicInfo.setDateOfJoining(employee.getDateOfJoining());
-				basicInfo.setEmployeeId(employee.getEmployeeId());
 				basicInfo.setEmployeeStatus(employee.getEmployeeStatus());
-				basicInfo.setEmployeeType(employee.getEmployeeType());
+				long workingDays = calculateWorkingDays(employee.getDateOfJoining(), LocalDate.now());
+				basicInfo.setNumberOfWorkingDays(workingDays);
 				basicInfo.setProbationPeriod(employee.getProbationPeriod());
-				basicInfo.setWorkExperience(employee.getWorkExperience());
-
+				basicInfo.setWorkLocation(employee.getWorkLocation());
+				basicInfo.setCurrentCtc(employee.getCurrentCtc());
+				basicInfo.setNextApprisalQuater(employee.getNextApprisalQuater());
+				basicInfo.setContactNumber(employee.getContactNumber());
+				// basicInfo.setEmergencyContact(employee.ge);
+				// basicInfo.setBankAccountNumber(employee.);
+				basicInfo.setPermanentAddress((details.getAddressDetails().getPermanetAdd().getHouseNo()) + ", "
+						+ (details.getAddressDetails().getPermanetAdd().getArea()) + ", near "
+						+ (details.getAddressDetails().getPermanetAdd().getLandmark()) + ", "
+						+ (details.getAddressDetails().getPermanetAdd().getCity()) + ", "
+						+ (details.getAddressDetails().getPermanetAdd().getState()) + ", "
+						+ (details.getAddressDetails().getPermanetAdd().getPincode()));
+				basicInfo.setTemporaryAddress((details.getAddressDetails().getPresentAdd().getHouseNo()) + ", "
+						+ (details.getAddressDetails().getPresentAdd().getArea()) + ", near "
+						+ (details.getAddressDetails().getPresentAdd().getLandmark()) + ", "
+						+ (details.getAddressDetails().getPresentAdd().getCity()) + ", "
+						+ (details.getAddressDetails().getPresentAdd().getState()) + ", "
+						+ (details.getAddressDetails().getPresentAdd().getPincode()));
 				return basicInfo;
 			} else {
-				long candidateId = employee.getCandidateId();
-				Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
 
 				BasicInfoDto basicInfo = new BasicInfoDto();
-
-				basicInfo.setDateOfJoining(onboarding.getDateOfJoining());
 
 				return basicInfo;
 			}
@@ -298,6 +341,21 @@ public class SummaryServiceImpl implements ISummaryService {
 			return null;
 
 		}
+	}
+
+	private long calculateWorkingDays(LocalDate startDate, LocalDate endDate) {
+		long workingDays = 0;
+		LocalDate currentDate = startDate;
+
+		while (currentDate.isBefore(endDate) || currentDate.isEqual(endDate)) {
+			// Assuming weekends are Saturday and Sunday
+			if (currentDate.getDayOfWeek() != DayOfWeek.SATURDAY && currentDate.getDayOfWeek() != DayOfWeek.SUNDAY) {
+				workingDays++;
+			}
+			currentDate = currentDate.plusDays(1);
+		}
+
+		return workingDays;
 	}
 
 	@Override

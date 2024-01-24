@@ -64,4 +64,11 @@ public class EnumCollection {
 		DELIVERED, FAILED
 	}
 
+	public enum AppraisalQuater {
+		FY_21_22_Q1, FY_21_22_Q2, FY_21_22_Q3, FY_21_22_Q4, FY_22_23_Q1, FY_22_23_Q2, FY_22_23_Q3, FY_22_23_Q4,
+		FY_23_24_Q1, FY_23_24_Q2, FY_23_24_Q3, FY_23_24_Q4, FY_24_25_Q1, FY_24_25_Q2, FY_24_25_Q3, FY_24_25_Q4,
+		FY_25_26_Q1, FY_25_26_Q2, FY_25_26_Q3, FY_25_26_Q4,
+
+	}
+
 }

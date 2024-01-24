@@ -1,32 +1,39 @@
 package com.hrm.main.payloads;
 
+import java.time.Duration;
 import java.time.LocalDate;
 
+import com.hrm.main.models.Helper.EnumCollection.AppraisalQuater;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 
 public class BasicInfoDto {
 
-	private String employeeId;
-	private LocalDate dateOfJoining;
-	private int probationPeriod;
-	private String employeeType;
 	private EmployeeStatus employeeStatus;
-	private float workExperience;
+	private long numberOfWorkingDays;
+	private int probationPeriod;
+	private String workLocation;
+	private String currentCtc;
+	private AppraisalQuater nextApprisalQuater;
+	private long contactNumber;
+	private String emergencyContact;
+	private String bankAccountNumber;
+	private String permanentAddress;
+	private String temporaryAddress;
 
-	public String getEmployeeId() {
-		return employeeId;
+	public EmployeeStatus getEmployeeStatus() {
+		return employeeStatus;
 	}
 
-	public void setEmployeeId(String employeeId) {
-		this.employeeId = employeeId;
+	public void setEmployeeStatus(EmployeeStatus employeeStatus) {
+		this.employeeStatus = employeeStatus;
 	}
 
-	public LocalDate getDateOfJoining() {
-		return dateOfJoining;
+	public long getNumberOfWorkingDays() {
+		return numberOfWorkingDays;
 	}
 
-	public void setDateOfJoining(LocalDate dateOfJoining) {
-		this.dateOfJoining = dateOfJoining;
+	public void setNumberOfWorkingDays(long numberOfWorkingDays) {
+		this.numberOfWorkingDays = numberOfWorkingDays;
 	}
 
 	public int getProbationPeriod() {
@@ -37,28 +44,68 @@ public class BasicInfoDto {
 		this.probationPeriod = probationPeriod;
 	}
 
-	public String getEmployeeType() {
-		return employeeType;
+	public String getWorkLocation() {
+		return workLocation;
 	}
 
-	public void setEmployeeType(String employeeType) {
-		this.employeeType = employeeType;
+	public void setWorkLocation(String workLocation) {
+		this.workLocation = workLocation;
 	}
 
-	public EmployeeStatus getEmployeeStatus() {
-		return employeeStatus;
+	public String getCurrentCtc() {
+		return currentCtc;
 	}
 
-	public void setEmployeeStatus(EmployeeStatus employeeStatus) {
-		this.employeeStatus = employeeStatus;
+	public void setCurrentCtc(String currentCtc) {
+		this.currentCtc = currentCtc;
 	}
 
-	public float getWorkExperience() {
-		return workExperience;
+	public AppraisalQuater getNextApprisalQuater() {
+		return nextApprisalQuater;
 	}
 
-	public void setWorkExperience(float workExperience) {
-		this.workExperience = workExperience;
+	public void setNextApprisalQuater(AppraisalQuater nextApprisalQuater) {
+		this.nextApprisalQuater = nextApprisalQuater;
+	}
+
+	public long getContactNumber() {
+		return contactNumber;
+	}
+
+	public void setContactNumber(long contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+
+	public String getEmergencyContact() {
+		return emergencyContact;
+	}
+
+	public void setEmergencyContact(String emergencyContact) {
+		this.emergencyContact = emergencyContact;
+	}
+
+	public String getBankAccountNumber() {
+		return bankAccountNumber;
+	}
+
+	public void setBankAccountNumber(String bankAccountNumber) {
+		this.bankAccountNumber = bankAccountNumber;
+	}
+
+	public String getPermanentAddress() {
+		return permanentAddress;
+	}
+
+	public void setPermanentAddress(String permanentAddress) {
+		this.permanentAddress = permanentAddress;
+	}
+
+	public String getTemporaryAddress() {
+		return temporaryAddress;
+	}
+
+	public void setTemporaryAddress(String temporaryAddress) {
+		this.temporaryAddress = temporaryAddress;
 	}
 
 }

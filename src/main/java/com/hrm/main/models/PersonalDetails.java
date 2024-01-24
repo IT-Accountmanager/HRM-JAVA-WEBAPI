@@ -2,6 +2,8 @@ package com.hrm.main.models;
 
 import java.time.LocalDate;
 
+import com.hrm.main.models.Helper.EnumCollection.BloodGroup;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,7 +38,7 @@ public class PersonalDetails {
 	private String gender;
 
 	@Column(name = "blood_group")
-	private String bloodGroup;
+	private BloodGroup bloodGroup;
 
 	@Column(name = "marital_status")
 	private String maritalStatus;
@@ -123,14 +125,6 @@ public class PersonalDetails {
 		this.gender = gender;
 	}
 
-	public String getBloodGroup() {
-		return bloodGroup;
-	}
-
-	public void setBloodGroup(String bloodGroup) {
-		this.bloodGroup = bloodGroup;
-	}
-
 	public String getMaritalStatus() {
 		return maritalStatus;
 	}
@@ -185,6 +179,14 @@ public class PersonalDetails {
 
 	public void setMothersName(String mothersName) {
 		this.mothersName = mothersName;
+	}
+
+	public BloodGroup getBloodGroup() {
+		return bloodGroup;
+	}
+
+	public void setBloodGroup(BloodGroup bloodGroup) {
+		this.bloodGroup = bloodGroup;
 	}
 
 }

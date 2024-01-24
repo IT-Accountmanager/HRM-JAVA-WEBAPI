@@ -75,6 +75,8 @@ public class EducationServiceImpl implements IEducationService {
 			if (this.educationRepo.existsById(id)) {
 
 				edu.setEducationId(id);
+				edu.setEducationSubmissionStatus(DetailsSubmissionStatus.Submitted);
+
 				Decoder decoder = Base64.getDecoder();
 
 				while (edu.base64Data.length() % 4 != 0) {

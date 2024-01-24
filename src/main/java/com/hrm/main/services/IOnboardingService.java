@@ -2,12 +2,13 @@ package com.hrm.main.services;
 
 import java.util.List;
 import com.hrm.main.models.Onboarding;
+import com.hrm.main.payloads.EmployeeIdPasswordDto;
 import com.hrm.main.payloads.LinkRequestDto;
 import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
 import com.hrm.main.payloads.SMSResponseDto;
 import com.hrm.main.payloads.VerifyOtpDto;
-import com.hrm.main.payloads.passwordDto;
+import com.hrm.main.payloads.PasswordDto;
 
 public interface IOnboardingService {
 
@@ -33,6 +34,8 @@ public interface IOnboardingService {
 
 	String verifyOtp(VerifyOtpDto verifyOtpDto, long candidateId);
 
-	String addPassword(passwordDto passwordDto, long candidateId);
+	String addPassword(PasswordDto passwordDto, long candidateId);
+
+	EmployeeIdPasswordDto getPassword(long candidateId);
 
 }

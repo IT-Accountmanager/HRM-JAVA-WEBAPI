@@ -147,8 +147,7 @@ public class HRManagerController {
 		return new ResponseEntity<HrManagerAgreementApprovalDto>(result, HttpStatus.OK);
 	}
 
-	// ---------------------------BGV Approval By Hr
-	// Manager-------------------------------
+	// --------------------BGV Approval By Hr Manager---------------------------
 	// _______________________________POST______________________________________________
 
 	@PostMapping("BgvApproval/{candidateId}")

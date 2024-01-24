@@ -1,29 +1,25 @@
 package com.hrm.main.controllers;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.Onboarding;
-import com.hrm.main.models.Helper.EnumCollection;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
-import com.hrm.main.payloads.LinkRequestDto;
+import com.hrm.main.payloads.EmployeeIdPasswordDto;
 import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
 import com.hrm.main.payloads.SMSResponseDto;
 import com.hrm.main.payloads.VerifyOtpDto;
-import com.hrm.main.payloads.passwordDto;
+import com.hrm.main.payloads.PasswordDto;
 import com.hrm.main.services.IOnboardingService;
 
 @CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
@@ -102,9 +98,15 @@ public class OnboardingController {
 	}
 
 	@PostMapping("add-password/{candidateId}")
-	public ResponseEntity<String> addPassword(@RequestBody passwordDto passwordDto, @PathVariable long candidateId) {
+	public ResponseEntity<String> addPassword(@RequestBody PasswordDto passwordDto, @PathVariable long candidateId) {
 		String result = this.onboardingService.addPassword(passwordDto, candidateId);
 		return new ResponseEntity<String>(result, HttpStatus.CREATED);
+	}
+
+	@GetMapping("password/{candidateId}")
+	public ResponseEntity<EmployeeIdPasswordDto> get(@PathVariable long candidateId) {
+		EmployeeIdPasswordDto result = this.onboardingService.getPassword(candidateId);
+		return new ResponseEntity<EmployeeIdPasswordDto>(result, HttpStatus.OK);
 	}
 
 	@GetMapping("/departments")

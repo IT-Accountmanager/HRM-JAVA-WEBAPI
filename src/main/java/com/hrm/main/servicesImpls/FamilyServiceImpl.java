@@ -55,6 +55,8 @@ public class FamilyServiceImpl implements IFamilyService {
 		try {
 			if (this.familyRepo.existsById(id)) {
 				family.setFamilyId(id);
+				family.setFamilySubmissionStatus(DetailsSubmissionStatus.Submitted);
+				family.setHrExecutiveApprovalStatus(ApprovalStatus.Pending);
 				Family save = this.familyRepo.save(family);
 				return "Id no. " + save.getCandidateId() + " is updated. ";
 			} else {

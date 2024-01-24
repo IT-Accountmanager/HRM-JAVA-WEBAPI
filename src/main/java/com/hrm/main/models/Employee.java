@@ -1,6 +1,9 @@
 package com.hrm.main.models;
 
+import java.time.Duration;
 import java.time.LocalDate;
+
+import com.hrm.main.models.Helper.EnumCollection.AppraisalQuater;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 import com.hrm.main.models.Helper.EnumCollection.ResignationStatus;
@@ -25,21 +28,27 @@ public class Employee {
 	private long candidateId;
 	private String employeeId;
 	private String name;
-	private String jobTitle;
-	private String workLocation;
-	private String designation;
-	private Departments department;
-	/*
-	 * private Sub_Department subDepartment;
-	 */ private String assignTo;
-	private float bondPeriod;
-	private long bondBreakAmount;
-	private float ctc;
-	private LocalDate dateOfJoining;
-	private LocalDate dateOfReleasing;
+	private EmployeeStatus employeeStatus;
 	private long contactNumber;
 	private String emailId;
-	private EmployeeStatus employeeStatus;
+	private LocalDate dateOfJoining;
+	private Departments department;
+	private Departments subDepartment;
+	private String assignTo;
+	private String designation;
+	private String totalExperience;
+	private String joinedCtc;
+	private String currentCtc;
+	private float serviceCommitment;
+	private Duration numberOfWorkingDays;
+	private AppraisalQuater nextApprisalQuater;
+	private String uanNumber;
+	private String yearOfPassout;
+	private String jobTitle;
+	private String workLocation;
+	private long bondBreakAmount;
+	private float ctc;
+	private LocalDate dateOfReleasing;
 	private float workExperience;
 	private float relevantExperience;
 	private int probationPeriod;
@@ -52,6 +61,8 @@ public class Employee {
 	private String previouDesignation;
 	private LocalDate previouWorkFrom;
 	private LocalDate previouWorkUpto;
+	private String password;
+
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	@Column(columnDefinition = "LONGBLOB")
@@ -128,14 +139,6 @@ public class Employee {
 
 	public void setAssignTo(String assignTo) {
 		this.assignTo = assignTo;
-	}
-
-	public float getBondPeriod() {
-		return bondPeriod;
-	}
-
-	public void setBondPeriod(float bondPeriod) {
-		this.bondPeriod = bondPeriod;
 	}
 
 	public long getBondBreakAmount() {
@@ -331,6 +334,86 @@ public class Employee {
 
 	public void setAppointmentLetter(byte[] appointmentLetter) {
 		this.appointmentLetter = appointmentLetter;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Departments getSubDepartment() {
+		return subDepartment;
+	}
+
+	public void setSubDepartment(Departments subDepartment) {
+		this.subDepartment = subDepartment;
+	}
+
+	public String getTotalExperience() {
+		return totalExperience;
+	}
+
+	public void setTotalExperience(String totalExperience) {
+		this.totalExperience = totalExperience;
+	}
+
+	public String getJoinedCtc() {
+		return joinedCtc;
+	}
+
+	public void setJoinedCtc(String joinedCtc) {
+		this.joinedCtc = joinedCtc;
+	}
+
+	public String getCurrentCtc() {
+		return currentCtc;
+	}
+
+	public void setCurrentCtc(String currentCtc) {
+		this.currentCtc = currentCtc;
+	}
+
+	public float getServiceCommitment() {
+		return serviceCommitment;
+	}
+
+	public void setServiceCommitment(float serviceCommitment) {
+		this.serviceCommitment = serviceCommitment;
+	}
+
+	public Duration getNumberOfWorkingDays() {
+		return numberOfWorkingDays;
+	}
+
+	public void setNumberOfWorkingDays(Duration numberOfWorkingDays) {
+		this.numberOfWorkingDays = numberOfWorkingDays;
+	}
+
+	public AppraisalQuater getNextApprisalQuater() {
+		return nextApprisalQuater;
+	}
+
+	public void setNextApprisalQuater(AppraisalQuater nextApprisalQuater) {
+		this.nextApprisalQuater = nextApprisalQuater;
+	}
+
+	public String getUanNumber() {
+		return uanNumber;
+	}
+
+	public void setUanNumber(String uanNumber) {
+		this.uanNumber = uanNumber;
+	}
+
+	public String getYearOfPassout() {
+		return yearOfPassout;
+	}
+
+	public void setYearOfPassout(String yearOfPassout) {
+		this.yearOfPassout = yearOfPassout;
 	}
 
 }

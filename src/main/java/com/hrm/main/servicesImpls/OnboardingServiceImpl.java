@@ -10,35 +10,41 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hrm.main.config.TwilioConfig;
+import com.hrm.main.models.Employee;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
 import com.hrm.main.models.Helper.EnumCollection.SmsStatus;
 import com.hrm.main.models.Helper.SendSMS;
+import com.hrm.main.payloads.EmployeeIdPasswordDto;
 import com.hrm.main.payloads.LinkRequestDto;
 import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
 import com.hrm.main.payloads.SMSResponseDto;
 import com.hrm.main.payloads.VerifyOtpDto;
-import com.hrm.main.payloads.passwordDto;
+import com.hrm.main.payloads.PasswordDto;
+import com.hrm.main.repositories.IEmployeeRepository;
 import com.hrm.main.repositories.IOnboardingRepository;
 import com.hrm.main.repositories.IProfileRepository;
 import com.hrm.main.services.IOnboardingService;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class OnboardingServiceImpl implements IOnboardingService {
 
 	@Autowired
 	IOnboardingRepository onboardingRepository;
-
 	@Autowired
 	IProfileRepository profileRepository;
 	@Autowired
 	ModelMapper modelMapper;
 	@Autowired
 	TwilioConfig twilioConfig;
+	@Autowired
+	IEmployeeRepository employeeRepository;
 
 	/*
 	 * @Override public String createOnboarding(Onboarding onboarding) { try {
@@ -232,7 +238,7 @@ public class OnboardingServiceImpl implements IOnboardingService {
 			Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
 
 			long candidatePhoneNumber = candidate.getContactNumber();
-			String link = "http://10.10.20.9:8082/welcome";
+			String link = "http://localhost:4200/welcome";
 			String name = candidate.getCandidateName();
 
 			PhoneNumber to = new PhoneNumber("+91" + String.valueOf(candidatePhoneNumber));
@@ -316,16 +322,34 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	}
 
 	@Override
-	public String addPassword(passwordDto passwordDto, long candidateId) {
-
+	public String addPassword(PasswordDto passwordDto, long candidateId) {
 		try {
-			Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
-			candidate.setPassword(passwordDto.getPassword());
-			this.onboardingRepository.save(candidate);
-			return "password saved";
+			Employee employee = this.employeeRepository.findByCandidateId(candidateId);
+			if (employee != null) {
+				employee.setPassword(passwordDto.getPassword());
+				this.employeeRepository.save(employee);
+				return "password saved";
+			} else {
+				return "employee not found for candidateId: " + candidateId;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "password not saved";
+			return "password not saved - " + e.getMessage();
 		}
 	}
+
+	// @Transactional
+	@Override
+	public EmployeeIdPasswordDto getPassword(long candidateId) {
+		try {
+			Employee employee = this.employeeRepository.findByCandidateId(candidateId);
+			EmployeeIdPasswordDto empDto = new EmployeeIdPasswordDto();
+			empDto.setEmployeeId(employee.getEmployeeId());
+			empDto.setPassword(employee.getPassword());
+			return empDto;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 }

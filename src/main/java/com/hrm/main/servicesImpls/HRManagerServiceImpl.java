@@ -740,7 +740,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		employee.setWorkLocation(appointmentLetterDto.getWorkLocation());
 		employee.setDateOfJoining(appointmentLetterDto.getDateOfJoining());
 		employee.setCtc(appointmentLetterDto.getCtc());
-		employee.setBondPeriod(appointmentLetterDto.getBondPeriod());
+		employee.setServiceCommitment(appointmentLetterDto.getBondPeriod());
 		employee.setBondBreakAmount(appointmentLetterDto.getBondBreakAmount());
 		employee.setEmailId(appointmentLetterDto.getEmailId());
 		employee.setContactNumber(appointmentLetterDto.getContactNumber());

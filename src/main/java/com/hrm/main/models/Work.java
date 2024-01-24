@@ -28,6 +28,7 @@ public class Work {
 	private LocalDate tenureTo;
 	private LocalDate tenureFrom;
 	private long lastCTC;
+	private float totalExperience;
 	private String lastReportingManagerName;
 	private long lastReportingManagerContactNo;
 	@Column(name = "candidate_id")
@@ -55,10 +56,10 @@ public class Work {
 	private byte[] lastMonthPaySlip;
 	@Transient
 	public String paySlipBase64Data;
-	private DetailsSubmissionStatus workSubmissionStatus = getWorkSubmissionStatus().Pending;
-	private ApprovalStatus hrExecutiveApprovalStatus = getHrExecutiveApprovalStatus().Pending;
+	private DetailsSubmissionStatus workSubmissionStatus = DetailsSubmissionStatus.Pending;
+	private ApprovalStatus hrExecutiveApprovalStatus = ApprovalStatus.Pending;
 	private String hrExecutiveRemark;
-	private ApprovalStatus hrManagerApprovalStatus = getHrManagerApprovalStatus().Pending;
+	private ApprovalStatus hrManagerApprovalStatus = ApprovalStatus.Pending;
 	private String hrManagerRemark;
 
 	public Work() {
@@ -207,6 +208,14 @@ public class Work {
 
 	public void setHrManagerRemark(String hrManagerRemark) {
 		this.hrManagerRemark = hrManagerRemark;
+	}
+
+	public float getTotalExperience() {
+		return totalExperience;
+	}
+
+	public void setTotalExperience(float totalExperience) {
+		this.totalExperience = totalExperience;
 	}
 
 }

@@ -1,14 +1,14 @@
 package com.hrm.main.payloads;
 
-public class passwordDto {
+public class PasswordDto {
 
 	private String password;
 
-	public passwordDto() {
+	public PasswordDto() {
 		super();
 	}
 
-	public passwordDto(String password) {
+	public PasswordDto(String password) {
 		super();
 		this.password = password;
 	}
