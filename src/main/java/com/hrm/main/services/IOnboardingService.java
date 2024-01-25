@@ -8,6 +8,7 @@ import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
 import com.hrm.main.payloads.SMSResponseDto;
 import com.hrm.main.payloads.VerifyOtpDto;
+import com.hrm.main.payloads.WelcomeDto;
 import com.hrm.main.payloads.PasswordDto;
 
 public interface IOnboardingService {
@@ -37,5 +38,9 @@ public interface IOnboardingService {
 	String addPassword(PasswordDto passwordDto, long candidateId);
 
 	EmployeeIdPasswordDto getPassword(long candidateId);
+
+	String checkEmpIdPass(EmployeeIdPasswordDto employeeIdPasswordDto);
+
+	WelcomeDto getEmployee(String employeeId);
 
 }

@@ -19,6 +19,7 @@ import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
 import com.hrm.main.payloads.SMSResponseDto;
 import com.hrm.main.payloads.VerifyOtpDto;
+import com.hrm.main.payloads.WelcomeDto;
 import com.hrm.main.payloads.PasswordDto;
 import com.hrm.main.services.IOnboardingService;
 
@@ -107,6 +108,18 @@ public class OnboardingController {
 	public ResponseEntity<EmployeeIdPasswordDto> get(@PathVariable long candidateId) {
 		EmployeeIdPasswordDto result = this.onboardingService.getPassword(candidateId);
 		return new ResponseEntity<EmployeeIdPasswordDto>(result, HttpStatus.OK);
+	}
+
+	@PostMapping("check-empId-pass")
+	public String check(@RequestBody EmployeeIdPasswordDto employeeIdPasswordDto) {
+		String result = this.onboardingService.checkEmpIdPass(employeeIdPasswordDto);
+		return result;
+	}
+
+	@GetMapping("employee/{employeeId}")
+	public ResponseEntity<WelcomeDto> getEmployee(@PathVariable String employeeId) {
+		WelcomeDto result = this.onboardingService.getEmployee(employeeId);
+		return new ResponseEntity<WelcomeDto>(result, HttpStatus.OK);
 	}
 
 	@GetMapping("/departments")

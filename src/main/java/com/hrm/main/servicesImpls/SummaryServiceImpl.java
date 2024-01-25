@@ -21,7 +21,10 @@ import com.hrm.main.payloads.EmployeeViewDto;
 import com.hrm.main.payloads.EmployeesNameDto;
 import com.hrm.main.payloads.ResignationInfoDto;
 import com.hrm.main.payloads.SetManagerDto;
+import com.hrm.main.payloads.SummaryAddressInfoDto;
+import com.hrm.main.payloads.SummaryContactInfoDto;
 import com.hrm.main.payloads.SummaryDto;
+import com.hrm.main.payloads.SummaryPersonalInfoDto;
 import com.hrm.main.payloads.WorkHistoryDto;
 import com.hrm.main.payloads.WorkInfoDto;
 import com.hrm.main.repositories.IEmployeeRepository;
@@ -83,12 +86,12 @@ public class SummaryServiceImpl implements ISummaryService {
 			summaryDto.setBloodGroup(details.getPersonalDetails().getBloodGroup());
 			summaryDto.setFatherName(details.getPersonalDetails().getFathersName());
 			// summaryDto.setEmergencyContact();
-			summaryDto.setPermanentAddress((details.getAddressDetails().getPermanetAdd().getHouseNo()) + ", "
-					+ (details.getAddressDetails().getPermanetAdd().getArea()) + ", near "
-					+ (details.getAddressDetails().getPermanetAdd().getLandmark()) + ", "
-					+ (details.getAddressDetails().getPermanetAdd().getCity()) + ", "
-					+ (details.getAddressDetails().getPermanetAdd().getState()) + ", "
-					+ (details.getAddressDetails().getPermanetAdd().getPincode()));
+			summaryDto.setPermanentAddress((details.getAddressDetails().getPermanentAdd().getHouseNo()) + ", "
+					+ (details.getAddressDetails().getPermanentAdd().getArea()) + ", near "
+					+ (details.getAddressDetails().getPermanentAdd().getLandmark()) + ", "
+					+ (details.getAddressDetails().getPermanentAdd().getCity()) + ", "
+					+ (details.getAddressDetails().getPermanentAdd().getState()) + ", "
+					+ (details.getAddressDetails().getPermanentAdd().getPincode()));
 			summaryDto.setTemporaryAddress((details.getAddressDetails().getPresentAdd().getHouseNo()) + ", "
 					+ (details.getAddressDetails().getPresentAdd().getArea()) + ", near "
 					+ (details.getAddressDetails().getPresentAdd().getLandmark()) + ", "
@@ -318,12 +321,12 @@ public class SummaryServiceImpl implements ISummaryService {
 				basicInfo.setContactNumber(employee.getContactNumber());
 				// basicInfo.setEmergencyContact(employee.ge);
 				// basicInfo.setBankAccountNumber(employee.);
-				basicInfo.setPermanentAddress((details.getAddressDetails().getPermanetAdd().getHouseNo()) + ", "
-						+ (details.getAddressDetails().getPermanetAdd().getArea()) + ", near "
-						+ (details.getAddressDetails().getPermanetAdd().getLandmark()) + ", "
-						+ (details.getAddressDetails().getPermanetAdd().getCity()) + ", "
-						+ (details.getAddressDetails().getPermanetAdd().getState()) + ", "
-						+ (details.getAddressDetails().getPermanetAdd().getPincode()));
+				basicInfo.setPermanentAddress((details.getAddressDetails().getPermanentAdd().getHouseNo()) + ", "
+						+ (details.getAddressDetails().getPermanentAdd().getArea()) + ", near "
+						+ (details.getAddressDetails().getPermanentAdd().getLandmark()) + ", "
+						+ (details.getAddressDetails().getPermanentAdd().getCity()) + ", "
+						+ (details.getAddressDetails().getPermanentAdd().getState()) + ", "
+						+ (details.getAddressDetails().getPermanentAdd().getPincode()));
 				basicInfo.setTemporaryAddress((details.getAddressDetails().getPresentAdd().getHouseNo()) + ", "
 						+ (details.getAddressDetails().getPresentAdd().getArea()) + ", near "
 						+ (details.getAddressDetails().getPresentAdd().getLandmark()) + ", "
@@ -397,6 +400,96 @@ public class SummaryServiceImpl implements ISummaryService {
 		employee.setEmployeeStatus(status.getEmployeeStatus());
 		this.employeeRepository.save(employee);
 		return "Status has been changed of Candidate Id : " + employeeId;
+	}
+
+	@Override
+	public SummaryPersonalInfoDto getPersonalInfo(String employeeId) {
+		try {
+			long candidateId = this.employeeRepository.findByEmployeeId(employeeId).getCandidateId();
+
+			Personal personal = this.personalRepository.findByCandidateId(candidateId);
+
+			if (personal != null && personal.getPersonalDetails() != null) {
+				SummaryPersonalInfoDto info = new SummaryPersonalInfoDto();
+
+				info.setDateOfBirth(personal.getPersonalDetails().getDateOfBirth());
+				info.setBloodGroup(personal.getPersonalDetails().getBloodGroup());
+				info.setGender(personal.getPersonalDetails().getGender());
+				info.setMaritalStatus(personal.getPersonalDetails().getMaritalStatus());
+
+				return info;
+			} else {
+
+				return null;
+			}
+		} catch (Exception e) {
+			e.getMessage();
+			return null;
+		}
+	}
+
+	@Override
+	public SummaryContactInfoDto getContactInfo(String employeeId) {
+		try {
+			long candidateId = this.employeeRepository.findByEmployeeId(employeeId).getCandidateId();
+
+			Personal personal = this.personalRepository.findByCandidateId(candidateId);
+
+			if (personal != null && personal.getPersonalDetails() != null) {
+				SummaryContactInfoDto info = new SummaryContactInfoDto();
+
+				info.setAlternativeNumber(personal.getPersonalDetails().getAlternativePhoneNo());
+				info.setContactNumber(personal.getPersonalDetails().getPhoneNo());
+				// info.setOfficialMailId();
+				info.setPersonalMailId(personal.getPersonalDetails().getPersonalMailId());
+
+				return info;
+			} else {
+
+				return null;
+			}
+		} catch (Exception e) {
+			e.getMessage();
+			return null;
+		}
+	}
+
+	@Override
+	public SummaryAddressInfoDto getAddressInfo(String employeeId) {
+		try {
+			long candidateId = this.employeeRepository.findByEmployeeId(employeeId).getCandidateId();
+
+			Personal personal = this.personalRepository.findByCandidateId(candidateId);
+
+			if (personal != null && personal.getPersonalDetails() != null) {
+				SummaryAddressInfoDto info = new SummaryAddressInfoDto();
+
+				info.setPermanentAddress(personal.getAddressDetails().getPermanentAdd().getHouseNo() + ", "
+						+ personal.getAddressDetails().getPermanentAdd().getArea() + ", near "
+						+ personal.getAddressDetails().getPermanentAdd().getLandmark() + ", "
+						+ personal.getAddressDetails().getPermanentAdd().getCity() + ", "
+						+ personal.getAddressDetails().getPermanentAdd().getState());
+				info.setPermanentAddressSince(null);
+				info.setPermanentHouseType(null);
+				info.setPermanentPincode(personal.getAddressDetails().getPermanentAdd().getPincode());
+				info.setPresentAddress(personal.getAddressDetails().getPresentAdd().getHouseNo() + ", "
+						+ personal.getAddressDetails().getPresentAdd().getArea() + ", near "
+						+ personal.getAddressDetails().getPresentAdd().getLandmark() + ", "
+						+ personal.getAddressDetails().getPresentAdd().getCity() + ", "
+						+ personal.getAddressDetails().getPresentAdd().getState());
+				info.setPresentAddressSince(null);
+				info.setPresentHouseType(null);
+				info.setPresentPincode(personal.getAddressDetails().getPresentAdd().getPincode());
+
+				return info;
+			} else {
+
+				return null;
+			}
+		} catch (Exception e) {
+			e.getMessage();
+			return null;
+		}
 	}
 
 }

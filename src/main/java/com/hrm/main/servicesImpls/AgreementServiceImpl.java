@@ -59,12 +59,12 @@ public class AgreementServiceImpl implements IAgreementService {
 						+ (personal.getAddressDetails().getPresentAdd().getState()) + ", "
 						+ (personal.getAddressDetails().getPresentAdd().getPincode()));
 
-				agreement.setPermanentAddress((personal.getAddressDetails().getPermanetAdd().getHouseNo()) + ", "
-						+ (personal.getAddressDetails().getPermanetAdd().getArea()) + ", near "
-						+ (personal.getAddressDetails().getPermanetAdd().getLandmark()) + ", "
-						+ (personal.getAddressDetails().getPermanetAdd().getCity()) + ", "
-						+ (personal.getAddressDetails().getPermanetAdd().getState()) + ", "
-						+ (personal.getAddressDetails().getPermanetAdd().getPincode()));
+				agreement.setPermanentAddress((personal.getAddressDetails().getPermanentAdd().getHouseNo()) + ", "
+						+ (personal.getAddressDetails().getPermanentAdd().getArea()) + ", near "
+						+ (personal.getAddressDetails().getPermanentAdd().getLandmark()) + ", "
+						+ (personal.getAddressDetails().getPermanentAdd().getCity()) + ", "
+						+ (personal.getAddressDetails().getPermanentAdd().getState()) + ", "
+						+ (personal.getAddressDetails().getPermanentAdd().getPincode()));
 
 				agreement.setCandidateId(candidateId);
 				agreement.setAgreementSubmissionStatus(DetailsSubmissionStatus.Submitted);
@@ -213,12 +213,12 @@ public class AgreementServiceImpl implements IAgreementService {
 				+ (personal.getAddressDetails().getPresentAdd().getCity()) + ", "
 				+ (personal.getAddressDetails().getPresentAdd().getState()) + ", "
 				+ (personal.getAddressDetails().getPresentAdd().getPincode()));
-		preAgreementInfo.setPermanentAddress((personal.getAddressDetails().getPermanetAdd().getHouseNo()) + ", "
-				+ (personal.getAddressDetails().getPermanetAdd().getArea()) + ", near "
-				+ (personal.getAddressDetails().getPermanetAdd().getLandmark()) + ", "
-				+ (personal.getAddressDetails().getPermanetAdd().getCity()) + ", "
-				+ (personal.getAddressDetails().getPermanetAdd().getState()) + ", "
-				+ (personal.getAddressDetails().getPermanetAdd().getPincode()));
+		preAgreementInfo.setPermanentAddress((personal.getAddressDetails().getPermanentAdd().getHouseNo()) + ", "
+				+ (personal.getAddressDetails().getPermanentAdd().getArea()) + ", near "
+				+ (personal.getAddressDetails().getPermanentAdd().getLandmark()) + ", "
+				+ (personal.getAddressDetails().getPermanentAdd().getCity()) + ", "
+				+ (personal.getAddressDetails().getPermanentAdd().getState()) + ", "
+				+ (personal.getAddressDetails().getPermanentAdd().getPincode()));
 		preAgreementInfo.setServiceCommitment(onboarding.getServiceCommitment());
 		preAgreementInfo.setEmployeeFathersName(personal.getPersonalDetails().getFathersName());
 		preAgreementInfo.setTenureFrom(LocalDate.now());

@@ -20,7 +20,10 @@ import com.hrm.main.payloads.EmployeeViewDto;
 import com.hrm.main.payloads.EmployeesNameDto;
 import com.hrm.main.payloads.ResignationInfoDto;
 import com.hrm.main.payloads.SetManagerDto;
+import com.hrm.main.payloads.SummaryAddressInfoDto;
+import com.hrm.main.payloads.SummaryContactInfoDto;
 import com.hrm.main.payloads.SummaryDto;
+import com.hrm.main.payloads.SummaryPersonalInfoDto;
 import com.hrm.main.payloads.WorkHistoryDto;
 import com.hrm.main.payloads.WorkInfoDto;
 import com.hrm.main.services.ISummaryService;
@@ -175,6 +178,28 @@ public class SummaryController {
 	public EmployeeStatus[] getEmployeeStatusList() {
 		EmployeeStatus[] status = EmployeeStatus.values();
 		return status;
+	}
+
+	// ----------------Personal Info----------------
+	@GetMapping("getPersonalInfo/{employeeId}")
+	public ResponseEntity<SummaryPersonalInfoDto> getPersonalInfo(@PathVariable String employeeId) {
+		SummaryPersonalInfoDto result = this.summaryService.getPersonalInfo(employeeId);
+		return new ResponseEntity<SummaryPersonalInfoDto>(result, HttpStatus.OK);
+	}
+
+	// ----------------Contact Info----------------
+	@GetMapping("getContactInfo/{employeeId}")
+	public ResponseEntity<SummaryContactInfoDto> getContactInfo(@PathVariable String employeeId) {
+		SummaryContactInfoDto result = this.summaryService.getContactInfo(employeeId);
+		return new ResponseEntity<SummaryContactInfoDto>(result, HttpStatus.OK);
+	}
+
+	// ----------------Address Info----------------
+	@GetMapping("getAddressInfo/{employeeId}")
+	public ResponseEntity<SummaryAddressInfoDto> getAddressInfo(@PathVariable String employeeId) {
+		SummaryAddressInfoDto result = this.summaryService.getAddressInfo(employeeId);
+		return new ResponseEntity<SummaryAddressInfoDto>(result, HttpStatus.OK);
+
 	}
 
 }

@@ -22,6 +22,7 @@ import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
 import com.hrm.main.payloads.SMSResponseDto;
 import com.hrm.main.payloads.VerifyOtpDto;
+import com.hrm.main.payloads.WelcomeDto;
 import com.hrm.main.payloads.PasswordDto;
 import com.hrm.main.repositories.IEmployeeRepository;
 import com.hrm.main.repositories.IOnboardingRepository;
@@ -350,6 +351,32 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	@Override
+	public String checkEmpIdPass(EmployeeIdPasswordDto employeeIdPasswordDto) {
+		Employee employee = this.employeeRepository.findByEmployeeId(employeeIdPasswordDto.getEmployeeId());
+		if (employee != null) {
+			if (employee.getPassword().equals(employeeIdPasswordDto.getPassword())) {
+				return "Login successful";
+			} else {
+				return "Incorrect password";
+			}
+		} else {
+			return "Employee does not exist";
+		}
+	}
+
+	@Override
+	public WelcomeDto getEmployee(String employeeId) {
+
+		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
+
+		WelcomeDto result = new WelcomeDto();
+		result.setName(employee.getName());
+		result.setDate(LocalDate.now());
+
+		return result;
 	}
 
 }

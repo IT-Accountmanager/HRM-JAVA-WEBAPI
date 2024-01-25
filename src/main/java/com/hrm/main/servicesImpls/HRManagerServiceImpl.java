@@ -355,6 +355,10 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
 			candidate.setCandidatesStatus(CandidatesStatus.Approved);
 
+			System.out.println("_______________________________________");
+			System.out.println(candidate.getJobTitleDesignation());
+			System.out.println("_______________________________________");
+
 			/*
 			 * if (employeeRepository.existsByEmailIdOrContactNumber(candidate.getEmailId(),
 			 * candidate.getContactNumber())) { return null; }
