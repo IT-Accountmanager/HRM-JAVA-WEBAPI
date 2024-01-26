@@ -23,12 +23,11 @@ public class Onboarding {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Onboarding_seq")
 	@SequenceGenerator(name = "Onboarding_seq", initialValue = 1, allocationSize = 1, sequenceName = "Onboarding_seq")
-	private int srNo;
+	@Column(name = "candidate_id")
+	private Long candidateId;
+
 	@Column(name = "job_title_designation")
 	private String jobTitleDesignation;
-
-	@Column(name = "candidate_id")
-	private long candidateId;
 
 	@Column(name = "candidate_name")
 	private String candidateName;
@@ -99,14 +98,6 @@ public class Onboarding {
 			return dateOfJoining.format(formatter);
 		}
 		return null; // or return an empty string or handle as appropriate
-	}
-
-	public int getSrNo() {
-		return srNo;
-	}
-
-	public void setSrNo(int srNo) {
-		this.srNo = srNo;
 	}
 
 	public String getJobTitleDesignation() {

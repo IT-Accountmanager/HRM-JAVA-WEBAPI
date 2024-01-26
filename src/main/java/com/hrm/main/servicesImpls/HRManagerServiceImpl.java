@@ -605,6 +605,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		return map;
 	}
 
+	//______________________RELEASE____________________________
 	@Override
 	public String releaseAppointmentLetter(long candidateId, CreateAppointmentLetterDto appointmentLetterDto) {
 
@@ -726,7 +727,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 	 * 
 	 * }
 	 */
-
+//__________________CREATE____________________
 	@Override
 	public String createAppointmentLetter(CreateAppointmentLetterDto appointmentLetterDto, long candidateId) {
 		Boolean existed = this.employeeRepository.existsByCandidateId(candidateId);
