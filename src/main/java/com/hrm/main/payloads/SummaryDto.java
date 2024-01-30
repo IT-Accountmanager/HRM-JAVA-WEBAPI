@@ -21,7 +21,7 @@ public class SummaryDto {
 	private String emailId;
 	private LocalDate dateOfJoining;
 	private Departments department;
-	private Departments subDepartment;
+	private Departments.Department subDepartment;
 	private String assignTo;
 	private String designation;
 	private String totalExperience;
@@ -151,11 +151,11 @@ public class SummaryDto {
 		this.workLocation = workLocation;
 	}
 
-	public Departments getSubDepartment() {
+	public Departments.Department getSubDepartment() {
 		return subDepartment;
 	}
 
-	public void setSubDepartment(Departments subDepartment) {
+	public void setSubDepartment(Departments.Department subDepartment) {
 		this.subDepartment = subDepartment;
 	}
 

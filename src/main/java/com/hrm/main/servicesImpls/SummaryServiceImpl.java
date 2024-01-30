@@ -1,6 +1,7 @@
 package com.hrm.main.servicesImpls;
 
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,13 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hrm.main.models.Employee;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Personal;
-import com.hrm.main.models.PersonalDetails;
 import com.hrm.main.models.Work;
-import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 import com.hrm.main.payloads.BasicInfoDto;
 import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.EmployeeViewDto;
 import com.hrm.main.payloads.EmployeesNameDto;
+import com.hrm.main.payloads.ReportingManagerDto;
 import com.hrm.main.payloads.ResignationInfoDto;
 import com.hrm.main.payloads.SetManagerDto;
 import com.hrm.main.payloads.SummaryAddressInfoDto;
@@ -73,9 +73,13 @@ public class SummaryServiceImpl implements ISummaryService {
 			summaryDto.setEmailId(employee.getEmailId());
 			summaryDto.setDateOfJoining(employee.getDateOfJoining());
 			summaryDto.setDepartment(employee.getDepartment());
-			// summaryDto.setSubDepartment(employee.getSubDepartment);
-			summaryDto.setAssignTo(employee.getAssignTo());
-			summaryDto.setDesignation(employee.getDesignation());
+			summaryDto.setSubDepartment(employee.getSubDepartment());
+			// summaryDto.setAssignTo(employee.getAssignTo());
+			if (employee.getDesignation() != null) {
+				summaryDto.setDesignation(employee.getDesignation());
+			} else {
+				summaryDto.setDesignation(candidate.getJobTitleDesignation());
+			}
 			// summaryDto.setTotalExperience();
 			summaryDto.setJoinedCtc(candidate.getCtc());
 			// summaryDto.setCurrentCtc();
@@ -130,7 +134,7 @@ public class SummaryServiceImpl implements ISummaryService {
 		employeeDto.setDepartment(employee.getDepartment());
 		employeeDto.setEmployeeStatus(employee.getEmployeeStatus());
 		employeeDto.setRelevantExperience(employee.getRelevantExperience());
-		employeeDto.setAssignTo(employee.getAssignTo());
+		// employeeDto.setAssignTo(employee.getAssignTo());
 
 		return employeeDto;
 	}
@@ -161,7 +165,7 @@ public class SummaryServiceImpl implements ISummaryService {
 				employee.setDepartment(singleEmployee.getDepartment());
 				employee.setEmployeeStatus(singleEmployee.getEmployeeStatus());
 				employee.setRelevantExperience(singleEmployee.getRelevantExperience());
-				employee.setAssignTo(singleEmployee.getAssignTo());
+				// employee.setAssignTo(singleEmployee.getAssignTo());
 				employee.setBondBreakAmount(singleEmployee.getBondBreakAmount());
 				employee.setWorkLocation(singleEmployee.getWorkLocation());
 
@@ -218,7 +222,8 @@ public class SummaryServiceImpl implements ISummaryService {
 			throw new EntityNotFoundException("Employee not found for employeeId: " + employeeId);
 		}
 
-		modelMapper.map(basicInfo, employee);
+		employee.setEmployeeStatus(basicInfo.getEmployeeStatus());
+		employee.setProbationPeriod(basicInfo.getProbationPeriod());
 
 		this.employeeRepository.save(employee);
 
@@ -276,10 +281,10 @@ public class SummaryServiceImpl implements ISummaryService {
 
 				WorkInfoDto workInfo = new WorkInfoDto();
 
-				workInfo.setAssignTo(employee.getAssignTo());
+				// workInfo.setAssignTo(employee.getAssignTo());
 				workInfo.setDepartment(employee.getDepartment());
 				workInfo.setDesignation(employee.getDesignation());
-				// workInfo.setSubDepartment(employee.getSubDepartment());
+				workInfo.setSubDepartment(employee.getSubDepartment());
 				workInfo.setWorkLocation(employee.getWorkLocation());
 
 				return workInfo;
@@ -307,43 +312,34 @@ public class SummaryServiceImpl implements ISummaryService {
 			Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
 
 			if (employee != null) {
-
 				BasicInfoDto basicInfo = new BasicInfoDto();
-				Personal details = this.personalRepository.findByCandidateId(employee.getCandidateId());
 
-				basicInfo.setEmployeeStatus(employee.getEmployeeStatus());
-				long workingDays = calculateWorkingDays(employee.getDateOfJoining(), LocalDate.now());
-				basicInfo.setNumberOfWorkingDays(workingDays);
-				basicInfo.setProbationPeriod(employee.getProbationPeriod());
-				basicInfo.setWorkLocation(employee.getWorkLocation());
-				basicInfo.setCurrentCtc(employee.getCurrentCtc());
-				basicInfo.setNextApprisalQuater(employee.getNextApprisalQuater());
-				basicInfo.setContactNumber(employee.getContactNumber());
-				// basicInfo.setEmergencyContact(employee.ge);
-				// basicInfo.setBankAccountNumber(employee.);
-				basicInfo.setPermanentAddress((details.getAddressDetails().getPermanentAdd().getHouseNo()) + ", "
-						+ (details.getAddressDetails().getPermanentAdd().getArea()) + ", near "
-						+ (details.getAddressDetails().getPermanentAdd().getLandmark()) + ", "
-						+ (details.getAddressDetails().getPermanentAdd().getCity()) + ", "
-						+ (details.getAddressDetails().getPermanentAdd().getState()) + ", "
-						+ (details.getAddressDetails().getPermanentAdd().getPincode()));
-				basicInfo.setTemporaryAddress((details.getAddressDetails().getPresentAdd().getHouseNo()) + ", "
-						+ (details.getAddressDetails().getPresentAdd().getArea()) + ", near "
-						+ (details.getAddressDetails().getPresentAdd().getLandmark()) + ", "
-						+ (details.getAddressDetails().getPresentAdd().getCity()) + ", "
-						+ (details.getAddressDetails().getPresentAdd().getState()) + ", "
-						+ (details.getAddressDetails().getPresentAdd().getPincode()));
+				if (employee.getEmployeeStatus() != null) {
+					basicInfo.setEmployeeStatus(employee.getEmployeeStatus());
+				}
+
+				if (employee.getProbationPeriod() != null) {
+					basicInfo.setProbationPeriod(employee.getProbationPeriod());
+				}
+
+				if (employee.getDateOfJoining() != null) {
+					basicInfo.setDateOfJoining(employee.getDateOfJoining());
+				}
+
+				basicInfo.setWorkExperience(calculateWorkExperience(employee.getDateOfJoining()));
+
 				return basicInfo;
 			} else {
-
-				BasicInfoDto basicInfo = new BasicInfoDto();
-
-				return basicInfo;
+				return new BasicInfoDto();
 			}
 		} catch (Exception e) {
-			return null;
-
+			e.printStackTrace();
+			return new BasicInfoDto();
 		}
+	}
+
+	private Duration calculateWorkExperience(LocalDate dateOfJoining) {
+		return Duration.between(dateOfJoining.atStartOfDay(), LocalDate.now().atStartOfDay());
 	}
 
 	private long calculateWorkingDays(LocalDate startDate, LocalDate endDate) {
@@ -490,6 +486,28 @@ public class SummaryServiceImpl implements ISummaryService {
 			e.getMessage();
 			return null;
 		}
+	}
+
+	@Override
+	public String addReportingManager(ReportingManagerDto reportingManagerDto, String employeeId) {
+		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
+		employee.setManager(reportingManagerDto.getName());
+		employee.setManagerType(reportingManagerDto.getManagerType());
+
+		return "Reporting Manager Added";
+	}
+
+	@Override
+	public ReportingManagerDto getReportingManager(String employeeId) {
+
+		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
+
+		ReportingManagerDto result = new ReportingManagerDto();
+		result.setName(employee.getManager());
+		result.setManagerType(employee.getManagerType());
+		result.setDepartment(employee.getDepartment());
+		// result.setDesignation(employee.getDesignation());
+		return null;
 	}
 
 }

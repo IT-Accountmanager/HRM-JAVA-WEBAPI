@@ -28,9 +28,12 @@ public class EnumCollection {
 	}
 
 	public enum Departments {
-		MES(Department.DFS, Department.IAS, Department.EDS, Department.BIM),
-		OD(Department.TAG, Department.HR, Department.FINANCE, Department.SALES, Department.SYSTEM_ADMIN),
-		RD(Department.IT, Department.DIGITAL_MARKETING, Department.DEVELOPMENT);
+		MECHANICAL_ENGINEERING_SERVICES(Department.DIGITAL_FACTORY_SOLUTION, Department.INDUSTRIAL_AUTOMATION_SOLUTION,
+				Department.ENGINEERING_DESIGN_SOLUTION, Department.BUILDING_INFORMATION_MODELING),
+		OPERATIONAL_DEPARTMENT(Department.TALENT_ACQUISITION, Department.HUMAN_RESOURCE, Department.FINANCE,
+				Department.SALES, Department.SYSTEM_ADMIN),
+		RESEARCH_AND_DEVELOPMENT(Department.INFORMATION_TECHNOLOGY, Department.DIGITAL_MARKETING,
+				Department.DEVELOPMENT);
 
 		private final Department[] subdepartments;
 
@@ -43,7 +46,9 @@ public class EnumCollection {
 		}
 
 		public enum Department {
-			DFS, IAS, EDS, BIM, TAG, HR, FINANCE, SALES, SYSTEM_ADMIN, IT, DIGITAL_MARKETING, DEVELOPMENT
+			DIGITAL_FACTORY_SOLUTION, INDUSTRIAL_AUTOMATION_SOLUTION, ENGINEERING_DESIGN_SOLUTION,
+			BUILDING_INFORMATION_MODELING, TALENT_ACQUISITION, HUMAN_RESOURCE, FINANCE, SALES, SYSTEM_ADMIN,
+			INFORMATION_TECHNOLOGY, DIGITAL_MARKETING, DEVELOPMENT
 		}
 	}
 
@@ -74,6 +79,18 @@ public class EnumCollection {
 	public enum HouseType {
 		OWNED_BY_SELF_OR_SPOUSE, OWNED_BY_PARENT_OR_SIBLING, RENTED_WITH_FAMILY, RENTED_WITH_FRIENDS,
 		RENTED_STAYING_ALONE, PAYING_GUEST, HOSTEL, COMPANY_PROVIDED, OTHERS
+	}
+
+	public enum ProbationPeriod {
+		_1_Month, _2_Month, _3_Month, _4_Month, _5_Month, _6_Month
+	}
+
+	public enum WorkLocation {
+		HYDERABAD, CHENNAI, BANGLORE, PUNE
+	}
+
+	public enum ManagerType {
+		PRIMARY, SECONDARY
 	}
 
 }

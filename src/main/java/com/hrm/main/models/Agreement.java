@@ -45,12 +45,12 @@ public class Agreement {
 	 * endDate;
 	 */
 	private long serviceBreakAmount;
-	private String custodyOf;
-	private String chequeNo;
-	private DetailsSubmissionStatus agreementSubmissionStatus = getAgreementSubmissionStatus().Pending;
-	private ApprovalStatus hrExecutiveApprovalStatus = getHrExecutiveApprovalStatus().Pending;
+	private String chequeNo1;
+	private String chequeNo2;
+	private DetailsSubmissionStatus agreementSubmissionStatus = DetailsSubmissionStatus.Pending;
+	private ApprovalStatus hrExecutiveApprovalStatus = ApprovalStatus.Pending;
 	private String hrExecutiveRemark;
-	private ApprovalStatus hrManagerApprovalStatus = getHrManagerApprovalStatus().Pending;
+	private ApprovalStatus hrManagerApprovalStatus = ApprovalStatus.Pending;
 	private String hrManagerRemark;
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
@@ -207,20 +207,20 @@ public class Agreement {
 		this.serviceBreakAmount = serviceBreakAmount;
 	}
 
-	public String getCustodyOf() {
-		return custodyOf;
+	public String getChequeNo1() {
+		return chequeNo1;
 	}
 
-	public void setCustodyOf(String custodyOf) {
-		this.custodyOf = custodyOf;
+	public void setChequeNo1(String chequeNo1) {
+		this.chequeNo1 = chequeNo1;
 	}
 
-	public String getChequeNo() {
-		return chequeNo;
+	public String getChequeNo2() {
+		return chequeNo2;
 	}
 
-	public void setChequeNo(String chequeNo) {
-		this.chequeNo = chequeNo;
+	public void setChequeNo2(String chequeNo2) {
+		this.chequeNo2 = chequeNo2;
 	}
 
 	public DetailsSubmissionStatus getAgreementSubmissionStatus() {

@@ -8,6 +8,7 @@ import com.hrm.main.payloads.BasicInfoDto;
 import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.EmployeeViewDto;
 import com.hrm.main.payloads.EmployeesNameDto;
+import com.hrm.main.payloads.ReportingManagerDto;
 import com.hrm.main.payloads.ResignationInfoDto;
 import com.hrm.main.payloads.SetManagerDto;
 import com.hrm.main.payloads.SummaryAddressInfoDto;
@@ -54,5 +55,9 @@ public interface ISummaryService {
 	SummaryContactInfoDto getContactInfo(String employeeId);
 
 	SummaryAddressInfoDto getAddressInfo(String employeeId);
+
+	String addReportingManager(ReportingManagerDto reportingManagerDto, String employeeId);
+
+	ReportingManagerDto getReportingManager(String employeeId);
 
 }

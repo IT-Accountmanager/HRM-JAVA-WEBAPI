@@ -69,6 +69,8 @@ public class AgreementServiceImpl implements IAgreementService {
 				agreement.setCandidateId(candidateId);
 				agreement.setAgreementSubmissionStatus(DetailsSubmissionStatus.Submitted);
 				agreement.setHrExecutiveApprovalStatus(ApprovalStatus.Pending);
+				agreement.setChequeNo1(agreement.getChequeNo1());
+				agreement.setChequeNo2(agreement.getChequeNo2());
 
 				Decoder decoder = Base64.getDecoder();
 				while (agreement.signBase64.length() % 4 != 0) {

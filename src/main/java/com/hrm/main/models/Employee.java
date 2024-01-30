@@ -6,10 +6,14 @@ import java.time.LocalDate;
 import com.hrm.main.models.Helper.EnumCollection.AppraisalQuater;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
+import com.hrm.main.models.Helper.EnumCollection.ManagerType;
+import com.hrm.main.models.Helper.EnumCollection.ProbationPeriod;
 import com.hrm.main.models.Helper.EnumCollection.ResignationStatus;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,8 +37,8 @@ public class Employee {
 	private String emailId;
 	private LocalDate dateOfJoining;
 	private Departments department;
-	private Departments subDepartment;
-	private String assignTo;
+	private Departments.Department subDepartment;
+	//private String assignTo;
 	private String designation;
 	private String totalExperience;
 	private String joinedCtc;
@@ -51,7 +55,8 @@ public class Employee {
 	private LocalDate dateOfReleasing;
 	private float workExperience;
 	private float relevantExperience;
-	private int probationPeriod;
+	// @Enumerated(EnumType.STRING)
+	private ProbationPeriod probationPeriod;
 	private String employeeType;
 	private LocalDate resignationDate;
 	private ResignationStatus resignationStatus;
@@ -62,6 +67,8 @@ public class Employee {
 	private LocalDate previouWorkFrom;
 	private LocalDate previouWorkUpto;
 	private String password;
+	private String manager;
+	private ManagerType managerType;
 
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
@@ -133,13 +140,11 @@ public class Employee {
 		this.department = department;
 	}
 
-	public String getAssignTo() {
-		return assignTo;
-	}
-
-	public void setAssignTo(String assignTo) {
-		this.assignTo = assignTo;
-	}
+	/*
+	 * public String getAssignTo() { return assignTo; }
+	 * 
+	 * public void setAssignTo(String assignTo) { this.assignTo = assignTo; }
+	 */
 
 	public long getBondBreakAmount() {
 		return bondBreakAmount;
@@ -209,11 +214,11 @@ public class Employee {
 		this.relevantExperience = relevantExperience;
 	}
 
-	public int getProbationPeriod() {
+	public ProbationPeriod getProbationPeriod() {
 		return probationPeriod;
 	}
 
-	public void setProbationPeriod(int probationPeriod) {
+	public void setProbationPeriod(ProbationPeriod probationPeriod) {
 		this.probationPeriod = probationPeriod;
 	}
 
@@ -344,12 +349,20 @@ public class Employee {
 		this.password = password;
 	}
 
-	public Departments getSubDepartment() {
+	public Departments.Department getSubDepartment() {
 		return subDepartment;
 	}
 
-	public void setSubDepartment(Departments subDepartment) {
+	public void setSubDepartment(Departments.Department subDepartment) {
 		this.subDepartment = subDepartment;
+	}
+
+	public String getBase64Data() {
+		return base64Data;
+	}
+
+	public void setBase64Data(String base64Data) {
+		this.base64Data = base64Data;
 	}
 
 	public String getTotalExperience() {
@@ -414,6 +427,22 @@ public class Employee {
 
 	public void setYearOfPassout(String yearOfPassout) {
 		this.yearOfPassout = yearOfPassout;
+	}
+
+	public String getManager() {
+		return manager;
+	}
+
+	public void setManager(String manager) {
+		this.manager = manager;
+	}
+
+	public ManagerType getManagerType() {
+		return managerType;
+	}
+
+	public void setManagerType(ManagerType managerType) {
+		this.managerType = managerType;
 	}
 
 }

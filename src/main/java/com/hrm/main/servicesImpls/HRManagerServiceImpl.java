@@ -605,7 +605,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		return map;
 	}
 
-	//______________________RELEASE____________________________
+	// ______________________RELEASE____________________________
 	@Override
 	public String releaseAppointmentLetter(long candidateId, CreateAppointmentLetterDto appointmentLetterDto) {
 
@@ -671,7 +671,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		}
 
 		EmployeeGenerateDto employeeGenerateDto = modelMapper.map(employee, EmployeeGenerateDto.class);
-
+//employeeGenerateDto.setJobTitleDesignation();
 		return employeeGenerateDto;
 	}
 
@@ -753,6 +753,11 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		employee.setJobTitle(appointmentLetterDto.getJobTitle());
 		employee.setAuthorisedSignature(appointmentLetterDto.getAuthorisedSignature());
 		employee.setSign(appointmentLetterDto.getSign());
+
+		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
+		onboarding.setCandidatesStatus(CandidatesStatus.Approved);
+		this.onboardingRepository.save(onboarding);
+
 		// employee.setAppointmentLetter(appointmentLetterDto.getAppointmentLetter());
 
 		this.employeeRepository.save(employee);

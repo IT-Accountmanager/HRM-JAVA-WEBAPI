@@ -1,6 +1,10 @@
 package com.hrm.main.controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +17,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hrm.main.models.SocialDetails;
+import com.hrm.main.models.Helper.EnumCollection.Departments;
+import com.hrm.main.models.Helper.EnumCollection.Departments.Department;
+import com.hrm.main.models.Helper.EnumCollection.Designation;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
+import com.hrm.main.models.Helper.EnumCollection.ManagerType;
+import com.hrm.main.models.Helper.EnumCollection.ProbationPeriod;
+import com.hrm.main.models.Helper.EnumCollection.WorkLocation;
 import com.hrm.main.payloads.BasicInfoDto;
 import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.EmployeeViewDto;
 import com.hrm.main.payloads.EmployeesNameDto;
+import com.hrm.main.payloads.ReportingManagerDto;
 import com.hrm.main.payloads.ResignationInfoDto;
 import com.hrm.main.payloads.SetManagerDto;
 import com.hrm.main.payloads.SummaryAddressInfoDto;
@@ -175,9 +187,12 @@ public class SummaryController {
 
 	// -----------------Employee Status List---------------------------------
 	@GetMapping("/get/employeeStatusList")
-	public EmployeeStatus[] getEmployeeStatusList() {
-		EmployeeStatus[] status = EmployeeStatus.values();
-		return status;
+	public List<String> getEmployeeStatusList() {
+		EmployeeStatus[] statusArray = EmployeeStatus.values();
+
+		List<String> employeeStatusList = Arrays.stream(statusArray).map(status -> status.name().replace("_", " "))
+				.collect(Collectors.toList());
+		return employeeStatusList;
 	}
 
 	// ----------------Personal Info----------------
@@ -199,7 +214,66 @@ public class SummaryController {
 	public ResponseEntity<SummaryAddressInfoDto> getAddressInfo(@PathVariable String employeeId) {
 		SummaryAddressInfoDto result = this.summaryService.getAddressInfo(employeeId);
 		return new ResponseEntity<SummaryAddressInfoDto>(result, HttpStatus.OK);
+	}
 
+	@GetMapping("department")
+	public List<String> getAllDepartments() {
+		Departments[] departments = Departments.values();
+		List<String> departmentList = Arrays.stream(departments).map(department -> department.name().replace("_", " "))
+				.collect(Collectors.toList());
+		return departmentList;
+	}
+
+	@GetMapping("subdepartment/{department}")
+	public List<String> getSubdepartments(@PathVariable String department) {
+
+		Departments requiredDepartment = Departments.valueOf(department.replace(" ", "_"));
+		Department[] subdepartments = requiredDepartment.getSubdepartments();
+		List<String> subDepartmentList = Arrays.stream(subdepartments)
+				.map(subdepartment -> subdepartment.name().replace("_", " ")).collect(Collectors.toList());
+		return subDepartmentList;
+	}
+
+	@GetMapping("probation_period_list")
+	public List<String> getProbationPeriodList() {
+		ProbationPeriod[] periods = ProbationPeriod.values();
+		List<String> periodList = Arrays.stream(periods).map(period -> period.name().replace("_", " "))
+				.collect(Collectors.toList());
+		return periodList;
+	}
+
+	@GetMapping("work_location_list")
+	public List<String> getWorkLocationList() {
+		WorkLocation[] locations = WorkLocation.values();
+		List<String> locationsList = Arrays.stream(locations).map(location -> location.name().replace("_", " "))
+				.collect(Collectors.toList());
+		return locationsList;
+	}
+
+	@GetMapping("designation_list")
+	public List<String> getDesignationList() {
+		Designation[] designations = Designation.values();
+		List<String> designationsList = Arrays.stream(designations)
+				.map(designation -> designation.name().replace("_", " ")).collect(Collectors.toList());
+		return designationsList;
+	}
+
+	// ----------------REPORTING MANAGER--------------------
+	@GetMapping("get_reporting_manager")
+	public ResponseEntity<ReportingManagerDto> get(@PathVariable String employeeId) {
+		ReportingManagerDto result = this.summaryService.getReportingManager(employeeId);
+		return new ResponseEntity<ReportingManagerDto>(result, HttpStatus.OK);
+	}
+
+	@PostMapping("reporting_manager")
+	public String add(@RequestBody ReportingManagerDto reportingManagerDto, @PathVariable String employeeId) {
+		String result = this.summaryService.addReportingManager(reportingManagerDto, employeeId);
+		return result;
+	}
+
+	@GetMapping("manager_type_list")
+	public ManagerType[] getManagerTypeList() {
+		return ManagerType.values();
 	}
 
 }
