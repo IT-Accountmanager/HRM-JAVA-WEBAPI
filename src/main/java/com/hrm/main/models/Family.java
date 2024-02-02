@@ -30,13 +30,13 @@ public class Family {
 
 	@Column(name = "candidate_id")
 	private long candidateId;
-	private DetailsSubmissionStatus familySubmissionStatus = getFamilySubmissionStatus().Pending;
+	private DetailsSubmissionStatus familySubmissionStatus = DetailsSubmissionStatus.Pending;
 
-	private ApprovalStatus hrExecutiveApprovalStatus = getHrExecutiveApprovalStatus().Pending;
+	private ApprovalStatus hrExecutiveApprovalStatus = ApprovalStatus.Pending;
 
 	private String hrExecutiveRemark;
 
-	private ApprovalStatus hrManagerApprovalStatus = getHrManagerApprovalStatus().Pending;
+	private ApprovalStatus hrManagerApprovalStatus = ApprovalStatus.Pending;
 
 	private String hrManagerRemark;
 

@@ -2,6 +2,7 @@ package com.hrm.main.services;
 
 import java.util.List;
 import com.hrm.main.models.Onboarding;
+import com.hrm.main.payloads.CandidateStatusDto;
 import com.hrm.main.payloads.EmployeeIdPasswordDto;
 import com.hrm.main.payloads.LinkRequestDto;
 import com.hrm.main.payloads.OnboardingDto;
@@ -42,5 +43,7 @@ public interface IOnboardingService {
 	String checkEmpIdPass(EmployeeIdPasswordDto employeeIdPasswordDto);
 
 	WelcomeDto getEmployee(String employeeId);
+
+	CandidateStatusDto getStatus(long candidateId);
 
 }

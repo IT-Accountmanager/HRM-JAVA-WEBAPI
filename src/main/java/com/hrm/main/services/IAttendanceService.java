@@ -3,6 +3,7 @@ package com.hrm.main.services;
 import java.util.List;
 
 import com.hrm.main.models.Attendance;
+import com.hrm.main.payloads.AttendanceEmployeeDto;
 
 public interface IAttendanceService {
 
@@ -12,7 +13,7 @@ public interface IAttendanceService {
 
 	List<Attendance> allAttendance();
 
-	Attendance getAttendance(String employeeId);
+	AttendanceEmployeeDto getAttendance(String employeeId);
 
 	String deleteAttendance(Integer id);
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
+import com.hrm.main.payloads.CandidateStatusDto;
 import com.hrm.main.payloads.EmployeeIdPasswordDto;
 import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
@@ -153,6 +154,12 @@ public class OnboardingController {
 		// Replace camel case with spaces and capitalize each word
 		return departmentName.replaceAll(String.format("%s|%s|%s", "(?<=[A-Z])(?=[A-Z][a-z])", "(?<=[^A-Z])(?=[A-Z])",
 				"(?<=[A-Za-z])(?=[^A-Za-z])"), " ");
+	}
+
+	@GetMapping("/status/{candidateId}")
+	public ResponseEntity<CandidateStatusDto> getStatus(@PathVariable long candidateId) {
+		CandidateStatusDto result = this.onboardingService.getStatus(candidateId);
+		return new ResponseEntity<CandidateStatusDto>(result, HttpStatus.OK);
 	}
 
 }

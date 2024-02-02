@@ -371,7 +371,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			 */
 			employeeDto.setName(candidate.getCandidateName());
 			employeeDto.setCandidateId(candidateId);
-			employeeDto.setJobTitleDesignation(candidate.getJobTitleDesignation());
+			employeeDto.setDesignation(candidate.getJobTitleDesignation());
 			employeeDto.setWorkLocation(candidate.getWorkLocation());
 			employeeDto.setDateOfJoining(candidate.getDateOfJoining());
 			employeeDto.setCtc(candidate.getCtc());
@@ -450,7 +450,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 
 		candidate.setCandidateId(candidateId);
 		candidate.setCandidateName(appointmentInfo.getName());
-		candidate.setJobTitleDesignation(appointmentInfo.getJobTitleDesignation());
+		candidate.setJobTitleDesignation(appointmentInfo.getDesignation());
 		candidate.setWorkLocation(appointmentInfo.getWorkLocation());
 		candidate.setDateOfJoining(appointmentInfo.getDateOfJoining());
 		candidate.setCtc(appointmentInfo.getCtc());
@@ -671,7 +671,8 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		}
 
 		EmployeeGenerateDto employeeGenerateDto = modelMapper.map(employee, EmployeeGenerateDto.class);
-//employeeGenerateDto.setJobTitleDesignation();
+
+		// employeeGenerateDto.setJobTitleDesignation();
 		return employeeGenerateDto;
 	}
 
@@ -749,14 +750,21 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		employee.setBondBreakAmount(appointmentLetterDto.getBondBreakAmount());
 		employee.setEmailId(appointmentLetterDto.getEmailId());
 		employee.setContactNumber(appointmentLetterDto.getContactNumber());
-		employee.setDesignation(appointmentLetterDto.getDesignation());
 		employee.setJobTitle(appointmentLetterDto.getJobTitle());
 		employee.setAuthorisedSignature(appointmentLetterDto.getAuthorisedSignature());
 		employee.setSign(appointmentLetterDto.getSign());
+		employee.setEmployeeStatus(EmployeeStatus.Active);
 
 		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
+		System.out.println("------------------------------------");
+		System.out.println("Status Of Candidate : " + onboarding.getCandidatesStatus());
 		onboarding.setCandidatesStatus(CandidatesStatus.Approved);
+		System.out.println("Status Of Candidate : " + onboarding.getCandidatesStatus());
+
 		this.onboardingRepository.save(onboarding);
+		System.out.println("Status Of Candidate : "
+				+ this.onboardingRepository.findByCandidateId(candidateId).getCandidatesStatus());
+		System.out.println("------------------------------------");
 
 		// employee.setAppointmentLetter(appointmentLetterDto.getAppointmentLetter());
 

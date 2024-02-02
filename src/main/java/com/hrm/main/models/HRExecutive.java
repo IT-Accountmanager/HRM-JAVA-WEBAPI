@@ -1,6 +1,8 @@
 package com.hrm.main.models;
 
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.models.Helper.EnumCollection.Designation;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +21,7 @@ public class HRExecutive {
 	@SequenceGenerator(name = "HrExecutive_Id_Sequence", initialValue = 1, allocationSize = 1, sequenceName = "HrExecutive_Id_Sequence")
 
 	private int id;
-	private String jobTitleDesignation;
+	private Designation jobTitleDesignation;
 	private long candidateId;
 	private String candidateName;
 	private long contactNumber;
@@ -38,11 +40,11 @@ public class HRExecutive {
 		this.id = id;
 	}
 
-	public String getJobTitleDesignation() {
+	public Designation getJobTitleDesignation() {
 		return jobTitleDesignation;
 	}
 
-	public void setJobTitleDesignation(String jobTitleDesignation) {
+	public void setJobTitleDesignation(Designation jobTitleDesignation) {
 		this.jobTitleDesignation = jobTitleDesignation;
 	}
 

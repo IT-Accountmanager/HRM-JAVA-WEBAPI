@@ -1,20 +1,21 @@
 package com.hrm.main.payloads;
 
 import com.hrm.main.models.Helper.EnumCollection.Departments;
+import com.hrm.main.models.Helper.EnumCollection.Designation;
 
 public class WorkInfoDto {
 
-	private String designation;
+	private Designation designation;
 	private Departments department;
 	private Departments.Department subDepartment;
 	// private String assignTo;
 	private String workLocation;
 
-	public String getDesignation() {
+	public Designation getDesignation() {
 		return designation;
 	}
 
-	public void setDesignation(String designation) {
+	public void setDesignation(Designation designation) {
 		this.designation = designation;
 	}
 

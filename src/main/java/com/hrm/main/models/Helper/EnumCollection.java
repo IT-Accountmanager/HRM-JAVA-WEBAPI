@@ -93,4 +93,21 @@ public class EnumCollection {
 		PRIMARY, SECONDARY
 	}
 
+	public enum Gender {
+		MALE("Male"), FEMALE("Female"), OTHER("Other");
+
+		private final String gender;
+
+		Gender(String gender) {
+			this.gender = gender;
+		}
+	}
+
+	public enum MaritalStatus {
+		SINGLE, MARRIED, DIVORCED, WIDOWED,
+	}
+
+	public enum CourseType {
+		REGULAR, DISTANCE
+	}
 }

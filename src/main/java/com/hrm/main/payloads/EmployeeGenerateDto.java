@@ -3,6 +3,7 @@ package com.hrm.main.payloads;
 import java.time.LocalDate;
 
 import com.hrm.main.models.Helper.EnumCollection.Departments;
+import com.hrm.main.models.Helper.EnumCollection.Designation;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 
 public class EmployeeGenerateDto {
@@ -11,7 +12,7 @@ public class EmployeeGenerateDto {
 	private long candidateId;
 	private String name;
 	private String workLocation;
-	private String jobTitleDesignation;
+	private Designation designation;
 	private float serviceCommitment;
 	private long serviceBreakAmount;
 	private long ctc;
@@ -72,12 +73,12 @@ public class EmployeeGenerateDto {
 		this.workLocation = workLocation;
 	}
 
-	public String getJobTitleDesignation() {
-		return jobTitleDesignation;
+	public Designation getDesignation() {
+		return designation;
 	}
 
-	public void setJobTitleDesignation(String jobTitleDesignation) {
-		this.jobTitleDesignation = jobTitleDesignation;
+	public void setDesignation(Designation designation) {
+		this.designation = designation;
 	}
 
 	public long getCtc() {

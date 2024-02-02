@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 import com.hrm.main.models.Helper.EnumCollection.AppraisalQuater;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
+import com.hrm.main.models.Helper.EnumCollection.Designation;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 import com.hrm.main.models.Helper.EnumCollection.ManagerType;
 import com.hrm.main.models.Helper.EnumCollection.ProbationPeriod;
@@ -38,8 +39,8 @@ public class Employee {
 	private LocalDate dateOfJoining;
 	private Departments department;
 	private Departments.Department subDepartment;
-	//private String assignTo;
-	private String designation;
+	// private String assignTo;
+	private Designation designation;
 	private String totalExperience;
 	private String joinedCtc;
 	private String currentCtc;
@@ -124,11 +125,11 @@ public class Employee {
 		return workLocation;
 	}
 
-	public String getDesignation() {
+	public Designation getDesignation() {
 		return designation;
 	}
 
-	public void setDesignation(String designation) {
+	public void setDesignation(Designation designation) {
 		this.designation = designation;
 	}
 

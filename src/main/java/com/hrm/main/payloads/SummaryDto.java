@@ -10,6 +10,7 @@ import com.hrm.main.models.Helper.EnumCollection.AppraisalQuater;
 import com.hrm.main.models.Helper.EnumCollection.BloodGroup;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
+import com.hrm.main.models.Helper.EnumCollection.Designation;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 
 public class SummaryDto {
@@ -23,7 +24,7 @@ public class SummaryDto {
 	private Departments department;
 	private Departments.Department subDepartment;
 	private String assignTo;
-	private String designation;
+	private Designation designation;
 	private String totalExperience;
 	private long joinedCtc;
 	private String currentCtc;
@@ -95,11 +96,11 @@ public class SummaryDto {
 		this.relevantExperience = relevantExperience;
 	}
 
-	public String getDesignation() {
+	public Designation getDesignation() {
 		return designation;
 	}
 
-	public void setDesignation(String designation) {
+	public void setDesignation(Designation designation) {
 		this.designation = designation;
 	}
 

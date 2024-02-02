@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.Attendance;
+import com.hrm.main.payloads.AttendanceEmployeeDto;
 import com.hrm.main.services.IAttendanceService;
 
 @CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
@@ -35,16 +36,15 @@ public class AttendanceController {
 
 	// ----------------FOR GET CLOCK IN------------------
 	@GetMapping("/getClockIn/{employeeId}")
-	public ResponseEntity<Attendance> getAttendance(@PathVariable String employeeId) {
-		Attendance attendance = this.attendanceService.getAttendance(employeeId);
-		return new ResponseEntity<Attendance>(attendance, HttpStatus.OK);
+	public ResponseEntity<AttendanceEmployeeDto> getAttendance(@PathVariable String employeeId) {
+		AttendanceEmployeeDto attendance = this.attendanceService.getAttendance(employeeId);
+		return new ResponseEntity<AttendanceEmployeeDto>(attendance, HttpStatus.OK);
 	}
 
 	// ----------------FOR CLOCK OUT------------------
 	@PostMapping("/clockOut/{employeeId}")
 	public ResponseEntity<String> addOutTime(@PathVariable String employeeId) {
 		String result = this.attendanceService.clockOut(employeeId);
-
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 

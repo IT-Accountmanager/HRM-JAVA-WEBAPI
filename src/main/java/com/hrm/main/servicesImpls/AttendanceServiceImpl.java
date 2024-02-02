@@ -9,8 +9,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hrm.main.models.Attendance;
+import com.hrm.main.models.Employee;
 import com.hrm.main.models.Helper.EnumCollection.AttendanceStatus;
+import com.hrm.main.payloads.AttendanceEmployeeDto;
 import com.hrm.main.repositories.IAttendanceRepository;
+import com.hrm.main.repositories.IEmployeeRepository;
 import com.hrm.main.services.IAttendanceService;
 
 @Service
@@ -19,13 +22,18 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	@Autowired
 	IAttendanceRepository attendanceRepo;
 
+	@Autowired
+	IEmployeeRepository employeeRepository;
+
 	@Override
 	public String clockIn(String employeeId) {
+
 		Attendance attendance = new Attendance();
+
 		attendance.setEmployeeId(employeeId);
-		attendance.setInTime(LocalTime.now());
 		attendance.setMonth(LocalDateTime.now().getMonth());
 		attendance.setDate(LocalDate.now());
+		attendance.setInTime(LocalTime.now());
 		attendance.setAttendanceStatus(AttendanceStatus.Present);
 		this.attendanceRepo.save(attendance);
 		return "attendence added of Employee Id : " + employeeId;
@@ -47,9 +55,26 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	}
 
 	@Override
-	public Attendance getAttendance(String employeeId) {
+	public AttendanceEmployeeDto getAttendance(String employeeId) {
 		Attendance attendance = this.attendanceRepo.findByEmployeeId(employeeId);
-		return attendance;
+		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
+		AttendanceEmployeeDto dto = new AttendanceEmployeeDto();
+
+		dto.setEmployeeId(employeeId);
+		dto.setMonth(attendance.getMonth());
+		dto.setDate(attendance.getDate());
+		dto.setInTime(attendance.getInTime());
+		dto.setOutTime(attendance.getOutTime());
+		dto.setWorkHours(dto.calculateWorkHours());
+		dto.setWorkHrs(dto.formatWorkHours());
+		dto.setAttendanceStatus(attendance.getAttendanceStatus());
+		dto.setManager(employee.getManager());
+		dto.setProjectId(null);
+		dto.setAppliedHoursForBilling(null);
+		dto.setApprovedHoursForBilling(null);
+		dto.setBillingHoursStatus(null);
+
+		return dto;
 	}
 
 	@Override

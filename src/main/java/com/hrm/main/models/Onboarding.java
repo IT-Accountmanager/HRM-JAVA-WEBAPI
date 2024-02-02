@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
+import com.hrm.main.models.Helper.EnumCollection.Designation;
 import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,7 +28,7 @@ public class Onboarding {
 	private Long candidateId;
 
 	@Column(name = "job_title_designation")
-	private String jobTitleDesignation;
+	private Designation jobTitleDesignation;
 
 	@Column(name = "candidate_name")
 	private String candidateName;
@@ -100,12 +101,16 @@ public class Onboarding {
 		return null; // or return an empty string or handle as appropriate
 	}
 
-	public String getJobTitleDesignation() {
+	public Designation getJobTitleDesignation() {
 		return jobTitleDesignation;
 	}
 
-	public void setJobTitleDesignation(String jobTitleDesignation) {
+	public void setJobTitleDesignation(Designation jobTitleDesignation) {
 		this.jobTitleDesignation = jobTitleDesignation;
+	}
+
+	public void setCandidateId(Long candidateId) {
+		this.candidateId = candidateId;
 	}
 
 	public long getCandidateId() {

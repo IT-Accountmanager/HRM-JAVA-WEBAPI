@@ -16,6 +16,7 @@ import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
 import com.hrm.main.models.Helper.EnumCollection.SmsStatus;
 import com.hrm.main.models.Helper.SendSMS;
+import com.hrm.main.payloads.CandidateStatusDto;
 import com.hrm.main.payloads.EmployeeIdPasswordDto;
 import com.hrm.main.payloads.LinkRequestDto;
 import com.hrm.main.payloads.OnboardingDto;
@@ -377,6 +378,15 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		result.setDate(LocalDate.now());
 
 		return result;
+	}
+
+	@Override
+	public CandidateStatusDto getStatus(long candidateId) {
+		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
+		CandidateStatusDto candidate = new CandidateStatusDto();
+		candidate.setCandidatesStatus(onboarding.getCandidatesStatus());
+
+		return candidate;
 	}
 
 }

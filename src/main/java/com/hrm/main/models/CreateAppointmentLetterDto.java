@@ -2,6 +2,7 @@ package com.hrm.main.models;
 
 import java.time.LocalDate;
 
+import com.hrm.main.models.Helper.EnumCollection.Designation;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 
 public class CreateAppointmentLetterDto {
@@ -9,7 +10,7 @@ public class CreateAppointmentLetterDto {
 	private String employeeId;
 	private String name;
 	private String jobTitle;
-	private String designation;
+	private Designation designation;
 	private String workLocation;
 	private LocalDate dateOfJoining;
 	private float ctc;
@@ -46,11 +47,11 @@ public class CreateAppointmentLetterDto {
 		this.name = name;
 	}
 
-	public String getDesignation() {
+	public Designation getDesignation() {
 		return designation;
 	}
 
-	public void setDesignation(String designation) {
+	public void setDesignation(Designation designation) {
 		this.designation = designation;
 	}
 

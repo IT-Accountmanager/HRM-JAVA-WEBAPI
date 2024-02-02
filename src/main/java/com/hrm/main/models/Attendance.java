@@ -8,6 +8,8 @@ import java.time.Month;
 
 import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.AttendanceStatus;
+import com.hrm.main.payloads.AttendanceEmployeeDto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,8 +35,7 @@ public class Attendance {
 	private LocalTime inTime;
 	private LocalTime outTime;
 	private Duration workHrs;
-	private AttendanceStatus attendanceStatus;
-	private String manager;
+	private AttendanceStatus attendanceStatus = AttendanceStatus.Anomaly;
 	private String projectId;
 	private float appliedHrsForBilling;
 	private float approvedHrsForBilling;
@@ -87,14 +88,6 @@ public class Attendance {
 
 	public void setWorkHrs(Duration workHrs) {
 		this.workHrs = workHrs;
-	}
-
-	public String getManager() {
-		return manager;
-	}
-
-	public void setManager(String manager) {
-		this.manager = manager;
 	}
 
 	public String getProjectId() {

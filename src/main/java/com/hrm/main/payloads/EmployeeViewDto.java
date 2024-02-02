@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
+import com.hrm.main.models.Helper.EnumCollection.Designation;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 
 public class EmployeeViewDto {
@@ -13,7 +14,7 @@ public class EmployeeViewDto {
 	private long contactNumber;
 	private String emailId;
 	private LocalDate dateOfJoining;
-	private String designation;
+	private Designation designation;
 	private Departments department;
 	private EmployeeStatus employeeStatus;
 	private float relevantExperience;
@@ -61,11 +62,11 @@ public class EmployeeViewDto {
 		this.dateOfJoining = dateOfJoining;
 	}
 
-	public String getDesignation() {
+	public Designation getDesignation() {
 		return designation;
 	}
 
-	public void setDesignation(String designation) {
+	public void setDesignation(Designation designation) {
 		this.designation = designation;
 	}
 
