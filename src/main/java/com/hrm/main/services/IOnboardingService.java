@@ -3,7 +3,7 @@ package com.hrm.main.services;
 import java.util.List;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.payloads.CandidateStatusDto;
-import com.hrm.main.payloads.EmployeeIdPasswordDto;
+import com.hrm.main.payloads.AuthenticateUserDto;
 import com.hrm.main.payloads.LinkRequestDto;
 import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
@@ -38,12 +38,13 @@ public interface IOnboardingService {
 
 	String addPassword(PasswordDto passwordDto, long candidateId);
 
-	EmployeeIdPasswordDto getPassword(long candidateId);
+	// AuthenticateUserDto getPassword(long candidateId);
 
-	String checkEmpIdPass(EmployeeIdPasswordDto employeeIdPasswordDto);
+	String authenticate(AuthenticateUserDto employeeIdPasswordDto);
 
 	WelcomeDto getEmployee(String employeeId);
 
 	CandidateStatusDto getStatus(long candidateId);
+
 
 }

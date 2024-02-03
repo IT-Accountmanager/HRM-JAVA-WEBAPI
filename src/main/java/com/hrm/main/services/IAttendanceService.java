@@ -1,7 +1,6 @@
 package com.hrm.main.services;
 
 import java.util.List;
-
 import com.hrm.main.models.Attendance;
 import com.hrm.main.payloads.AttendanceEmployeeDto;
 
@@ -11,7 +10,7 @@ public interface IAttendanceService {
 
 	String clockOut(String employeeId);
 
-	List<Attendance> allAttendance();
+	List<Attendance> allAttendance(String employeeId);
 
 	AttendanceEmployeeDto getAttendance(String employeeId);
 

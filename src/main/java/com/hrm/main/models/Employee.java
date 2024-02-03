@@ -67,7 +67,6 @@ public class Employee {
 	private String previouDesignation;
 	private LocalDate previouWorkFrom;
 	private LocalDate previouWorkUpto;
-	private String password;
 	private String manager;
 	private ManagerType managerType;
 
@@ -340,14 +339,6 @@ public class Employee {
 
 	public void setAppointmentLetter(byte[] appointmentLetter) {
 		this.appointmentLetter = appointmentLetter;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public Departments.Department getSubDepartment() {

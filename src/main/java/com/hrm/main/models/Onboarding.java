@@ -59,6 +59,8 @@ public class Onboarding {
 	private String formattedDate;
 	private static final long OTP_VALID_DURATION = 5 * 60 * 1000; // 5 minutes
 
+	private String password;
+
 	@Column(name = "one_time_password")
 	private String oneTimePassword;
 
@@ -207,6 +209,14 @@ public class Onboarding {
 
 	public void setWorkLocation(String workLocation) {
 		this.workLocation = workLocation;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getOneTimePassword() {

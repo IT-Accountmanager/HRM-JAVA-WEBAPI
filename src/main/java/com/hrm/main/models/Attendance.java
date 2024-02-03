@@ -18,17 +18,14 @@ import jakarta.persistence.SequenceGenerator;
 
 @Entity
 public class Attendance {
-	/*
-	 * @Id
-	 * 
-	 * @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
-	 * "attendance_id_seq")
-	 * 
-	 * @SequenceGenerator(name = "attendance_id_seq", initialValue = 1,
-	 * allocationSize = 1, sequenceName = "attendance_id_seq") private int id;
-	 */
-	// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
+
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "attendance_id_seq")
+	@SequenceGenerator(name = "attendance_id_seq", initialValue = 1, allocationSize = 1, sequenceName = "attendance_id_seq")
+	private int id;
+
+	// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
+
 	private String employeeId;
 	private Month month;
 	private LocalDate date;

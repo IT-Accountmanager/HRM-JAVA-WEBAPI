@@ -4,10 +4,14 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import com.hrm.main.models.Attendance;
 import com.hrm.main.models.Employee;
 import com.hrm.main.models.Helper.EnumCollection.AttendanceStatus;
@@ -20,7 +24,7 @@ import com.hrm.main.services.IAttendanceService;
 public class AttendanceServiceImpl implements IAttendanceService {
 
 	@Autowired
-	IAttendanceRepository attendanceRepo;
+	IAttendanceRepository attendanceRepository;
 
 	@Autowired
 	IEmployeeRepository employeeRepository;
@@ -28,35 +32,51 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	@Override
 	public String clockIn(String employeeId) {
 
-		Attendance attendance = new Attendance();
+		Attendance existingAttendance = this.attendanceRepository.findByEmployeeIdAndDate(employeeId, LocalDate.now());
 
-		attendance.setEmployeeId(employeeId);
-		attendance.setMonth(LocalDateTime.now().getMonth());
-		attendance.setDate(LocalDate.now());
-		attendance.setInTime(LocalTime.now());
-		attendance.setAttendanceStatus(AttendanceStatus.Present);
-		this.attendanceRepo.save(attendance);
-		return "attendence added of Employee Id : " + employeeId;
+		if (existingAttendance != null) {
+			return "Clock-in record already exist for Employee Id : " + employeeId;
+		} else {
+			Attendance attendance = new Attendance();
+
+			attendance.setEmployeeId(employeeId);
+			attendance.setMonth(LocalDateTime.now().getMonth());
+			attendance.setDate(LocalDate.now());
+			attendance.setInTime(LocalTime.now());
+			attendance.setAttendanceStatus(AttendanceStatus.Present);
+			this.attendanceRepository.save(attendance);
+			return "attendence added of Employee Id : " + employeeId;
+		}
+
 	}
 
 	@Override
 	public String clockOut(String employeeId) {
-		Attendance attendance = this.attendanceRepo.findByEmployeeId(employeeId);
+
+		Attendance attendance = this.attendanceRepository.findByEmployeeId(employeeId);
+
 		attendance.setOutTime(LocalTime.now());
 		attendance.setWorkHrs(Duration.between(attendance.getOutTime(), attendance.getInTime()));
-		this.attendanceRepo.save(attendance);
+		this.attendanceRepository.save(attendance);
 		return "Check Out of Employee Id " + employeeId + " at " + attendance.getOutTime();
+
 	}
 
 	@Override
-	public List<Attendance> allAttendance() {
-		return this.attendanceRepo.findAll();
+	public List<Attendance> allAttendance(String employeeId) {
+		List<Attendance> allByEmployeeId = attendanceRepository.findAllByEmployeeId(employeeId);
 
+		if (allByEmployeeId.isEmpty()) {
+
+			return Collections.emptyList();
+		}
+
+		return allByEmployeeId;
 	}
 
 	@Override
 	public AttendanceEmployeeDto getAttendance(String employeeId) {
-		Attendance attendance = this.attendanceRepo.findByEmployeeId(employeeId);
+		Attendance attendance = this.attendanceRepository.findByEmployeeId(employeeId);
 		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
 		AttendanceEmployeeDto dto = new AttendanceEmployeeDto();
 
@@ -80,7 +100,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	@Override
 	public String deleteAttendance(Integer id) {
 		try {
-			attendanceRepo.deleteById(id);
+			attendanceRepository.deleteById(id);
 
 			return "Id no. " + id + " is deleted succesfully. ";
 
@@ -94,9 +114,9 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	public String editAttendance(Attendance attendance, Integer id) {
 
 		try {
-			if (this.attendanceRepo.existsById(id)) {
+			if (this.attendanceRepository.existsById(id)) {
 				// attendance.setId(id);
-				this.attendanceRepo.save(attendance);
+				this.attendanceRepository.save(attendance);
 				return "Id no. " + id + " is updated. ";
 			} else {
 				return "Id no. " + id + " is does not exists. ";

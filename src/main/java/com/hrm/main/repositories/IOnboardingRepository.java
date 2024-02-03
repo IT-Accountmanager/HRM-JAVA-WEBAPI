@@ -45,4 +45,6 @@ public interface IOnboardingRepository extends JpaRepository<Onboarding, Integer
 
 	boolean existsByCandidateId(long candidateId);
 
+	Onboarding findByEmailIdOrContactNumberAndPassword(String emailId, long contactNumber, String password);
+
 }

@@ -17,7 +17,7 @@ import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
 import com.hrm.main.models.Helper.EnumCollection.SmsStatus;
 import com.hrm.main.models.Helper.SendSMS;
 import com.hrm.main.payloads.CandidateStatusDto;
-import com.hrm.main.payloads.EmployeeIdPasswordDto;
+import com.hrm.main.payloads.AuthenticateUserDto;
 import com.hrm.main.payloads.LinkRequestDto;
 import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
@@ -326,13 +326,13 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	@Override
 	public String addPassword(PasswordDto passwordDto, long candidateId) {
 		try {
-			Employee employee = this.employeeRepository.findByCandidateId(candidateId);
-			if (employee != null) {
-				employee.setPassword(passwordDto.getPassword());
-				this.employeeRepository.save(employee);
+			Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
+			if (onboarding != null) {
+				onboarding.setPassword(passwordDto.getPassword());
+				this.onboardingRepository.save(onboarding);
 				return "password saved";
 			} else {
-				return "employee not found for candidateId: " + candidateId;
+				return "Candidate not found for candidateId: " + candidateId;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -340,31 +340,32 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		}
 	}
 
-	// @Transactional
-	@Override
-	public EmployeeIdPasswordDto getPassword(long candidateId) {
-		try {
-			Employee employee = this.employeeRepository.findByCandidateId(candidateId);
-			EmployeeIdPasswordDto empDto = new EmployeeIdPasswordDto();
-			empDto.setEmployeeId(employee.getEmployeeId());
-			empDto.setPassword(employee.getPassword());
-			return empDto;
-		} catch (Exception e) {
-			return null;
-		}
-	}
+	/*
+	 * // @Transactional
+	 * 
+	 * @Override public AuthenticateUserDto getPassword(long candidateId) { try {
+	 * Employee employee = this.employeeRepository.findByCandidateId(candidateId);
+	 * AuthenticateUserDto empDto = new AuthenticateUserDto();
+	 * empDto.setEmployeeId(employee.getEmployeeId());
+	 * empDto.setPassword(employee.getPassword()); return empDto; } catch (Exception
+	 * e) { return null; } }
+	 */
 
 	@Override
-	public String checkEmpIdPass(EmployeeIdPasswordDto employeeIdPasswordDto) {
-		Employee employee = this.employeeRepository.findByEmployeeId(employeeIdPasswordDto.getEmployeeId());
-		if (employee != null) {
-			if (employee.getPassword().equals(employeeIdPasswordDto.getPassword())) {
-				return "Login successful";
+	public String authenticate(AuthenticateUserDto authenticateUserDto) {
+		Onboarding onboarding = this.onboardingRepository.findByEmailIdOrContactNumberAndPassword(
+				authenticateUserDto.getEmailId(), authenticateUserDto.getContactNumber(),
+				authenticateUserDto.getPassword());
+		if (onboarding != null) {
+			if (onboarding.getEmailId().equals(authenticateUserDto.getEmailId())
+					|| onboarding.getContactNumber() == authenticateUserDto.getContactNumber()
+							&& onboarding.getPassword().equals(authenticateUserDto.getPassword())) {
+				return "Login successful of Candidate Id : " + "\\r\\n" + onboarding.getCandidateId();
 			} else {
 				return "Incorrect password";
 			}
 		} else {
-			return "Employee does not exist";
+			return "Employee does not exist of Candidate Id : " + authenticateUserDto.getCandidateId();
 		}
 	}
 

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.payloads.CandidateStatusDto;
-import com.hrm.main.payloads.EmployeeIdPasswordDto;
+import com.hrm.main.payloads.AuthenticateUserDto;
 import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
 import com.hrm.main.payloads.SMSResponseDto;
@@ -105,15 +105,16 @@ public class OnboardingController {
 		return new ResponseEntity<String>(result, HttpStatus.CREATED);
 	}
 
-	@GetMapping("password/{candidateId}")
-	public ResponseEntity<EmployeeIdPasswordDto> get(@PathVariable long candidateId) {
-		EmployeeIdPasswordDto result = this.onboardingService.getPassword(candidateId);
-		return new ResponseEntity<EmployeeIdPasswordDto>(result, HttpStatus.OK);
-	}
+	/*
+	 * @GetMapping("password/{candidateId}") public
+	 * ResponseEntity<AuthenticateUserDto> get(@PathVariable long candidateId) {
+	 * AuthenticateUserDto result = this.onboardingService.getPassword(candidateId);
+	 * return new ResponseEntity<AuthenticateUserDto>(result, HttpStatus.OK); }
+	 */
 
-	@PostMapping("check-empId-pass")
-	public String check(@RequestBody EmployeeIdPasswordDto employeeIdPasswordDto) {
-		String result = this.onboardingService.checkEmpIdPass(employeeIdPasswordDto);
+	@PostMapping("authenticate")
+	public String authenticate(@RequestBody AuthenticateUserDto employeeIdPasswordDto) {
+		String result = this.onboardingService.authenticate(employeeIdPasswordDto);
 		return result;
 	}
 

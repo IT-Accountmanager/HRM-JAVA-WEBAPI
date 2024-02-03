@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.hrm.main.models.Employee;
+import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 
@@ -32,7 +33,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 	/*
 	 * List<Employee> findAllBySubDepartment(Sub_Department subDepartment);
 	 */
-	
+
 	// List<Employee> findAllByDepartmentAndSubDepartment(Departments department,
 	// Sub_Department subDepartment);
 
@@ -40,12 +41,13 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 	 * List<Employee> findByDepartmentAndSubDepartmentAndDesignation(Departments
 	 * department, Sub_Department subDepartment, String designation);
 	 */
-	
+
 	/*
 	 * List<Employee> findByDepartmentAndSubDepartmentAndDesignationNot(Departments
 	 * department, Sub_Department subDepartment, String designation);
 	 */
 
 	List<Employee> findByEmployeeStatus(EmployeeStatus employeeStatus);
+
 
 }

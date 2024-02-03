@@ -48,9 +48,10 @@ public class AttendanceController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
-	@GetMapping("/allattendance")
-	public ResponseEntity<List<Attendance>> getAllAttendence() {
-		List<Attendance> allAttendance = this.attendanceService.allAttendance();
+	// -------------------GET ALL ATTENDANCE BY EMPLOYEE ID-------------------
+	@GetMapping("/allattendance/{employeeId}")
+	public ResponseEntity<List<Attendance>> getAllAttendenceByEmployeeId(@PathVariable String employeeId) {
+		List<Attendance> allAttendance = this.attendanceService.allAttendance(employeeId);
 		return new ResponseEntity<List<Attendance>>(allAttendance, HttpStatus.OK);
 	}
 
