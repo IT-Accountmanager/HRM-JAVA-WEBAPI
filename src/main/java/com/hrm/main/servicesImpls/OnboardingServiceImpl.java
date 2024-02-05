@@ -17,6 +17,7 @@ import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
 import com.hrm.main.models.Helper.EnumCollection.SmsStatus;
 import com.hrm.main.models.Helper.SendSMS;
 import com.hrm.main.payloads.CandidateStatusDto;
+import com.hrm.main.payloads.ExperiencedDto;
 import com.hrm.main.payloads.AuthenticateUserDto;
 import com.hrm.main.payloads.LinkRequestDto;
 import com.hrm.main.payloads.OnboardingDto;
@@ -388,6 +389,28 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		candidate.setCandidatesStatus(onboarding.getCandidatesStatus());
 
 		return candidate;
+	}
+
+	@Override
+	public boolean setFresherOrExperienced(ExperiencedDto experiencedDto, long candidateId) {
+		try {
+			Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
+
+			if (onboarding != null) {
+
+				onboarding.setExperience(experiencedDto.getExperience());
+
+				this.onboardingRepository.save(onboarding);
+
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
 	}
 
 }

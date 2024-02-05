@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.hrm.main.models.Work;
-import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
-import com.hrm.main.payloads.EducationStatusResponse;
 import com.hrm.main.payloads.WorkStatusResponse;
 import com.hrm.main.services.IWorkService;
 
@@ -29,12 +26,27 @@ public class WorkController {
 	@Autowired
 	IWorkService workService;
 
+	/*
+	 * @PostMapping("/AddWork/{candidateId}") public ResponseEntity<String>
+	 * createWork(@RequestBody(required = false) Work work, @PathVariable long
+	 * candidateId) { String result = this.workService.createWork(work,
+	 * candidateId); return new ResponseEntity<String>(result, HttpStatus.OK); }
+	 */
+	
 	@PostMapping("/AddWork/{candidateId}")
-	public ResponseEntity<String> createWork(@RequestBody Work work, @PathVariable long candidateId) {
-		String result = this.workService.createWork(work, candidateId);
-		return new ResponseEntity<String>(result, HttpStatus.OK);
-	}
+	public ResponseEntity<String> createWork(@RequestBody(required = false) Work work, @PathVariable long candidateId) {
+	    String result;
+	    
+	    if (work != null) {
+	        // Handle the case for an experienced candidate with additional work details
+	        result = this.workService.createWorkForExperiencedCandidate(work, candidateId);
+	    } else {
+	        // Handle the case for a fresher candidate with no additional work details
+	        result = this.workService.createWorkForFresherCandidate(candidateId);
+	    }
 
+	    return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 	@GetMapping("/getAll/{candidateId}")
 	public ResponseEntity<List<Work>> getAllWork(@PathVariable long candidateId) {
 		List<Work> allWork = this.workService.getAllWorkByCandidateId(candidateId);

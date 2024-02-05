@@ -7,7 +7,9 @@ import com.hrm.main.payloads.WorkStatusResponse;
 
 public interface IWorkService {
 
-	String createWork(Work work, long candidateId);
+	String createWorkForExperiencedCandidate(Work work, long candidateId);
+
+	String createWorkForFresherCandidate(long candidateId);
 
 	List<Work> getAllWorkByCandidateId(long candidateId);
 
@@ -20,5 +22,7 @@ public interface IWorkService {
 	String getDocument(Integer id);
 
 	WorkStatusResponse getWorkStatusByCandidateId(long candidateId);
+
+	// String setExperienced(long candidateId);
 
 }

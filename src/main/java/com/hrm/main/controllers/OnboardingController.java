@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.payloads.CandidateStatusDto;
+import com.hrm.main.payloads.ExperiencedDto;
 import com.hrm.main.payloads.AuthenticateUserDto;
 import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
@@ -161,6 +162,19 @@ public class OnboardingController {
 	public ResponseEntity<CandidateStatusDto> getStatus(@PathVariable long candidateId) {
 		CandidateStatusDto result = this.onboardingService.getStatus(candidateId);
 		return new ResponseEntity<CandidateStatusDto>(result, HttpStatus.OK);
+	}
+
+	@PostMapping("/experience-status/{candidateId}")
+	public ResponseEntity<String> updateFresherStatus(@RequestBody ExperiencedDto experiencedDto,
+			@PathVariable long candidateId) {
+
+		boolean updated = this.onboardingService.setFresherOrExperienced(experiencedDto, candidateId);
+
+		if (updated) {
+			return ResponseEntity.ok("Experience status updated successfully.");
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Candidate with ID " + candidateId + " not found.");
+		}
 	}
 
 }

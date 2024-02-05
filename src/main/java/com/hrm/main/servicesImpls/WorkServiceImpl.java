@@ -5,49 +5,81 @@ import java.util.Base64.Decoder;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Work;
 import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.DetailsSubmissionStatus;
 import com.hrm.main.payloads.WorkStatusResponse;
+import com.hrm.main.repositories.IOnboardingRepository;
 import com.hrm.main.repositories.IWorkRepository;
 import com.hrm.main.services.IWorkService;
 
 @Service
+@Transactional
 public class WorkServiceImpl implements IWorkService {
 
 	@Autowired
 	private IWorkRepository workRepo;
 
+	@Autowired
+	private IOnboardingRepository onboardingRepository;
+
 	@Override
-	public String createWork(Work work, long candidateId) {
-		try {
+	public String createWorkForExperiencedCandidate(Work work, long candidateId) {
+
+		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
+
+		if (onboarding.getExperience().equals("Experienced")) {
+			try {
+				work.setCandidateId(candidateId);
+				work.setWorkSubmissionStatus(DetailsSubmissionStatus.Submitted);
+				work.setHrExecutiveApprovalStatus(ApprovalStatus.Pending);
+				Decoder decoder = Base64.getDecoder();
+				while (work.paySlipBase64Data.length() % 4 != 0) {
+					work.paySlipBase64Data += "=";
+				}
+				while (work.appraisalLetterBase64Data.length() % 4 != 0) {
+					work.appraisalLetterBase64Data += "=";
+				}
+				/*
+				 * while (work.relievedLetterBase64Data.length() % 4 != 0) {
+				 * work.relievedLetterBase64Data += "="; }
+				 */
+
+				// work.setUploadOfferLetter(decoder.decode(work.offerLetterBase64Data));
+				work.setLastAppraisalLetter(decoder.decode(work.appraisalLetterBase64Data));
+				work.setLastMonthPaySlip(decoder.decode(work.paySlipBase64Data));
+
+				var work1 = this.workRepo.save(work);
+				if (work1.getWorkId() > 0) {
+					return "Work created successfully for experienced candidate with ID " + candidateId;
+
+				}
+			} catch (Exception e) {
+				e.getMessage();
+			}
+		}
+
+		return "Work are not created for experienced candidate with ID " + candidateId;
+
+	}
+
+	@Override
+	public String createWorkForFresherCandidate(long candidateId) {
+		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
+		Work work = new Work();
+		if (onboarding.getExperience().equals("Fresher")) {
 			work.setCandidateId(candidateId);
 			work.setWorkSubmissionStatus(DetailsSubmissionStatus.Submitted);
 			work.setHrExecutiveApprovalStatus(ApprovalStatus.Pending);
-			Decoder decoder = Base64.getDecoder();
-			while (work.paySlipBase64Data.length() % 4 != 0) {
-				work.paySlipBase64Data += "=";
-			}
-			while (work.appraisalLetterBase64Data.length() % 4 != 0) {
-				work.appraisalLetterBase64Data += "=";
-			}
-			/*
-			 * while (work.relievedLetterBase64Data.length() % 4 != 0) {
-			 * work.relievedLetterBase64Data += "="; }
-			 */
 
-			// work.setUploadOfferLetter(decoder.decode(work.offerLetterBase64Data));
-			work.setLastAppraisalLetter(decoder.decode(work.appraisalLetterBase64Data));
-			work.setLastMonthPaySlip(decoder.decode(work.paySlipBase64Data));
+			this.workRepo.save(work);
+			return "Work created successfully for fresher candidate with ID " + candidateId;
 
-			var work1 = this.workRepo.save(work);
-			if (work1.getWorkId() > 0) {
-				return "Work details are added : " + work1.getWorkId();
-			}
-		} catch (Exception e) {
-			e.getMessage();
 		}
-		return "work details are not added : ";
+		return "Work are not created for fresher candidate with ID " + candidateId;
 
 	}
 

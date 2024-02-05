@@ -3,6 +3,7 @@ package com.hrm.main.services;
 import java.util.List;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.payloads.CandidateStatusDto;
+import com.hrm.main.payloads.ExperiencedDto;
 import com.hrm.main.payloads.AuthenticateUserDto;
 import com.hrm.main.payloads.LinkRequestDto;
 import com.hrm.main.payloads.OnboardingDto;
@@ -46,5 +47,6 @@ public interface IOnboardingService {
 
 	CandidateStatusDto getStatus(long candidateId);
 
+	boolean setFresherOrExperienced(ExperiencedDto fresherOrExperiencedDto, long candidateId);
 
 }
