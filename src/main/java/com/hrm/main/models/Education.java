@@ -30,6 +30,8 @@ public class Education {
 	private LocalDate endDate;
 	private String percentageOrGrade;
 	private String collegeNameOrUniversity;
+	private String eduPhoneNo;
+	private String eduEmailId;
 	@Column(name = "candidate_id")
 	private long candidateId;
 	@Lob
@@ -111,6 +113,22 @@ public class Education {
 
 	public void setPercentageOrGrade(String percentageOrGrade) {
 		this.percentageOrGrade = percentageOrGrade;
+	}
+
+	public String getEduPhoneNo() {
+		return eduPhoneNo;
+	}
+
+	public void setEduPhoneNo(String eduPhoneNo) {
+		this.eduPhoneNo = eduPhoneNo;
+	}
+
+	public String getEduEmailId() {
+		return eduEmailId;
+	}
+
+	public void setEduEmailId(String eduEmailId) {
+		this.eduEmailId = eduEmailId;
 	}
 
 	public String getCollegeNameOrUniversity() {

@@ -354,20 +354,31 @@ public class OnboardingServiceImpl implements IOnboardingService {
 
 	@Override
 	public String authenticate(AuthenticateUserDto authenticateUserDto) {
-		Onboarding onboarding = this.onboardingRepository.findByEmailIdOrContactNumberAndPassword(
-				authenticateUserDto.getEmailId(), authenticateUserDto.getContactNumber(),
-				authenticateUserDto.getPassword());
-		if (onboarding != null) {
-			if (onboarding.getEmailId().equals(authenticateUserDto.getEmailId())
-					|| onboarding.getContactNumber() == authenticateUserDto.getContactNumber()
-							&& onboarding.getPassword().equals(authenticateUserDto.getPassword())) {
-				return "Login successful of Candidate Id : " + "\\r\\n" + onboarding.getCandidateId();
-			} else {
-				return "Incorrect password";
-			}
+		String username = authenticateUserDto.getUsername();
+		String password = authenticateUserDto.getPassword();
+
+		Onboarding user = null;
+
+		if (isValidEmail(username)) {
+			user = onboardingRepository.findByEmailIdOrContactNumber(username, 0L);
 		} else {
-			return "Employee does not exist of Candidate Id : " + authenticateUserDto.getCandidateId();
+			try {
+				long contactNumber = Long.parseLong(username);
+				user = onboardingRepository.findByEmailIdOrContactNumber("", contactNumber);
+			} catch (NumberFormatException e) {
+				return "Invalid username format";
+			}
 		}
+
+		if (user != null && user.getPassword().equals(password)) {
+			return "Authentication successful";
+		} else {
+			return "Authentication failed";
+		}
+	}
+
+	private boolean isValidEmail(String email) {
+		return email.contains("@");
 	}
 
 	@Override

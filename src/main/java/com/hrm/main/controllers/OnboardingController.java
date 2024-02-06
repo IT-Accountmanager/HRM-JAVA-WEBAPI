@@ -114,9 +114,20 @@ public class OnboardingController {
 	 */
 
 	@PostMapping("authenticate")
-	public String authenticate(@RequestBody AuthenticateUserDto employeeIdPasswordDto) {
-		String result = this.onboardingService.authenticate(employeeIdPasswordDto);
-		return result;
+	public ResponseEntity<String> authenticate(@RequestBody AuthenticateUserDto authenticateUserDto) {
+		String result = null;
+
+		if (authenticateUserDto != null) {
+			result = this.onboardingService.authenticate(authenticateUserDto);
+
+			if (result != null) {
+				return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+			} else {
+				return new ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED);
+			}
+		} else {
+			return new ResponseEntity<>("Invalid input", HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@GetMapping("employee/{employeeId}")

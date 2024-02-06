@@ -38,10 +38,8 @@ public class WorkController {
 	    String result;
 	    
 	    if (work != null) {
-	        // Handle the case for an experienced candidate with additional work details
 	        result = this.workService.createWorkForExperiencedCandidate(work, candidateId);
 	    } else {
-	        // Handle the case for a fresher candidate with no additional work details
 	        result = this.workService.createWorkForFresherCandidate(candidateId);
 	    }
 
