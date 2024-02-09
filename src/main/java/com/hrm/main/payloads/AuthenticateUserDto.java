@@ -5,6 +5,9 @@ public class AuthenticateUserDto {
 	private Long candidateId;
 	private String password;
 	private String username;
+	/*
+	 * private String employeeId; private String name;
+	 */
 
 	public Long getCandidateId() {
 		return candidateId;
@@ -29,5 +32,16 @@ public class AuthenticateUserDto {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	/*
+	 * public String getEmployeeId() { return employeeId; }
+	 * 
+	 * public void setEmployeeId(String employeeId) { this.employeeId = employeeId;
+	 * }
+	 * 
+	 * public String getName() { return name; }
+	 * 
+	 * public void setName(String name) { this.name = name; }
+	 */
 
 }

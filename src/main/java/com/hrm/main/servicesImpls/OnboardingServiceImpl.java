@@ -8,10 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import com.hrm.main.config.TwilioConfig;
+import com.hrm.main.models.Email;
 import com.hrm.main.models.Employee;
 import com.hrm.main.models.Onboarding;
+//import com.hrm.main.models.Helper.EmailSender;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
 import com.hrm.main.models.Helper.EnumCollection.SmsStatus;
@@ -20,6 +25,7 @@ import com.hrm.main.payloads.CandidateStatusDto;
 import com.hrm.main.payloads.ExperiencedDto;
 import com.hrm.main.payloads.AuthenticateUserDto;
 import com.hrm.main.payloads.LinkRequestDto;
+import com.hrm.main.payloads.LoginWelcomeDto;
 import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
 import com.hrm.main.payloads.SMSResponseDto;
@@ -48,6 +54,10 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	TwilioConfig twilioConfig;
 	@Autowired
 	IEmployeeRepository employeeRepository;
+	@Autowired
+	JavaMailSender javaMailSender;
+	@Value("${spring.mail.username}")
+	private String sender;
 
 	/*
 	 * @Override public String createOnboarding(Onboarding onboarding) { try {
@@ -233,6 +243,56 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		}
 	}
 
+//--------------WITH LESS SECURE APP--------------------
+
+	@Override
+	public String sendSimpleMail(long candidateId) {
+		try {
+
+			Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
+			String link = "http://localhost:4200/welcome/" + candidateId;
+			String name = candidate.getCandidateName();
+			SimpleMailMessage mailMessage = new SimpleMailMessage();
+
+			mailMessage.setFrom(sender);
+			mailMessage.setTo(candidate.getEmailId());
+			mailMessage.setSubject("Fill all personal details");
+			mailMessage.setText("Dear " + name + "," + "\n\r" + "\n\r"
+					+ "Your profile has been selected for Envision Integrated Services. Please click the link below and fill your information. "
+					+ "\n\r" + "\n\r" + "Link : " + link);
+
+			this.javaMailSender.send(mailMessage);
+			return "Mail Sent Successfully.";
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error while Sending Mail.";
+		}
+	}
+
+	// ----------------------WITH SECURE APP--------------------------
+
+	/*
+	 * @Override public String sendSimpleMail(long candidateId) { Onboarding
+	 * candidate = this.onboardingRepository.findByCandidateId(candidateId);
+	 * EmailSender emailSender = new EmailSender();
+	 * 
+	 * String link = "http://localhost:4200/welcome"; String name =
+	 * candidate.getCandidateName(); String to = candidate.getEmailId(); String from
+	 * = sender; String subject =
+	 * "Invitation From Envision Integrated Services Pvt. Ltd."; String body =
+	 * "Dear " + name + "," + "\n\r" + "\n\r" +
+	 * "Your profile has been selected for Envision Integrated Services. Please click the link below and fill your information. "
+	 * + "\n\r" + "\n\r" + "Link : " + link; boolean emailSent =
+	 * emailSender.sendEmail(to, from, subject, body);
+	 * 
+	 * if (emailSent) { return "Email Sent Successfully !!"; }
+	 * 
+	 * return "Error in Sending email !!"; }
+	 */
+
+	// ___________________________________________________________________
+
 	@Override
 	public SMSResponseDto sendSMS(long candidateId) {
 		SMSResponseDto smsResponseDto = null;
@@ -241,7 +301,7 @@ public class OnboardingServiceImpl implements IOnboardingService {
 			Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
 
 			long candidatePhoneNumber = candidate.getContactNumber();
-			String link = "http://localhost:4200/welcome";
+			String link = "http://localhost:4200/welcome/" + candidateId;
 			String name = candidate.getCandidateName();
 
 			PhoneNumber to = new PhoneNumber("+91" + String.valueOf(candidatePhoneNumber));
@@ -262,7 +322,7 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	}
 
 	@Override
-	public SMSResponseDto sendOtp(long candidateId) {
+	public SMSResponseDto sendMobileOtp(long candidateId) {
 		SMSResponseDto smsResponseDto = null;
 
 		Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
@@ -297,8 +357,56 @@ public class OnboardingServiceImpl implements IOnboardingService {
 			e.printStackTrace();
 			smsResponseDto = new SMSResponseDto(SmsStatus.FAILED, e.getMessage());
 		}
+		/*
+		 * try {
+		 * 
+		 * SimpleMailMessage mailMessage = new SimpleMailMessage();
+		 * 
+		 * mailMessage.setFrom(sender); mailMessage.setTo(candidate.getEmailId());
+		 * mailMessage.setSubject("Fill all personal details");
+		 * mailMessage.setText("Dear " + name + "," + "\n\r" + "\n\r" +
+		 * "Your profile has been selected for Envision Integrated Services. Please click the link below and fill your information. "
+		 * + "\n\r" + "\n\r" + "Link : " + link);
+		 * 
+		 * this.javaMailSender.send(mailMessage); return "Mail Sent Successfully.";
+		 * 
+		 * } catch (Exception e) { e.printStackTrace(); smsResponseDto = new
+		 * SMSResponseDto(SmsStatus.FAILED, e.getMessage()); }
+		 */
 
 		return smsResponseDto;
+	}
+
+	@Override
+	public String sendEmailOtp(long candidateId) {
+
+		Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
+
+		try {
+			int randomPin = (int) (Math.random() * 999999) + 100000;
+			String otp = String.valueOf(randomPin);
+			LocalDateTime requestTime = LocalDateTime.now();
+
+			candidate.setOneTimePassword(otp);
+			candidate.setOtpRequestedTime(requestTime);
+
+			SimpleMailMessage mailMessage = new SimpleMailMessage();
+
+			mailMessage.setFrom(sender);
+			mailMessage.setTo(candidate.getEmailId());
+			mailMessage.setSubject("OTP Confirmation alert for Envision Integrated Services Pvt. Ltd.");
+			mailMessage.setText("Dear User," + "\n\r"
+					+ "Please use the following OTP (One Time Password) to validate your email. " + otp);
+
+			this.onboardingRepository.save(candidate);
+
+			this.javaMailSender.send(mailMessage);
+			return "Mail Sent Successfully.";
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error while Sending Mail.";
+		}
 	}
 
 	@Override
@@ -310,7 +418,7 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		LocalDateTime verifyRequestTime = LocalDateTime.now();
 		Duration duration = Duration.between(otpRequestTime, verifyRequestTime);
 
-		if (duration.getSeconds() < 90) {
+		if (duration.getSeconds() < 480) {
 			if (otp.equals(verifyOtpDto.getOneTimePassword())) {
 				return "Verified !";
 			} else {
@@ -358,9 +466,12 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		String password = authenticateUserDto.getPassword();
 
 		Onboarding user = null;
+		// Employee employee = null;
 
 		if (isValidEmail(username)) {
 			user = onboardingRepository.findByEmailIdOrContactNumber(username, 0L);
+			// long candidateId = user.getCandidateId();
+			// employee = this.employeeRepository.findByCandidateId(candidateId);
 		} else {
 			try {
 				long contactNumber = Long.parseLong(username);
@@ -371,7 +482,11 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		}
 
 		if (user != null && user.getPassword().equals(password)) {
-			return "Authentication successful";
+			return "Authentication successful and candidate Id is : "
+					+ user.getCandidateId()/*
+											 * + "\\r\\n" + "Employee Id : " + employee.getEmployeeId() + "\\r\\n" +
+											 * "Employee Name :" + employee.getName()
+											 */;
 		} else {
 			return "Authentication failed";
 		}
@@ -422,6 +537,17 @@ public class OnboardingServiceImpl implements IOnboardingService {
 			return false;
 		}
 
+	}
+
+	@Override
+	public LoginWelcomeDto getDetails(long candidateId) {
+
+		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
+		LoginWelcomeDto dto = new LoginWelcomeDto();
+		dto.setContactNumber(onboarding.getContactNumber());
+		dto.setEmailId(onboarding.getEmailId());
+		dto.setName(onboarding.getCandidateName());
+		return dto;
 	}
 
 }

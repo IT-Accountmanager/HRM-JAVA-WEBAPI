@@ -43,7 +43,7 @@ public class SummaryDto {
 	private String bankAccountNumber;
 	private String qualification;
 	private String specialization;
-	private String yearOfPassout;
+	private int yearOfPassout;
 	private String resignationDate;
 	private String actualLastWorkingDay;
 
@@ -288,11 +288,11 @@ public class SummaryDto {
 		this.specialization = specialization;
 	}
 
-	public String getYearOfPassout() {
+	public int getYearOfPassout() {
 		return yearOfPassout;
 	}
 
-	public void setYearOfPassout(String yearOfPassout) {
+	public void setYearOfPassout(int yearOfPassout) {
 		this.yearOfPassout = yearOfPassout;
 	}
 

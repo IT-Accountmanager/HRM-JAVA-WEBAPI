@@ -1,11 +1,13 @@
 package com.hrm.main.services;
 
 import java.util.List;
+
+import com.hrm.main.models.Email;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.payloads.CandidateStatusDto;
 import com.hrm.main.payloads.ExperiencedDto;
+import com.hrm.main.payloads.LoginWelcomeDto;
 import com.hrm.main.payloads.AuthenticateUserDto;
-import com.hrm.main.payloads.LinkRequestDto;
 import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
 import com.hrm.main.payloads.SMSResponseDto;
@@ -33,7 +35,7 @@ public interface IOnboardingService {
 
 	SMSResponseDto sendSMS(long canidateId);
 
-	SMSResponseDto sendOtp(long candidateId);
+	SMSResponseDto sendMobileOtp(long candidateId);
 
 	String verifyOtp(VerifyOtpDto verifyOtpDto, long candidateId);
 
@@ -48,5 +50,11 @@ public interface IOnboardingService {
 	CandidateStatusDto getStatus(long candidateId);
 
 	boolean setFresherOrExperienced(ExperiencedDto fresherOrExperiencedDto, long candidateId);
+
+	String sendSimpleMail(long candidateId);
+
+	String sendEmailOtp(long candidateId);
+
+	LoginWelcomeDto getDetails(long candidateId);
 
 }

@@ -86,7 +86,7 @@ public class EnumCollection {
 	}
 
 	public enum WorkLocation {
-		HYDERABAD, CHENNAI, BANGLORE, PUNE
+		HYDERABAD, CHENNAI, BANGALORE, PUNE
 	}
 
 	public enum ManagerType {

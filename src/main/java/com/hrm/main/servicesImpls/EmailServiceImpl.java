@@ -23,25 +23,7 @@ public class EmailServiceImpl implements IEmailService {
 	@Value("${spring.mail.username}")
 	private String sender;
 
-	@Override
-	public String sendSimpleMail(Email email) {
-		try {
-
-			SimpleMailMessage mailMessage = new SimpleMailMessage();
-
-			mailMessage.setFrom(email.getSender());
-			mailMessage.setTo(email.getRecipient());
-			mailMessage.setSubject(email.getSubject());
-			mailMessage.setText(email.getMsgBody());
-
-			this.javaMailSender.send(mailMessage);
-			return "Mail Sent Successfully.";
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "Error while Sending Mail.";
-		}
-	}
+	
 
 	@Override
 	public String sendMailWithAttachment(Email email) {

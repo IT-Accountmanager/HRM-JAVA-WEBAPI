@@ -3,7 +3,7 @@ package com.hrm.main.models;
 public class Email {
 	private String sender;
 	private String recipient;
-	private String msgBody;
+	private String msgBody; 
 	private String subject;
 	private String attachment;
 

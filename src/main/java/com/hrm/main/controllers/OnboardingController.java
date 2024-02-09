@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.hrm.main.models.Email;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.payloads.CandidateStatusDto;
 import com.hrm.main.payloads.ExperiencedDto;
+import com.hrm.main.payloads.LoginWelcomeDto;
 import com.hrm.main.payloads.AuthenticateUserDto;
 import com.hrm.main.payloads.OnboardingDto;
 import com.hrm.main.payloads.OnboardingEditDto;
@@ -90,9 +93,22 @@ public class OnboardingController {
 		return this.onboardingService.sendSMS(candidateId);
 	}
 
-	@PostMapping("send-otp/{candidateId}")
+	@PostMapping("/send-link-e/{candidateId}")
+	public ResponseEntity<String> sendMail(@PathVariable long candidateId) {
+		String result = this.onboardingService.sendSimpleMail(candidateId);
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+
+	@PostMapping("send-otp-m/{candidateId}")
 	public SMSResponseDto sendOtp(@PathVariable long candidateId) {
-		return this.onboardingService.sendOtp(candidateId);
+		return this.onboardingService.sendMobileOtp(candidateId);
+	}
+
+	@PostMapping("send-otp-e/{candidateId}")
+	public ResponseEntity<String> sendOtpToMail(@PathVariable long candidateId) {
+		String result = this.onboardingService.sendEmailOtp(candidateId);
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+
 	}
 
 	@PostMapping("verify-otp/{candidateId}")
@@ -186,6 +202,12 @@ public class OnboardingController {
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Candidate with ID " + candidateId + " not found.");
 		}
+	}
+
+	@GetMapping("/detail/{candidateId}")
+	public ResponseEntity<LoginWelcomeDto> getDetails(@PathVariable long candidateId) {
+		LoginWelcomeDto details = this.onboardingService.getDetails(candidateId);
+		return new ResponseEntity<LoginWelcomeDto>(details, HttpStatus.OK);
 	}
 
 }

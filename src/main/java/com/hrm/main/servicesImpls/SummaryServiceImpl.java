@@ -10,6 +10,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.hrm.main.models.Education;
 import com.hrm.main.models.Employee;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Personal;
@@ -27,6 +29,7 @@ import com.hrm.main.payloads.SummaryDto;
 import com.hrm.main.payloads.SummaryPersonalInfoDto;
 import com.hrm.main.payloads.WorkHistoryDto;
 import com.hrm.main.payloads.WorkInfoDto;
+import com.hrm.main.repositories.IEducationRepository;
 import com.hrm.main.repositories.IEmployeeRepository;
 import com.hrm.main.repositories.IOnboardingRepository;
 import com.hrm.main.repositories.IPersonalRepository;
@@ -47,6 +50,8 @@ public class SummaryServiceImpl implements ISummaryService {
 	@Autowired
 	IPersonalRepository personalRepository;
 	@Autowired
+	IEducationRepository educationRepository;
+	@Autowired
 	ModelMapper modelMapper;
 
 	@Override
@@ -63,6 +68,7 @@ public class SummaryServiceImpl implements ISummaryService {
 
 			Onboarding candidate = this.onboardingRepository.findByCandidateId(employee.getCandidateId());
 			Personal details = this.personalRepository.findByCandidateId(employee.getCandidateId());
+			List<Education> educations = this.educationRepository.findAllByCandidateId(employee.getCandidateId());
 			SummaryDto summaryDto = new SummaryDto();
 
 			summaryDto.setCandidateId(employee.getCandidateId());
@@ -106,9 +112,9 @@ public class SummaryServiceImpl implements ISummaryService {
 			summaryDto.setPanCardNumber(details.getDocumentDetails().getPanCardNo());
 			// summaryDto.setUanNumber();
 			summaryDto.setBankAccountNumber(details.getBankDetails().getAccountNo());
-			// summaryDto.setQualification();
-			// summaryDto.setSpecialization();
-			// summaryDto.setYearOfPassout();
+			 summaryDto.setQualification(educations.get(0).getQualification());
+		 summaryDto.setSpecialization(educations.get(0).getStream());
+			 summaryDto.setYearOfPassout(educations.get(0).getEndDate().getYear());
 			// summaryDto.setResignationDate();
 			// summaryDto.setActualLastWorkingDay();
 			summaryDto.setRelevantExperience(employee.getRelevantExperience());

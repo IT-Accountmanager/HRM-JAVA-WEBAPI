@@ -16,11 +16,7 @@ public class EmailController {
 	@Autowired
 	IEmailService emailService;
 
-	@PostMapping("/sendMail")
-	public ResponseEntity<String> sendMail(@RequestBody Email email) {
-		String result = this.emailService.sendSimpleMail(email);
-		return new ResponseEntity<String>(result, HttpStatus.OK);
-	}
+	
 
 	@PostMapping("/sendMailAttachment")
 	public ResponseEntity<String> sendMailWithAttachment(@RequestBody Email email) {
