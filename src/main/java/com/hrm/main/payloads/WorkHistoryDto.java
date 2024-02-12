@@ -3,43 +3,54 @@ package com.hrm.main.payloads;
 import java.time.LocalDate;
 
 import com.hrm.main.models.Helper.EnumCollection.Departments;
+import com.hrm.main.models.Helper.EnumCollection.Designation;
 
 public class WorkHistoryDto {
-	private Departments previouDepartment;
-	private String previouDesignation;
-	private LocalDate previouWorkFrom;
-	private LocalDate previouWorkUpto;
+	private Departments.Department subDepartment;
+	private Designation designation;
+	private String projectManager;
+	private LocalDate from;
+	private LocalDate to;
 
-	public Departments getPreviouDepartment() {
-		return previouDepartment;
+	
+	public Departments.Department getSubDepartment() {
+		return subDepartment;
 	}
 
-	public void setPreviouDepartment(Departments previouDepartment) {
-		this.previouDepartment = previouDepartment;
+	public void setSubDepartment(Departments.Department subDepartment) {
+		this.subDepartment = subDepartment;
 	}
 
-	public String getPreviouDesignation() {
-		return previouDesignation;
+	public Designation getDesignation() {
+		return designation;
 	}
 
-	public void setPreviouDesignation(String previouDesignation) {
-		this.previouDesignation = previouDesignation;
+	public void setDesignation(Designation designation) {
+		this.designation = designation;
 	}
 
-	public LocalDate getPreviouWorkFrom() {
-		return previouWorkFrom;
+	public String getProjectManager() {
+		return projectManager;
 	}
 
-	public void setPreviouWorkFrom(LocalDate previouWorkFrom) {
-		this.previouWorkFrom = previouWorkFrom;
+	public void setProjectManager(String projectManager) {
+		this.projectManager = projectManager;
 	}
 
-	public LocalDate getPreviouWorkUpto() {
-		return previouWorkUpto;
+	public LocalDate getFrom() {
+		return from;
 	}
 
-	public void setPreviouWorkUpto(LocalDate previouWorkUpto) {
-		this.previouWorkUpto = previouWorkUpto;
+	public void setFrom(LocalDate from) {
+		this.from = from;
+	}
+
+	public LocalDate getTo() {
+		return to;
+	}
+
+	public void setTo(LocalDate to) {
+		this.to = to;
 	}
 
 }

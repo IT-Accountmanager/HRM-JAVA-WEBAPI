@@ -3,8 +3,7 @@ package com.hrm.main.payloads;
 public class LoginWelcomeDto {
 
 	private String name;
-	private long contactNumber;
-	private String emailId;
+	private String employeeId;
 
 	public String getName() {
 		return name;
@@ -14,20 +13,12 @@ public class LoginWelcomeDto {
 		this.name = name;
 	}
 
-	public long getContactNumber() {
-		return contactNumber;
+	public String getEmployeeId() {
+		return employeeId;
 	}
 
-	public void setContactNumber(long contactNumber) {
-		this.contactNumber = contactNumber;
-	}
-
-	public String getEmailId() {
-		return emailId;
-	}
-
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
+	public void setEmployeeId(String employeeId) {
+		this.employeeId = employeeId;
 	}
 
 }

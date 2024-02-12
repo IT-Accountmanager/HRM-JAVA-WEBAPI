@@ -69,6 +69,8 @@ public class Employee {
 	private LocalDate previouWorkUpto;
 	private String manager;
 	private ManagerType managerType;
+	private LocalDate managerTo;
+	private LocalDate managerFrom;
 
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
@@ -435,6 +437,22 @@ public class Employee {
 
 	public void setManagerType(ManagerType managerType) {
 		this.managerType = managerType;
+	}
+
+	public LocalDate getManagerTo() {
+		return managerTo;
+	}
+
+	public void setManagerTo(LocalDate managerTo) {
+		this.managerTo = managerTo;
+	}
+
+	public LocalDate getManagerFrom() {
+		return managerFrom;
+	}
+
+	public void setManagerFrom(LocalDate managerFrom) {
+		this.managerFrom = managerFrom;
 	}
 
 }

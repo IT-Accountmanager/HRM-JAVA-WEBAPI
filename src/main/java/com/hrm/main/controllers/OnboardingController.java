@@ -209,5 +209,7 @@ public class OnboardingController {
 		LoginWelcomeDto details = this.onboardingService.getDetails(candidateId);
 		return new ResponseEntity<LoginWelcomeDto>(details, HttpStatus.OK);
 	}
+	
+	
 
 }

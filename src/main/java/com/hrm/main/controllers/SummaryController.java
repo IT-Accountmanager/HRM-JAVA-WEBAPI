@@ -155,27 +155,15 @@ public class SummaryController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
-	// ----------------------- Get Work History-------------------
-	@GetMapping("/workHistory/get/{employeeId}")
-	public ResponseEntity<WorkHistoryDto> getWorkHistory(@PathVariable String employeeId) {
-		WorkHistoryDto result = this.summaryService.getWorkHistory(employeeId);
-		return new ResponseEntity<WorkHistoryDto>(result, HttpStatus.OK);
-	}
-
-	// ----------------------- Add Resignation Info-------------------
-	@PostMapping("/resignationInfo/add/{employeeId}")
-	public ResponseEntity<String> addResignationInfo(@RequestBody ResignationInfoDto resignationInfo,
-			@PathVariable String employeeId) {
-		String result = this.summaryService.addResignationInfo(resignationInfo, employeeId);
-		return new ResponseEntity<String>(result, HttpStatus.OK);
-	}
-
-	// ----------------------- Get Resignation Info-------------------
-	@GetMapping("/resignationInfo/get/{employeeId}")
-	public ResponseEntity<ResignationInfoDto> getResignationInfo(@PathVariable String employeeId) {
-		ResignationInfoDto result = this.summaryService.getResignationInfo(employeeId);
-		return new ResponseEntity<ResignationInfoDto>(result, HttpStatus.OK);
-	}
+	/*
+	 * // ----------------------- Get Work History-------------------
+	 * 
+	 * @GetMapping("/workHistory/get/{employeeId}") public
+	 * ResponseEntity<WorkHistoryDto> getWorkHistory(@PathVariable String
+	 * employeeId) { WorkHistoryDto result =
+	 * this.summaryService.getWorkHistory(employeeId); return new
+	 * ResponseEntity<WorkHistoryDto>(result, HttpStatus.OK); }
+	 */
 
 	// ----------------------Set Employee Status----------------------
 	@PostMapping("employeeStatus/{employeeId}")
@@ -256,19 +244,6 @@ public class SummaryController {
 		List<String> designationsList = Arrays.stream(designations)
 				.map(designation -> designation.name().replace("_", " ")).collect(Collectors.toList());
 		return designationsList;
-	}
-
-	// ----------------REPORTING MANAGER--------------------
-	@GetMapping("get_reporting_manager")
-	public ResponseEntity<ReportingManagerDto> get(@PathVariable String employeeId) {
-		ReportingManagerDto result = this.summaryService.getReportingManager(employeeId);
-		return new ResponseEntity<ReportingManagerDto>(result, HttpStatus.OK);
-	}
-
-	@PostMapping("reporting_manager")
-	public String add(@RequestBody ReportingManagerDto reportingManagerDto, @PathVariable String employeeId) {
-		String result = this.summaryService.addReportingManager(reportingManagerDto, employeeId);
-		return result;
 	}
 
 	@GetMapping("manager_type_list")

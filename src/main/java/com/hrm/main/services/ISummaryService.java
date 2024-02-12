@@ -38,15 +38,9 @@ public interface ISummaryService {
 
 	String addWorkHistory(WorkHistoryDto workHistory, String employeeId);
 
-	String addResignationInfo(ResignationInfoDto resignationInfo, String employeeId);
-
 	WorkInfoDto getWorkInfo(String employeeId);
 
 	BasicInfoDto getBasicInfo(String employeeId);
-
-	WorkHistoryDto getWorkHistory(String employeeId);
-
-	ResignationInfoDto getResignationInfo(String employeeId);
 
 	String changeEmployeeStatus(String employeeId, EmployeeGenerateDto status);
 
@@ -55,9 +49,5 @@ public interface ISummaryService {
 	SummaryContactInfoDto getContactInfo(String employeeId);
 
 	SummaryAddressInfoDto getAddressInfo(String employeeId);
-
-	String addReportingManager(ReportingManagerDto reportingManagerDto, String employeeId);
-
-	ReportingManagerDto getReportingManager(String employeeId);
 
 }

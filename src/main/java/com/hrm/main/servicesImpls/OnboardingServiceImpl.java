@@ -16,6 +16,7 @@ import com.hrm.main.config.TwilioConfig;
 import com.hrm.main.models.Email;
 import com.hrm.main.models.Employee;
 import com.hrm.main.models.Onboarding;
+import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 //import com.hrm.main.models.Helper.EmailSender;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
@@ -541,13 +542,22 @@ public class OnboardingServiceImpl implements IOnboardingService {
 
 	@Override
 	public LoginWelcomeDto getDetails(long candidateId) {
+		try {
+			Employee employee = this.employeeRepository.findByCandidateId(candidateId);
+			Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
 
-		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
-		LoginWelcomeDto dto = new LoginWelcomeDto();
-		dto.setContactNumber(onboarding.getContactNumber());
-		dto.setEmailId(onboarding.getEmailId());
-		dto.setName(onboarding.getCandidateName());
-		return dto;
+			if (onboarding != null && onboarding.getCandidatesStatus() == CandidatesStatus.Approved) {
+				LoginWelcomeDto dto = new LoginWelcomeDto();
+				dto.setEmployeeId(employee.getEmployeeId());
+				dto.setName(onboarding.getCandidateName());
+				return dto;
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

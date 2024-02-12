@@ -112,9 +112,9 @@ public class SummaryServiceImpl implements ISummaryService {
 			summaryDto.setPanCardNumber(details.getDocumentDetails().getPanCardNo());
 			// summaryDto.setUanNumber();
 			summaryDto.setBankAccountNumber(details.getBankDetails().getAccountNo());
-			 summaryDto.setQualification(educations.get(0).getQualification());
-		 summaryDto.setSpecialization(educations.get(0).getStream());
-			 summaryDto.setYearOfPassout(educations.get(0).getEndDate().getYear());
+			summaryDto.setQualification(educations.get(0).getQualification());
+			summaryDto.setSpecialization(educations.get(0).getStream());
+			summaryDto.setYearOfPassout(educations.get(0).getEndDate().getYear());
 			// summaryDto.setResignationDate();
 			// summaryDto.setActualLastWorkingDay();
 			summaryDto.setRelevantExperience(employee.getRelevantExperience());
@@ -266,20 +266,6 @@ public class SummaryServiceImpl implements ISummaryService {
 	}
 
 	@Override
-	public String addResignationInfo(ResignationInfoDto resignationInfo, String employeeId) {
-		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
-		if (employee == null) {
-			throw new EntityNotFoundException("Employee not found for employeeId: " + employeeId);
-		}
-
-		modelMapper.map(resignationInfo, employee);
-
-		this.employeeRepository.save(employee);
-
-		return " Resignation Info of Employee Id : " + employeeId + " is added Successfully !";
-	}
-
-	@Override
 	public WorkInfoDto getWorkInfo(String employeeId) {
 		try {
 			Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
@@ -361,39 +347,6 @@ public class SummaryServiceImpl implements ISummaryService {
 		}
 
 		return workingDays;
-	}
-
-	@Override
-	public WorkHistoryDto getWorkHistory(String employeeId) {
-		try {
-			Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
-			if (employee != null) {
-				WorkHistoryDto workHistory = new WorkHistoryDto();
-				workHistory.setPreviouDepartment(employee.getPreviouDepartment());
-				workHistory.setPreviouDesignation(employee.getPreviouDesignation());
-				workHistory.setPreviouWorkFrom(employee.getPreviouWorkFrom());
-				workHistory.setPreviouWorkUpto(employee.getPreviouWorkUpto());
-
-				return workHistory;
-
-			} else {
-				long candidateId = employee.getCandidateId();
-				Work work = this.workRepository.findByCandidateId(candidateId);
-
-				return modelMapper.map(work, WorkHistoryDto.class);
-			}
-		} catch (Exception e) {
-			return null;
-
-		}
-	}
-
-	@Override
-	public ResignationInfoDto getResignationInfo(String employeeId) {
-
-		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
-
-		return modelMapper.map(employee, ResignationInfoDto.class);
 	}
 
 	@Override
@@ -492,28 +445,6 @@ public class SummaryServiceImpl implements ISummaryService {
 			e.getMessage();
 			return null;
 		}
-	}
-
-	@Override
-	public String addReportingManager(ReportingManagerDto reportingManagerDto, String employeeId) {
-		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
-		employee.setManager(reportingManagerDto.getName());
-		employee.setManagerType(reportingManagerDto.getManagerType());
-
-		return "Reporting Manager Added";
-	}
-
-	@Override
-	public ReportingManagerDto getReportingManager(String employeeId) {
-
-		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
-
-		ReportingManagerDto result = new ReportingManagerDto();
-		result.setName(employee.getManager());
-		result.setManagerType(employee.getManagerType());
-		result.setDepartment(employee.getDepartment());
-		// result.setDesignation(employee.getDesignation());
-		return null;
 	}
 
 }

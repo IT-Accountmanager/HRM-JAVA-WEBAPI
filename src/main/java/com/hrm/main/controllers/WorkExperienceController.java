@@ -22,7 +22,7 @@ import com.hrm.main.services.IWorkService;
 @RestController
 @RequestMapping("/work")
 
-public class WorkController {
+public class WorkExperienceController {
 	@Autowired
 	IWorkService workService;
 
