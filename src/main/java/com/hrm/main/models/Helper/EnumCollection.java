@@ -110,4 +110,58 @@ public class EnumCollection {
 	public enum CourseType {
 		REGULAR, DISTANCE
 	}
+	
+	public enum ShiftRule {
+		RuleSettings_1,
+		RuleSettings_2,
+		RuleSettings_3
+	}
+	
+	public enum WeekRule {
+		RuleSettings_1,
+		RuleSettings_2,
+		RuleSettings_3
+	}
+	
+	public enum Resignation {
+		Rejected,
+        Approved
+	}
+	
+	public enum NoticePeriod {
+		_30_Days,
+		_60_Days,
+		_90_Days,
+		_120_Days
+	}
+	
+	public enum Category {
+		Working,
+		WalkOut,
+		Terminated,
+		Absconded,
+		NotReporting,
+		Bench,
+		LongLeave,
+		Contractual,
+		ProbationPeriod,
+		TrainingPeriod,
+		NoticePeriod
+	}
+	
+	public enum LeaveType {
+		EarnedLeave,
+		CompensatoryLeave,
+		LossOfPay
+	}
+	
+	public enum Half1 {
+		FirstHalf,
+		SecondHalf
+	}
+	
+	public enum Half2 {
+		FirstHalf,
+		SecondHalf
+	}
 }
