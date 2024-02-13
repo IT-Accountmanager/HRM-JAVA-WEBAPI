@@ -1,11 +1,15 @@
 package com.hrm.main.servicesImpls;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.stream.Collectors;
 import com.hrm.main.models.Employee;
 import com.hrm.main.models.Work;
+import com.hrm.main.payloads.DirectReportsDto;
 import com.hrm.main.payloads.ReportingManagerDto;
 import com.hrm.main.payloads.ResignationEditDto;
 import com.hrm.main.payloads.ResignationInfoDto;
@@ -104,4 +108,24 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 		return null;
 	}
 
+	@Override
+	public List<DirectReportsDto> getDirectReports(String employeeId) {
+		return Optional.ofNullable(this.employeeRepository.findByEmployeeId(employeeId)).map(employee -> {
+			String manager = employee.getManager();
+			List<Employee> employeesUnderManager = this.employeeRepository.findAllByManager(manager);
+
+			return employeesUnderManager.stream().map(directReport -> {
+				DirectReportsDto directReportsDto = new DirectReportsDto();
+				directReportsDto.setName(directReport.getName());
+				directReportsDto.setDesignation(directReport.getDesignation());
+				directReportsDto.setSubDepartment(directReport.getSubDepartment());
+				directReportsDto.setTo(directReport.getManagerTo());
+				directReportsDto.setFrom(directReport.getManagerFrom());
+
+				return directReportsDto;
+			}).collect(Collectors.toList());
+		}).orElse(Collections.emptyList());
+	}
+	
+	
 }

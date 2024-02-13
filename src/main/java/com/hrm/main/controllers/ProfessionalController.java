@@ -1,5 +1,7 @@
 package com.hrm.main.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hrm.main.payloads.DirectReportsDto;
 import com.hrm.main.payloads.ReportingManagerDto;
 import com.hrm.main.payloads.ResignationEditDto;
 import com.hrm.main.payloads.ResignationInfoDto;
@@ -57,6 +60,14 @@ public class ProfessionalController {
 	public String add(@RequestBody ReportingManagerDto reportingManagerDto, @PathVariable String employeeId) {
 		String result = this.professionalService.addReportingManager(reportingManagerDto, employeeId);
 		return result;
+	}
+
+	// --------------DIRECT REPORTS-------------------------
+	@GetMapping("directReports/{employeeId}")
+	public ResponseEntity<List<DirectReportsDto>> getDirectReoprts(@PathVariable String employeeId) {
+		List<DirectReportsDto> list = this.professionalService.getDirectReports(employeeId);
+		return new ResponseEntity<List<DirectReportsDto>>(list, HttpStatus.OK);
+
 	}
 
 }

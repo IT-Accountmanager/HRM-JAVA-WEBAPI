@@ -1,5 +1,8 @@
 package com.hrm.main.services;
 
+import java.util.List;
+
+import com.hrm.main.payloads.DirectReportsDto;
 import com.hrm.main.payloads.ReportingManagerDto;
 import com.hrm.main.payloads.ResignationEditDto;
 import com.hrm.main.payloads.ResignationInfoDto;
@@ -16,5 +19,7 @@ public interface IProfessionalService {
 	ReportingManagerDto getReportingManager(String employeeId);
 
 	String addReportingManager(ReportingManagerDto reportingManagerDto, String employeeId);
+
+	List<DirectReportsDto> getDirectReports(String employeeId);
 
 }

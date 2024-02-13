@@ -49,5 +49,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 
 	List<Employee> findByEmployeeStatus(EmployeeStatus employeeStatus);
 
+	List<Employee> findAllByManager(String manager);
+
 
 }
