@@ -8,6 +8,7 @@ import java.time.Month;
 
 import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.AttendanceStatus;
+import com.hrm.main.models.Helper.EnumCollection.LeaveType;
 import com.hrm.main.payloads.AttendanceEmployeeDto;
 
 import jakarta.persistence.Entity;
@@ -33,11 +34,15 @@ public class Attendance {
 	private LocalTime outTime;
 	private Duration workHrs;
 	private AttendanceStatus attendanceStatus = AttendanceStatus.Anomaly;
+	private LeaveType leaveType;
 	private String projectId;
 	private float appliedHrsForBilling;
 	private float approvedHrsForBilling;
 	private float regularizedHours;
 	private ApprovalStatus status;
+	private LocalDate startDate;
+	private LocalDate endDate;
+	private String leaveReason;
 
 	public String getEmployeeId() {
 		return employeeId;
@@ -134,5 +139,50 @@ public class Attendance {
 	public void setStatus(ApprovalStatus status) {
 		this.status = status;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}
+
+	public LocalDate getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getLeaveReason() {
+		return leaveReason;
+	}
+
+	public void setLeaveReason(String leaveReason) {
+		this.leaveReason = leaveReason;
+	}
+
+	public LeaveType getLeaveType() {
+		return leaveType;
+	}
+
+	public void setLeaveType(LeaveType leaveType) {
+		this.leaveType = leaveType;
+	}
+	
+	
+	
+	
+	
 
 }

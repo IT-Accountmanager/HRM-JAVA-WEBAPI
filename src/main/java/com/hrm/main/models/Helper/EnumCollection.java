@@ -10,11 +10,6 @@ public class EnumCollection {
 		Pending, InReview, Approved, Rejected, HrExecutiveRejected, HRManagerRejected
 	}
 
-	public enum EmployeeStatus {
-		Active, Inactive, Terminated, Absconded, Not_Reporting, Bench, Long_Leave, contractual, Probation_Period,
-		Training_Period, Notice_Period
-	}
-
 	public enum ApprovalStatus {
 		Pending, Approved, Rejected
 	}
@@ -110,58 +105,38 @@ public class EnumCollection {
 	public enum CourseType {
 		REGULAR, DISTANCE
 	}
-	
+
 	public enum ShiftRule {
-		RuleSettings_1,
-		RuleSettings_2,
-		RuleSettings_3
+		RuleSettings_1, RuleSettings_2, RuleSettings_3
 	}
-	
+
 	public enum WeekRule {
-		RuleSettings_1,
-		RuleSettings_2,
-		RuleSettings_3
+		RuleSettings_1, RuleSettings_2, RuleSettings_3
 	}
-	
+
 	public enum Resignation {
-		Rejected,
-        Approved
+		Rejected, Approved
 	}
-	
+
 	public enum NoticePeriod {
-		_30_Days,
-		_60_Days,
-		_90_Days,
-		_120_Days
+		_30_Days, _60_Days, _90_Days, _120_Days
 	}
-	
+
+	public enum EmployeeStatus {
+		Active, Inactive
+	}
+
 	public enum Category {
-		Working,
-		WalkOut,
-		Terminated,
-		Absconded,
-		NotReporting,
-		Bench,
-		LongLeave,
-		Contractual,
-		ProbationPeriod,
-		TrainingPeriod,
-		NoticePeriod
+		Working, WalkOut, Terminated, Absconded, NotReporting, Bench, LongLeave, Contractual, ProbationPeriod,
+		TrainingPeriod, NoticePeriod
 	}
-	
+
 	public enum LeaveType {
-		EarnedLeave,
-		CompensatoryLeave,
-		LossOfPay
+		EarnedLeave, CompensatoryLeave, LossOfPay
 	}
-	
-	public enum Half1 {
-		FirstHalf,
-		SecondHalf
+
+	public enum Half {
+		FirstHalf, SecondHalf
 	}
-	
-	public enum Half2 {
-		FirstHalf,
-		SecondHalf
-	}
+
 }
