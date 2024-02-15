@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.Attendance;
 import com.hrm.main.payloads.AttendanceEmployeeDto;
+import com.hrm.main.payloads.BillableHoursDto;
+import com.hrm.main.payloads.RegularizationHoursDto;
 import com.hrm.main.services.IAttendanceService;
 
 @CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
@@ -54,6 +56,22 @@ public class AttendanceController {
 	public ResponseEntity<List<Attendance>> getAllAttendenceByEmployeeId(@PathVariable String employeeId) {
 		List<Attendance> allAttendance = this.attendanceService.allAttendance(employeeId);
 		return new ResponseEntity<List<Attendance>>(allAttendance, HttpStatus.OK);
+	}
+
+	// --------------------------POST BILLABLE HOURS-------------------------
+	@PostMapping("billableHours/{employeeId}")
+	public ResponseEntity<String> addBillableHours(@RequestBody BillableHoursDto billableHoursDto,
+			@PathVariable String employeeId) {
+		String result = this.attendanceService.addBillableHours(billableHoursDto, employeeId);
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+
+	// --------------------------POST REGULARIZED HOURS-------------------------
+	@PostMapping("regularizationHours/{employeeId}")
+	public ResponseEntity<String> addRegularizationHours(@RequestBody RegularizationHoursDto regularizationHoursDto,
+			@PathVariable String employeeId) {
+		String result = this.attendanceService.addRegularizationHours(regularizationHoursDto, employeeId);
+		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
 	@PutMapping("/editattendance/{id}")

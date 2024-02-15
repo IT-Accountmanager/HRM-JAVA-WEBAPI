@@ -126,7 +126,7 @@ public class EnumCollection {
 		Active, Inactive
 	}
 
-	public enum Category {
+	public enum EmployeeCategory {
 		Working, WalkOut, Terminated, Absconded, NotReporting, Bench, LongLeave, Contractual, ProbationPeriod,
 		TrainingPeriod, NoticePeriod
 	}

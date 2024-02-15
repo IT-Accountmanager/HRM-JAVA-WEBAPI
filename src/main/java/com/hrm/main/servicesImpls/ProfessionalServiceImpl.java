@@ -1,5 +1,6 @@
 package com.hrm.main.servicesImpls;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -63,7 +64,10 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 			throw new EntityNotFoundException("Employee not found for employeeId: " + employeeId);
 		}
 
-		modelMapper.map(resignationEditDto, employee);
+		employee.setResignationStatus(resignationEditDto.getResignationStatus());
+		employee.setLastWorkingDay(resignationEditDto.getLastWorkingDay());
+		employee.setNoticePeriod(resignationEditDto.getNoticePeriod());
+		// modelMapper.map(resignationEditDto, employee);
 
 		this.employeeRepository.save(employee);
 
@@ -96,17 +100,24 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 	}
 
 	@Override
-	public ReportingManagerDto getReportingManager(String employeeId) {
+	public List<ReportingManagerDto> getReportingManager(String employeeId) {
+	    Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
 
-		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
+	    List<ReportingManagerDto> result = new ArrayList<>();
 
-		ReportingManagerDto result = new ReportingManagerDto();
-		result.setName(employee.getManager());
-		result.setManagerType(employee.getManagerType());
-		result.setDepartment(employee.getDepartment());
-		result.setDesignation(employee.getDesignation());
-		return null;
+	    if (employee != null) {
+	        ReportingManagerDto reportingManagerDto = new ReportingManagerDto();
+	        reportingManagerDto.setName(employee.getManager());
+	        reportingManagerDto.setManagerType(employee.getManagerType());
+	        reportingManagerDto.setDepartment(employee.getDepartment());
+	        reportingManagerDto.setDesignation(employee.getDesignation());
+
+	        result.add(reportingManagerDto);
+	    }
+
+	    return result;
 	}
+
 
 	@Override
 	public List<DirectReportsDto> getDirectReports(String employeeId) {
@@ -126,6 +137,5 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 			}).collect(Collectors.toList());
 		}).orElse(Collections.emptyList());
 	}
-	
-	
+
 }

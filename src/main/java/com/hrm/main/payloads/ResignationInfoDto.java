@@ -2,13 +2,14 @@ package com.hrm.main.payloads;
 
 import java.time.LocalDate;
 
+import com.hrm.main.models.Helper.EnumCollection.NoticePeriod;
 import com.hrm.main.models.Helper.EnumCollection.ResignationStatus;
 
 public class ResignationInfoDto {
 
 	private LocalDate resignationDate;
 	private ResignationStatus resignationStatus;
-	private int noticePeriod;
+	private NoticePeriod noticePeriod;
 	private LocalDate lastWorkingDay;
 
 	public LocalDate getResignationDate() {
@@ -27,11 +28,11 @@ public class ResignationInfoDto {
 		this.resignationStatus = resignationStatus;
 	}
 
-	public int getNoticePeriod() {
+	public NoticePeriod getNoticePeriod() {
 		return noticePeriod;
 	}
 
-	public void setNoticePeriod(int noticePeriod) {
+	public void setNoticePeriod(NoticePeriod noticePeriod) {
 		this.noticePeriod = noticePeriod;
 	}
 

@@ -117,6 +117,7 @@ public class SummaryServiceImpl implements ISummaryService {
 			summaryDto.setYearOfPassout(educations.get(0).getEndDate().getYear());
 			// summaryDto.setResignationDate();
 			// summaryDto.setActualLastWorkingDay();
+			// summaryDto.setEmployeeCategory(employee.getEmployeeCategory());
 			summaryDto.setRelevantExperience(employee.getRelevantExperience());
 			summaryDto.setWorkLocation(employee.getWorkLocation());
 
@@ -222,7 +223,7 @@ public class SummaryServiceImpl implements ISummaryService {
 	}
 
 	@Override
-	public String addBasicInfo(BasicInfoDto basicInfo, String employeeId) {
+	public String editBasicInfo(BasicInfoDto basicInfo, String employeeId) {
 		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
 		if (employee == null) {
 			throw new EntityNotFoundException("Employee not found for employeeId: " + employeeId);
@@ -230,6 +231,7 @@ public class SummaryServiceImpl implements ISummaryService {
 
 		employee.setEmployeeStatus(basicInfo.getEmployeeStatus());
 		employee.setProbationPeriod(basicInfo.getProbationPeriod());
+		employee.setEmployeeCategory(basicInfo.getEmployeeCategory());
 
 		this.employeeRepository.save(employee);
 
@@ -316,6 +318,9 @@ public class SummaryServiceImpl implements ISummaryService {
 
 				if (employee.getDateOfJoining() != null) {
 					basicInfo.setDateOfJoining(employee.getDateOfJoining());
+				}
+				if (employee.getEmployeeCategory() != null) {
+					basicInfo.setEmployeeCategory(employee.getEmployeeCategory());
 				}
 
 				basicInfo.setWorkExperience(calculateWorkExperience(employee.getDateOfJoining()));

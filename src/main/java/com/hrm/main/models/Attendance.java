@@ -43,6 +43,13 @@ public class Attendance {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private String leaveReason;
+	private float productionHours;
+	private float otherHours;
+	private float totalHours;
+	private LocalTime exatctInTime;
+	private LocalTime exactOutTime;
+	private Duration regularisationRequestHours;
+	private String regularisationReason;
 
 	public String getEmployeeId() {
 		return employeeId;
@@ -179,10 +186,61 @@ public class Attendance {
 	public void setLeaveType(LeaveType leaveType) {
 		this.leaveType = leaveType;
 	}
-	
-	
-	
-	
-	
+
+	public float getProductionHours() {
+		return productionHours;
+	}
+
+	public void setProductionHours(float productionHours) {
+		this.productionHours = productionHours;
+	}
+
+	public float getOtherHours() {
+		return otherHours;
+	}
+
+	public void setOtherHours(float otherHours) {
+		this.otherHours = otherHours;
+	}
+
+	public float getTotalHours() {
+		return totalHours;
+	}
+
+	public void setTotalHours(float totalHours) {
+		this.totalHours = totalHours;
+	}
+
+	public LocalTime getExatctInTime() {
+		return exatctInTime;
+	}
+
+	public void setExatctInTime(LocalTime exatctInTime) {
+		this.exatctInTime = exatctInTime;
+	}
+
+	public LocalTime getExactOutTime() {
+		return exactOutTime;
+	}
+
+	public void setExactOutTime(LocalTime exactOutTime) {
+		this.exactOutTime = exactOutTime;
+	}
+
+	public Duration getRegularisationRequestHours() {
+		return regularisationRequestHours;
+	}
+
+	public void setRegularisationRequestHours(Duration regularisationRequestHours) {
+		this.regularisationRequestHours = regularisationRequestHours;
+	}
+
+	public String getRegularisationReason() {
+		return regularisationReason;
+	}
+
+	public void setRegularisationReason(String regularisationReason) {
+		this.regularisationReason = regularisationReason;
+	}
 
 }

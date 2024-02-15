@@ -1,10 +1,8 @@
 package com.hrm.main.controllers;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.hrm.main.models.SocialDetails;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.Departments.Department;
 import com.hrm.main.models.Helper.EnumCollection.Designation;
@@ -118,20 +114,6 @@ public class SummaryController {
 	 * this.onboardingEmployeeSummaryService.deleteSummary(id); return new
 	 * ResponseEntity<>(result, HttpStatus.OK); }
 	 */
-
-	// ----------------------- Add Basic Info-------------------
-	@PostMapping("/basicInfo/add/{employeeId}")
-	public ResponseEntity<String> addBasicInfo(@RequestBody BasicInfoDto basicInfo, @PathVariable String employeeId) {
-		String result = this.summaryService.addBasicInfo(basicInfo, employeeId);
-		return new ResponseEntity<String>(result, HttpStatus.OK);
-	}
-
-	// ----------------------- Get Basic Info-------------------
-	@GetMapping("/basicInfo/get/{employeeId}")
-	public ResponseEntity<BasicInfoDto> getBasicInfo(@PathVariable String employeeId) {
-		BasicInfoDto result = this.summaryService.getBasicInfo(employeeId);
-		return new ResponseEntity<BasicInfoDto>(result, HttpStatus.OK);
-	}
 
 	// ----------------------- Add Work Info-------------------
 	@PostMapping("/workInfo/add/{employeeId}")

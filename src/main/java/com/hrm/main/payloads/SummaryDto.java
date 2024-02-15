@@ -2,15 +2,11 @@ package com.hrm.main.payloads;
 
 import java.time.Duration;
 import java.time.LocalDate;
-
-import com.hrm.main.models.AddressDetails;
-import com.hrm.main.models.PermanentAddress;
-import com.hrm.main.models.PresentAddress;
 import com.hrm.main.models.Helper.EnumCollection.AppraisalQuater;
 import com.hrm.main.models.Helper.EnumCollection.BloodGroup;
-import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.Designation;
+import com.hrm.main.models.Helper.EnumCollection.EmployeeCategory;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 
 public class SummaryDto {
@@ -18,6 +14,7 @@ public class SummaryDto {
 	private String employeeId;
 	private String name;
 	private EmployeeStatus employeeStatus;
+	private EmployeeCategory employeeCategory;
 	private long contactNumber;
 	private String emailId;
 	private LocalDate dateOfJoining;
@@ -142,6 +139,14 @@ public class SummaryDto {
 
 	public void setEmployeeStatus(EmployeeStatus employeeStatus) {
 		this.employeeStatus = employeeStatus;
+	}
+
+	public EmployeeCategory getEmployeeCategory() {
+		return employeeCategory;
+	}
+
+	public void setEmployeeCategory(EmployeeCategory employeeCategory) {
+		this.employeeCategory = employeeCategory;
 	}
 
 	public String getWorkLocation() {

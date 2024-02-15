@@ -2,19 +2,18 @@ package com.hrm.main.models;
 
 import java.time.Duration;
 import java.time.LocalDate;
-
 import com.hrm.main.models.Helper.EnumCollection.AppraisalQuater;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.Designation;
+import com.hrm.main.models.Helper.EnumCollection.EmployeeCategory;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 import com.hrm.main.models.Helper.EnumCollection.ManagerType;
+import com.hrm.main.models.Helper.EnumCollection.NoticePeriod;
 import com.hrm.main.models.Helper.EnumCollection.ProbationPeriod;
 import com.hrm.main.models.Helper.EnumCollection.ResignationStatus;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,6 +33,7 @@ public class Employee {
 	private String employeeId;
 	private String name;
 	private EmployeeStatus employeeStatus;
+	private EmployeeCategory employeeCategory = EmployeeCategory.Working;
 	private long contactNumber;
 	private String emailId;
 	private LocalDate dateOfJoining;
@@ -61,7 +61,7 @@ public class Employee {
 	private String employeeType;
 	private LocalDate resignationDate;
 	private ResignationStatus resignationStatus;
-	private int noticePeriod;
+	private NoticePeriod noticePeriod;
 	private LocalDate lastWorkingDay;
 	private Departments previouDepartment;
 	private String previouDesignation;
@@ -208,6 +208,14 @@ public class Employee {
 		this.employeeStatus = employeeStatus;
 	}
 
+	public EmployeeCategory getEmployeeCategory() {
+		return employeeCategory;
+	}
+
+	public void setEmployeeCategory(EmployeeCategory employeeCategory) {
+		this.employeeCategory = employeeCategory;
+	}
+
 	public float getRelevantExperience() {
 		return relevantExperience;
 	}
@@ -263,11 +271,11 @@ public class Employee {
 		this.resignationStatus = resignationStatus;
 	}
 
-	public int getNoticePeriod() {
+	public NoticePeriod getNoticePeriod() {
 		return noticePeriod;
 	}
 
-	public void setNoticePeriod(int noticePeriod) {
+	public void setNoticePeriod(NoticePeriod noticePeriod) {
 		this.noticePeriod = noticePeriod;
 	}
 

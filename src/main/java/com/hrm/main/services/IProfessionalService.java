@@ -16,7 +16,7 @@ public interface IProfessionalService {
 
 	ResignationInfoDto getResignationInfo(String employeeId);
 
-	ReportingManagerDto getReportingManager(String employeeId);
+	List<ReportingManagerDto> getReportingManager(String employeeId);
 
 	String addReportingManager(ReportingManagerDto reportingManagerDto, String employeeId);
 

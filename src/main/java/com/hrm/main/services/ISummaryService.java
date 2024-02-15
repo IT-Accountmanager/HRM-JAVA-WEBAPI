@@ -32,7 +32,7 @@ public interface ISummaryService {
 
 	SetManagerDto setManager(SetManagerDto assignTo, String employeeId);
 
-	String addBasicInfo(BasicInfoDto basicInfo, String employeeId);
+	String editBasicInfo(BasicInfoDto basicInfo, String employeeId);
 
 	String addWorkInfo(WorkInfoDto workInfo, String employeeId);
 

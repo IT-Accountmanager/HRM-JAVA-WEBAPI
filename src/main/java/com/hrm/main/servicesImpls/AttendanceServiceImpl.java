@@ -16,6 +16,8 @@ import com.hrm.main.models.Attendance;
 import com.hrm.main.models.Employee;
 import com.hrm.main.models.Helper.EnumCollection.AttendanceStatus;
 import com.hrm.main.payloads.AttendanceEmployeeDto;
+import com.hrm.main.payloads.BillableHoursDto;
+import com.hrm.main.payloads.RegularizationHoursDto;
 import com.hrm.main.repositories.IAttendanceRepository;
 import com.hrm.main.repositories.IEmployeeRepository;
 import com.hrm.main.services.IAttendanceService;
@@ -126,6 +128,25 @@ public class AttendanceServiceImpl implements IAttendanceService {
 			e.getMessage();
 		}
 		return "Id no. " + id + " is not updated. ";
+	}
+
+	@Override
+	public String addBillableHours(BillableHoursDto billableHoursDto, String employeeId) {
+		List<Attendance> attendanceListOfEmployee = this.attendanceRepository.findAllByEmployeeId(employeeId);
+		List<LocalDate> listOfDate = billableHoursDto.getListOfDate();
+		
+		for(LocalDate date : listOfDate)
+		{
+			
+		}
+		
+		
+		return null;
+	}
+
+	@Override
+	public String addRegularizationHours(RegularizationHoursDto regularizationHoursDto, String employeeId) {
+		return null;
 	}
 
 }
