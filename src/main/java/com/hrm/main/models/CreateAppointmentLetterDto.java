@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.hrm.main.models.Helper.EnumCollection.Designation;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
+import com.hrm.main.models.Helper.EnumCollection.WorkLocation;
 
 public class CreateAppointmentLetterDto {
 	private long candidateId;
@@ -11,7 +12,7 @@ public class CreateAppointmentLetterDto {
 	private String name;
 	private String jobTitle;
 	private Designation designation;
-	private String workLocation;
+	private WorkLocation workLocation;
 	private LocalDate dateOfJoining;
 	private float ctc;
 	private float bondPeriod;
@@ -55,11 +56,11 @@ public class CreateAppointmentLetterDto {
 		this.designation = designation;
 	}
 
-	public String getWorkLocation() {
+	public WorkLocation getWorkLocation() {
 		return workLocation;
 	}
 
-	public void setWorkLocation(String workLocation) {
+	public void setWorkLocation(WorkLocation workLocation) {
 		this.workLocation = workLocation;
 	}
 

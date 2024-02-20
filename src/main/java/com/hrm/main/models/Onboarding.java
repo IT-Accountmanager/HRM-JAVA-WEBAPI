@@ -9,6 +9,8 @@ import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.Designation;
 import com.hrm.main.models.Helper.EnumCollection.HrSubmission;
+import com.hrm.main.models.Helper.EnumCollection.WorkLocation;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -56,7 +58,7 @@ public class Onboarding {
 	private HrSubmission hrManagerSubmission;
 
 	private LocalDate dateOfJoining;
-	private String workLocation;
+	private WorkLocation workLocation;
 	private String formattedDate;
 	private static final long OTP_VALID_DURATION = 5 * 60 * 1000; // 5 minutes
 
@@ -212,11 +214,11 @@ public class Onboarding {
 		this.dateOfJoining = dateOfJoining;
 	}
 
-	public String getWorkLocation() {
+	public WorkLocation getWorkLocation() {
 		return workLocation;
 	}
 
-	public void setWorkLocation(String workLocation) {
+	public void setWorkLocation(WorkLocation workLocation) {
 		this.workLocation = workLocation;
 	}
 

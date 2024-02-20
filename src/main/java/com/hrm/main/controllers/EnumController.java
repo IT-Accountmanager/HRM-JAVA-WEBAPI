@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.hrm.main.models.Helper.EnumCollection.CategoryControl;
 import com.hrm.main.models.Helper.EnumCollection.CourseType;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeCategory;
 import com.hrm.main.models.Helper.EnumCollection.Gender;
@@ -34,28 +36,33 @@ public class EnumController {
 	}
 
 	@GetMapping("/weekrule")
-	public WeekRule[] getweek() {
+	public WeekRule[] getWeek() {
 		return WeekRule.values();
 	}
 
 	@GetMapping("/resignation")
-	public Resignation[] getresignation() {
+	public Resignation[] getResignation() {
 		return Resignation.values();
 	}
 
 	@GetMapping("/noticePeriod")
-	public NoticePeriod[] getnotice() {
+	public NoticePeriod[] getNotice() {
 		return NoticePeriod.values();
 	}
 
 	@GetMapping("/shiftrule")
-	public ShiftRule[] getshift() {
+	public ShiftRule[] getShift() {
 		return ShiftRule.values();
 	}
 
 	@GetMapping("/category")
-	public EmployeeCategory[] getcategory() {
+	public EmployeeCategory[] getCategory() {
 		return EmployeeCategory.values();
+	}
+
+	@GetMapping("/categoryControl")
+	public CategoryControl[] getCategoryControl() {
+		return CategoryControl.values();
 	}
 
 }

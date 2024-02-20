@@ -10,18 +10,18 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.hrm.main.models.BankDetails;
+import com.hrm.main.models.DocumentDetails;
 import com.hrm.main.models.Education;
 import com.hrm.main.models.Employee;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Personal;
-import com.hrm.main.models.Work;
+import com.hrm.main.models.PersonalDetails;
+import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.payloads.BasicInfoDto;
 import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.EmployeeViewDto;
 import com.hrm.main.payloads.EmployeesNameDto;
-import com.hrm.main.payloads.ReportingManagerDto;
-import com.hrm.main.payloads.ResignationInfoDto;
 import com.hrm.main.payloads.SetManagerDto;
 import com.hrm.main.payloads.SummaryAddressInfoDto;
 import com.hrm.main.payloads.SummaryContactInfoDto;
@@ -29,9 +29,12 @@ import com.hrm.main.payloads.SummaryDto;
 import com.hrm.main.payloads.SummaryPersonalInfoDto;
 import com.hrm.main.payloads.WorkHistoryDto;
 import com.hrm.main.payloads.WorkInfoDto;
+import com.hrm.main.repositories.IBankDetailsRepository;
+import com.hrm.main.repositories.IDocumentsDetailsRepository;
 import com.hrm.main.repositories.IEducationRepository;
 import com.hrm.main.repositories.IEmployeeRepository;
 import com.hrm.main.repositories.IOnboardingRepository;
+import com.hrm.main.repositories.IPersonalDetailsRepository;
 import com.hrm.main.repositories.IPersonalRepository;
 import com.hrm.main.repositories.IWorkRepository;
 import com.hrm.main.services.ISummaryService;
@@ -50,7 +53,13 @@ public class SummaryServiceImpl implements ISummaryService {
 	@Autowired
 	IPersonalRepository personalRepository;
 	@Autowired
+	IPersonalDetailsRepository personalDetailsRepository;
+	@Autowired
+	IDocumentsDetailsRepository documentsDetailsRepository;
+	@Autowired
 	IEducationRepository educationRepository;
+	@Autowired
+	IBankDetailsRepository bankDetailsRepository;
 	@Autowired
 	ModelMapper modelMapper;
 
@@ -66,62 +75,122 @@ public class SummaryServiceImpl implements ISummaryService {
 
 		for (Employee employee : findAll) {
 
-			Onboarding candidate = this.onboardingRepository.findByCandidateId(employee.getCandidateId());
-			Personal details = this.personalRepository.findByCandidateId(employee.getCandidateId());
-			List<Education> educations = this.educationRepository.findAllByCandidateId(employee.getCandidateId());
-			SummaryDto summaryDto = new SummaryDto();
+			if (employee.isImported()) {
+				SummaryDto summaryDto = new SummaryDto();
 
-			summaryDto.setCandidateId(employee.getCandidateId());
-			summaryDto.setEmployeeId(employee.getEmployeeId());
-			summaryDto.setName(employee.getName());
-			summaryDto.setEmployeeStatus(employee.getEmployeeStatus());
-			summaryDto.setContactNumber(employee.getContactNumber());
-			summaryDto.setEmailId(employee.getEmailId());
-			summaryDto.setDateOfJoining(employee.getDateOfJoining());
-			summaryDto.setDepartment(employee.getDepartment());
-			summaryDto.setSubDepartment(employee.getSubDepartment());
-			// summaryDto.setAssignTo(employee.getAssignTo());
-			if (employee.getDesignation() != null) {
+				long candidateId = employee.getCandidateId();
+
+				Personal personal = this.personalRepository.findByCandidateId(candidateId);
+				Education education = this.educationRepository.findByCandidateId(candidateId);
+
+				summaryDto.setEmployeeId(employee.getEmployeeId());
+				summaryDto.setName(employee.getName());
+				summaryDto.setEmployeeStatus(employee.getEmployeeStatus());
+				summaryDto.setEmployeeCategory(employee.getEmployeeCategory());
+				summaryDto.setContactNumber(employee.getContactNumber());
+				summaryDto.setEmailId(employee.getEmailId());
+				summaryDto.setDateOfJoining(employee.getDateOfJoining());
+				summaryDto.setDepartment(employee.getDepartment());
+				summaryDto.setSubDepartment(employee.getSubDepartment());
+				summaryDto.setAssignTo(employee.getAssignTo());
 				summaryDto.setDesignation(employee.getDesignation());
-			} else {
-				summaryDto.setDesignation(candidate.getJobTitleDesignation());
-			}
-			// summaryDto.setTotalExperience();
-			summaryDto.setJoinedCtc(candidate.getCtc());
-			// summaryDto.setCurrentCtc();
-			summaryDto.setServiceCommitment(candidate.getServiceCommitment());
-			// summaryDto.setNumberOfWorkingDays();
-			// summaryDto.setNextApprisalQuater();
-			summaryDto.setDateOfBirth(details.getPersonalDetails().getDateOfBirth());
-			summaryDto.setBloodGroup(details.getPersonalDetails().getBloodGroup());
-			summaryDto.setFatherName(details.getPersonalDetails().getFathersName());
-			// summaryDto.setEmergencyContact();
-			summaryDto.setPermanentAddress((details.getAddressDetails().getPermanentAdd().getHouseNo()) + ", "
-					+ (details.getAddressDetails().getPermanentAdd().getArea()) + ", near "
-					+ (details.getAddressDetails().getPermanentAdd().getLandmark()) + ", "
-					+ (details.getAddressDetails().getPermanentAdd().getCity()) + ", "
-					+ (details.getAddressDetails().getPermanentAdd().getState()) + ", "
-					+ (details.getAddressDetails().getPermanentAdd().getPincode()));
-			summaryDto.setTemporaryAddress((details.getAddressDetails().getPresentAdd().getHouseNo()) + ", "
-					+ (details.getAddressDetails().getPresentAdd().getArea()) + ", near "
-					+ (details.getAddressDetails().getPresentAdd().getLandmark()) + ", "
-					+ (details.getAddressDetails().getPresentAdd().getCity()) + ", "
-					+ (details.getAddressDetails().getPresentAdd().getState()) + ", "
-					+ (details.getAddressDetails().getPresentAdd().getPincode()));
-			summaryDto.setAadharCardNumber(details.getDocumentDetails().getAdharCardNo());
-			summaryDto.setPanCardNumber(details.getDocumentDetails().getPanCardNo());
-			// summaryDto.setUanNumber();
-			summaryDto.setBankAccountNumber(details.getBankDetails().getAccountNo());
-			summaryDto.setQualification(educations.get(0).getQualification());
-			summaryDto.setSpecialization(educations.get(0).getStream());
-			summaryDto.setYearOfPassout(educations.get(0).getEndDate().getYear());
-			// summaryDto.setResignationDate();
-			// summaryDto.setActualLastWorkingDay();
-			// summaryDto.setEmployeeCategory(employee.getEmployeeCategory());
-			summaryDto.setRelevantExperience(employee.getRelevantExperience());
-			summaryDto.setWorkLocation(employee.getWorkLocation());
+				summaryDto.setCategoryControl(employee.getCategoryControl());
+				summaryDto.setTotalExperience(null);
+				summaryDto.setJoinedCtc(employee.getJoinedCtc());
+				summaryDto.setCurrentCtc(employee.getCurrentCtc());
+				summaryDto.setServiceCommitment(employee.getServiceCommitment());
+				summaryDto.setNumberOfWorkingDays(employee.getNumberOfWorkingDays());
+				summaryDto.setNextApprisalQuater(employee.getNextApprisalQuater());
+				summaryDto.setDateOfBirth(personal.getPersonalDetails().getDateOfBirth());
+				summaryDto.setBloodGroup(personal.getPersonalDetails().getBloodGroup());
+				summaryDto.setFatherName(personal.getPersonalDetails().getFathersName());
+				summaryDto.setEmergencyContact(null);
+				summaryDto.setPermanentAddress(null);
+				summaryDto.setTemporaryAddress(null);
+				summaryDto.setAadharCardNumber(personal.getDocumentDetails().getAdharCardNo());
+				summaryDto.setPanCardNumber(personal.getDocumentDetails().getPanCardNo());
+				summaryDto.setUanNumber(employee.getUanNumber());
+				summaryDto.setBankAccountNumber(personal.getBankDetails().getAccountNo());
+				summaryDto.setQualification(education.getQualification());
+				summaryDto.setSpecialization(education.getStream());
+				summaryDto.setYearOfPassout(0);
+				summaryDto.setResignationDate(null);
+				summaryDto.setActualLastWorkingDay(null);
 
-			summaryDtoList.add(summaryDto);
+				summaryDtoList.add(summaryDto);
+
+			}
+
+			System.out.println("___________________________________________________________________________");
+
+			System.out.println("Employee Id : " + employee.getEmployeeId());
+			System.out.println("");
+
+			System.out.println("___________________________________________________________________________");
+
+			if (!employee.isImported()) {
+				Onboarding candidate = this.onboardingRepository.findByCandidateId(employee.getCandidateId());
+				Personal details = this.personalRepository.findByCandidateId(employee.getCandidateId());
+				List<Education> educations = this.educationRepository.findAllByCandidateId(employee.getCandidateId());
+				SummaryDto summaryDto = new SummaryDto();
+
+				summaryDto.setCandidateId(employee.getCandidateId());
+				summaryDto.setEmployeeId(employee.getEmployeeId());
+				summaryDto.setName(employee.getName());
+				summaryDto.setEmployeeStatus(employee.getEmployeeStatus());
+				summaryDto.setContactNumber(employee.getContactNumber());
+				summaryDto.setEmailId(employee.getEmailId());
+				summaryDto.setDateOfJoining(employee.getDateOfJoining());
+				summaryDto.setDepartment(employee.getDepartment());
+				summaryDto.setSubDepartment(employee.getSubDepartment());
+				// summaryDto.setAssignTo(employee.getAssignTo());
+				if (employee.getDesignation() != null) {
+					summaryDto.setDesignation(employee.getDesignation());
+				} else {
+					if (candidate != null && candidate.getJobTitleDesignation() != null) {
+						summaryDto.setDesignation(candidate.getJobTitleDesignation());
+					} else {
+						summaryDto.setDesignation(candidate.getJobTitleDesignation());
+					}
+				}
+				// summaryDto.setTotalExperience();
+				summaryDto.setJoinedCtc(candidate.getCtc());
+				// summaryDto.setCurrentCtc();
+				summaryDto.setServiceCommitment(candidate.getServiceCommitment());
+				// summaryDto.setNumberOfWorkingDays();
+				// summaryDto.setNextApprisalQuater();
+				summaryDto.setDateOfBirth(details.getPersonalDetails().getDateOfBirth());
+				summaryDto.setBloodGroup(details.getPersonalDetails().getBloodGroup());
+				summaryDto.setFatherName(details.getPersonalDetails().getFathersName());
+				// summaryDto.setEmergencyContact();
+				summaryDto.setPermanentAddress((details.getAddressDetails().getPermanentAdd().getHouseNo()) + ", "
+						+ (details.getAddressDetails().getPermanentAdd().getArea()) + ", near "
+						+ (details.getAddressDetails().getPermanentAdd().getLandmark()) + ", "
+						+ (details.getAddressDetails().getPermanentAdd().getCity()) + ", "
+						+ (details.getAddressDetails().getPermanentAdd().getState()) + ", "
+						+ (details.getAddressDetails().getPermanentAdd().getPincode()));
+				summaryDto.setTemporaryAddress((details.getAddressDetails().getPresentAdd().getHouseNo()) + ", "
+						+ (details.getAddressDetails().getPresentAdd().getArea()) + ", near "
+						+ (details.getAddressDetails().getPresentAdd().getLandmark()) + ", "
+						+ (details.getAddressDetails().getPresentAdd().getCity()) + ", "
+						+ (details.getAddressDetails().getPresentAdd().getState()) + ", "
+						+ (details.getAddressDetails().getPresentAdd().getPincode()));
+				summaryDto.setAadharCardNumber(details.getDocumentDetails().getAdharCardNo());
+				summaryDto.setPanCardNumber(details.getDocumentDetails().getPanCardNo());
+				// summaryDto.setUanNumber();
+				summaryDto.setBankAccountNumber(details.getBankDetails().getAccountNo());
+				summaryDto.setQualification(educations.get(0).getQualification());
+				summaryDto.setSpecialization(educations.get(0).getStream());
+				summaryDto.setYearOfPassout(educations.get(0).getEndDate().getYear());
+				// summaryDto.setResignationDate();
+				// summaryDto.setActualLastWorkingDay();
+				summaryDto.setEmployeeCategory(employee.getEmployeeCategory());
+				/*
+				 * summaryDto.setRelevantExperience(employee.getRelevantExperience());
+				 * summaryDto.setWorkLocation(employee.getWorkLocation());
+				 */
+				summaryDtoList.add(summaryDto);
+			}
 
 		}
 
@@ -140,7 +209,7 @@ public class SummaryServiceImpl implements ISummaryService {
 		employeeDto.setDesignation(employee.getDesignation());
 		employeeDto.setDepartment(employee.getDepartment());
 		employeeDto.setEmployeeStatus(employee.getEmployeeStatus());
-		employeeDto.setRelevantExperience(employee.getRelevantExperience());
+		// employeeDto.setRelevantExperience(employee.getRelevantExperience());
 		// employeeDto.setAssignTo(employee.getAssignTo());
 
 		return employeeDto;
@@ -156,31 +225,89 @@ public class SummaryServiceImpl implements ISummaryService {
 
 			for (EmployeeViewDto singleEmployee : employees) {
 				if (employeeRepository.existsByEmailId(singleEmployee.getEmailId())) {
-					continue;
+					return "Candidate with this Email Id already exist";
 				}
 
 				if (employeeRepository.existsByContactNumber(singleEmployee.getContactNumber())) {
-					continue;
+					return "Candidate with this Mobile No. already exist";
 				}
+
+				Onboarding onboarding = new Onboarding();
+				onboarding.setCandidateId(onboardingRepository.count() + 1);
+				onboarding.setCandidateName(singleEmployee.getName());
+				onboarding.setCandidatesStatus(CandidatesStatus.Approved);
+				onboarding.setContactNumber(singleEmployee.getContactNumber());
+				onboarding.setDateOfJoining(singleEmployee.getDateOfJoining());
+				onboarding.setEmailId(singleEmployee.getEmailId());
+				onboarding.setCtc(singleEmployee.getJoinedCtc());
+				onboarding.setJobTitleDesignation(singleEmployee.getDesignation());
+				onboarding.setServiceCommitment(singleEmployee.getServiceCommitment());
+				this.onboardingRepository.save(onboarding);
+
+				Personal personal = new Personal();
+				personal.setCandidateId(onboarding.getCandidateId());
+
+				PersonalDetails personalDetails = new PersonalDetails();
+				personal.setPersonalDetails(personalDetails);
+
+				DocumentDetails documentDetails = new DocumentDetails();
+				personal.setDocumentDetails(documentDetails);
+
+				personalDetails.setFathersName(singleEmployee.getFatherName());
+				personalDetails.setBloodGroup(singleEmployee.getBloodGroup());
+				personalDetails.setDateOfBirth(singleEmployee.getDateOfBirth());
+				personalDetails.setPersonalMailId(singleEmployee.getEmailId());
+				personalDetails.setPhoneNo(singleEmployee.getContactNumber());
+				// this.personalDetailsRepository.save(personalDetails);
+
+				BankDetails bankDetails = new BankDetails();
+				personal.setBankDetails(bankDetails);
+				bankDetails.setAccountNo(singleEmployee.getBankAccountNo());
+				this.bankDetailsRepository.save(bankDetails);
+
+				documentDetails.setAdharCardNo(singleEmployee.getAdharCardNo());
+				documentDetails.setPanCardNo(singleEmployee.getPanCardNo());
+				// this.documentsDetailsRepository.save(documentDetails);
+
+				this.personalRepository.save(personal);
+
+				Education education = new Education();
+				education.setCandidateId(onboarding.getCandidateId());
+
+				education.setQualification(singleEmployee.getQualification());
+				education.setStream(singleEmployee.getStream());
+				education.setEndDate(singleEmployee.getYearOfPassout());
+
+				this.educationRepository.save(education);
+
 				Employee employee = new Employee();
+				employee.setCandidateId(onboarding.getCandidateId());
 				employee.setEmployeeId(singleEmployee.getEmployeeId());
 				employee.setName(singleEmployee.getName());
+				employee.setEmployeeStatus(singleEmployee.getEmployeeStatus());
+				employee.setEmployeeCategory(singleEmployee.getCategory());
 				employee.setContactNumber(singleEmployee.getContactNumber());
 				employee.setEmailId(singleEmployee.getEmailId());
 				employee.setDateOfJoining(singleEmployee.getDateOfJoining());
-				employee.setDesignation(singleEmployee.getDesignation());
 				employee.setDepartment(singleEmployee.getDepartment());
-				employee.setEmployeeStatus(singleEmployee.getEmployeeStatus());
-				employee.setRelevantExperience(singleEmployee.getRelevantExperience());
-				// employee.setAssignTo(singleEmployee.getAssignTo());
-				employee.setBondBreakAmount(singleEmployee.getBondBreakAmount());
-				employee.setWorkLocation(singleEmployee.getWorkLocation());
-
-				// Save the employee using your service/repository
+				employee.setSubDepartment(singleEmployee.getSubDepartment());
+				employee.setAssignTo(singleEmployee.getAssignTo());
+				employee.setManager(null);
+				employee.setDesignation(singleEmployee.getDesignation());
+				employee.setCategoryControl(singleEmployee.getCategoryControl());
+				employee.setTotalExperience(null);
+				employee.setJoinedCtc(singleEmployee.getJoinedCtc());
+				employee.setCurrentCtc(singleEmployee.getCurrentCtc());
+				employee.setServiceCommitment(0);
+				employee.setNumberOfWorkingDays(null);
+				employee.setNextApprisalQuater(null);
+				// employee.setDateOfBirth(null);
+				// employee.setBloodGroup(null);
+				// employee.set
+				employee.setImported(true);
 				this.employeeRepository.save(employee);
 			}
 		} catch (Exception e) {
-			// Handle exception, log it, or rethrow
 			return "Error importing employees: " + e.getMessage();
 		}
 
@@ -290,7 +417,7 @@ public class SummaryServiceImpl implements ISummaryService {
 				WorkInfoDto workInfo = new WorkInfoDto();
 
 				workInfo.setDesignation(onboarding.getJobTitleDesignation());
-				workInfo.setWorkLocation(onboarding.getWorkLocation());
+				// workInfo.setWorkLocation(onboarding.getWorkLocation());
 
 				return workInfo;
 			}

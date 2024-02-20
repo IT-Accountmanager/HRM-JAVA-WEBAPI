@@ -1,15 +1,11 @@
 package com.hrm.main.servicesImpls;
 
-import java.io.File;
-import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import com.hrm.main.models.Agreement;
 import com.hrm.main.models.BackgroundVerification;
@@ -451,7 +447,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		candidate.setCandidateId(candidateId);
 		candidate.setCandidateName(appointmentInfo.getName());
 		candidate.setJobTitleDesignation(appointmentInfo.getDesignation());
-		candidate.setWorkLocation(appointmentInfo.getWorkLocation());
+		// candidate.setWorkLocation(appointmentInfo.getWorkLocation());
 		candidate.setDateOfJoining(appointmentInfo.getDateOfJoining());
 		candidate.setCtc(appointmentInfo.getCtc());
 		candidate.setServiceCommitment(appointmentInfo.getServiceCommitment());

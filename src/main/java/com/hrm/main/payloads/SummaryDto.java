@@ -4,10 +4,12 @@ import java.time.Duration;
 import java.time.LocalDate;
 import com.hrm.main.models.Helper.EnumCollection.AppraisalQuater;
 import com.hrm.main.models.Helper.EnumCollection.BloodGroup;
+import com.hrm.main.models.Helper.EnumCollection.CategoryControl;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.Designation;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeCategory;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
+import com.hrm.main.models.Helper.EnumCollection.WorkLocation;
 
 public class SummaryDto {
 	private long candidateId;
@@ -22,9 +24,10 @@ public class SummaryDto {
 	private Departments.Department subDepartment;
 	private String assignTo;
 	private Designation designation;
+	private CategoryControl categoryControl;
 	private String totalExperience;
 	private long joinedCtc;
-	private String currentCtc;
+	private long currentCtc;
 	private float serviceCommitment;
 	private Duration numberOfWorkingDays;
 	private AppraisalQuater nextApprisalQuater;
@@ -45,8 +48,9 @@ public class SummaryDto {
 	private String actualLastWorkingDay;
 
 	// private long serviceBreakAmount;
-	private float relevantExperience = 0.0f;
-	private String workLocation;
+	/*
+	 * private float relevantExperience = 0.0f; private WorkLocation workLocation;
+	 */
 	/* private byte[] appointmentLetter; */
 
 	public SummaryDto() {
@@ -83,14 +87,6 @@ public class SummaryDto {
 
 	public void setDateOfJoining(LocalDate dateOfJoining) {
 		this.dateOfJoining = dateOfJoining;
-	}
-
-	public float getRelevantExperience() {
-		return relevantExperience;
-	}
-
-	public void setRelevantExperience(float relevantExperience) {
-		this.relevantExperience = relevantExperience;
 	}
 
 	public Designation getDesignation() {
@@ -149,13 +145,12 @@ public class SummaryDto {
 		this.employeeCategory = employeeCategory;
 	}
 
-	public String getWorkLocation() {
-		return workLocation;
-	}
-
-	public void setWorkLocation(String workLocation) {
-		this.workLocation = workLocation;
-	}
+	/*
+	 * public WorkLocation getWorkLocation() { return workLocation; }
+	 * 
+	 * public void setWorkLocation(WorkLocation workLocation) { this.workLocation =
+	 * workLocation; }
+	 */
 
 	public Departments.Department getSubDepartment() {
 		return subDepartment;
@@ -181,11 +176,11 @@ public class SummaryDto {
 		this.joinedCtc = joinedCtc;
 	}
 
-	public String getCurrentCtc() {
+	public long getCurrentCtc() {
 		return currentCtc;
 	}
 
-	public void setCurrentCtc(String currentCtc) {
+	public void setCurrentCtc(long currentCtc) {
 		this.currentCtc = currentCtc;
 	}
 
@@ -331,6 +326,14 @@ public class SummaryDto {
 
 	public void setTemporaryAddress(String temporaryAddress) {
 		this.temporaryAddress = temporaryAddress;
+	}
+
+	public CategoryControl getCategoryControl() {
+		return categoryControl;
+	}
+
+	public void setCategoryControl(CategoryControl categoryControl) {
+		this.categoryControl = categoryControl;
 	}
 
 }

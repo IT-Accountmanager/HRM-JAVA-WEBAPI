@@ -3,6 +3,7 @@ package com.hrm.main.payloads;
 import java.time.LocalDate;
 
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.models.Helper.EnumCollection.WorkLocation;
 
 public class OnboardingDto {
 	private String jobTitleDesignation;
@@ -15,7 +16,7 @@ public class OnboardingDto {
 	private float ctc;
 	private CandidatesStatus candidatesStatus;
 	private LocalDate dateOfJoining;
-	private String workLocation;
+	private WorkLocation workLocation;
 
 	public String getJobTitleDesignation() {
 		return jobTitleDesignation;
@@ -97,11 +98,11 @@ public class OnboardingDto {
 		this.dateOfJoining = dateOfJoining;
 	}
 
-	public String getWorkLocation() {
+	public WorkLocation getWorkLocation() {
 		return workLocation;
 	}
 
-	public void setWorkLocation(String workLocation) {
+	public void setWorkLocation(WorkLocation workLocation) {
 		this.workLocation = workLocation;
 	}
 

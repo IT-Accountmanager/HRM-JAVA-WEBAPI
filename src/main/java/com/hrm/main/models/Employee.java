@@ -3,6 +3,8 @@ package com.hrm.main.models;
 import java.time.Duration;
 import java.time.LocalDate;
 import com.hrm.main.models.Helper.EnumCollection.AppraisalQuater;
+import com.hrm.main.models.Helper.EnumCollection.BloodGroup;
+import com.hrm.main.models.Helper.EnumCollection.CategoryControl;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.Designation;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeCategory;
@@ -11,6 +13,8 @@ import com.hrm.main.models.Helper.EnumCollection.ManagerType;
 import com.hrm.main.models.Helper.EnumCollection.NoticePeriod;
 import com.hrm.main.models.Helper.EnumCollection.ProbationPeriod;
 import com.hrm.main.models.Helper.EnumCollection.ResignationStatus;
+import com.hrm.main.models.Helper.EnumCollection.WorkLocation;
+
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,20 +43,20 @@ public class Employee {
 	private LocalDate dateOfJoining;
 	private Departments department;
 	private Departments.Department subDepartment;
-	// private String assignTo;
-	private Designation designation;
+	private String assignTo;
+	private Designation designation;//
 	private String totalExperience;
-	private String joinedCtc;
-	private String currentCtc;
+	private long joinedCtc;//
+	private long currentCtc;//
 	private float serviceCommitment;
 	private Duration numberOfWorkingDays;
 	private AppraisalQuater nextApprisalQuater;
 	private String uanNumber;
 	private String yearOfPassout;
 	private String jobTitle;
-	private String workLocation;
-	private long bondBreakAmount;
-	private float ctc;
+	private WorkLocation workLocation;//
+	private long bondBreakAmount;//
+	private float ctc;//
 	private LocalDate dateOfReleasing;
 	private float workExperience;
 	private float relevantExperience;
@@ -71,6 +75,8 @@ public class Employee {
 	private ManagerType managerType;
 	private LocalDate managerTo;
 	private LocalDate managerFrom;
+	private CategoryControl categoryControl;
+	private boolean imported;
 
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
@@ -122,10 +128,6 @@ public class Employee {
 		this.name = name;
 	}
 
-	public String getWorkLocation() {
-		return workLocation;
-	}
-
 	public Designation getDesignation() {
 		return designation;
 	}
@@ -154,10 +156,6 @@ public class Employee {
 
 	public void setBondBreakAmount(long bondBreakAmount) {
 		this.bondBreakAmount = bondBreakAmount;
-	}
-
-	public void setWorkLocation(String workLocation) {
-		this.workLocation = workLocation;
 	}
 
 	public float getCtc() {
@@ -375,19 +373,19 @@ public class Employee {
 		this.totalExperience = totalExperience;
 	}
 
-	public String getJoinedCtc() {
+	public long getJoinedCtc() {
 		return joinedCtc;
 	}
 
-	public void setJoinedCtc(String joinedCtc) {
+	public void setJoinedCtc(long joinedCtc) {
 		this.joinedCtc = joinedCtc;
 	}
 
-	public String getCurrentCtc() {
+	public long getCurrentCtc() {
 		return currentCtc;
 	}
 
-	public void setCurrentCtc(String currentCtc) {
+	public void setCurrentCtc(long currentCtc) {
 		this.currentCtc = currentCtc;
 	}
 
@@ -461,6 +459,38 @@ public class Employee {
 
 	public void setManagerFrom(LocalDate managerFrom) {
 		this.managerFrom = managerFrom;
+	}
+
+	public WorkLocation getWorkLocation() {
+		return workLocation;
+	}
+
+	public void setWorkLocation(WorkLocation workLocation) {
+		this.workLocation = workLocation;
+	}
+
+	public CategoryControl getCategoryControl() {
+		return categoryControl;
+	}
+
+	public void setCategoryControl(CategoryControl categoryControl) {
+		this.categoryControl = categoryControl;
+	}
+
+	public boolean isImported() {
+		return imported;
+	}
+
+	public void setImported(boolean imported) {
+		this.imported = imported;
+	}
+
+	public String getAssignTo() {
+		return assignTo;
+	}
+
+	public void setAssignTo(String assignTo) {
+		this.assignTo = assignTo;
 	}
 
 }

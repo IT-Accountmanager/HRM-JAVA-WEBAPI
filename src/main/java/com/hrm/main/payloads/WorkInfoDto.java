@@ -2,6 +2,7 @@ package com.hrm.main.payloads;
 
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.Designation;
+import com.hrm.main.models.Helper.EnumCollection.WorkLocation;
 
 public class WorkInfoDto {
 
@@ -9,7 +10,7 @@ public class WorkInfoDto {
 	private Departments department;
 	private Departments.Department subDepartment;
 	// private String assignTo;
-	private String workLocation;
+	private WorkLocation workLocation;
 
 	public Designation getDesignation() {
 		return designation;
@@ -33,16 +34,16 @@ public class WorkInfoDto {
 	 * public void setAssignTo(String assignTo) { this.assignTo = assignTo; }
 	 */
 
-	public String getWorkLocation() {
+	public Departments.Department getSubDepartment() {
+		return subDepartment;
+	}
+
+	public WorkLocation getWorkLocation() {
 		return workLocation;
 	}
 
-	public void setWorkLocation(String workLocation) {
+	public void setWorkLocation(WorkLocation workLocation) {
 		this.workLocation = workLocation;
-	}
-
-	public Departments.Department getSubDepartment() {
-		return subDepartment;
 	}
 
 	public void setSubDepartment(Departments.Department subDepartment) {

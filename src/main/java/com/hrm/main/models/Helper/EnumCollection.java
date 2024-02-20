@@ -139,4 +139,8 @@ public class EnumCollection {
 		FirstHalf, SecondHalf
 	}
 
+	public enum CategoryControl {
+		USER, MANAGER, ADMIN, SUPER_ADMIN
+	}
+
 }
