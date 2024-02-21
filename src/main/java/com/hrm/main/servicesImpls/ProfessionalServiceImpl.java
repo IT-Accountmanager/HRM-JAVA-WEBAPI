@@ -11,9 +11,10 @@ import java.util.stream.Collectors;
 import com.hrm.main.models.Employee;
 import com.hrm.main.models.Work;
 import com.hrm.main.payloads.DirectReportsDto;
+import com.hrm.main.payloads.MResignationEditDto;
 import com.hrm.main.payloads.ReportingManagerDto;
-import com.hrm.main.payloads.ResignationEditDto;
 import com.hrm.main.payloads.ResignationInfoDto;
+import com.hrm.main.payloads.UResignationEditDto;
 import com.hrm.main.payloads.WorkHistoryDto;
 import com.hrm.main.repositories.IEmployeeRepository;
 import com.hrm.main.repositories.IWorkRepository;
@@ -58,7 +59,7 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 	}
 
 	@Override
-	public String addResignationInfo(ResignationEditDto resignationEditDto, String employeeId) {
+	public String addResignationInfo(MResignationEditDto resignationEditDto, String employeeId) {
 		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
 		if (employee == null) {
 			throw new EntityNotFoundException("Employee not found for employeeId: " + employeeId);
@@ -78,18 +79,22 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 	public ResignationInfoDto getResignationInfo(String employeeId) {
 
 		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
-		ResignationInfoDto resignationInfoDto = new ResignationInfoDto();
-		resignationInfoDto.setLastWorkingDay(employee.getLastWorkingDay());
-		resignationInfoDto.setNoticePeriod(employee.getNoticePeriod());
-		resignationInfoDto.setResignationDate(employee.getResignationDate());
-		resignationInfoDto.setResignationStatus(employee.getResignationStatus());
+		if (employee != null) {
+			ResignationInfoDto resignationInfoDto = new ResignationInfoDto();
+			resignationInfoDto.setLastWorkingDay(employee.getLastWorkingDay());
+			resignationInfoDto.setNoticePeriod(employee.getNoticePeriod());
+			resignationInfoDto.setResignationDate(employee.getResignationDate());
+			resignationInfoDto.setResignationStatus(employee.getResignationStatus());
 
-		return resignationInfoDto;
+			return resignationInfoDto;
+		}
+		return null;
 	}
 
 	@Override
 	public String addReportingManager(ReportingManagerDto reportingManagerDto, String employeeId) {
 		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
+
 		employee.setManager(reportingManagerDto.getName());
 		employee.setManagerType(reportingManagerDto.getManagerType());
 		employee.setManagerTo(reportingManagerDto.getTo());
@@ -101,23 +106,22 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 
 	@Override
 	public List<ReportingManagerDto> getReportingManager(String employeeId) {
-	    Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
+		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
 
-	    List<ReportingManagerDto> result = new ArrayList<>();
+		List<ReportingManagerDto> result = new ArrayList<>();
 
-	    if (employee != null) {
-	        ReportingManagerDto reportingManagerDto = new ReportingManagerDto();
-	        reportingManagerDto.setName(employee.getManager());
-	        reportingManagerDto.setManagerType(employee.getManagerType());
-	        reportingManagerDto.setDepartment(employee.getDepartment());
-	        reportingManagerDto.setDesignation(employee.getDesignation());
+		if (employee != null) {
+			ReportingManagerDto reportingManagerDto = new ReportingManagerDto();
+			reportingManagerDto.setName(employee.getManager());
+			reportingManagerDto.setManagerType(employee.getManagerType());
+			reportingManagerDto.setDepartment(employee.getDepartment());
+			reportingManagerDto.setDesignation(employee.getDesignation());
 
-	        result.add(reportingManagerDto);
-	    }
+			result.add(reportingManagerDto);
+		}
 
-	    return result;
+		return result;
 	}
-
 
 	@Override
 	public List<DirectReportsDto> getDirectReports(String employeeId) {
@@ -136,6 +140,41 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 				return directReportsDto;
 			}).collect(Collectors.toList());
 		}).orElse(Collections.emptyList());
+	}
+
+	/*
+	 * @Override public String addUserResignationInfo(UResignationEditDto
+	 * resignationEditDto, String employeeId) { Employee employee =
+	 * this.employeeRepository.findByEmployeeId(employeeId); if (employee == null) {
+	 * throw new EntityNotFoundException("Employee not found for employeeId: " +
+	 * employeeId); }
+	 * 
+	 * employee.setResignationDate(resignationEditDto.getResignationDate());
+	 * 
+	 * this.employeeRepository.save(employee);
+	 * 
+	 * return " Resignation Info of Employee Id : " + employeeId +
+	 * " is added Successfully !"; }
+	 */
+
+	@Override
+	public String addUserResignationInfo(UResignationEditDto resignationDto, String employeeId) {
+		if (resignationDto == null || employeeId == null) {
+			throw new IllegalArgumentException("Invalid input parameters");
+		}
+
+		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
+
+		if (employee == null) {
+			throw new EntityNotFoundException("Employee not found for employeeId: " + employeeId);
+		}
+
+		ModelMapper modelMapper = new ModelMapper();
+		modelMapper.map(resignationDto, employee);
+
+		this.employeeRepository.save(employee);
+
+		return "Resignation information for Employee Id: " + employeeId + " has been added successfully";
 	}
 
 }

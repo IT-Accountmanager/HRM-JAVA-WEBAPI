@@ -23,10 +23,12 @@ public class AddressDetails {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "permanent_add_Id")
 	private PermanentAddress permanentAdd;
+	private String permanentAddress;
 
 	@OneToOne(/* mappedBy = "addCur", */ cascade = CascadeType.ALL)
 	@JoinColumn(name = "present_add_Id")
 	private PresentAddress presentAdd;
+	private String presentAddress;
 
 	public int getAdId() {
 		return adId;
@@ -58,6 +60,22 @@ public class AddressDetails {
 
 	public void setPresentAdd(PresentAddress presentAdd) {
 		this.presentAdd = presentAdd;
+	}
+
+	public String getPermanentAddress() {
+		return permanentAddress;
+	}
+
+	public void setPermanentAddress(String permanentAddress) {
+		this.permanentAddress = permanentAddress;
+	}
+
+	public String getPresentAddress() {
+		return presentAddress;
+	}
+
+	public void setPresentAddress(String presentAddress) {
+		this.presentAddress = presentAddress;
 	}
 
 }

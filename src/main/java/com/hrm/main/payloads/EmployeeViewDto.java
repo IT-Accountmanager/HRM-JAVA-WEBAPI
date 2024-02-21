@@ -40,7 +40,7 @@ public class EmployeeViewDto {
 	private String adharCardNo;
 	private String panCardNo;
 	private String uanNumber;
-	private String bankAccountNo;
+	private String bankAccountNumber;
 	private String qualification;
 	private String stream;
 	private LocalDate yearOfPassout;
@@ -263,12 +263,12 @@ public class EmployeeViewDto {
 		this.uanNumber = uanNumber;
 	}
 
-	public String getBankAccountNo() {
-		return bankAccountNo;
+	public String getBankAccountNumber() {
+		return bankAccountNumber;
 	}
 
-	public void setBankAccountNo(String bankAccountNo) {
-		this.bankAccountNo = bankAccountNo;
+	public void setBankAccountNumber(String bankAccountNumber) {
+		this.bankAccountNumber = bankAccountNumber;
 	}
 
 	public String getQualification() {

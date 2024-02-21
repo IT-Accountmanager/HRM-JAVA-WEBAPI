@@ -114,5 +114,7 @@ public class PermanentAddress {
 	public void setPincode(String pincode) {
 		this.pincode = pincode;
 	}
+	
+	
 
 }

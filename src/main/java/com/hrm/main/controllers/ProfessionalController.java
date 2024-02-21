@@ -1,24 +1,22 @@
 package com.hrm.main.controllers;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.hrm.main.payloads.BasicInfoDto;
 import com.hrm.main.payloads.DirectReportsDto;
+import com.hrm.main.payloads.MResignationEditDto;
 import com.hrm.main.payloads.ReportingManagerDto;
-import com.hrm.main.payloads.ResignationEditDto;
 import com.hrm.main.payloads.ResignationInfoDto;
+import com.hrm.main.payloads.UResignationEditDto;
 import com.hrm.main.payloads.WorkHistoryDto;
 import com.hrm.main.services.IProfessionalService;
 import com.hrm.main.services.ISummaryService;
@@ -41,7 +39,7 @@ public class ProfessionalController {
 
 	// ----------------------- Add Resignation Info-------------------
 	@PutMapping("/resignation/edit/{employeeId}")
-	public ResponseEntity<String> addResignationInfo(@RequestBody ResignationEditDto resignationEditDto,
+	public ResponseEntity<String> addResignationInfo(@RequestBody MResignationEditDto resignationEditDto,
 			@PathVariable String employeeId) {
 		String result = this.professionalService.addResignationInfo(resignationEditDto, employeeId);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
@@ -87,6 +85,14 @@ public class ProfessionalController {
 		List<DirectReportsDto> list = this.professionalService.getDirectReports(employeeId);
 		return new ResponseEntity<List<DirectReportsDto>>(list, HttpStatus.OK);
 
+	}
+	
+	//-------------------USER - RESIGNATION EDIT--------------------------
+	@PutMapping("user/resignation/edit/{employeeId}")
+	public ResponseEntity<String> addUserResignationInfo(@RequestBody UResignationEditDto resignationEditDto,
+			@PathVariable String employeeId) {
+		String result = this.professionalService.addUserResignationInfo(resignationEditDto, employeeId);
+		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
 }

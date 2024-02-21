@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import com.hrm.main.models.Helper.EnumCollection.NoticePeriod;
 import com.hrm.main.models.Helper.EnumCollection.ResignationStatus;
 
-public class ResignationEditDto {
+public class MResignationEditDto {
 
 	private ResignationStatus resignationStatus;
 	private LocalDate resignationDate;

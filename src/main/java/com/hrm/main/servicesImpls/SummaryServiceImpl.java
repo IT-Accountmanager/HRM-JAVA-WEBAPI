@@ -82,7 +82,9 @@ public class SummaryServiceImpl implements ISummaryService {
 
 				Personal personal = this.personalRepository.findByCandidateId(candidateId);
 				Education education = this.educationRepository.findByCandidateId(candidateId);
+				Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
 
+				summaryDto.setCandidateId(candidateId);
 				summaryDto.setEmployeeId(employee.getEmployeeId());
 				summaryDto.setName(employee.getName());
 				summaryDto.setEmployeeStatus(employee.getEmployeeStatus());
@@ -98,7 +100,7 @@ public class SummaryServiceImpl implements ISummaryService {
 				summaryDto.setTotalExperience(null);
 				summaryDto.setJoinedCtc(employee.getJoinedCtc());
 				summaryDto.setCurrentCtc(employee.getCurrentCtc());
-				summaryDto.setServiceCommitment(employee.getServiceCommitment());
+				summaryDto.setServiceCommitment(onboarding.getServiceCommitment());
 				summaryDto.setNumberOfWorkingDays(employee.getNumberOfWorkingDays());
 				summaryDto.setNextApprisalQuater(employee.getNextApprisalQuater());
 				summaryDto.setDateOfBirth(personal.getPersonalDetails().getDateOfBirth());
@@ -200,19 +202,24 @@ public class SummaryServiceImpl implements ISummaryService {
 	@Override
 	public EmployeeViewDto getSummaryByCandidateId(long candidateId) {
 		Employee employee = this.employeeRepository.findByCandidateId(candidateId);
-		EmployeeViewDto employeeDto = new EmployeeViewDto();
-		employeeDto.setEmployeeId(employee.getEmployeeId());
-		employeeDto.setName(employee.getName());
-		employeeDto.setContactNumber(employee.getContactNumber());
-		employeeDto.setEmailId(employee.getEmailId());
-		employeeDto.setDateOfJoining(employee.getDateOfJoining());
-		employeeDto.setDesignation(employee.getDesignation());
-		employeeDto.setDepartment(employee.getDepartment());
-		employeeDto.setEmployeeStatus(employee.getEmployeeStatus());
-		// employeeDto.setRelevantExperience(employee.getRelevantExperience());
-		// employeeDto.setAssignTo(employee.getAssignTo());
 
-		return employeeDto;
+		if (employee != null) {
+			EmployeeViewDto employeeDto = new EmployeeViewDto();
+			employeeDto.setEmployeeId(employee.getEmployeeId());
+			employeeDto.setName(employee.getName());
+			employeeDto.setContactNumber(employee.getContactNumber());
+			employeeDto.setEmailId(employee.getEmailId());
+			employeeDto.setDateOfJoining(employee.getDateOfJoining());
+			employeeDto.setDesignation(employee.getDesignation());
+			employeeDto.setDepartment(employee.getDepartment());
+			employeeDto.setEmployeeStatus(employee.getEmployeeStatus());
+			// employeeDto.setRelevantExperience(employee.getRelevantExperience());
+			// employeeDto.setAssignTo(employee.getAssignTo());
+
+			return employeeDto;
+		}
+
+		return null;
 	}
 
 	@Transactional
@@ -262,7 +269,7 @@ public class SummaryServiceImpl implements ISummaryService {
 
 				BankDetails bankDetails = new BankDetails();
 				personal.setBankDetails(bankDetails);
-				bankDetails.setAccountNo(singleEmployee.getBankAccountNo());
+				bankDetails.setAccountNo(singleEmployee.getBankAccountNumber());
 				this.bankDetailsRepository.save(bankDetails);
 
 				documentDetails.setAdharCardNo(singleEmployee.getAdharCardNo());
@@ -300,10 +307,8 @@ public class SummaryServiceImpl implements ISummaryService {
 				employee.setCurrentCtc(singleEmployee.getCurrentCtc());
 				employee.setServiceCommitment(0);
 				employee.setNumberOfWorkingDays(null);
-				employee.setNextApprisalQuater(null);
-				// employee.setDateOfBirth(null);
-				// employee.setBloodGroup(null);
-				// employee.set
+				employee.setNextApprisalQuater(singleEmployee.getNextApprisalQuater());
+				employee.setUanNumber(singleEmployee.getUanNumber());
 				employee.setImported(true);
 				this.employeeRepository.save(employee);
 			}
