@@ -232,5 +232,6 @@ public class SummaryController {
 	public ManagerType[] getManagerTypeList() {
 		return ManagerType.values();
 	}
+	
 
 }

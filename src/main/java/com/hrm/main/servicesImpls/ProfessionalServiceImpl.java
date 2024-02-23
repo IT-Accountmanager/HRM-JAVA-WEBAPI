@@ -41,8 +41,8 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 				workHistory.setDesignation(employee.getDesignation());
 				workHistory.setProjectManager(null);
 				workHistory.setSubDepartment(employee.getSubDepartment());
-				workHistory.setTo(employee.getDateOfJoining());
-				workHistory.setFrom(employee.getDateOfReleasing());
+				workHistory.setTo(employee.getDateOfReleasing());
+				workHistory.setFrom(employee.getDateOfJoining());
 
 				return workHistory;
 
@@ -116,6 +116,8 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 			reportingManagerDto.setManagerType(employee.getManagerType());
 			reportingManagerDto.setDepartment(employee.getDepartment());
 			reportingManagerDto.setDesignation(employee.getDesignation());
+			reportingManagerDto.setFrom(employee.getManagerFrom());
+			reportingManagerDto.setTo(employee.getManagerTo());
 
 			result.add(reportingManagerDto);
 		}

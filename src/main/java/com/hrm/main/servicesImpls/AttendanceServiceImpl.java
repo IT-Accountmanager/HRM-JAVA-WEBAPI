@@ -6,15 +6,12 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import com.hrm.main.models.Attendance;
 import com.hrm.main.models.Employee;
 import com.hrm.main.models.Helper.EnumCollection.AttendanceStatus;
+import com.hrm.main.payloads.ApplyLeaveDto;
 import com.hrm.main.payloads.AttendanceEmployeeDto;
 import com.hrm.main.payloads.BillableHoursDto;
 import com.hrm.main.payloads.RegularizationHoursDto;
@@ -131,16 +128,15 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	}
 
 	@Override
+//<<<<<<< HEAD
 	public String addBillableHours(BillableHoursDto billableHoursDto, String employeeId) {
 		List<Attendance> attendanceListOfEmployee = this.attendanceRepository.findAllByEmployeeId(employeeId);
 		List<LocalDate> listOfDate = billableHoursDto.getListOfDate();
-		
-		for(LocalDate date : listOfDate)
-		{
-			
+
+		for (LocalDate date : listOfDate) {
+
 		}
-		
-		
+
 		return null;
 	}
 
@@ -148,5 +144,47 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	public String addRegularizationHours(RegularizationHoursDto regularizationHoursDto, String employeeId) {
 		return null;
 	}
+
+//=======
+	public ApplyLeaveDto createOrUpdateLeave(ApplyLeaveDto leaveDto) {
+		if (leaveDto.getEmployeeId() == null) {
+			throw new IllegalArgumentException("Employee ID cannot be null.");
+		}
+
+		String employeeId = leaveDto.getEmployeeId();
+		Attendance attendance = attendanceRepository.findByEmployeeId(employeeId);
+		if (attendance == null) {
+			throw new IllegalStateException("Attendance record not found for employee: " + employeeId);
+		}
+
+		if (!"P".equals(attendance.getAttendanceStatus()) && !"Weekoff".equals(attendance.getAttendanceStatus())
+				&& !"Holiday".equals(attendance.getAttendanceStatus())) {
+
+			leaveDto.setStartDate(leaveDto.getStartDate());
+			leaveDto.setEndDate(leaveDto.getEndDate());
+			leaveDto.setLeaveType(leaveDto.getLeaveType());
+			leaveDto.setLeaveReason(leaveDto.getLeaveReason());
+			leaveDto.setHalf1(leaveDto.getHalf1());
+			leaveDto.setHalf2(leaveDto.getHalf2());
+
+			// Save or update the attendance record
+//	        attendanceRepository.save(attendance);
+
+			// Update the status in the attendance record
+//	        attendance.setAttendanceStatus("Pending");
+			attendanceRepository.save(attendance);
+			return leaveDto;
+		} else {
+			return null;
+		}
+	}
+
+//	@Override
+//	public ApplyLeaveDto getLeave(String employeeId) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
+//>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
 
 }

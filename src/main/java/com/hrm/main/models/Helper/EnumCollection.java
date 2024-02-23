@@ -138,6 +138,14 @@ public class EnumCollection {
 	public enum Half {
 		FirstHalf, SecondHalf
 	}
+	
+	public enum CategoryControll {
+		User,Manager,Admin,SuperAdmin
+	}
+	
+	public enum Relationship {
+		Mother,Father,Sister,Brother,Wife,Husband
+	}
 
 	public enum CategoryControl {
 		USER, MANAGER, ADMIN, SUPER_ADMIN
