@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hrm.main.models.Helper.EnumCollection.Category;
+import com.hrm.main.models.Helper.EnumCollection.CategoryControll;
 import com.hrm.main.models.Helper.EnumCollection.NoticePeriod;
 import com.hrm.main.models.Helper.EnumCollection.Resignation;
 import com.hrm.main.models.Helper.EnumCollection.ShiftRule;
@@ -44,5 +45,7 @@ public class Enum_Controller {
 	public Category[]getcategory(){
 		return Category.values();
 	}
+	
+	
 
 }

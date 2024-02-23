@@ -10,14 +10,26 @@ public class WorkInfoDto {
 	private Departments.Department subDepartment;
 	// private String assignTo;
 	private String workLocation;
+	private long candidateId;
 
 	public Designation getDesignation() {
 		return designation;
 	}
-
+	
 	public void setDesignation(Designation designation) {
 		this.designation = designation;
 	}
+
+	public long getCandidateId() {
+		return candidateId;
+	}
+
+
+	public void setCandidateId(long candidateId) {
+		this.candidateId = candidateId;
+	}
+
+	
 
 	public Departments getDepartment() {
 		return department;
@@ -48,5 +60,6 @@ public class WorkInfoDto {
 	public void setSubDepartment(Departments.Department subDepartment) {
 		this.subDepartment = subDepartment;
 	}
+	
 
 }

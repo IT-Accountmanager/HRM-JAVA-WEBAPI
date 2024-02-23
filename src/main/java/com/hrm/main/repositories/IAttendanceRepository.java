@@ -18,3 +18,4 @@ public interface IAttendanceRepository extends JpaRepository<Attendance, Integer
 	List<Attendance> findAllByEmployeeId(String employeeId);
 
 }
+

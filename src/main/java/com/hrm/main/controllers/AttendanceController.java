@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.Attendance;
+import com.hrm.main.payloads.ApplyLeaveDto;
 import com.hrm.main.payloads.AttendanceEmployeeDto;
 import com.hrm.main.services.IAttendanceService;
 
@@ -67,4 +68,14 @@ public class AttendanceController {
 		String result = this.attendanceService.deleteAttendance(id);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
+	
+	@PostMapping("/createOrUpdate/leave/{employeeId}")
+	public ResponseEntity<ApplyLeaveDto> createOrUpdateLeave(@PathVariable String employeeId, @RequestBody ApplyLeaveDto leaveDto) {
+	    // Set employeeId in the leaveDto
+	    //leaveDto.setEmployeeId(employeeId);
+
+	    ApplyLeaveDto updatedLeaveDto = attendanceService.createOrUpdateLeave(leaveDto);
+	    return new ResponseEntity<>(updatedLeaveDto, HttpStatus.CREATED);
+	}
+
 }

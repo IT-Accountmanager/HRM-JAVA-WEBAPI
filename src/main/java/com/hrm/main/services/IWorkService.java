@@ -3,6 +3,7 @@ package com.hrm.main.services;
 import java.util.List;
 
 import com.hrm.main.models.Work;
+
 import com.hrm.main.payloads.WorkStatusResponse;
 
 public interface IWorkService {
@@ -22,6 +23,7 @@ public interface IWorkService {
 	String getDocument(Integer id);
 
 	WorkStatusResponse getWorkStatusByCandidateId(long candidateId);
+	
 
 	// String setExperienced(long candidateId);
 

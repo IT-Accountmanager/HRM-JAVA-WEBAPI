@@ -8,6 +8,7 @@ import java.time.Month;
 
 import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
 import com.hrm.main.models.Helper.EnumCollection.AttendanceStatus;
+import com.hrm.main.models.Helper.EnumCollection.Half;
 import com.hrm.main.models.Helper.EnumCollection.LeaveType;
 import com.hrm.main.payloads.AttendanceEmployeeDto;
 
@@ -43,6 +44,24 @@ public class Attendance {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private String leaveReason;
+	private Half half1;
+	private Half half2;
+
+	public Half getHalf1() {
+		return half1;
+	}
+
+	public void setHalf1(Half half1) {
+		this.half1 = half1;
+	}
+
+	public Half getHalf2() {
+		return half2;
+	}
+
+	public void setHalf2(Half half2) {
+		this.half2 = half2;
+	}
 
 	public String getEmployeeId() {
 		return employeeId;
