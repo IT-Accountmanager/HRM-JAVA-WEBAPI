@@ -412,6 +412,7 @@ public class SummaryServiceImpl implements ISummaryService {
 				workInfo.setDesignation(employee.getDesignation());
 				workInfo.setSubDepartment(employee.getSubDepartment());
 				workInfo.setWorkLocation(employee.getWorkLocation());
+				workInfo.setCategoryControl(employee.getCategoryControl());
 
 				return workInfo;
 
