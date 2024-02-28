@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hrm.main.models.CreateAppointmentLetterDto;
 import com.hrm.main.models.HRManager;
 import com.hrm.main.models.Onboarding;
+import com.hrm.main.models.Helper.CtcBreakup;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
+import com.hrm.main.models.Helper.PDF;
 import com.hrm.main.payloads.AuthorizedSignDto;
 import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
@@ -37,6 +39,14 @@ import com.hrm.main.services.IHRExecutiveService;
 import com.hrm.main.services.IHRManagerService;
 
 import jakarta.websocket.server.PathParam;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
 
 @CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
 @RestController
@@ -231,6 +241,22 @@ public class HRManagerController {
 
 		String result = this.hRManagerService.deleteHRManager(id);
 
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	/*
+	 * @GetMapping("/ctc/{candidateId}") public ResponseEntity<CtcBreakup>
+	 * check(@PathVariable long candidateId) {
+	 * 
+	 * CtcBreakup result = this.hRManagerService.check(candidateId); return new
+	 * ResponseEntity<CtcBreakup>(result, HttpStatus.OK);
+	 * 
+	 * }
+	 */
+
+	@GetMapping(value = "/ctc/{candidateId}", produces = "application/json")
+	public ResponseEntity<CtcBreakup> check(@PathVariable long candidateId) {
+		CtcBreakup result = this.hRManagerService.check(candidateId);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 

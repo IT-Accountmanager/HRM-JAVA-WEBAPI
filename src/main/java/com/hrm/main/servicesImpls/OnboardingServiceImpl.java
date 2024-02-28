@@ -199,7 +199,17 @@ public class OnboardingServiceImpl implements IOnboardingService {
 				onboarding.setCandidatesStatus(CandidatesStatus.Pending);
 				onboarding.setHrExecutiveSubmission(HrSubmission.Pending);
 				onboarding.setHrManagerSubmission(HrSubmission.Pending);
-				onboarding.setDateOfJoining(singleOnboarding.getDateOfJoining());
+				if (singleOnboarding.getDateOfJoining() != null) {
+					try {
+						onboarding.setDateOfJoining(singleOnboarding.getDateOfJoining());
+					} catch (Exception e) {
+						System.out.println("__________________________________________________");
+						System.out.println(e.getMessage());
+						e.printStackTrace();
+					}
+
+				}
+
 				onboarding.setWorkLocation(singleOnboarding.getWorkLocation());
 
 				Onboarding savedOnboarding = onboardingRepository.save(onboarding);
@@ -248,7 +258,7 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		try {
 
 			Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
-			String link = "http://localhost:4200/welcome/" + candidateId;
+			String link = "http://10.10.20.9:8082/#/welcome/" + candidateId;
 			String name = candidate.getCandidateName();
 			SimpleMailMessage mailMessage = new SimpleMailMessage();
 
@@ -299,7 +309,7 @@ public class OnboardingServiceImpl implements IOnboardingService {
 			Onboarding candidate = this.onboardingRepository.findByCandidateId(candidateId);
 
 			long candidatePhoneNumber = candidate.getContactNumber();
-			String link = "http://localhost:4200/welcome/" + candidateId;
+			String link = "http://10.10.20.9:8082/#/welcome/" + candidateId;
 			String name = candidate.getCandidateName();
 
 			PhoneNumber to = new PhoneNumber("+91" + String.valueOf(candidatePhoneNumber));

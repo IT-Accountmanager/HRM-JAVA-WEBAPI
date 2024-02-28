@@ -1,34 +1,13 @@
-package com.hrm.main.models;
+package com.hrm.main.models.Helper;
 
-import java.time.LocalDate;
+public class PDF {
 
-import com.hrm.main.models.Helper.EnumCollection.Designation;
-import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
-import com.hrm.main.models.Helper.EnumCollection.WorkLocation;
-
-public class CreateAppointmentLetterDto {
-	private long candidateId;
-	private String employeeId;
-	private String name;
-	private String jobTitle;
-	private Designation designation;
-	private WorkLocation workLocation;
-	private LocalDate dateOfJoining;
-	private float ctc;
-	private float bondPeriod;
-	private long bondBreakAmount;
-	private String emailId;
-	private long contactNumber;
-	private EmployeeStatus employeeStatus;
-	private byte[] authorisedSignature;
-	private byte[] sign;
-	private byte[] appointmentLetter;
-	public String html = " <div style=\"margin-left:3%;\">\r\n"
+	public static final String HTML = " <div style=\"margin-left:3%;\">\r\n"
 			+ "            <h1 style=\"text-align:center;font-weight:bold;\"><u>APPOINTMENT LETTER</u></h1>\r\n"
 			+ "           \r\n" + "     \r\n" + "\r\n" + "            <div style=\"margin-top:5%;\">\r\n"
-			+ "        <p>Employee ID :<span style=\"font-weight:bold;\">" + employeeId + "</span></p>\r\n"
-			+ "        <p style=\"margin-right:5%;\">Dear <span style=\"font-weight:bold;\">" + name
-			+ "</span><br><br>\r\n" + "   \r\n"
+			+ "        <p>Employee ID :<span style=\"font-weight:bold;\">{{viewdata1?.employeeId ?? \" \"}}</span></p>\r\n"
+			+ "        <p style=\"margin-right:5%;\">Dear <span style=\"font-weight:bold;\">{{viewdata1?.name ?? \" \" | titlecase}}</span><br><br>\r\n"
+			+ "   \r\n"
 			+ "          Welcome to <span style=\"font-weight:bold;\">Envision Integrated Services Private Limited</span>.<br><br>You are appointed as <span style=\"font-weight:bold;\">{{viewdata1?.designation?.replace('_',' ')  ?? \" \" | titlecase}}</span>\r\n"
 			+ "          in Permanent role\r\n"
 			+ "           w.e.f <span style=\"font-weight:bold;\">{{viewdata?.dateOfJoining ?? \" \" | date:'dd-MM-yyyy'}}</span> and your Base operations are from\r\n"
@@ -349,133 +328,5 @@ public class CreateAppointmentLetterDto {
 			+ "                    <p style=\"margin-top:3px;\">Employee Signature </p>\r\n" + "                 \r\n"
 			+ "                   \r\n" + "                </div>\r\n" + "         \r\n" + "          </div>\r\n"
 			+ "        </div>";
-
-	public long getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(long candidateId) {
-		this.candidateId = candidateId;
-	}
-
-	public String getEmployeeId() {
-		return employeeId;
-	}
-
-	public void setEmployeeId(String employeeId) {
-		this.employeeId = employeeId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Designation getDesignation() {
-		return designation;
-	}
-
-	public void setDesignation(Designation designation) {
-		this.designation = designation;
-	}
-
-	public WorkLocation getWorkLocation() {
-		return workLocation;
-	}
-
-	public void setWorkLocation(WorkLocation workLocation) {
-		this.workLocation = workLocation;
-	}
-
-	public LocalDate getDateOfJoining() {
-		return dateOfJoining;
-	}
-
-	public void setDateOfJoining(LocalDate dateOfJoining) {
-		this.dateOfJoining = dateOfJoining;
-	}
-
-	public float getCtc() {
-		return ctc;
-	}
-
-	public void setCtc(float ctc) {
-		this.ctc = ctc;
-	}
-
-	public float getBondPeriod() {
-		return bondPeriod;
-	}
-
-	public void setBondPeriod(float bondPeriod) {
-		this.bondPeriod = bondPeriod;
-	}
-
-	public long getBondBreakAmount() {
-		return bondBreakAmount;
-	}
-
-	public void setBondBreakAmount(long bondBreakAmount) {
-		this.bondBreakAmount = bondBreakAmount;
-	}
-
-	public String getEmailId() {
-		return emailId;
-	}
-
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-
-	public long getContactNumber() {
-		return contactNumber;
-	}
-
-	public void setContactNumber(long contactNumber) {
-		this.contactNumber = contactNumber;
-	}
-
-	public EmployeeStatus getEmployeeStatus() {
-		return employeeStatus;
-	}
-
-	public void setEmployeeStatus(EmployeeStatus employeeStatus) {
-		this.employeeStatus = employeeStatus;
-	}
-
-	public byte[] getAuthorisedSignature() {
-		return authorisedSignature;
-	}
-
-	public void setAuthorisedSignature(byte[] authorisedSignature) {
-		this.authorisedSignature = authorisedSignature;
-	}
-
-	public byte[] getSign() {
-		return sign;
-	}
-
-	public void setSign(byte[] sign) {
-		this.sign = sign;
-	}
-
-	public byte[] getAppointmentLetter() {
-		return appointmentLetter;
-	}
-
-	public void setAppointmentLetter(byte[] appointmentLetter) {
-		this.appointmentLetter = appointmentLetter;
-	}
-
-	public String getJobTitle() {
-		return jobTitle;
-	}
-
-	public void setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
-	}
 
 }

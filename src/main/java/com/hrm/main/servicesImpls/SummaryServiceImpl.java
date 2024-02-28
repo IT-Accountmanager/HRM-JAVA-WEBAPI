@@ -3,6 +3,7 @@ package com.hrm.main.servicesImpls;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -131,6 +132,9 @@ public class SummaryServiceImpl implements ISummaryService {
 			System.out.println("___________________________________________________________________________");
 
 			if (!employee.isImported()) {
+
+				System.out.println("______________________________________");
+				System.out.println("Candidate Id : " + employee.getCandidateId());
 				Onboarding candidate = this.onboardingRepository.findByCandidateId(employee.getCandidateId());
 				Personal details = this.personalRepository.findByCandidateId(employee.getCandidateId());
 				List<Education> educations = this.educationRepository.findAllByCandidateId(employee.getCandidateId());
@@ -156,11 +160,19 @@ public class SummaryServiceImpl implements ISummaryService {
 					}
 				}
 				// summaryDto.setTotalExperience();
-				summaryDto.setJoinedCtc(candidate.getCtc());
+				try {
+					summaryDto.setJoinedCtc(candidate.getCtc());
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
 				// summaryDto.setCurrentCtc();
-				summaryDto.setServiceCommitment(candidate.getServiceCommitment());
-				// summaryDto.setNumberOfWorkingDays();
-				// summaryDto.setNextApprisalQuater();
+
+				try {
+					summaryDto.setServiceCommitment(candidate.getServiceCommitment());
+				} catch (Exception e) {
+					// TODO: handle exception
+				} // summaryDto.setNumberOfWorkingDays();
+					// summaryDto.setNextApprisalQuater();
 				summaryDto.setDateOfBirth(details.getPersonalDetails().getDateOfBirth());
 				summaryDto.setBloodGroup(details.getPersonalDetails().getBloodGroup());
 				summaryDto.setFatherName(details.getPersonalDetails().getFathersName());
@@ -456,7 +468,12 @@ public class SummaryServiceImpl implements ISummaryService {
 					basicInfo.setEmployeeCategory(employee.getEmployeeCategory());
 				}
 
-				basicInfo.setWorkExperience(calculateWorkExperience(employee.getDateOfJoining()));
+				Period period = Period.between(employee.getDateOfJoining(), LocalDate.now());
+
+				int years = period.getYears();
+				int months = period.getMonths();
+
+				basicInfo.setWorkExperience(years + " years " + months + " months ");
 
 				return basicInfo;
 			} else {
@@ -584,8 +601,5 @@ public class SummaryServiceImpl implements ISummaryService {
 			return null;
 		}
 	}
-	
-	
+
 }
-
-

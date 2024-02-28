@@ -23,6 +23,7 @@ public class EmployeeGenerateDto {
 	private String emailId;
 	private long contactNumber;
 	private EmployeeStatus employeeStatus;
+	public String html;
 
 	private byte[] sign;
 

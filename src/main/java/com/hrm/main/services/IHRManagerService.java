@@ -5,7 +5,9 @@ import java.util.List;
 import com.hrm.main.models.CreateAppointmentLetterDto;
 import com.hrm.main.models.HRManager;
 import com.hrm.main.models.Onboarding;
+import com.hrm.main.models.Helper.CtcBreakup;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.main.models.Helper.PDF;
 import com.hrm.main.payloads.AuthorizedSignDto;
 import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
@@ -71,5 +73,7 @@ public interface IHRManagerService {
 	EmployeeGenerateDto getReleaseAppointmentLetter(long candidateId);
 
 	String createAppointmentLetter(CreateAppointmentLetterDto appointmentLetterDto, long candidateId);
+
+	CtcBreakup check(long candidateId);
 
 }

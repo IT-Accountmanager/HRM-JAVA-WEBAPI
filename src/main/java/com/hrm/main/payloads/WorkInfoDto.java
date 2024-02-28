@@ -10,14 +10,9 @@ public class WorkInfoDto {
 	private Designation designation;
 	private Departments department;
 	private Departments.Department subDepartment;
-//<<<<<<< HEAD
 	private CategoryControl categoryControl;
-	// private WorkLocation workLocation;
-//=======
-	// private String assignTo;
-	private String workLocation;
+	private WorkLocation workLocation;
 	private long candidateId;
-//>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
 
 	public Designation getDesignation() {
 		return designation;
@@ -57,6 +52,14 @@ public class WorkInfoDto {
 
 	public void setSubDepartment(Departments.Department subDepartment) {
 		this.subDepartment = subDepartment;
+	}
+
+	public WorkLocation getWorkLocation() {
+		return workLocation;
+	}
+
+	public void setWorkLocation(WorkLocation workLocation) {
+		this.workLocation = workLocation;
 	}
 
 }

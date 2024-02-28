@@ -6,11 +6,6 @@ public class HrManagerWorkApprovalDto {
 	private ApprovalStatus hrManagerApprovalStatus;
 	private String hrManagerRemark;
 
-	public HrManagerWorkApprovalDto() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
 	public ApprovalStatus getHrManagerApprovalStatus() {
 		return hrManagerApprovalStatus;
 	}

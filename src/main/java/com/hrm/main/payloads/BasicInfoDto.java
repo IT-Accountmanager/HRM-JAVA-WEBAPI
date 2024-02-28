@@ -2,6 +2,7 @@ package com.hrm.main.payloads;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.Period;
 
 import com.hrm.main.models.Helper.EnumCollection.AppraisalQuater;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeCategory;
@@ -12,7 +13,7 @@ public class BasicInfoDto {
 
 	private LocalDate dateOfJoining;
 	private ProbationPeriod probationPeriod;
-	private Duration workExperience;
+	private String workExperience;
 	private EmployeeStatus employeeStatus;
 	private EmployeeCategory employeeCategory;
 
@@ -44,11 +45,11 @@ public class BasicInfoDto {
 		this.dateOfJoining = dateOfJoining;
 	}
 
-	public Duration getWorkExperience() {
+	public String getWorkExperience() {
 		return workExperience;
 	}
 
-	public void setWorkExperience(Duration workExperience) {
+	public void setWorkExperience(String workExperience) {
 		this.workExperience = workExperience;
 	}
 
