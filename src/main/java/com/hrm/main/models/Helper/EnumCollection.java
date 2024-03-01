@@ -53,7 +53,11 @@ public class EnumCollection {
 
 	public enum Designation {
 		JUNIOR_ENGINEER, JUNIOR_EXECUTIVE, ASSOCIATE_ENGINEER, ASSOCIATE_EXECUTIVE, SENIOR_ENGINEER, SENIOR_EXECUTIVE,
-		TEAM_LEAD, PROJECT_MANAGER, PROGRAM_MANAGER, CXO
+		TEAM_LEAD, PROJECT_MANAGER, PROGRAM_MANAGER, CXO;
+
+		String replace(String string, String string2) {
+			return null;
+		}
 	}
 
 	public enum BloodGroup {

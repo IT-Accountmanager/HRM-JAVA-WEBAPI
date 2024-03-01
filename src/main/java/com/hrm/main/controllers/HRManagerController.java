@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hrm.main.models.CreateAppointmentLetterDto;
 import com.hrm.main.models.HRManager;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.CtcBreakup;
@@ -23,6 +23,7 @@ import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 import com.hrm.main.models.Helper.PDF;
 import com.hrm.main.payloads.AuthorizedSignDto;
+import com.hrm.main.payloads.CreateAppointmentLetterDto;
 import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.HrExecutiveEducationApprovalDto;
 import com.hrm.main.payloads.HrExecutiveFamilyApprovalDto;
@@ -35,6 +36,7 @@ import com.hrm.main.payloads.HrManagerEducationApprovalDto;
 import com.hrm.main.payloads.HrManagerFamilyApprovalDto;
 import com.hrm.main.payloads.HrManagerPersonalApprovalDto;
 import com.hrm.main.payloads.HrManagerWorkApprovalDto;
+import com.hrm.main.payloads.ReleaseAppointmentLetterDto;
 import com.hrm.main.services.IHRExecutiveService;
 import com.hrm.main.services.IHRManagerService;
 
@@ -207,12 +209,33 @@ public class HRManagerController {
 	}
 
 	// -------------------------------RELEASE----------------------------------------
-	@PostMapping("release/{candidateId}")
-	public ResponseEntity<String> releaseAppointmentLetter(@PathVariable long candidateId,
-			@RequestBody CreateAppointmentLetterDto appointmentLetterDto) {
-		String result = this.hRManagerService.releaseAppointmentLetter(candidateId, appointmentLetterDto);
-		return new ResponseEntity<String>(result, HttpStatus.OK);
+	@PostMapping("/release/{candidateId}")
+	public String releaseAppointmentLetter(@PathVariable long candidateId,
+			@RequestBody CreateAppointmentLetterDto appointmentLetterDto, Model model) {
+
+		// Assuming HRManagerService returns a model object with necessary data
+		ReleaseAppointmentLetterDto result = this.hRManagerService.releaseAppointmentLetter(candidateId,
+				appointmentLetterDto);
+		System.out.println("*****************************************************");
+		System.out.println(result.getEmployeeId());
+
+		// Add the model object to be used in the template
+		model.addAttribute("appointmentLetter", result);
+
+		// Return the view name corresponding to your HTML template (without the
+		// extension)
+		return "appointment_letter";
 	}
+
+	/*
+	 * @PostMapping("release/{candidateId}") public ResponseEntity<String>
+	 * releaseAppointmentLetter(@PathVariable long candidateId,
+	 * 
+	 * @RequestBody CreateAppointmentLetterDto appointmentLetterDto) { String result
+	 * = this.hRManagerService.releaseAppointmentLetter(candidateId,
+	 * appointmentLetterDto); return new ResponseEntity<String>(result,
+	 * HttpStatus.OK); }
+	 */
 
 	// ------------------------------RELEASE GET-----------------------------------
 	@GetMapping("getRelease/{candidateId}")

@@ -1,4 +1,4 @@
-package com.hrm.main.models;
+package com.hrm.main.payloads;
 
 import java.time.LocalDate;
 

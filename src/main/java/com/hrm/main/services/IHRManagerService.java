@@ -2,13 +2,13 @@ package com.hrm.main.services;
 
 import java.util.List;
 
-import com.hrm.main.models.CreateAppointmentLetterDto;
 import com.hrm.main.models.HRManager;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Helper.CtcBreakup;
 import com.hrm.main.models.Helper.EnumCollection.CandidatesStatus;
 import com.hrm.main.models.Helper.PDF;
 import com.hrm.main.payloads.AuthorizedSignDto;
+import com.hrm.main.payloads.CreateAppointmentLetterDto;
 import com.hrm.main.payloads.EmployeeGenerateDto;
 import com.hrm.main.payloads.HrExecutivePersonalApprovalDto;
 import com.hrm.main.payloads.HrManagerAgreementApprovalDto;
@@ -18,6 +18,7 @@ import com.hrm.main.payloads.HrManagerEducationApprovalDto;
 import com.hrm.main.payloads.HrManagerFamilyApprovalDto;
 import com.hrm.main.payloads.HrManagerPersonalApprovalDto;
 import com.hrm.main.payloads.HrManagerWorkApprovalDto;
+import com.hrm.main.payloads.ReleaseAppointmentLetterDto;
 
 public interface IHRManagerService {
 
@@ -68,7 +69,8 @@ public interface IHRManagerService {
 
 	String editAppointment(EmployeeGenerateDto appointmentInfo, long candidateId);
 
-	String releaseAppointmentLetter(long candidateId, CreateAppointmentLetterDto appointmentLetterDto);
+	ReleaseAppointmentLetterDto releaseAppointmentLetter(long candidateId,
+			CreateAppointmentLetterDto appointmentLetterDto);
 
 	EmployeeGenerateDto getReleaseAppointmentLetter(long candidateId);
 

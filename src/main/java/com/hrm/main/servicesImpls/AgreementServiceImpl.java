@@ -199,6 +199,43 @@ public class AgreementServiceImpl implements IAgreementService {
 		return new AgreementStatusResponse(status);
 	}
 
+	/*
+	 * @Override public AgreementDto getPreAgreementInfo(long candidateId) {
+	 * Onboarding onboarding =
+	 * this.onboardingRepository.findByCandidateId(candidateId); Personal personal =
+	 * this.personalRepository.findByCandidateId(candidateId); AgreementDto
+	 * preAgreementInfo = new AgreementDto();
+	 * preAgreementInfo.setAgreementDate(LocalDate.now());
+	 * preAgreementInfo.setEmployeeName(onboarding.getCandidateName());
+	 * preAgreementInfo
+	 * .setAge(Period.between(personal.getPersonalDetails().getDateOfBirth(),
+	 * LocalDate.now()).getYears()); preAgreementInfo.setReligion("Hindu");
+	 * preAgreementInfo.setPresentAddress((personal.getAddressDetails().
+	 * getPresentAdd().getHouseNo()) + ", " +
+	 * (personal.getAddressDetails().getPresentAdd().getArea()) + ", near " +
+	 * (personal.getAddressDetails().getPresentAdd().getLandmark()) + ", " +
+	 * (personal.getAddressDetails().getPresentAdd().getCity()) + ", " +
+	 * (personal.getAddressDetails().getPresentAdd().getState()) + ", " +
+	 * (personal.getAddressDetails().getPresentAdd().getPincode()));
+	 * preAgreementInfo.setPermanentAddress((personal.getAddressDetails().
+	 * getPermanentAdd().getHouseNo()) + ", " +
+	 * (personal.getAddressDetails().getPermanentAdd().getArea()) + ", near " +
+	 * (personal.getAddressDetails().getPermanentAdd().getLandmark()) + ", " +
+	 * (personal.getAddressDetails().getPermanentAdd().getCity()) + ", " +
+	 * (personal.getAddressDetails().getPermanentAdd().getState()) + ", " +
+	 * (personal.getAddressDetails().getPermanentAdd().getPincode()));
+	 * preAgreementInfo.setServiceCommitment(onboarding.getServiceCommitment());
+	 * preAgreementInfo.setEmployeeFathersName(personal.getPersonalDetails().
+	 * getFathersName()); preAgreementInfo.setTenureFrom(LocalDate.now()); int
+	 * months = (int) onboarding.getServiceCommitment() * 12;
+	 * 
+	 * preAgreementInfo.setTenureTo(LocalDate.now().plusMonths(months));
+	 * preAgreementInfo.setServiceBreakAmount(onboarding.getServiceBreakAmount());
+	 * preAgreementInfo.setCustodyOf("HR"); // preAgreementInfo.setChequeNo(null);
+	 * 
+	 * return preAgreementInfo; }
+	 */
+
 	@Override
 	public AgreementDto getPreAgreementInfo(long candidateId) {
 		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
@@ -206,30 +243,45 @@ public class AgreementServiceImpl implements IAgreementService {
 		AgreementDto preAgreementInfo = new AgreementDto();
 		preAgreementInfo.setAgreementDate(LocalDate.now());
 		preAgreementInfo.setEmployeeName(onboarding.getCandidateName());
-		preAgreementInfo
-				.setAge(Period.between(personal.getPersonalDetails().getDateOfBirth(), LocalDate.now()).getYears());
-		preAgreementInfo.setReligion("Hindu");
-		preAgreementInfo.setPresentAddress((personal.getAddressDetails().getPresentAdd().getHouseNo()) + ", "
-				+ (personal.getAddressDetails().getPresentAdd().getArea()) + ", near "
-				+ (personal.getAddressDetails().getPresentAdd().getLandmark()) + ", "
-				+ (personal.getAddressDetails().getPresentAdd().getCity()) + ", "
-				+ (personal.getAddressDetails().getPresentAdd().getState()) + ", "
-				+ (personal.getAddressDetails().getPresentAdd().getPincode()));
-		preAgreementInfo.setPermanentAddress((personal.getAddressDetails().getPermanentAdd().getHouseNo()) + ", "
-				+ (personal.getAddressDetails().getPermanentAdd().getArea()) + ", near "
-				+ (personal.getAddressDetails().getPermanentAdd().getLandmark()) + ", "
-				+ (personal.getAddressDetails().getPermanentAdd().getCity()) + ", "
-				+ (personal.getAddressDetails().getPermanentAdd().getState()) + ", "
-				+ (personal.getAddressDetails().getPermanentAdd().getPincode()));
-		preAgreementInfo.setServiceCommitment(onboarding.getServiceCommitment());
-		preAgreementInfo.setEmployeeFathersName(personal.getPersonalDetails().getFathersName());
-		preAgreementInfo.setTenureFrom(LocalDate.now());
-		int months = (int) onboarding.getServiceCommitment() * 12;
 
-		preAgreementInfo.setTenureTo(LocalDate.now().plusMonths(months));
+		if (personal != null && personal.getPersonalDetails() != null) {
+			preAgreementInfo
+					.setAge(Period.between(personal.getPersonalDetails().getDateOfBirth(), LocalDate.now()).getYears());
+			preAgreementInfo.setEmployeeFathersName(personal.getPersonalDetails().getFathersName());
+		}
+
+		if (personal != null && personal.getAddressDetails() != null
+				&& personal.getAddressDetails().getPresentAdd() != null) {
+			preAgreementInfo.setPresentAddress((personal.getAddressDetails().getPresentAdd().getHouseNo()) + ", "
+					+ (personal.getAddressDetails().getPresentAdd().getArea()) + ", near "
+					+ (personal.getAddressDetails().getPresentAdd().getLandmark()) + ", "
+					+ (personal.getAddressDetails().getPresentAdd().getCity()) + ", "
+					+ (personal.getAddressDetails().getPresentAdd().getState()) + ", "
+					+ (personal.getAddressDetails().getPresentAdd().getPincode()));
+		}
+
+		if (personal != null && personal.getAddressDetails() != null
+				&& personal.getAddressDetails().getPermanentAdd() != null) {
+			preAgreementInfo.setPermanentAddress((personal.getAddressDetails().getPermanentAdd().getHouseNo()) + ", "
+					+ (personal.getAddressDetails().getPermanentAdd().getArea()) + ", near "
+					+ (personal.getAddressDetails().getPermanentAdd().getLandmark()) + ", "
+					+ (personal.getAddressDetails().getPermanentAdd().getCity()) + ", "
+					+ (personal.getAddressDetails().getPermanentAdd().getState()) + ", "
+					+ (personal.getAddressDetails().getPermanentAdd().getPincode()));
+		}
+
+		preAgreementInfo.setServiceCommitment(onboarding.getServiceCommitment());
+		preAgreementInfo.setTenureFrom(LocalDate.now());
+
+		float serviceCommitment = onboarding.getServiceCommitment();
+
+		if (serviceCommitment != 0.0f) {
+			int months = (int) serviceCommitment * 12;
+			preAgreementInfo.setTenureTo(LocalDate.now().plusMonths(months));
+		}
+
 		preAgreementInfo.setServiceBreakAmount(onboarding.getServiceBreakAmount());
 		preAgreementInfo.setCustodyOf("HR");
-		// preAgreementInfo.setChequeNo(null);
 
 		return preAgreementInfo;
 	}
