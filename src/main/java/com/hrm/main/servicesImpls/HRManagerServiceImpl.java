@@ -1,17 +1,25 @@
 package com.hrm.main.servicesImpls;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.stream.Collectors;
+import java.nio.charset.StandardCharsets;
+import org.apache.commons.io.FileUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.data.util.StreamUtils;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import com.hrm.main.models.Agreement;
@@ -23,6 +31,7 @@ import com.hrm.main.models.HRManager;
 import com.hrm.main.models.Onboarding;
 import com.hrm.main.models.Personal;
 import com.hrm.main.models.Work;
+import com.hrm.main.models.Helper.AppointmentLetterTemplateReplace;
 import com.hrm.main.models.Helper.Convert;
 import com.hrm.main.models.Helper.CtcBreakup;
 import com.hrm.main.models.Helper.EnumCollection.ApprovalStatus;
@@ -53,6 +62,8 @@ import com.hrm.main.repositories.IPersonalRepository;
 import com.hrm.main.repositories.IWorkRepository;
 import com.hrm.main.services.IHRManagerService;
 import com.itextpdf.html2pdf.HtmlConverter;
+import com.itextpdf.io.source.OutputStream;
+
 import org.springframework.mail.javamail.MimeMessageHelper;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -1230,7 +1241,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			if (allApprovalsAreApproved(candidateId)) {
 				Employee employee = this.employeeRepository.findByCandidateId(candidateId);
 
-				String pdfFilePath = generatePdf(employee);
+				String pdfFilePath = generatePdf1(employee);
 
 				sendAppointmentLetterEmail(employee, pdfFilePath);
 
@@ -1275,25 +1286,85 @@ public class HRManagerServiceImpl implements IHRManagerService {
 				&& educationApprovalStatus == ApprovalStatus.Approved;
 	}
 
-	private String generatePdf(Employee employee) throws IOException {
-		// Read the HTML content from the classpath
-		String htmlFilePath = "\\template\\appointment_letter.html";
+	/*
+	 * private String generatePdf(Employee employee) throws IOException { // Read
+	 * the HTML content from the classpath String htmlFilePath =
+	 * "\\template\\appointment_letter.html"; // String htmlFilePath = //
+	 * "\\HRM-JAVA-WEBAPI\\src\\main\\resources\\template\\appointment_letter.html";
+	 * 
+	 * try (InputStream inputStream =
+	 * getClass().getClassLoader().getResourceAsStream(htmlFilePath)) { if
+	 * (inputStream == null) { throw new
+	 * FileNotFoundException("HTML file not found: " + htmlFilePath); }
+	 * 
+	 * // Convert InputStream to String
+	 * 
+	 * String html = new BufferedReader(new InputStreamReader(inputStream)).lines()
+	 * .collect(Collectors.joining("\n"));
+	 * 
+	 * // Process the template and write to a file html = processTemplate(html);
+	 * 
+	 * // Modify the PDF file path as needed String pdfFilePath =
+	 * "C:\\Users\\Rameshrao.k\\Appointment Letter/Appointment Letter  " +
+	 * employee.getName() + ".pdf"; File newHtmlFile = new File(pdfFilePath);
+	 * FileUtils.writeStringToFile(newHtmlFile, htmlString);
+	 * 
+	 * try (FileOutputStream fileOutputStream = new FileOutputStream(pdfFilePath)) {
+	 * // Convert HTML to PDF HtmlConverter.convertToPdf(html, fileOutputStream); }
+	 * 
+	 * return pdfFilePath; } catch (IOException e) { // Handle the exception
+	 * appropriately, log errors e.printStackTrace(); throw e; // Propagate the
+	 * exception or handle it according to your needs } }
+	 * 
+	 * 
+	 * try { ClassPathResource resource = new
+	 * ClassPathResource("template/appointment_letter.html"); InputStream
+	 * inputStream = resource.getInputStream();
+	 * 
+	 * // Use a Scanner to read the InputStream into a String String htmlContent =
+	 * new Scanner(inputStream,
+	 * StandardCharsets.UTF_8.name()).useDelimiter("\\A").next();
+	 * 
+	 * // Now you can use the htmlContent as needed. // For example, you might want
+	 * to modify the content or generate a PDF.
+	 * 
+	 * // Modify HTML content if needed String modifiedHtmlContent =
+	 * modifyHtml(htmlContent);
+	 * 
+	 * // Generate PDF using the modified HTML content String pdfFilePath =
+	 * generatePdfFromHtml(modifiedHtmlContent, employee.getName());
+	 * 
+	 * return pdfFilePath; } catch (IOException e) { // Handle the exception
+	 * e.printStackTrace(); } return null;
+	 * 
+	 * }
+	 */
 
-		try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(htmlFilePath)) {
+	private String generatePdf1(Employee employee) throws IOException {
+		// Specify the path to the HTML template file
+		String htmlFilePath = "/template/appointment_letter.html";
+
+		try (InputStream inputStream = getClass().getResourceAsStream(htmlFilePath)) {
 			if (inputStream == null) {
 				throw new FileNotFoundException("HTML file not found: " + htmlFilePath);
 			}
 
-			// Convert InputStream to String
-			String html = new BufferedReader(new InputStreamReader(inputStream)).lines()
-					.collect(Collectors.joining("\n"));
+			// Convert InputStream to String (HTML content)
+			String htmlTemplate = new Scanner(inputStream, StandardCharsets.UTF_8.name()).useDelimiter("\\A").next();
+
+			// Replace placeholders in the HTML content with actual data
+			String htmlContent = processTemplate(htmlTemplate, employee);
 
 			// Modify the PDF file path as needed
-			String pdfFilePath = "C:\\Users\\Rameshrao.k\\Appointment Letter/Appointment Letter  " + employee.getName()
-					+ ".pdf";
+			String pdfDirectoryPath = "C:\\Users\\Rameshrao.k\\Appointment Letter";
+			String pdfFilePath = pdfDirectoryPath + "\\ Appointment Letter " + employee.getName() + ".pdf";
 
+			// Ensure the directory exists; create it if not
+			Files.createDirectories(Paths.get(pdfDirectoryPath));
+
+			// Convert HTML to PDF and save it to the specified path
 			try (FileOutputStream fileOutputStream = new FileOutputStream(pdfFilePath)) {
-				HtmlConverter.convertToPdf(html, fileOutputStream);
+				HtmlConverter.convertToPdf(htmlContent, fileOutputStream);
 			}
 
 			return pdfFilePath;
@@ -1302,6 +1373,40 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			e.printStackTrace();
 			throw e; // Propagate the exception or handle it according to your needs
 		}
+	}
+
+	private String processTemplate(String template, Employee employee) {
+		// Maintain placeholder in map
+
+		Map<String, String> values = new HashMap();
+		values.put("employeeId", employee.getEmployeeId());
+		values.put("employeeName", employee.getName());
+
+		// Replace placeholders with actual values
+		for (Map.Entry<String, String> entry : values.entrySet()) {
+			String placeholder = "@{" + entry.getKey() + "}";
+			template = template.replace(placeholder, entry.getValue());
+		}
+
+		// Write modified content to a new HTML file if needed
+		// You can also return the modified template without writing to a file
+
+		String modifiedHtml = template;
+		try {
+			// Modify the file path and name as needed
+			String modifiedHtmlFilePath = "C:\\Users\\Rameshrao.k\\ModifiedHTML\\modified.html";
+
+			// Ensure the directory exists; create it if not
+			Files.createDirectories(Paths.get(modifiedHtmlFilePath).getParent());
+
+			Files.writeString(Paths.get(modifiedHtmlFilePath), modifiedHtml, StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			// Handle the exception appropriately, log errors
+			e.printStackTrace();
+			// Propagate the exception or handle it according to your needs
+		}
+
+		return modifiedHtml;
 	}
 
 	private void sendAppointmentLetterEmail(Employee employee, String pdfFilePath) {
@@ -1320,6 +1425,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			mimeMessageHelper.setText(body);
 
 			FileSystemResource file = new FileSystemResource(pdfFilePath);
+
 			mimeMessageHelper.addAttachment(file.getFilename(), file);
 
 			javaMailSender.send(mimeMessage);
@@ -1339,6 +1445,34 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		employee.setCandidateId(candidateId);
 
 		this.employeeRepository.save(employee);
+	}
+
+	private String modifyHtml(String htmlContent) {
+		// Implement your logic to modify the HTML content
+		// For example, replace placeholders with dynamic data
+		return htmlContent.replace("$title", "YourTitle").replace("$body", "YourBody");
+	}
+
+	private String generatePdfFromHtml(String modifiedHtmlContent, String employeeName) throws IOException {
+		// Implement your logic to generate PDF from HTML
+		// For example, use a PDF generation library like Flying Saucer or iText
+
+		// Modify the PDF file path as needed
+
+		String pdfFilePath = "C:\\Users\\Rameshrao.k\\Appointment Letter/Appointment Letter  " + employeeName + ".pdf";
+		File newHtmlFile = new File(pdfFilePath);
+
+		try (FileOutputStream outputStream = new FileOutputStream(pdfFilePath)) {
+			HtmlConverter.convertToPdf(modifiedHtmlContent, outputStream);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		FileUtils.writeStringToFile(newHtmlFile, modifiedHtmlContent);
+
+		// Additional logic for PDF generation if necessary
+
+		return pdfFilePath;
 	}
 
 	@Override

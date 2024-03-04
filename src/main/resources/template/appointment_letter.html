@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Appointment Letter</title>
+	<title>$title</title>
 </head>
 
 <body>
@@ -18,11 +18,9 @@
 
 
 			<div style="margin-top:5%;">
-				<p>Employee ID :<span style="font-weight:bold;">{{appointmentLetter.getEmployeeId ||'No Employee
-						ID'}}</span></p>
+				<p>Employee ID :<span style="font-weight:bold;">@{employeeId}</span></p>
 				<p style="margin-right:5%;">Dear <span style="font-weight:bold;">Dear <span
-							style="font-weight:bold;">{{employee_name.replace("{employee_name}",
-							appointmentLetter.getName())|| 'No Employee Name'}}</span>
+							style="font-weight:bold;">@{employeeName}</span>
 					</span><br><br>
 
 					Welcome to <span style="font-weight:bold;">Envision Integrated Services Private
@@ -522,8 +520,8 @@
 
 			<div style="display:flex;">
 				<div>
-					<img src="{{'data:image/jpg;base64,' + viewdata1?.authorisedSignature}}"
-						style="height:100px;width:150px;margin-top:20px;" />
+					<!--<img src="{{'data:image/jpg;base64,' + viewdata1?.authorisedSignature}}"
+						style="height:100px;width:150px;margin-top:20px;" />-->
 					<p style="margin-top:10px;">Authorized Signature</p>
 
 
@@ -534,8 +532,8 @@
 					<p style="">Employee Name: <span style="font-weight:bold;font-size:0.83vw;">{{viewdata1?.name ?? ""
 							| titlecase}}</span></p>
 
-					<img src="{{'data:image/jpg;base64,' + viewdata?.sign}}"
-						style="height:100px;width:150px;margin-top:5px;" />
+					<!--<img src="{{'data:image/jpg;base64,' + viewdata?.sign}}"
+						style="height:100px;width:150px;margin-top:5px;" />-->
 					<p style="margin-top:-13px;">Employee Signature </p>
 
 

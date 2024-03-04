@@ -21,7 +21,7 @@ import com.hrm.main.payloads.BillableHoursDto;
 import com.hrm.main.payloads.RegularizationHoursDto;
 import com.hrm.main.services.IAttendanceService;
 
-@CrossOrigin(origins = { "http://10.10.100.6:8083/", "http://10.10.100.6:8085/", "http://Localhost:4200/" })
+@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
 
 @RestController
 @RequestMapping("/attendance")
@@ -86,14 +86,15 @@ public class AttendanceController {
 		String result = this.attendanceService.deleteAttendance(id);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
-	
-	@PostMapping("/createOrUpdate/leave/{employeeId}")
-	public ResponseEntity<ApplyLeaveDto> createOrUpdateLeave(@PathVariable String employeeId, @RequestBody ApplyLeaveDto leaveDto) {
-	    // Set employeeId in the leaveDto
-	    //leaveDto.setEmployeeId(employeeId);
 
-	    ApplyLeaveDto updatedLeaveDto = attendanceService.createOrUpdateLeave(leaveDto);
-	    return new ResponseEntity<>(updatedLeaveDto, HttpStatus.CREATED);
+	@PostMapping("/createOrUpdate/leave/{employeeId}")
+	public ResponseEntity<ApplyLeaveDto> createOrUpdateLeave(@PathVariable String employeeId,
+			@RequestBody ApplyLeaveDto leaveDto) {
+		// Set employeeId in the leaveDto
+		// leaveDto.setEmployeeId(employeeId);
+
+		ApplyLeaveDto updatedLeaveDto = attendanceService.createOrUpdateLeave(leaveDto);
+		return new ResponseEntity<>(updatedLeaveDto, HttpStatus.CREATED);
 	}
 
 }
