@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>$title</title>
+	<title>Appointment Letter</title>
 </head>
 
 <body>
@@ -18,25 +18,25 @@
 
 
 			<div style="margin-top:5%;">
-				<p>Employee ID :<span style="font-weight:bold;">@{employeeId}</span></p>
-				<p style="margin-right:5%;">Dear <span style="font-weight:bold;">Dear <span
-							style="font-weight:bold;">@{employeeName}</span>
+				<p>Employee ID : <span style="font-weight:bold;">@{Employee Id}</span></p>
+				<p style="margin-right:5%;">Dear <span style="font-weight:bold;"> <span
+							style="font-weight:bold;">@{Name}</span>
 					</span><br><br>
 
 					Welcome to <span style="font-weight:bold;">Envision Integrated Services Private
 						Limited</span>.<br><br>You are appointed as <span
-						style="font-weight:bold;">{{viewdata1?.designation?.replace('_',' ') ?? " " | titlecase}}</span>
+						style="font-weight:bold;">@{Designation}</span>
 					in Permanent role
-					w.e.f <span style="font-weight:bold;">{{viewdata?.dateOfJoining ?? " " | date:'dd-MM-yyyy'}}</span>
+					w.e.f <span style="font-weight:bold;">@{Date Of Joining}</span>
 					and your Base operations are from
-					{{viewdata1?.workLocation ?? " "}}. The following are the terms and conditions of the Employment.
+					@{Location}. The following are the terms and conditions of the Employment.
 				</p>
 
 				<h2 style="font-weight:bold;">COMPENSATION & BENEFITS</h2>
 				<ol style="margin-right:5%;text-align:justify;">
 					<li>
-						Your total Annual Salary (CTC) will be Rs.<span style="font-weight:bold;">{{viewdata1?.ctc ?? "
-							" | number}}.</span> The detailed compensation
+						Your total Annual Salary (CTC) will be Rs.<span style="font-weight:bold;">@{CTC}</span>. The
+						detailed compensation
 						structure is described in Annexure- A. </li>
 					<li>
 						Your salary will be reviewed periodically as per Company policy. However, changes in
@@ -65,7 +65,7 @@
 				<h3 style="font-weight:bold;">PERIOD OF SERVICE</h3>
 				<ol style="margin-right:5%;text-align:justify;">
 					<li>
-						Executing a <span style="font-weight:bold;">{{viewdata1?.serviceCommitment ?? ""}}</span>
+						Executing a <span style="font-weight:bold;">@{Service Commitement}</span>
 						year(s)
 						training cum service agreement with the company.
 					</li>
@@ -96,14 +96,7 @@
 						The Company does not make overtime payments for extra hours worked, if any.
 					</li>
 				</ol>
-				<!-- <div>
-          <p style="margin-top:30px;text-align:center;font-weight:bold;">www.actus.com</p>
-        </div> -->
-				<!-- <div class="subpage">Page 1/2</div>
-        </div> -->
 
-
-				<!-- <div class="page"> -->
 
 				<h2 style="font-weight:bold;">LEAVES & HOLIDAYS</h2>
 
@@ -191,12 +184,7 @@
 						any right to stake claim of any kind of compensation from the Company.
 					</li>
 				</ol>
-				<!-- <div>
-          <p style="margin-top:30px;text-align:center;font-weight:bold;">www.actus.com</p>
-        </div> -->
-				<!-- </div> -->
 
-				<!-- <div class="page"> -->
 				<h2 style="font-weight:bold;">TERMINATION OF EMPLOYMENT</h2>
 
 				<ol style="margin-right:5%;text-align:justify">
@@ -211,7 +199,7 @@
 							</li>
 							<li>
 								In the event that you decide to leave the company before a period of service
-								agreement you must pay an amount of {{servicebreakamount}} (INR) in lieu of the
+								agreement you must pay an amount of @{Service Break Amount} (INR) in lieu of the
 								breaking of service agreement.<br>
 							</li>
 							<li>
@@ -346,68 +334,54 @@
 				</ol>
 				<p>We take this opportunity to welcome you to the Envision IS family and wish you a satisfying
 					engagement with us.</p>
-				<div style="page-break-before: always;"></div>
+
 
 				<h2 style="font-weight:bold;margin-top: 10px;">ACCEPTANCE OF JOINING</h2>
 				<p>The terms and conditions of this Appointment Letter are fully acceptable to me. I shall report
-					for duties on <span style="font-weight:bold;">{{viewdata1?.dateOfJoining ?? " " |
-						date:'dd-MM-yyyy'}}.</span></p>
+					for duties on <span style="font-weight:bold;">@{Date Of Joining}</span></p>
 
 				<p>Sincerely,</p>
 				<p>For <span style="font-weight:bold;">Envision Integrated Services Private Limited</span>.</p>
 
 				<div style="display:flex;">
-					<div>
-						<img src="{{'data:image/jpg;base64,' + viewdata1?.authorisedSignature}}"
-							style="height:100px;width:150px;margin-top:20px;" />
-						<p style="margin-top:10px;">Authorized Signature</p>
 
 
-					</div>
-
-
-					<div style="margin-left:600px;">
-						<p style="">Employee Name: <span style="font-weight:bold;font-size:0.83vw;">{{viewdata1?.name ??
-								"" | titlecase}}</span></p>
-
-						<img src="{{'data:image/jpg;base64,' + viewdata?.sign}}"
-							style="height:100px;width:150px;margin-top:5px;" />
-						<p style="margin-top:3px;">Employee Signature </p>
+					<div style="margin-left:400px;">
+						<p style="">Employee Name: <span style="font-weight:bold;font-size:0.83vw;">@{Name}</span>
+						</p>
 
 
 					</div>
 
 				</div>
 			</div>
-
-			<!-- <div>
-            <p style="margin-top:30px;text-align:center;font-weight:bold;">www.actus.com</p>
-          </div> -->
-			<!-- </div> -->
-			<!-- <div class="page"> -->
 			<div style="page-break-before: always;"></div>
 			<h2 style="text-align:center;margin-top: 10px;">ANNEXURE – A</h2>
 
-			<table class="ctcbreakup" style="width:80%">
+			<table class="ctcbreakup" style="width: 80%; margin-left: auto; margin-right: auto;">
 				<tr class="breakup">
-					<td class="salary" style="width: 500px;">EMPLOYEE NAME</td>
-					<td class="salary" colspan="2">{{viewdata1?.name ?? " " | titlecase}}</td>
+					<td class="salary" style="width:auto;">EMPLOYEE NAME</td>
+					<td class="salary" colspan="2">
+						<p style="width:auto;font-weight:bold;">@{Name}</p>
+					</td>
 				</tr>
 				<tr class="breakup">
 					<td class="salary">EMPLOYEE ID</td>
-					<td class="salary" colspan="2">{{viewdata1?.employeeId ?? " "}}</td>
+					<td class="salary" colspan="2">@{Employee Id}</td>
 				</tr>
 				<tr class="breakup">
-					<td class="salary">DESIGNATION</td>
-					<td class="salary" colspan="2">{{viewdata1?.designation.replace('_',' ') ?? " " | titlecase}}</td>
+					<td class="salary" style="width:auto;">DESIGNATION</td>
+					<td class="salary" colspan="2">
+						<p style="width:auto;font-weight:bold;">@{Designation}</p>
+					</td>
 				</tr>
 				<tr class="breakup">
 					<td class="salary" style="width: 500px;">DATE OF JOINING</td>
-					<td class="salary" colspan="2">{{viewdata1?.dateOfJoining ?? " " | date:'dd-MM-yyyy'}}</td>
+					<td class="salary" colspan="2">@{Date Of Joining}</td>
 				</tr>
 				<tr class="breakup">
 					<td class="salary" style="width: 500px;">DATE OF RELEASING</td>
-					<td class="salary" colspan="2">{{viewdata1?.dateOfJoining ?? " " | date:'dd-MM-yyyy'}}</td>
+					<td class="salary" colspan="2">@{Date Of Joining}</td>
 				</tr>
 				<tr>
 					<td class="salary" colspan="3" style="text-align:center;font-size:17px;">EARNINGS - A</td>
@@ -419,121 +393,105 @@
 				</tr>
 				<tr>
 					<td class="salary">BASIC</td>
-					<td class="salary">{{basicSalary | number : '1.2-2'}}</td>
-					<td class="salary">{{mobasicSalary | number : '1.2-2'}}</td>
+					<td class="salary" style="text-align: right;">@{Basic}</td>
+					<td class="salary" style="text-align: right;">@{M Basic}</td>
 				</tr>
 				<tr>
 					<td class="salary" style="width: 100%;">HOUSE RENT ALLOWANCE</td>
-					<td class="salary">{{houseRent | number : '1.2-2'}}</td>
-					<td class="salary">{{mohouseRent | number : '1.2-2'}}</td>
+					<td class="salary" style="text-align: right;">@{House Rent Allowance}</td>
+					<td class="salary" style="text-align: right;">@{M House Rent Allowance}</td>
 				</tr>
-				<!-- <tr>
-            <td>CONVEYANCE</td>
-            <td>____________</td>
-            <td>____________</td>
-          </tr> -->
+
 				<tr>
 					<td class="salary" style="width: 100%;">SPECIAL ALLOWANCE</td>
-					<td class="salary">{{specialAllowence | number : '1.2-2'}}</td>
-					<td class="salary">{{mospecialAllowence | number : '1.2-2'}}</td>
+					<td class="salary" style="text-align: right;">@{Special Allowance}</td>
+					<td class="salary" style="text-align: right;">@{M Special Allowance}</td>
 				</tr>
 				<tr>
 					<td class="salary">MEDICAL</td>
-					<td class="salary">{{medicalAllowence | number : '1.2-2'}}</td>
-					<td class="salary">{{momedicalAllowence | number : '1.2-2'}}</td>
+					<td class="salary" style="text-align: right;">@{Medical}</td>
+					<td class="salary" style="text-align: right;">@{M Medical}</td>
 				</tr>
 				<tr>
 					<td class="salary">TELEPHONE</td>
-					<td class="salary">{{telephone | number : '1.2-2'}}</td>
-					<td class="salary">{{motelephone | number : '1.2-2'}}</td>
+					<td class="salary" style="text-align: right;">@{Telephone}</td>
+					<td class="salary" style="text-align: right;">@{M Telephone}</td>
 				</tr>
 				<tr>
 					<td class="salary" style="width: 100%;">LEAVE TRAVEL ALLOWANCE</td>
-					<td class="salary">{{leaveTravel | number : '1.2-2'}}</td>
-					<td class="salary">{{moleaveTravel | number : '1.2-2'}}</td>
+					<td class="salary" style="text-align: right;">@{Leave Travel Allowance}</td>
+					<td class="salary" style="text-align: right;">@{M Leave Travel Allowance}</td>
 				</tr>
-				<!-- <tr>
-            <td>SHIFT ALLOWANCES</td>
-            <td>______________</td>
-            <td>______________</td>
-            </tr> -->
+
 				<tr style="background-color: #dddddd;">
 					<td class="salary" style="width: 500px;">GROSS SALARY</td>
-					<td class="salary">{{grossSalary | number : '1.2-2'}}</td>
-					<td class="salary">{{mogrossSalary | number : '1.2-2'}}</td>
+					<td class="salary" style="text-align: right;">@{Gross Salary}</td>
+					<td class="salary" style="text-align: right;">@{M Gross Salary}</td>
 				</tr>
 				<tr>
 					<td class="salary">EMPLOYEE PF</td>
-					<td class="salary">{{EmployeePf | number : '1.2-2'}}</td>
-					<td class="salary">{{moEmployeePf | number : '1.2-2'}}</td>
+					<td class="salary" style="text-align: right;">@{Employee Pf}</td>
+					<td class="salary" style="text-align: right;">@{M Employee Pf}</td>
 				</tr>
 				<tr>
 					<td class="salary">GRATUITY</td>
-					<td class="salary">{{gratuity | number : '1.2-2'}}</td>
-					<td class="salary">{{mogratuity | number : '1.2-2'}}</td>
+					<td class="salary" style="text-align: right;">@{Gratuity}</td>
+					<td class="salary" style="text-align: right;">@{M Gratuity}</td>
 				</tr>
 				<tr>
 					<td class="salary" style="width: 500px;">PROFESSIONAL TAX</td>
-					<td class="salary">{{professionalTax | number : '1.2-2'}}</td>
-					<td class="salary">{{moprofessionalTax | number : '1.2-2'}}</td>
+					<td class="salary" style="text-align: right;">@{Professional Tax}</td>
+					<td class="salary" style="text-align: right;">@{M Professional Tax}</td>
 				</tr>
 				<tr style="background-color: #dddddd;">
 					<td class="salary" style="width: 500px;">NET TAKE HOME </td>
-					<td class="salary">{{netTakeHome | number : '1.2-2'}}</td>
-					<td class="salary">{{monetTakeHome | number : '1.2-2'}}</td>
+					<td class="salary" style="text-align: right;">@{Net Take Home}</td>
+					<td class="salary" style="text-align: right;">@{M Net Take Home}</td>
 				</tr>
 				<tr>
 					<td class="salary">EMPLOYER PF</td>
-					<td class="salary">{{employerPf | number : '1.2-2'}}</td>
-					<td class="salary">{{moemployerPf | number : '1.2-2'}}</td>
+					<td class="salary" style="text-align: right;">@{Employer Pf}</td>
+					<td class="salary" style="text-align: right;">@{M Employer Pf}</td>
 				</tr>
 				<tr>
 					<td class="salary" style="width: 500px;">GROUP INSURANCE</td>
-					<td class="salary">{{groupInsurance | number : '1.2-2'}}</td>
-					<td class="salary">{{mogroupInsurance | number : '1.2-2'}}</td>
+					<td class="salary" style="text-align: right;">@{Group Insurance}</td>
+					<td class="salary" style="text-align: right;">@{M Group Insurance}</td>
 				</tr>
-				<!-- <tr>
-            <td>PERFORMACE LINKED
-              PAY(PLP)</td>
-            <td>______________</td>
-            <td>______________</td>
-            </tr> -->
+
 				<tr>
 
 				</tr>
 				<tr style="background-color: #dddddd;">
 					<td class="salary" style="width: 100%;">TOTAL COST TO COMPANY</td>
-					<td class="salary">{{totalCoastToCompany | number : '1.2-2'}}</td>
-					<td class="salary">{{mototalCoastToCompany | number : '1.2-2'}}</td>
+					<td class="salary" style="text-align: right;">@{Cost To Company}</td>
+					<td class="salary" style="text-align: right;">@{M Cost To Company}</td>
 				</tr>
 				<tr class="breakup">
-					<td class="sala1ry" colspan="3" style="text-align:center;">{{totalcost | uppercase}}</td>
+					<td class="sala1ry" colspan="3" style="text-align:center;">Rupees @{Salary} Only.</td>
 				</tr>
 			</table>
 			<br>
 			<p>The terms and conditions of this Appointment Letter are fully acceptable to me. I shall report
-				for duties on <span style="font-weight:bold;">{{viewdata?.dateOfJoining ?? "" |
-					date:'dd-MM-yyyy'}}</span>.</p>
+				for duties on <span style="font-weight:bold;">@{Date Of Joining}</span>.</p>
 
 			<p>Sincerely,</p>
 			<p>For <span style="font-weight:bold;">Envision Integrated Services Private Limited</span>.
 
 			<div style="display:flex;">
 				<div>
-					<!--<img src="{{'data:image/jpg;base64,' + viewdata1?.authorisedSignature}}"
-						style="height:100px;width:150px;margin-top:20px;" />-->
+
 					<p style="margin-top:10px;">Authorized Signature</p>
 
 
 				</div>
 
 
-				<div style="margin-left:500px;">
-					<p style="">Employee Name: <span style="font-weight:bold;font-size:0.83vw;">{{viewdata1?.name ?? ""
-							| titlecase}}</span></p>
+				<div style="margin-left:300px;">
+					<p style="">Employee Name: <span style="font-weight:bold;font-size:0.83vw;">@{Name}</span></p>
 
-					<!--<img src="{{'data:image/jpg;base64,' + viewdata?.sign}}"
-						style="height:100px;width:150px;margin-top:5px;" />-->
+
+
 					<p style="margin-top:-13px;">Employee Signature </p>
 
 

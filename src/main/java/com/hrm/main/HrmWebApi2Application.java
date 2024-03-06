@@ -8,7 +8,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
-import com.hrm.main.config.TwilioConfig;
+import com.hrm.config.TwilioConfig;
 import com.twilio.Twilio;
 
 import jakarta.annotation.PostConstruct;
