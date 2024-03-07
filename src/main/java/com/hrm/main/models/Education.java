@@ -40,11 +40,11 @@ public class Education {
 	private byte[] certificate;
 	@Transient
 	public String base64Data;
-	private DetailsSubmissionStatus educationSubmissionStatus = getEducationSubmissionStatus().Pending;
+	private DetailsSubmissionStatus educationSubmissionStatus = DetailsSubmissionStatus.Pending;
 
-	private ApprovalStatus hrExecutiveApprovalStatus = getHrExecutiveApprovalStatus().Pending;
+	private ApprovalStatus hrExecutiveApprovalStatus = ApprovalStatus.Pending;
 	private String hrExecutiveRemark;
-	private ApprovalStatus hrManagerApprovalStatus = getHrManagerApprovalStatus().Pending;
+	private ApprovalStatus hrManagerApprovalStatus = ApprovalStatus.Pending;
 	private String hrManagerRemark;
 
 	public Education() {

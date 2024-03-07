@@ -2,7 +2,11 @@ package com.hrm.main.payloads;
 
 import java.time.LocalDate;
 
-public class ResignationEditDto {
+import com.hrm.main.models.Helper.EnumCollection.NoticePeriod;
+import com.hrm.main.models.Helper.EnumCollection.ResignationStatus;
+
+public class UResignationEditDto {
+
 	private LocalDate resignationDate;
 
 	public LocalDate getResignationDate() {

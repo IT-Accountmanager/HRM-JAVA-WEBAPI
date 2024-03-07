@@ -126,7 +126,7 @@ public class EnumCollection {
 		Active, Inactive
 	}
 
-	public enum Category {
+	public enum EmployeeCategory {
 		Working, WalkOut, Terminated, Absconded, NotReporting, Bench, LongLeave, Contractual, ProbationPeriod,
 		TrainingPeriod, NoticePeriod
 	}
@@ -145,6 +145,10 @@ public class EnumCollection {
 	
 	public enum Relationship {
 		Mother,Father,Sister,Brother,Wife,Husband
+	}
+
+	public enum CategoryControl {
+		USER, MANAGER, ADMIN, SUPER_ADMIN
 	}
 
 }

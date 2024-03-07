@@ -186,9 +186,8 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	public Long createOnboarding(List<Onboarding> onboardings) {
 		try {
 			for (Onboarding singleOnboarding : onboardings) {
-				Onboarding onboarding = new Onboarding(); // Create a new instance for each iteration
+				Onboarding onboarding = new Onboarding();
 
-				// Set values from the input Onboarding
 				onboarding.setJobTitleDesignation(singleOnboarding.getJobTitleDesignation());
 				onboarding.setCandidateId(onboardingRepository.count() + 1);
 				onboarding.setCandidateName(singleOnboarding.getCandidateName());
@@ -227,8 +226,7 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
 
 		if (onboarding == null) {
-			// Handle the case where no Onboarding record is found for the given candidateId
-			// You might want to log this event or return a different message
+
 			return "No Onboarding record found for candidateId: " + candidateId;
 		}
 
@@ -236,10 +234,9 @@ public class OnboardingServiceImpl implements IOnboardingService {
 
 		try {
 			SendSMS.sendSMS("Hello");
-			// Log success if needed
 			return "Message sent successfully";
 		} catch (Exception e) {
-			e.printStackTrace(); // Log the exception details
+			e.printStackTrace();
 			return "Failed to send message";
 		}
 	}

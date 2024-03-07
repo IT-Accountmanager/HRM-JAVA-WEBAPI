@@ -5,12 +5,12 @@ import java.time.LocalDate;
 import com.hrm.main.models.Helper.EnumCollection.NoticePeriod;
 import com.hrm.main.models.Helper.EnumCollection.ResignationStatus;
 
-public class ResignationInfoDto {
+public class MResignationEditDto {
 
-	private LocalDate resignationDate;
 	private ResignationStatus resignationStatus;
-	private NoticePeriod noticePeriod;
+	private LocalDate resignationDate;
 	private LocalDate lastWorkingDay;
+	private NoticePeriod noticePeriod;
 
 	public LocalDate getResignationDate() {
 		return resignationDate;
@@ -28,20 +28,20 @@ public class ResignationInfoDto {
 		this.resignationStatus = resignationStatus;
 	}
 
-	public NoticePeriod getNoticePeriod() {
-		return noticePeriod;
-	}
-
-	public void setNoticePeriod(NoticePeriod noticePeriod) {
-		this.noticePeriod = noticePeriod;
-	}
-
 	public LocalDate getLastWorkingDay() {
 		return lastWorkingDay;
 	}
 
 	public void setLastWorkingDay(LocalDate lastWorkingDay) {
 		this.lastWorkingDay = lastWorkingDay;
+	}
+
+	public NoticePeriod getNoticePeriod() {
+		return noticePeriod;
+	}
+
+	public void setNoticePeriod(NoticePeriod noticePeriod) {
+		this.noticePeriod = noticePeriod;
 	}
 
 }

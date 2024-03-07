@@ -1,16 +1,23 @@
 package com.hrm.main.payloads;
 
+import com.hrm.main.models.Helper.EnumCollection.CategoryControl;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.Designation;
+import com.hrm.main.models.Helper.EnumCollection.WorkLocation;
 
 public class WorkInfoDto {
 
 	private Designation designation;
 	private Departments department;
 	private Departments.Department subDepartment;
+
 	// private String assignTo;
-	private String workLocation;
+//	private String workLocation;
 	private long candidateId;
+	
+	private CategoryControl categoryControl;
+	private WorkLocation workLocation;
+
 
 	public Designation getDesignation() {
 		return designation;
@@ -39,22 +46,24 @@ public class WorkInfoDto {
 		this.department = department;
 	}
 
-	/*
-	 * public String getAssignTo() { return assignTo; }
-	 * 
-	 * public void setAssignTo(String assignTo) { this.assignTo = assignTo; }
-	 */
-
-	public String getWorkLocation() {
-		return workLocation;
+	public CategoryControl getCategoryControl() {
+		return categoryControl;
 	}
 
-	public void setWorkLocation(String workLocation) {
-		this.workLocation = workLocation;
+	public void setCategoryControl(CategoryControl categoryControl) {
+		this.categoryControl = categoryControl;
 	}
 
 	public Departments.Department getSubDepartment() {
 		return subDepartment;
+	}
+
+	public WorkLocation getWorkLocation() {
+		return workLocation;
+	}
+
+	public void setWorkLocation(WorkLocation workLocation) {
+		this.workLocation = workLocation;
 	}
 
 	public void setSubDepartment(Departments.Department subDepartment) {

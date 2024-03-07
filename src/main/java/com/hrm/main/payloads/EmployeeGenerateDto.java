@@ -5,13 +5,14 @@ import java.time.LocalDate;
 import com.hrm.main.models.Helper.EnumCollection.Departments;
 import com.hrm.main.models.Helper.EnumCollection.Designation;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
+import com.hrm.main.models.Helper.EnumCollection.WorkLocation;
 
 public class EmployeeGenerateDto {
 
 	private String employeeId;
 	private long candidateId;
 	private String name;
-	private String workLocation;
+	private WorkLocation workLocation;
 	private Designation designation;
 	private float serviceCommitment;
 	private long serviceBreakAmount;
@@ -65,11 +66,11 @@ public class EmployeeGenerateDto {
 		this.name = name;
 	}
 
-	public String getWorkLocation() {
+	public WorkLocation getWorkLocation() {
 		return workLocation;
 	}
 
-	public void setWorkLocation(String workLocation) {
+	public void setWorkLocation(WorkLocation workLocation) {
 		this.workLocation = workLocation;
 	}
 

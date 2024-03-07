@@ -4,15 +4,17 @@ import java.time.Duration;
 import java.time.LocalDate;
 
 import com.hrm.main.models.Helper.EnumCollection.AppraisalQuater;
+import com.hrm.main.models.Helper.EnumCollection.EmployeeCategory;
 import com.hrm.main.models.Helper.EnumCollection.EmployeeStatus;
 import com.hrm.main.models.Helper.EnumCollection.ProbationPeriod;
 
 public class BasicInfoDto {
 
-	private EmployeeStatus employeeStatus;
-	private ProbationPeriod probationPeriod;
 	private LocalDate dateOfJoining;
+	private ProbationPeriod probationPeriod;
 	private Duration workExperience;
+	private EmployeeStatus employeeStatus;
+	private EmployeeCategory employeeCategory;
 
 	public BasicInfoDto() {
 		super();
@@ -48,6 +50,14 @@ public class BasicInfoDto {
 
 	public void setWorkExperience(Duration workExperience) {
 		this.workExperience = workExperience;
+	}
+
+	public EmployeeCategory getEmployeeCategory() {
+		return employeeCategory;
+	}
+
+	public void setEmployeeCategory(EmployeeCategory employeeCategory) {
+		this.employeeCategory = employeeCategory;
 	}
 
 }
