@@ -1,4 +1,4 @@
-package com.hrm.Helper;
+package com.hrm.helper;
 
 /*import java.io.FileWriter;
 import java.io.IOException;

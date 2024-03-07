@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.hrm.Helper.EnumCollection.Designation;
-import com.hrm.Helper.EnumCollection.Departments.Department;
+import com.hrm.helper.EnumCollection.Designation;
+import com.hrm.helper.EnumCollection.Departments.Department;
 import com.hrm.models.Work;
 import com.hrm.payloads.WorkDto;
 import com.hrm.payloads.WorkInfoDto;

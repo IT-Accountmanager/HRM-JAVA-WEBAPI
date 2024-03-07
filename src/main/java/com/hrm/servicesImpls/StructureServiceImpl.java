@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hrm.Helper.EnumCollection.Departments;
+import com.hrm.helper.EnumCollection.Departments;
 import com.hrm.models.Employee;
 import com.hrm.repositories.IEmployeeRepository;
 import com.hrm.services.IStructureService;

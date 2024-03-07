@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hrm.Helper.EnumCollection;
-import com.hrm.Helper.EnumCollection.CandidatesStatus;
-import com.hrm.Helper.EnumCollection.HrSubmission;
+import com.hrm.helper.EnumCollection;
+import com.hrm.helper.EnumCollection.CandidatesStatus;
+import com.hrm.helper.EnumCollection.HrSubmission;
 import com.hrm.models.Onboarding;
 import com.hrm.models.PersonalDetails;
 import com.hrm.models.Profile;

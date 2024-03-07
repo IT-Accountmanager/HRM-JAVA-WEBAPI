@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hrm.Helper.EnumCollection.ApprovalStatus;
-import com.hrm.Helper.EnumCollection.Designation;
-import com.hrm.Helper.EnumCollection.DetailsSubmissionStatus;
-import com.hrm.Helper.EnumCollection.Departments.Department;
+import com.hrm.helper.EnumCollection.ApprovalStatus;
+import com.hrm.helper.EnumCollection.Designation;
+import com.hrm.helper.EnumCollection.DetailsSubmissionStatus;
+import com.hrm.helper.EnumCollection.Departments.Department;
 import com.hrm.models.Onboarding;
 import com.hrm.models.Work;
 import com.hrm.payloads.WorkStatusResponse;

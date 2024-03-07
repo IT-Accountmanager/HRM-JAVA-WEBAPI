@@ -4,10 +4,10 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
 
-import com.hrm.Helper.EnumCollection.AppraisalQuater;
-import com.hrm.Helper.EnumCollection.EmployeeCategory;
-import com.hrm.Helper.EnumCollection.EmployeeStatus;
-import com.hrm.Helper.EnumCollection.ProbationPeriod;
+import com.hrm.helper.EnumCollection.AppraisalQuater;
+import com.hrm.helper.EnumCollection.EmployeeCategory;
+import com.hrm.helper.EnumCollection.EmployeeStatus;
+import com.hrm.helper.EnumCollection.ProbationPeriod;
 
 public class BasicInfoDto {
 

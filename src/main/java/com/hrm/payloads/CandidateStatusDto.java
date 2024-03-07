@@ -1,6 +1,6 @@
 package com.hrm.payloads;
 
-import com.hrm.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.helper.EnumCollection.CandidatesStatus;
 
 public class CandidateStatusDto {
 

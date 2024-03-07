@@ -6,10 +6,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 
-import com.hrm.Helper.EnumCollection.ApprovalStatus;
-import com.hrm.Helper.EnumCollection.AttendanceStatus;
-import com.hrm.Helper.EnumCollection.Half;
-import com.hrm.Helper.EnumCollection.LeaveType;
+import com.hrm.helper.EnumCollection.ApprovalStatus;
+import com.hrm.helper.EnumCollection.AttendanceStatus;
+import com.hrm.helper.EnumCollection.Half;
+import com.hrm.helper.EnumCollection.LeaveType;
 import com.hrm.payloads.AttendanceEmployeeDto;
 
 import jakarta.persistence.Entity;

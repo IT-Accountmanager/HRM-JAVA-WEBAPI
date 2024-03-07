@@ -2,8 +2,8 @@ package com.hrm.payloads;
 
 import java.time.LocalDate;
 
-import com.hrm.Helper.EnumCollection.ApprovalStatus;
-import com.hrm.Helper.EnumCollection.DetailsSubmissionStatus;
+import com.hrm.helper.EnumCollection.ApprovalStatus;
+import com.hrm.helper.EnumCollection.DetailsSubmissionStatus;
 
 public class AgreementDto {
 	private int agreementId;

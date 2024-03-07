@@ -3,8 +3,8 @@ package com.hrm.services;
 
 import java.util.List;
 
-import com.hrm.Helper.EnumCollection.CandidatesStatus;
-import com.hrm.Helper.EnumCollection.HrSubmission;
+import com.hrm.helper.EnumCollection.CandidatesStatus;
+import com.hrm.helper.EnumCollection.HrSubmission;
 import com.hrm.models.Onboarding;
 import com.hrm.models.PersonalDetails;
 import com.hrm.models.Profile;

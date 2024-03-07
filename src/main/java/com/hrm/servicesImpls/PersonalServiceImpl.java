@@ -6,7 +6,7 @@ import java.util.Base64.Decoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hrm.Helper.EnumCollection.DetailsSubmissionStatus;
+import com.hrm.helper.EnumCollection.DetailsSubmissionStatus;
 import com.hrm.models.Onboarding;
 import com.hrm.models.Personal;
 import com.hrm.payloads.PersonalStatusResponse;

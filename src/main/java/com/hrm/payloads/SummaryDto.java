@@ -3,14 +3,14 @@ package com.hrm.payloads;
 import java.time.Duration;
 import java.time.LocalDate;
 
-import com.hrm.Helper.EnumCollection.AppraisalQuater;
-import com.hrm.Helper.EnumCollection.BloodGroup;
-import com.hrm.Helper.EnumCollection.CategoryControl;
-import com.hrm.Helper.EnumCollection.Departments;
-import com.hrm.Helper.EnumCollection.Designation;
-import com.hrm.Helper.EnumCollection.EmployeeCategory;
-import com.hrm.Helper.EnumCollection.EmployeeStatus;
-import com.hrm.Helper.EnumCollection.WorkLocation;
+import com.hrm.helper.EnumCollection.AppraisalQuater;
+import com.hrm.helper.EnumCollection.BloodGroup;
+import com.hrm.helper.EnumCollection.CategoryControl;
+import com.hrm.helper.EnumCollection.Departments;
+import com.hrm.helper.EnumCollection.Designation;
+import com.hrm.helper.EnumCollection.EmployeeCategory;
+import com.hrm.helper.EnumCollection.EmployeeStatus;
+import com.hrm.helper.EnumCollection.WorkLocation;
 
 public class SummaryDto {
 	private long candidateId;

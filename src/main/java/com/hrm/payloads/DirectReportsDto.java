@@ -2,8 +2,8 @@ package com.hrm.payloads;
 
 import java.time.LocalDate;
 
-import com.hrm.Helper.EnumCollection.Departments;
-import com.hrm.Helper.EnumCollection.Designation;
+import com.hrm.helper.EnumCollection.Departments;
+import com.hrm.helper.EnumCollection.Designation;
 
 public class DirectReportsDto {
 

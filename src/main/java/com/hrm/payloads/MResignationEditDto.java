@@ -2,8 +2,8 @@ package com.hrm.payloads;
 
 import java.time.LocalDate;
 
-import com.hrm.Helper.EnumCollection.NoticePeriod;
-import com.hrm.Helper.EnumCollection.ResignationStatus;
+import com.hrm.helper.EnumCollection.NoticePeriod;
+import com.hrm.helper.EnumCollection.ResignationStatus;
 
 public class MResignationEditDto {
 

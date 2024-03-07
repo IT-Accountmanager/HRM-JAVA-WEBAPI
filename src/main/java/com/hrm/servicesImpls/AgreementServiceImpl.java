@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails.Address;
 import org.springframework.stereotype.Service;
 
-import com.hrm.Helper.EnumCollection.ApprovalStatus;
-import com.hrm.Helper.EnumCollection.DetailsSubmissionStatus;
+import com.hrm.helper.EnumCollection.ApprovalStatus;
+import com.hrm.helper.EnumCollection.DetailsSubmissionStatus;
 import com.hrm.models.Agreement;
 import com.hrm.models.Onboarding;
 import com.hrm.models.PermanentAddress;

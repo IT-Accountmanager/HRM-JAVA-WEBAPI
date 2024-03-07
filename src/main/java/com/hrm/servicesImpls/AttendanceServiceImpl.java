@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hrm.Helper.EnumCollection.AttendanceStatus;
+import com.hrm.helper.EnumCollection.AttendanceStatus;
 import com.hrm.models.Attendance;
 import com.hrm.models.Employee;
 import com.hrm.payloads.ApplyLeaveDto;

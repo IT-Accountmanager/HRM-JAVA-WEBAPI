@@ -1,7 +1,7 @@
 package com.hrm.models;
 
 
-import com.hrm.Helper.EnumCollection.ShiftRule;
+import com.hrm.helper.EnumCollection.ShiftRule;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

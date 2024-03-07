@@ -2,8 +2,8 @@ package com.hrm.payloads;
 
 import java.time.LocalDate;
 
-import com.hrm.Helper.EnumCollection.CandidatesStatus;
-import com.hrm.Helper.EnumCollection.WorkLocation;
+import com.hrm.helper.EnumCollection.CandidatesStatus;
+import com.hrm.helper.EnumCollection.WorkLocation;
 
 public class OnboardingDto {
 	private String jobTitleDesignation;

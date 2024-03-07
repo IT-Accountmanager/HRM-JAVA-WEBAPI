@@ -2,7 +2,7 @@ package com.hrm.services;
 
 import java.util.List;
 
-import com.hrm.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.helper.EnumCollection.CandidatesStatus;
 import com.hrm.models.BackgroundVerification;
 import com.hrm.models.HRExecutive;
 import com.hrm.models.Onboarding;

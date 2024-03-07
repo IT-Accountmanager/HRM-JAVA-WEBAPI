@@ -1,6 +1,6 @@
 package com.hrm.payloads;
 
-import com.hrm.Helper.EnumCollection.ApprovalStatus;
+import com.hrm.helper.EnumCollection.ApprovalStatus;
 
 public class HrManagerPersonalApprovalDto {
 

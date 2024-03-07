@@ -1,6 +1,6 @@
 package com.hrm.payloads;
 
-import com.hrm.Helper.EnumCollection.EmployeeStatus;
+import com.hrm.helper.EnumCollection.EmployeeStatus;
 
 public class AppointmentLetterReleaseOrRejectDto {
 

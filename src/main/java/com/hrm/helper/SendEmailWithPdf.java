@@ -49,5 +49,3 @@
  * 
  * sendEmailWithAttachment(toEmail, subject, body, pdfBytes); } }
  */
-package com;
-

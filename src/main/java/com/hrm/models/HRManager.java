@@ -1,7 +1,7 @@
 package com.hrm.models;
 
-import com.hrm.Helper.EnumCollection.CandidatesStatus;
-import com.hrm.Helper.EnumCollection.Designation;
+import com.hrm.helper.EnumCollection.CandidatesStatus;
+import com.hrm.helper.EnumCollection.Designation;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

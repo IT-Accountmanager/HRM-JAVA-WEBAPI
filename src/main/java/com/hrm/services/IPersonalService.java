@@ -1,6 +1,6 @@
 package com.hrm.services;
 
-import com.hrm.Helper.EnumCollection.DetailsSubmissionStatus;
+import com.hrm.helper.EnumCollection.DetailsSubmissionStatus;
 import com.hrm.models.Personal;
 import com.hrm.models.PersonalDetails;
 import com.hrm.payloads.PersonalStatusResponse;

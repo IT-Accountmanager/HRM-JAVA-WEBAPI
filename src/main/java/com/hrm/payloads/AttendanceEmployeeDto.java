@@ -6,8 +6,8 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.util.Optional;
 
-import com.hrm.Helper.EnumCollection.ApprovalStatus;
-import com.hrm.Helper.EnumCollection.AttendanceStatus;
+import com.hrm.helper.EnumCollection.ApprovalStatus;
+import com.hrm.helper.EnumCollection.AttendanceStatus;
 
 public class AttendanceEmployeeDto {
 

@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hrm.Helper.EnumCollection.BloodGroup;
-import com.hrm.Helper.EnumCollection.Departments;
-import com.hrm.Helper.EnumCollection.EmployeeStatus;
+import com.hrm.helper.EnumCollection.BloodGroup;
+import com.hrm.helper.EnumCollection.Departments;
+import com.hrm.helper.EnumCollection.EmployeeStatus;
 import com.hrm.models.PersonalDetails;
 import com.hrm.services.IPersonalDetailsService;
 

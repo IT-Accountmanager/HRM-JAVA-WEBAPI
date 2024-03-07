@@ -2,10 +2,10 @@ package com.hrm.payloads;
 
 import java.time.LocalDate;
 
-import com.hrm.Helper.EnumCollection.Departments;
-import com.hrm.Helper.EnumCollection.Designation;
-import com.hrm.Helper.EnumCollection.EmployeeStatus;
-import com.hrm.Helper.EnumCollection.WorkLocation;
+import com.hrm.helper.EnumCollection.Departments;
+import com.hrm.helper.EnumCollection.Designation;
+import com.hrm.helper.EnumCollection.EmployeeStatus;
+import com.hrm.helper.EnumCollection.WorkLocation;
 
 public class EmployeeGenerateDto {
 

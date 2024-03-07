@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hrm.Helper.CtcBreakup;
-import com.hrm.Helper.PDF;
-import com.hrm.Helper.EnumCollection.CandidatesStatus;
-import com.hrm.Helper.EnumCollection.Departments;
-import com.hrm.Helper.EnumCollection.EmployeeStatus;
+import com.hrm.helper.CtcBreakup;
+import com.hrm.helper.PDF;
+import com.hrm.helper.EnumCollection.CandidatesStatus;
+import com.hrm.helper.EnumCollection.Departments;
+import com.hrm.helper.EnumCollection.EmployeeStatus;
 import com.hrm.models.HRManager;
 import com.hrm.models.Onboarding;
 import com.hrm.payloads.AuthorizedSignDto;

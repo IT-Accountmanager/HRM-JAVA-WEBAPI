@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.hrm.Helper.EnumCollection;
-import com.hrm.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.helper.EnumCollection;
+import com.hrm.helper.EnumCollection.CandidatesStatus;
 import com.hrm.models.Onboarding;
 import com.hrm.models.RegisterUserEntity;
 

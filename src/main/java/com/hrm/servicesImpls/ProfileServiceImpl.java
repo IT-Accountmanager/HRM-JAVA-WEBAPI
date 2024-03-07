@@ -7,9 +7,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hrm.Helper.EnumCollection.CandidatesStatus;
-import com.hrm.Helper.EnumCollection.DetailsSubmissionStatus;
-import com.hrm.Helper.EnumCollection.HrSubmission;
+import com.hrm.helper.EnumCollection.CandidatesStatus;
+import com.hrm.helper.EnumCollection.DetailsSubmissionStatus;
+import com.hrm.helper.EnumCollection.HrSubmission;
 import com.hrm.models.Agreement;
 import com.hrm.models.Education;
 import com.hrm.models.Family;

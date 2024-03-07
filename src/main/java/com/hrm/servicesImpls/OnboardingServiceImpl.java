@@ -13,12 +13,13 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.hrm.Helper.SendSMS;
-import com.hrm.Helper.EnumCollection.ApprovalStatus;
-import com.hrm.Helper.EnumCollection.CandidatesStatus;
-import com.hrm.Helper.EnumCollection.HrSubmission;
-import com.hrm.Helper.EnumCollection.SmsStatus;
-import com.hrm.config.TwilioConfig;
+import com.hrm.helper.SendSMS;
+import com.hrm.helper.EnumCollection.ApprovalStatus;
+import com.hrm.helper.EnumCollection.CandidatesStatus;
+import com.hrm.helper.EnumCollection.HrSubmission;
+import com.hrm.helper.EnumCollection.SmsStatus;
+//import com.hrm.config.TwilioConfig;
+import com.hrm.models.Attendance;
 import com.hrm.models.Email;
 import com.hrm.models.Employee;
 import com.hrm.models.Onboarding;
@@ -31,8 +32,10 @@ import com.hrm.payloads.OnboardingDto;
 import com.hrm.payloads.OnboardingEditDto;
 import com.hrm.payloads.PasswordDto;
 import com.hrm.payloads.SMSResponseDto;
+import com.hrm.payloads.UserLoginResponseDto;
 import com.hrm.payloads.VerifyOtpDto;
 import com.hrm.payloads.WelcomeDto;
+import com.hrm.repositories.IAttendanceRepository;
 import com.hrm.repositories.IEmployeeRepository;
 import com.hrm.repositories.IOnboardingRepository;
 import com.hrm.repositories.IProfileRepository;
@@ -51,14 +54,18 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	IProfileRepository profileRepository;
 	@Autowired
 	ModelMapper modelMapper;
-	@Autowired
-	TwilioConfig twilioConfig;
+	/*
+	 * @Autowired TwilioConfig twilioConfig;
+	 */
 	@Autowired
 	IEmployeeRepository employeeRepository;
 	@Autowired
 	JavaMailSender javaMailSender;
 	@Value("${spring.mail.username}")
 	private String sender;
+
+	@Autowired
+	IAttendanceRepository attendanceRepository;
 
 	/*
 	 * @Override public String createOnboarding(Onboarding onboarding) { try {
@@ -313,12 +320,12 @@ public class OnboardingServiceImpl implements IOnboardingService {
 			String name = candidate.getCandidateName();
 
 			PhoneNumber to = new PhoneNumber("+91" + String.valueOf(candidatePhoneNumber));
-			PhoneNumber from = new PhoneNumber(twilioConfig.getPhoneNumber());
+			// PhoneNumber from = new PhoneNumber(twilioConfig.getPhoneNumber());
 
 			String smsBody = "Dear " + name + "," + "\n\r" + "\n\r"
 					+ "Your profile has been selected for Envision Integrated Services. Please click the link below and fill your information. "
 					+ "\n\r" + "\n\r" + "Link : " + link;
-			Message message = Message.creator(to, from, smsBody).create();
+			// Message message = Message.creator(to, from, smsBody).create();
 
 			smsResponseDto = new SMSResponseDto(SmsStatus.DELIVERED, smsBody);
 		} catch (Exception e) {
@@ -340,7 +347,7 @@ public class OnboardingServiceImpl implements IOnboardingService {
 			long candidatePhoneNumber = candidate.getContactNumber();
 
 			PhoneNumber to = new PhoneNumber("+91" + String.valueOf(candidatePhoneNumber));
-			PhoneNumber from = new PhoneNumber(twilioConfig.getPhoneNumber());
+			// PhoneNumber from = new PhoneNumber(twilioConfig.getPhoneNumber());
 			int randomPin = (int) (Math.random() * 999999) + 100000;
 			String otp = String.valueOf(randomPin);
 			LocalDateTime requestTime = LocalDateTime.now();
@@ -358,9 +365,9 @@ public class OnboardingServiceImpl implements IOnboardingService {
 
 			System.out.println("_____________________________________________");
 
-			Message.creator(to, from, smsBody).create();
+		//	Message.creator(to, //from, smsBody).create();
 
-			smsResponseDto = new SMSResponseDto(SmsStatus.DELIVERED, smsBody);
+			//smsResponseDto = new SMSResponseDto(SmsStatus.DELIVERED, smsBody);
 		} catch (Exception e) {
 			e.printStackTrace();
 			smsResponseDto = new SMSResponseDto(SmsStatus.FAILED, e.getMessage());
@@ -469,7 +476,10 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	 */
 
 	@Override
-	public String authenticate(AuthenticateUserDto authenticateUserDto) {
+	public UserLoginResponseDto authenticate(AuthenticateUserDto authenticateUserDto) {
+
+		UserLoginResponseDto userLoginResponseDto = new UserLoginResponseDto();
+
 		String username = authenticateUserDto.getUsername();
 		String password = authenticateUserDto.getPassword();
 
@@ -485,19 +495,29 @@ public class OnboardingServiceImpl implements IOnboardingService {
 				long contactNumber = Long.parseLong(username);
 				user = onboardingRepository.findByEmailIdOrContactNumber("", contactNumber);
 			} catch (NumberFormatException e) {
-				return "Invalid username format";
+				return null;
+				// return "Invalid username format";
 			}
 		}
 
 		if (user != null && user.getPassword().equals(password)) {
-			return "Authentication successful and candidate Id is : "
-					+ user.getCandidateId()/*
-											 * + "\\r\\n" + "Employee Id : " + employee.getEmployeeId() + "\\r\\n" +
-											 * "Employee Name :" + employee.getName()
-											 */;
+
+			Employee employee = this.employeeRepository.findByCandidateId(user.getCandidateId());
+
+			LocalDate today = LocalDate.now();
+			Attendance toDaysAttendance = this.attendanceRepository.findByEmployeeIdAndDate(employee.getEmployeeId(),
+					today);
+
+			if (toDaysAttendance != null) {
+
+			}
+
+			// return "Authentication successful and candidate Id is : " +
+			// user.getCandidateId();
 		} else {
-			return "Authentication failed";
+			// return "Authentication failed";
 		}
+		return null;
 	}
 
 	private boolean isValidEmail(String email) {

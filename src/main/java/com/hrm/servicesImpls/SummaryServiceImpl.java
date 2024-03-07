@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hrm.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.helper.EnumCollection.CandidatesStatus;
 import com.hrm.models.BankDetails;
 import com.hrm.models.DocumentDetails;
 import com.hrm.models.Education;

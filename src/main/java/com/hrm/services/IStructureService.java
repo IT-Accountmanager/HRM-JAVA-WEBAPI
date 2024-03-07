@@ -2,7 +2,7 @@ package com.hrm.services;
 
 import java.util.List;
 
-import com.hrm.Helper.EnumCollection.Departments;
+import com.hrm.helper.EnumCollection.Departments;
 
 public interface IStructureService {
 

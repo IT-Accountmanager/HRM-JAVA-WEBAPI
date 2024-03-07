@@ -2,8 +2,8 @@ package com.hrm.services;
 
 import java.util.List;
 
-import com.hrm.Helper.EnumCollection.CandidatesStatus;
-import com.hrm.Helper.EnumCollection.EmployeeStatus;
+import com.hrm.helper.EnumCollection.CandidatesStatus;
+import com.hrm.helper.EnumCollection.EmployeeStatus;
 import com.hrm.payloads.BasicInfoDto;
 import com.hrm.payloads.EmployeeGenerateDto;
 import com.hrm.payloads.EmployeeViewDto;

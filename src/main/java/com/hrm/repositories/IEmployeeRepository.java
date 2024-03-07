@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.hrm.Helper.EnumCollection.Departments;
-import com.hrm.Helper.EnumCollection.EmployeeStatus;
+import com.hrm.helper.EnumCollection.Departments;
+import com.hrm.helper.EnumCollection.EmployeeStatus;
 import com.hrm.models.Employee;
 import com.hrm.models.Onboarding;
 

@@ -5,16 +5,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hrm.Helper.EnumCollection.CategoryControl;
-import com.hrm.Helper.EnumCollection.CourseType;
-import com.hrm.Helper.EnumCollection.EmployeeCategory;
-import com.hrm.Helper.EnumCollection.Gender;
-import com.hrm.Helper.EnumCollection.MaritalStatus;
-import com.hrm.Helper.EnumCollection.NoticePeriod;
-import com.hrm.Helper.EnumCollection.Relationship;
-import com.hrm.Helper.EnumCollection.Resignation;
-import com.hrm.Helper.EnumCollection.ShiftRule;
-import com.hrm.Helper.EnumCollection.WeekRule;
+import com.hrm.helper.EnumCollection.CategoryControl;
+import com.hrm.helper.EnumCollection.CourseType;
+import com.hrm.helper.EnumCollection.EmployeeCategory;
+import com.hrm.helper.EnumCollection.Gender;
+import com.hrm.helper.EnumCollection.MaritalStatus;
+import com.hrm.helper.EnumCollection.NoticePeriod;
+import com.hrm.helper.EnumCollection.Relationship;
+import com.hrm.helper.EnumCollection.Resignation;
+import com.hrm.helper.EnumCollection.ShiftRule;
+import com.hrm.helper.EnumCollection.WeekRule;
 
 @CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
 @RestController

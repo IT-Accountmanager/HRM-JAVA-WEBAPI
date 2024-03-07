@@ -2,7 +2,7 @@ package com.hrm.models;
 
 import java.time.LocalDate;
 
-import com.hrm.Helper.EnumCollection.BloodGroup;
+import com.hrm.helper.EnumCollection.BloodGroup;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,6 +1,6 @@
 package com.hrm.payloads;
 
-import com.hrm.Helper.EnumCollection.DetailsSubmissionStatus;
+import com.hrm.helper.EnumCollection.DetailsSubmissionStatus;
 
 public class FamilyStatusResponse {
 	private DetailsSubmissionStatus status;

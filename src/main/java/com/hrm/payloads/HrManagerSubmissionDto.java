@@ -1,6 +1,6 @@
 package com.hrm.payloads;
 
-import com.hrm.Helper.EnumCollection.HrSubmission;
+import com.hrm.helper.EnumCollection.HrSubmission;
 
 public class HrManagerSubmissionDto {
 

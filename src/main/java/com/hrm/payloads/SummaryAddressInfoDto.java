@@ -2,7 +2,7 @@ package com.hrm.payloads;
 
 import java.time.LocalDate;
 
-import com.hrm.Helper.EnumCollection.HouseType;
+import com.hrm.helper.EnumCollection.HouseType;
 
 public class SummaryAddressInfoDto {
 

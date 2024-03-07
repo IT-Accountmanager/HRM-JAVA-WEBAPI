@@ -2,7 +2,7 @@ package com.hrm.payloads;
 
 import java.time.LocalDate;
 
-import com.hrm.Helper.EnumCollection.BloodGroup;
+import com.hrm.helper.EnumCollection.BloodGroup;
 
 public class SummaryPersonalInfoDto {
 

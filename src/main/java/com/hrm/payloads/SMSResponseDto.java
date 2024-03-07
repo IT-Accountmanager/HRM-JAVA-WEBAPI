@@ -1,6 +1,6 @@
 package com.hrm.payloads;
 
-import com.hrm.Helper.EnumCollection.SmsStatus;
+import com.hrm.helper.EnumCollection.SmsStatus;
 
 public class SMSResponseDto {
 

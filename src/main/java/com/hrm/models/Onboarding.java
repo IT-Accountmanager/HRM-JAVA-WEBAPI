@@ -6,11 +6,11 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-import com.hrm.Helper.EnumCollection.CandidatesStatus;
-import com.hrm.Helper.EnumCollection.Departments;
-import com.hrm.Helper.EnumCollection.Designation;
-import com.hrm.Helper.EnumCollection.HrSubmission;
-import com.hrm.Helper.EnumCollection.WorkLocation;
+import com.hrm.helper.EnumCollection.CandidatesStatus;
+import com.hrm.helper.EnumCollection.Departments;
+import com.hrm.helper.EnumCollection.Designation;
+import com.hrm.helper.EnumCollection.HrSubmission;
+import com.hrm.helper.EnumCollection.WorkLocation;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

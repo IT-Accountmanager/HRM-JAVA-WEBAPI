@@ -2,7 +2,7 @@ package com.hrm.payloads;
 
 import java.time.LocalDate;
 
-import com.hrm.Helper.EnumCollection.CandidatesStatus;
+import com.hrm.helper.EnumCollection.CandidatesStatus;
 
 public class HrManagerDto {
 	private String jobTitle;

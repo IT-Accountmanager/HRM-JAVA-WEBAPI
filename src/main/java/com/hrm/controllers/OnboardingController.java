@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hrm.Helper.EnumCollection.Departments;
+import com.hrm.helper.EnumCollection.Departments;
 import com.hrm.models.Onboarding;
 import com.hrm.payloads.AuthenticateUserDto;
 import com.hrm.payloads.CandidateStatusDto;
@@ -23,6 +23,7 @@ import com.hrm.payloads.OnboardingDto;
 import com.hrm.payloads.OnboardingEditDto;
 import com.hrm.payloads.PasswordDto;
 import com.hrm.payloads.SMSResponseDto;
+import com.hrm.payloads.UserLoginResponseDto;
 import com.hrm.payloads.VerifyOtpDto;
 import com.hrm.payloads.WelcomeDto;
 import com.hrm.services.IOnboardingService;
@@ -128,22 +129,19 @@ public class OnboardingController {
 	 * return new ResponseEntity<AuthenticateUserDto>(result, HttpStatus.OK); }
 	 */
 
-	@PostMapping("authenticate")
-	public ResponseEntity<String> authenticate(@RequestBody AuthenticateUserDto authenticateUserDto) {
-		String result = null;
-
-		if (authenticateUserDto != null) {
-			result = this.onboardingService.authenticate(authenticateUserDto);
-
-			if (result != null) {
-				return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
-			} else {
-				return new ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED);
-			}
-		} else {
-			return new ResponseEntity<>("Invalid input", HttpStatus.BAD_REQUEST);
-		}
-	}
+	/*
+	 * @PostMapping("authenticate") public ResponseEntity<UserLoginResponseDto>
+	 * authenticate(@RequestBody AuthenticateUserDto authenticateUserDto) { String
+	 * result = null;
+	 * 
+	 * if (authenticateUserDto != null) { result =
+	 * this.onboardingService.authenticate(authenticateUserDto);
+	 * 
+	 * if (result != null) { return new ResponseEntity<>(result,
+	 * HttpStatus.ACCEPTED); } else { return new
+	 * ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED); } } else
+	 * { return new ResponseEntity<>("Invalid input", HttpStatus.BAD_REQUEST); } }
+	 */
 
 	@GetMapping("employee/{employeeId}")
 	public ResponseEntity<WelcomeDto> getEmployee(@PathVariable String employeeId) {

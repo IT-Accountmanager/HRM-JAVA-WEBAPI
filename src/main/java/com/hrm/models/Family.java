@@ -2,8 +2,8 @@ package com.hrm.models;
 
 import java.time.LocalDate;
 
-import com.hrm.Helper.EnumCollection.ApprovalStatus;
-import com.hrm.Helper.EnumCollection.DetailsSubmissionStatus;
+import com.hrm.helper.EnumCollection.ApprovalStatus;
+import com.hrm.helper.EnumCollection.DetailsSubmissionStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
