@@ -98,7 +98,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 		// Return a message with the check-out time
 		return "Checked out Employee Id " + employeeId + " at " + formattedOutTime;
-	}
+	}//
 
 	@Override
 	public List<Attendance> allAttendance(String employeeId) {
