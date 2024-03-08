@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -31,25 +32,31 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	IEmployeeRepository employeeRepository;
 
 	@Override
-	public String clockIn(String employeeId) {
+	public String clockIn(String employeeId, LocalDate date) {
+	    // Check if the employee has already clocked in for the specified date
+	    Attendance existingAttendance = attendanceRepository.findByEmployeeIdAndDate(employeeId, date);
 
-		Attendance existingAttendance = this.attendanceRepository.findByEmployeeIdAndDate(employeeId, LocalDate.now());
+	    if (existingAttendance != null) {
+	        return "Clock-in record already exists for Employee Id : " + employeeId + " on " + date;
+	    } else {
+	        // Get the current time
+	        LocalTime currentTime = LocalTime.now();
 
-		if (existingAttendance != null) {
-			return "Clock-in record already exist for Employee Id : " + employeeId;
-		} else {
-			Attendance attendance = new Attendance();
+	        // Create a new attendance record
+	        Attendance attendance = new Attendance();
+	        attendance.setEmployeeId(employeeId);
+	        attendance.setMonth(LocalDateTime.now().getMonth());
+	        attendance.setDate(date);
+	        attendance.setInTime(currentTime);
+	        attendance.setAttendanceStatus(AttendanceStatus.Present);
 
-			attendance.setEmployeeId(employeeId);
-			attendance.setMonth(LocalDateTime.now().getMonth());
-			attendance.setDate(LocalDate.now());
-			attendance.setInTime(LocalTime.now());
-			attendance.setAttendanceStatus(AttendanceStatus.Present);
-			this.attendanceRepository.save(attendance);
-			return "attendence added of Employee Id : " + employeeId;
-		}
+	        // Save the attendance record
+	        attendanceRepository.save(attendance);
 
+	        return "Attendance added for Employee Id : " + employeeId + " on " + date;
+	    }
 	}
+
 
 	@Override
 	public String clockOut(String employeeId) {
@@ -167,6 +174,8 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	        return null;
 	    }
 	}
+
+
 
 
 

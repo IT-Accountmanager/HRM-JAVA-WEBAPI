@@ -135,6 +135,8 @@ public class OnboardingController {
 
 		if (authenticateUserDto != null) {
 			result = this.onboardingService.authenticate(authenticateUserDto);
+			
+			
 
 			if (result != null) {
 				return new ResponseEntity<>(result, HttpStatus.ACCEPTED);

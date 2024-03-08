@@ -467,12 +467,12 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		String password = authenticateUserDto.getPassword();
 
 		Onboarding user = null;
-		// Employee employee = null;
+		 Employee employee = null;
 
 		if (isValidEmail(username)) {
 			user = onboardingRepository.findByEmailIdOrContactNumber(username, 0L);
-			// long candidateId = user.getCandidateId();
-			// employee = this.employeeRepository.findByCandidateId(candidateId);
+			 long candidateId = user.getCandidateId();
+			 employee = this.employeeRepository.findByCandidateId(candidateId);
 		} else {
 			try {
 				long contactNumber = Long.parseLong(username);
@@ -482,15 +482,21 @@ public class OnboardingServiceImpl implements IOnboardingService {
 			}
 		}
 
-		if (user != null && user.getPassword().equals(password)) {
-			return "Authentication successful and candidate Id is : "
-					+ user.getCandidateId()/*
-											 * + "\\r\\n" + "Employee Id : " + employee.getEmployeeId() + "\\r\\n" +
-											 * "Employee Name :" + employee.getName()
-											 */;
-		} else {
-			return "Authentication failed";
-		}
+if (user != null && user.getPassword().equals(password)) {
+			
+	Duration zeroDuration = Duration.ZERO;
+
+    
+    String formattedDuration = String.format("%02d:%02d:%02d",
+            zeroDuration.toHours(),
+            zeroDuration.toMinutesPart(),
+            zeroDuration.toSecondsPart());
+
+         return "Authentication successful and duration is: " + formattedDuration;
+    } 
+        else {
+         return "Authentication failed";
+   }
 	}
 
 	private boolean isValidEmail(String email) {

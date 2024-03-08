@@ -1,5 +1,6 @@
 package com.hrm.main.controllers;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,8 @@ public class AttendanceController {
 	// ----------------FOR CLOCK IN------------------
 	@PostMapping("/clockIn/{employeeId}")
 	public ResponseEntity<String> addInTime(@PathVariable String employeeId) {
-		String result = this.attendanceService.clockIn(employeeId);
+		LocalDate currentDate = LocalDate.now();
+		String result = this.attendanceService.clockIn(employeeId, currentDate);
 
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
@@ -44,11 +46,11 @@ public class AttendanceController {
 	}
 
 	// ----------------FOR CLOCK OUT------------------
-	@PostMapping("/clockOut/{employeeId}")
-	public ResponseEntity<String> addOutTime(@PathVariable String employeeId) {
-		String result = this.attendanceService.clockOut(employeeId);
-		return new ResponseEntity<String>(result, HttpStatus.OK);
-	}
+		@PostMapping("/clockOut/{employeeId}")
+		public ResponseEntity<String> addOutTime(@PathVariable String employeeId) {
+			String result = this.attendanceService.clockOut(employeeId);
+			return new ResponseEntity<String>(result, HttpStatus.OK);
+		}
 
 	// -------------------GET ALL ATTENDANCE BY EMPLOYEE ID-------------------
 	@GetMapping("/allattendance/{employeeId}")
