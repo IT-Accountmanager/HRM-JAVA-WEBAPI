@@ -1,0 +1,81 @@
+package com.hrm.servicesImpls;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.hrm.models.Document;
+import com.hrm.repositories.IDocumentRepository;
+import com.hrm.services.IDocumentService;
+
+@Service
+public class DocumentSeviceImpl implements IDocumentService {
+
+	@Autowired
+	private IDocumentRepository documentRepo;
+
+	@Autowired
+	WorkServiceImpl workServImpl;
+
+	@Override
+	public String createDocument(Document doc) {
+		try {
+
+			//workServImpl.createWork(doc.getWork());
+			var document1 = this.documentRepo.save(doc);
+
+			
+			if (document1.getId() > 0) {
+				return "Documents are added:" + document1.getId();
+			}
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return "Documents are not added";
+
+	}
+
+	@Override
+	public List<Document> getAllDocument() {
+		List<Document> allDoc = documentRepo.findAll();
+		return allDoc;
+	}
+
+	@Override
+	public Document getDocument(Integer id) {
+		Document doc = documentRepo.findById(id).get();
+		return doc;
+	}
+
+	@Override
+	public String deleteDocument(Integer id) {
+		try {
+			documentRepo.deleteById(id);
+			return "Id no. " + id + " is Deleted Succeefully.";
+		} catch (Exception e) {
+			e.getMessage();
+		}
+
+		return "Id no. " + id + " is not Deleted.";
+	}
+
+	@Override
+	public String updateDocument(Document doc, Integer id) {
+
+		try {
+			if (this.documentRepo.existsById(id)) {
+				doc.setId(id);
+				this.documentRepo.save(doc);
+				return "Id no. " + id + " is updated. ";
+			} else {
+				return "Id no. " + id + " is does not exists ";
+			}
+
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return "Id no. " + id + " is not updated. ";
+	}
+
+}
