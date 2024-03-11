@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1332,7 +1333,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 	 * }
 	 */
 
-	@Autowired(required=true)
+	@Autowired(required = true)
 	PdfGenerator pdfGenerator;
 
 	private String generatePdf1(Employee employee) throws IOException {
@@ -1380,43 +1381,44 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		CtcBreakup createCtcBreakUp = breakup.createCtcBreakUp(employee.getCtc());
 
 		Map<String, Object> values = new HashMap();
-		values.put("Employee Id", employee.getEmployeeId());
+		values.put("Employee_Id", employee.getEmployeeId());
 		values.put("Name", employee.getName());
 		values.put("Designation", employee.getDesignation().toString().replace("_", " "));
-		values.put("Date Of Joining", Format.getFormattedDate(employee.getDateOfJoining()));
+		values.put("Date_Of_Joining", Format.getFormattedDate(employee.getDateOfJoining()));
 		values.put("Location", employee.getWorkLocation());
 		values.put("CTC", (int) employee.getCtc());
-		values.put("Service Commitement", (int) employee.getServiceCommitment());
+		values.put("Service_Commitement", (int) employee.getServiceCommitment());
+		values.put("Service_Break_Amount", (int) employee.getBondBreakAmount());
 		values.put("Basic", (int) createCtcBreakUp.getBasicSalary());
-		values.put("M Basic", (int) createCtcBreakUp.getMonthlyBasicSalary());
-		values.put("House Rent Allowance", (int) createCtcBreakUp.getHouseRentAllowance());
-		values.put("M House Rent Allowance", (int) createCtcBreakUp.getMonthlyHouseRentAllowance());
-		values.put("Special Allowance", (int) createCtcBreakUp.getSpecialAllowance());
-		values.put("M Special Allowance", (int) createCtcBreakUp.getMonthlySpecialAllowance());
+		values.put("M_Basic", (int) createCtcBreakUp.getMonthlyBasicSalary());
+		values.put("House_Rent_Allowance", (int) createCtcBreakUp.getHouseRentAllowance());
+		values.put("M_House_Rent_Allowance", (int) createCtcBreakUp.getMonthlyHouseRentAllowance());
+		values.put("Special_Allowance", (int) createCtcBreakUp.getSpecialAllowance());
+		values.put("M_Special_Allowance", (int) createCtcBreakUp.getMonthlySpecialAllowance());
 		values.put("Medical", (int) createCtcBreakUp.getMedicalAllowance());
-		values.put("M Medical", (int) createCtcBreakUp.getMonthlyMedicalAllowance());
+		values.put("M_Medical", (int) createCtcBreakUp.getMonthlyMedicalAllowance());
 		values.put("Telephone", (int) (int) createCtcBreakUp.getTelephoneAllowance());
-		values.put("M Telephone", createCtcBreakUp.getMonthlyTelephoneAllowance());
-		values.put("Leave Travel Allowance", (int) createCtcBreakUp.getLeaveTravelAllowance());
-		values.put("M Leave Travel Allowance", (int) createCtcBreakUp.getMonthlyLeaveTravelAllowance());
-		values.put("Gross Salary", (int) createCtcBreakUp.getGrossSalary());
-		values.put("M Gross Salary", (int) createCtcBreakUp.getMonthlyGrossSalary());
-		values.put("Employee Pf", (int) createCtcBreakUp.getEmployeePF());
-		values.put("M Employee Pf", (int) createCtcBreakUp.getMonthlyEmployeePF());
+		values.put("M_Telephone", createCtcBreakUp.getMonthlyTelephoneAllowance());
+		values.put("Leave_Travel_Allowance", (int) createCtcBreakUp.getLeaveTravelAllowance());
+		values.put("M_Leave_Travel_Allowance", (int) createCtcBreakUp.getMonthlyLeaveTravelAllowance());
+		values.put("Gross_Salary", (int) createCtcBreakUp.getGrossSalary());
+		values.put("M_Gross_Salary", (int) createCtcBreakUp.getMonthlyGrossSalary());
+		values.put("Employee_Pf", (int) createCtcBreakUp.getEmployeePF());
+		values.put("M_Employee_Pf", (int) createCtcBreakUp.getMonthlyEmployeePF());
 		values.put("Gratuity", (int) createCtcBreakUp.getGratuity());
-		values.put("M Gratuity", (int) createCtcBreakUp.getMonthlyGratuity());
-		values.put("Professional Tax", (int) createCtcBreakUp.getProfessionalTax());
-		values.put("M Professional Tax", (int) createCtcBreakUp.getMonthlyProfessionalTax());
-		values.put("Net Take Home", (int) createCtcBreakUp.getNetTakeHome());
-		values.put("M Net Take Home", (int) createCtcBreakUp.getMonthlyNetTakeHome());
-		values.put("Employer Pf", (int) createCtcBreakUp.getEmployerPF());
-		values.put("M Employer Pf", (int) createCtcBreakUp.getMonthlyEmployerPF());
-		values.put("Group Insurance", (int) createCtcBreakUp.getGroupInsurance());
-		values.put("M Group Insurance", (int) createCtcBreakUp.getMonthlyGroupInsurance());
-		values.put("Cost To Company", (int) createCtcBreakUp.getTotalCTC());
-		values.put("M Cost To Company", (int) createCtcBreakUp.getMonthlytotalCTC());
+		values.put("M_Gratuity", (int) createCtcBreakUp.getMonthlyGratuity());
+		values.put("Professional_Tax", (int) createCtcBreakUp.getProfessionalTax());
+		values.put("M_Professional_Tax", (int) createCtcBreakUp.getMonthlyProfessionalTax());
+		values.put("Net_Take_Home", (int) createCtcBreakUp.getNetTakeHome());
+		values.put("M_Net_Take_Home", (int) createCtcBreakUp.getMonthlyNetTakeHome());
+		values.put("Employer_Pf", (int) createCtcBreakUp.getEmployerPF());
+		values.put("M_Employer_Pf", (int) createCtcBreakUp.getMonthlyEmployerPF());
+		values.put("Group_Insurance", (int) createCtcBreakUp.getGroupInsurance());
+		values.put("M_Group_Insurance", (int) createCtcBreakUp.getMonthlyGroupInsurance());
+		values.put("Cost_To_Company", (int) createCtcBreakUp.getTotalCTC());
+		values.put("M_Cost_To_Company", (int) createCtcBreakUp.getMonthlytotalCTC());
 		values.put("Salary", Convert.convertToWords((int) createCtcBreakUp.getMonthlytotalCTC()));
-		values.put("Sign", employee.getSign());
+		values.put("Sign", Base64.getEncoder().encodeToString(employee.getSign()));
 
 		// Replace placeholders with actual values
 		for (Map.Entry<String, Object> entry : values.entrySet()) {

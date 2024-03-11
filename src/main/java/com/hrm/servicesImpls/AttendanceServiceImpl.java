@@ -5,24 +5,27 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hrm.helper.EnumCollection.AttendanceStatus;
+import com.hrm.helper.Format;
 import com.hrm.models.Attendance;
 import com.hrm.models.Employee;
 import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.AttendanceEmployeeDto;
 import com.hrm.payloads.BillableHoursDto;
 import com.hrm.payloads.RegularizationHoursDto;
+import com.hrm.payloads.UserAttendanceDto;
 import com.hrm.repositories.IAttendanceRepository;
 import com.hrm.repositories.IEmployeeRepository;
 import com.hrm.services.IAttendanceService;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Service
 public class AttendanceServiceImpl implements IAttendanceService {
@@ -35,23 +38,57 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 	private static final Logger logger = LoggerFactory.getLogger(IAttendanceService.class);
 
+	/*
+	 * @Override public String clockIn(String employeeId) {
+	 * 
+	 * Attendance existingAttendance =
+	 * this.attendanceRepository.findByEmployeeIdAndDate(employeeId,
+	 * LocalDate.now());
+	 * 
+	 * if (existingAttendance != null) { return
+	 * "Clock-in record already exist for Employee Id : " + employeeId; } else {
+	 * Attendance attendance = new Attendance();// new api getclock in timee(emp id
+	 * , now time and current time)
+	 * 
+	 * attendance.setEmployeeId(employeeId);
+	 * attendance.setMonth(LocalDateTime.now().getMonth());
+	 * attendance.setDate(LocalDate.now()); attendance.setInTime(LocalTime.now());
+	 * attendance.setAttendanceStatus(AttendanceStatus.Present);
+	 * this.attendanceRepository.save(attendance); return
+	 * "attendence added of Employee Id : " + employeeId; }
+	 * 
+	 * }
+	 */
+
 	@Override
+
 	public String clockIn(String employeeId) {
 
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+		String formattedTime = LocalTime.now().format(formatter);
+		LocalTime parsedTime = LocalTime.parse(formattedTime, formatter);
 		Attendance existingAttendance = this.attendanceRepository.findByEmployeeIdAndDate(employeeId, LocalDate.now());
-
 		if (existingAttendance != null) {
-			return "Clock-in record already exist for Employee Id : " + employeeId;
-		} else {
-			Attendance attendance = new Attendance();// new api getclock in timee(emp id , now time and current time)
 
+			return "Clock-in record already exist for Employee Id : " + employeeId;
+
+		} else {
+
+			Attendance attendance = new Attendance();// new api getclock in timee(emp id , now time and current time)
 			attendance.setEmployeeId(employeeId);
+
 			attendance.setMonth(LocalDateTime.now().getMonth());
+
 			attendance.setDate(LocalDate.now());
-			attendance.setInTime(LocalTime.now());
+
+			attendance.setInTime(parsedTime);
+
 			attendance.setAttendanceStatus(AttendanceStatus.Present);
+
 			this.attendanceRepository.save(attendance);
+
 			return "attendence added of Employee Id : " + employeeId;
+
 		}
 
 	}
@@ -69,15 +106,37 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	}
 
 	@Override
-	public List<Attendance> allAttendance(String employeeId) {
+	public List<UserAttendanceDto> allAttendance(String employeeId) {
 		List<Attendance> allByEmployeeId = attendanceRepository.findAllByEmployeeId(employeeId);
 
 		if (allByEmployeeId.isEmpty()) {
-
 			return Collections.emptyList();
 		}
 
-		return allByEmployeeId;
+		List<UserAttendanceDto> attendanceDtoList = new ArrayList<>();
+
+		for (Attendance attendance : allByEmployeeId) {
+			UserAttendanceDto attendanceDto = new UserAttendanceDto();
+
+			Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
+
+			attendanceDto.setMonth(attendance.getMonth().name());
+			attendanceDto.setDate(Format.getFormattedDate(attendance.getDate()));
+			attendanceDto.setInTime(Format.getFormattedTime(attendance.getInTime()));
+			attendanceDto.setOutTime(Format.getFormattedTime(attendance.getOutTime()));
+			attendanceDto.setWorkHrs(
+					Format.getFormattedWorkHours(Duration.between(attendance.getInTime(), attendance.getOutTime())));
+			attendanceDto.setAttendanceStatus(attendance.getAttendanceStatus());
+			attendanceDto.setManager(employee.getManager()); // Set manager value based on your logic
+			attendanceDto.setProjectId(attendance.getProjectId());
+			attendanceDto.setAppliedHrsForBilling(String.valueOf(attendance.getAppliedHrsForBilling()));
+			attendanceDto.setApprovedHrsForBilling(String.valueOf(attendance.getApprovedHrsForBilling()));
+			// attendanceDto.setRemarks(""); // Set remarks value based on your logic
+
+			attendanceDtoList.add(attendanceDto);
+		}
+
+		return attendanceDtoList;
 	}
 
 	@Override
@@ -198,9 +257,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 			return null;
 		}
 	}
-	
-	
-	
+
 //	 @Override
 //	    public String addBillableHours(BillableHoursDto billableHoursDto, String employeeId) {
 //		    LocalDate date = billableHoursDto.getDate();
@@ -227,55 +284,50 @@ public class AttendanceServiceImpl implements IAttendanceService {
 //	            return "Attendance record not found for employee " + employeeId + " on " + date1;
 //	        }
 //	    }
-	
-	
-	
-	 @Override
-	 public String addRegularizationHours(RegularizationHoursDto regularizationHoursDto, String employeeId) {
-		 LocalDate date = regularizationHoursDto.getDate();
-	     LocalTime exactInTime = regularizationHoursDto.getExactInTime();
-	     LocalTime exactOutTime = regularizationHoursDto.getExactOutTime();
-	     String regularisationReason = regularizationHoursDto.getRegularisationReason();
-	     
-	     
-	     Duration difference = Duration.between(exactInTime, exactOutTime);
-	     
-	     // Define the threshold duration of 9 hours and 30 minutes
-	     Duration threshold = Duration.ofHours(9).plusMinutes(30);
 
-	     Attendance attendance = attendanceRepository.findByEmployeeId(employeeId);
+	@Override
+	public String addRegularizationHours(RegularizationHoursDto regularizationHoursDto, String employeeId) {
+		LocalDate date = regularizationHoursDto.getDate();
+		LocalTime exactInTime = regularizationHoursDto.getExactInTime();
+		LocalTime exactOutTime = regularizationHoursDto.getExactOutTime();
+		String regularisationReason = regularizationHoursDto.getRegularisationReason();
 
-	     if (attendance != null) {
-	    	 attendance.setDate(date);
-	         attendance.setExactInTime(exactInTime);
-	         attendance.setExactOutTime(exactOutTime);
-	         attendance.setRegularisationReason(regularisationReason);
-	         
-	         // Check if the duration is less than the threshold
-	         if (difference.compareTo(threshold) < 0) {
-	             // If less, set RegularisationRequestHours to the difference from the threshold
-	             Duration remainingHours = threshold.minus(difference);
-	             attendance.setRegularisationRequestHours(remainingHours);
-	         } else {
-	             // If greater or equal, set RegularisationRequestHours to zero
-	             attendance.setRegularisationRequestHours(Duration.ZERO);
-	         }
+		Duration difference = Duration.between(exactInTime, exactOutTime);
 
-	         attendanceRepository.save(attendance);
-	         return "Regularization hours added for employee " + employeeId;
-	     } else {
-	         return "Attendance record not found for employee " + employeeId;
-	     }
-	 }
+		// Define the threshold duration of 9 hours and 30 minutes
+		Duration threshold = Duration.ofHours(9).plusMinutes(30);
+
+		Attendance attendance = attendanceRepository.findByEmployeeId(employeeId);
+
+		if (attendance != null) {
+			attendance.setDate(date);
+			attendance.setExactInTime(exactInTime);
+			attendance.setExactOutTime(exactOutTime);
+			attendance.setRegularisationReason(regularisationReason);
+
+			// Check if the duration is less than the threshold
+			if (difference.compareTo(threshold) < 0) {
+				// If less, set RegularisationRequestHours to the difference from the threshold
+				Duration remainingHours = threshold.minus(difference);
+				attendance.setRegularisationRequestHours(remainingHours);
+			} else {
+				// If greater or equal, set RegularisationRequestHours to zero
+				attendance.setRegularisationRequestHours(Duration.ZERO);
+			}
+
+			attendanceRepository.save(attendance);
+			return "Regularization hours added for employee " + employeeId;
+		} else {
+			return "Attendance record not found for employee " + employeeId;
+		}
+	}
 
 	@Override
 	public String addBillableHours(BillableHoursDto billableHoursDto, String employeeId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	 
-	 
-	 
+
 //		@Override
 //		public float gettotalHoursFromBillableHoursDto(String employeeId) {
 //			Attendance attendance = this.attendanceRepository.findByEmployeeId(employeeId);
@@ -283,7 +335,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 //			float totalHours = attendance.getTotalHours();
 //			return totalHours;
 //		}
-		
+
 //		@Override
 //		public LocalTime getinTimeFromAttendance(String employeeId) {
 //			Attendance attendance =this.attendanceRepository.findByEmployeeId(employeeId);
@@ -291,15 +343,14 @@ public class AttendanceServiceImpl implements IAttendanceService {
 //			return inTime;
 //			
 //		}
-		
+
 //		@Override
 //		public LocalTime getoutTimeFromAttendance(String employeeId) {
 //			Attendance attendance = this.attendanceRepository.findByEmployeeId(employeeId);
 //			LocalTime outTime = attendance.getOutTime();
 //			return outTime;
 //		}
-	 
-		
+
 //	 ---------------FOR DATE FORMAT MODIFIED CLOCK IN----------------
 //	    @Override
 //		public String clockIn(String employeeId, LocalDate date) {
@@ -339,8 +390,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 //				return "Attendance added for Employee Id : " + employeeId + " on " + date;
 //			}
 //		}
-	 
-	 
+
 //	 -------------------------FOR DATE FORMAT MODIFIED CLOCKOUT----------------
 //	 @Override
 //		public String clockOut(String employeeId) {
@@ -365,7 +415,6 @@ public class AttendanceServiceImpl implements IAttendanceService {
 //			// Return a message with the check-out time
 //			return "Checked out Employee Id " + employeeId + " at " + formattedOutTime;
 //		}//
-
 
 //	@Override
 //	public ApplyLeaveDto getLeave(String employeeId) {
