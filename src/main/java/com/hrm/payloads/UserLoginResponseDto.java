@@ -1,7 +1,5 @@
 package com.hrm.payloads;
 
-import java.time.Duration;
-
 public class UserLoginResponseDto {
 
 	private String duration;

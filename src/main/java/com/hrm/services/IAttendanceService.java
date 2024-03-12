@@ -25,11 +25,13 @@ public interface IAttendanceService {
 
 //	ApplyLeaveDto getLeave(String employeeId);
 
-	ApplyLeaveDto createOrUpdateLeave(ApplyLeaveDto leaveDto);
+	// ApplyLeaveDto createOrUpdateLeave(ApplyLeaveDto leaveDto);
 
 	String addBillableHours(BillableHoursDto billableHoursDto, String employeeId);
 
 	String addRegularizationHours(RegularizationHoursDto regularizationHoursDto, String employeeId);
+
+	String addLeave(ApplyLeaveDto applyLeaveDto, String employeeId);
 
 //	ApplyLeaveDto addLeave(ApplyLeaveDto leaveDto);
 

@@ -1,10 +1,10 @@
 package com.hrm.controllers;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.hrm.models.Attendance;
 import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.AttendanceEmployeeDto;
@@ -35,6 +34,7 @@ public class AttendanceController {
 	// ----------------FOR CLOCK IN------------------
 	@PostMapping("/clockIn/{employeeId}")
 	public ResponseEntity<String> addInTime(@PathVariable String employeeId) {
+		LocalDate currentDate = LocalDate.now();
 		String result = this.attendanceService.clockIn(employeeId);
 
 		return new ResponseEntity<String>(result, HttpStatus.OK);
@@ -70,7 +70,7 @@ public class AttendanceController {
 	}
 
 	// --------------------------POST REGULARIZED HOURS-------------------------
-	@PostMapping("regularizationHours/{employeeId}")
+	@PostMapping("/regularizationHours/{employeeId}")
 	public ResponseEntity<String> addRegularizationHours(@RequestBody RegularizationHoursDto regularizationHoursDto,
 			@PathVariable String employeeId) {
 		String result = this.attendanceService.addRegularizationHours(regularizationHoursDto, employeeId);
@@ -89,16 +89,23 @@ public class AttendanceController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
-	@PostMapping("/createOrUpdate/leave/{employeeId}")
-	public ResponseEntity<ApplyLeaveDto> createOrUpdateLeave(@PathVariable String employeeId,
-			@RequestBody ApplyLeaveDto leaveDto) {
-		// Set employeeId in the leaveDto
-		// leaveDto.setEmployeeId(employeeId);
-
-		ApplyLeaveDto updatedLeaveDto = attendanceService.createOrUpdateLeave(leaveDto);
-		return new ResponseEntity<>(updatedLeaveDto, HttpStatus.CREATED);
+	@PostMapping("/addLeave/{employeeId}")
+	public ResponseEntity<String> addLeave(@RequestBody ApplyLeaveDto applyLeaveDto, @PathVariable String employeeId) {
+		String result = attendanceService.addLeave(applyLeaveDto, employeeId);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
+//	@PostMapping("/createOrUpdate/leave/{employeeId}")
+//	public ResponseEntity<ApplyLeaveDto> createOrUpdateLeave(@PathVariable String employeeId,
+//			@RequestBody ApplyLeaveDto leaveDto) {
+//		// Set employeeId in the leaveDto
+//		// leaveDto.setEmployeeId(employeeId);
+//
+//		ApplyLeaveDto updatedLeaveDto = attendanceService.createOrUpdateLeave(leaveDto);
+//		return new ResponseEntity<>(updatedLeaveDto, HttpStatus.CREATED);
+//	}
+
+//>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
 //	@PostMapping("/regularization-hours/{employeeId}")
 //    public ResponseEntity<String> addRegularizationHours(@RequestBody RegularizationHoursDto regularizationHoursDto,
 //                                                         @PathVariable String employeeId) {

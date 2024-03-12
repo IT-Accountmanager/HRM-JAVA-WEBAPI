@@ -7,23 +7,17 @@ import com.hrm.helper.EnumCollection.Half;
 import com.hrm.helper.EnumCollection.LeaveType;
 
 public class ApplyLeaveDto {
-	private String employeeId;
+	
 	private LeaveType leaveType;
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private Half half1;
 	private Half half2;
-	private AttendanceStatus attendanceStatus = AttendanceStatus.Anomaly;
+//	private AttendanceStatus attendanceStatus = AttendanceStatus.Anomaly;
 	private String leaveReason;
 	
 	
 	
-	public String getEmployeeId() {
-		return employeeId;
-	}
-	public void setEmployeeId(String employeeId) {
-		this.employeeId = employeeId;
-	}
 	public LeaveType getLeaveType() {
 		return leaveType;
 	}
@@ -54,12 +48,12 @@ public class ApplyLeaveDto {
 	public void setHalf2(Half half2) {
 		this.half2 = half2;
 	}
-	public AttendanceStatus getAttendanceStatus() {
-		return attendanceStatus;
-	}
-	public void setAttendanceStatus(AttendanceStatus attendanceStatus) {
-		this.attendanceStatus = attendanceStatus;
-	}
+//	public AttendanceStatus getAttendanceStatus() {
+//		return attendanceStatus;
+//	}
+//	public void setAttendanceStatus(AttendanceStatus attendanceStatus) {
+//		this.attendanceStatus = attendanceStatus;
+//	}
 	public String getLeaveReason() {
 		return leaveReason;
 	}

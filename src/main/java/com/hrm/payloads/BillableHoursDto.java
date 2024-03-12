@@ -8,7 +8,7 @@ public class BillableHoursDto {
 	private LocalDate date;
 	private float productionHours;
 	private float otherHours;
-	private float totalHours;
+	private float appliedHrsForBilling;
 
 //	public List<LocalDate> getListOfDate() {
 //		return listOfDate;
@@ -17,7 +17,7 @@ public class BillableHoursDto {
 //	public void setListOfDate(List<LocalDate> listOfDate) {
 //		this.listOfDate = listOfDate;
 //	}
-	
+
 	public LocalDate getDate() {
 		return date;
 	}
@@ -42,12 +42,12 @@ public class BillableHoursDto {
 		this.otherHours = otherHours;
 	}
 
-	public float getTotalHours() {
-		return totalHours;
+	public float getAppliedHrsForBilling() {
+		return appliedHrsForBilling;
 	}
 
-	public void setTotalHours(float totalHours) {
-		this.totalHours = totalHours;
+	public void setAppliedHrsForBilling(float appliedHrsForBilling) {
+		this.appliedHrsForBilling = appliedHrsForBilling;
 	}
 
 }

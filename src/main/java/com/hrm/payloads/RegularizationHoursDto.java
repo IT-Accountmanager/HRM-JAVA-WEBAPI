@@ -4,14 +4,16 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class RegularizationHoursDto {
 
 	private LocalDate date;
-    private LocalTime exactInTime;
-	private LocalTime exactOutTime;
-	private Duration regularisationRequestHours;
+	private LocalTime inTime;
+	private LocalTime outTime;
+	private String regularisationRequestHours;
 	private String regularisationReason;
-	
+
 	public LocalDate getDate() {
 		return date;
 	}
@@ -20,27 +22,27 @@ public class RegularizationHoursDto {
 		this.date = date;
 	}
 
-	public LocalTime getExactInTime() {
-		return exactInTime;
+	public LocalTime getInTime() {
+		return inTime;
 	}
 
-	public void setExactInTime(LocalTime exactInTime) {
-		this.exactInTime = exactInTime;
+	public void setInTime(LocalTime inTime) {
+		this.inTime = inTime;
 	}
 
-	public LocalTime getExactOutTime() {
-		return exactOutTime;
+	public LocalTime getOutTime() {
+		return outTime;
 	}
 
-	public void setExactOutTime(LocalTime exactOutTime) {
-		this.exactOutTime = exactOutTime;
+	public void setOutTime(LocalTime outTime) {
+		this.outTime = outTime;
 	}
 
-	public Duration getRegularisationRequestHours() {
+	public String getRegularisationRequestHours() {
 		return regularisationRequestHours;
 	}
 
-	public void setRegularisationRequestHours(Duration regularisationRequestHours) {
+	public void setRegularisationRequestHours(String regularisationRequestHours) {
 		this.regularisationRequestHours = regularisationRequestHours;
 	}
 

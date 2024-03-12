@@ -1,0 +1,28 @@
+package com.hrm.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.hrm.models.Holiday;
+import com.hrm.services.IHolidayService;
+
+@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
+@RestController
+@RequestMapping("/holiday")
+public class HolidayController {
+
+	@Autowired
+	IHolidayService holidayService;
+
+	public List<Holiday> add(@RequestBody List<Holiday>holiday) {
+		List<Holiday> result = this.holidayService.add(holiday);
+		return result;
+	}
+
+}

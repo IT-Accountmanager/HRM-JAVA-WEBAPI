@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hrm.helper.EnumCollection.ApprovalStatus;
 import com.hrm.helper.EnumCollection.AttendanceStatus;
 import com.hrm.helper.EnumCollection.Half;
@@ -30,6 +31,7 @@ public class Attendance {
 
 	private String employeeId;
 	private Month month;
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	private LocalDate date;
 	private LocalTime inTime;
 	private LocalTime outTime;
@@ -44,22 +46,16 @@ public class Attendance {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private String leaveReason;
-//<<<<<<< HEAD
 	private float productionHours;
 	private float otherHours;
-	private float totalHours;
-	private LocalTime exactInTime;
-	private LocalTime exactOutTime;
 	private Duration regularisationRequestHours;
 	private String regularisationReason;
-	
 	private float monthlyPresentDays;
 	private float monthlyLossOfPayDays;
 	private Duration monthlyAppliedHoursForBilling;
 	private Duration monthlyApprovedHoursForBilling;
-	
-	
-    public float getMonthlyPresentDays() {
+
+	public float getMonthlyPresentDays() {
 		return monthlyPresentDays;
 	}
 
@@ -91,7 +87,7 @@ public class Attendance {
 		this.monthlyApprovedHoursForBilling = monthlyApprovedHoursForBilling;
 	}
 
-	//=======
+	// =======
 	private Half half1;
 	private Half half2;
 
@@ -262,30 +258,6 @@ public class Attendance {
 
 	public void setOtherHours(float otherHours) {
 		this.otherHours = otherHours;
-	}
-
-	public float getTotalHours() {
-		return totalHours;
-	}
-
-	public void setTotalHours(float totalHours) {
-		this.totalHours = totalHours;
-	}
-
-	public LocalTime getExactInTime() {
-		return exactInTime;
-	}
-
-	public void setExactInTime(LocalTime exactInTime) {
-		this.exactInTime = exactInTime;
-	}
-
-	public LocalTime getExactOutTime() {
-		return exactOutTime;
-	}
-
-	public void setExactOutTime(LocalTime exactOutTime) {
-		this.exactOutTime = exactOutTime;
 	}
 
 	public Duration getRegularisationRequestHours() {

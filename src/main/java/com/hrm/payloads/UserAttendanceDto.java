@@ -1,11 +1,10 @@
 package com.hrm.payloads;
 
-
-
 import com.hrm.helper.EnumCollection.AttendanceStatus;
 
 public class UserAttendanceDto {
 
+	private String employeeId;
 	private String month;
 	private String date;
 	private String inTime;
@@ -17,6 +16,14 @@ public class UserAttendanceDto {
 	private String appliedHrsForBilling;
 	private String approvedHrsForBilling;
 	private String remarks;
+
+	public String getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(String employeeId) {
+		this.employeeId = employeeId;
+	}
 
 	public String getMonth() {
 		return month;
