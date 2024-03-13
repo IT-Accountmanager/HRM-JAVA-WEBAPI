@@ -20,8 +20,8 @@ public class HolidayController {
 	@Autowired
 	IHolidayService holidayService;
 
-	public List<Holiday> add(@RequestBody List<Holiday>holiday) {
-		List<Holiday> result = this.holidayService.add(holiday);
+	public String add(@RequestBody List<Holiday> holiday) {
+		String result = this.holidayService.add(holiday);
 		return result;
 	}
 

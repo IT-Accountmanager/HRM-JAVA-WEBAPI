@@ -216,7 +216,6 @@ public class HRManagerController {
 		// Assuming HRManagerService returns a model object with necessary data
 		ReleaseAppointmentLetterDto result = this.hRManagerService.releaseAppointmentLetter(candidateId,
 				appointmentLetterDto);
-		System.out.println("*****************************************************");
 		System.out.println(result.getEmployeeId());
 
 		// Add the model object to be used in the template

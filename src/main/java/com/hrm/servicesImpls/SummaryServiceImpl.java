@@ -463,8 +463,8 @@ public class SummaryServiceImpl implements ISummaryService {
 				return workInfo;
 			}
 		} catch (Exception e) {
-			return null;
-
+			e.printStackTrace();
+			return new WorkInfoDto();
 		}
 	}
 

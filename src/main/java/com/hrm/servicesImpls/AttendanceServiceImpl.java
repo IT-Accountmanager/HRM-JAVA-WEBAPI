@@ -62,7 +62,6 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	 */
 
 	@Override
-
 	public String clockIn(String employeeId) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 		String formattedTime = LocalTime.now().format(formatter);
@@ -81,7 +80,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 		} else {
 
-			Attendance attendance = new Attendance();// new api getclock in timee(emp id , now time and current time)
+			Attendance attendance = new Attendance();
 			attendance.setEmployeeId(employeeId);
 
 			attendance.setMonth(LocalDateTime.now().getMonth());

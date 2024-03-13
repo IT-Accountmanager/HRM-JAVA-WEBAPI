@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
+import java.util.OptionalLong;
 import com.hrm.helper.Convert;
 import com.hrm.helper.CtcBreakup;
 import com.hrm.helper.Format;
@@ -57,6 +57,7 @@ import com.hrm.repositories.IOnboardingRepository;
 import com.hrm.repositories.IPersonalRepository;
 import com.hrm.repositories.IWorkRepository;
 import com.hrm.services.IHRManagerService;
+import com.hrm.utils.CommonUtils;
 
 import org.springframework.mail.javamail.MimeMessageHelper;
 import jakarta.mail.MessagingException;
@@ -1245,7 +1246,6 @@ public class HRManagerServiceImpl implements IHRManagerService {
 
 				return releaseAppointmentLetterDto;
 			} else {
-				// Set an error message in the result
 				releaseAppointmentLetterDto
 						.setError("Error in releasing Appointment Letter: Not all approvals are approved.");
 			}
@@ -1253,11 +1253,9 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			// Log the exception or handle it appropriately
 			e.printStackTrace();
 
-			// Set an error message in the result
 			releaseAppointmentLetterDto.setError("Error in releasing Appointment Letter");
 		}
 
-		// If an error occurred, you can return the result with the error information
 		return releaseAppointmentLetterDto;
 	}
 
@@ -1352,11 +1350,12 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			String htmlContent = processTemplate(htmlTemplate, employee);
 
 			// Modify the PDF file path as needed
-			String pdfDirectoryPath = "C:\\Users\\Rameshrao.k\\Appointment Letter";
-			String pdfFilePath = pdfDirectoryPath + "\\ Appointment Letter " + employee.getName() + ".pdf";
+			String basePath = commonUtils.getBasePath() + "/appointment_letter";
+			Files.createDirectories(Paths.get(basePath));
+//			String pdfDirectoryPath = "C:\\Users\\Rameshrao.k\\Appointment Letter";
+			String pdfFilePath = basePath + "/Appointment_Letter_" + employee.getName() + ".pdf";
 
 			// Ensure the directory exists; create it if not
-			Files.createDirectories(Paths.get(pdfDirectoryPath));
 
 			// Convert HTML to PDF and save it to the specified path
 			/*
@@ -1440,7 +1439,8 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		String modifiedHtml = template;
 		try {
 			// Modify the file path and name as needed
-			String modifiedHtmlFilePath = "C:\\Users\\Rameshrao.k\\ModifiedHTML\\modified.html";
+			String basePath = commonUtils.getBasePath();
+			String modifiedHtmlFilePath = basePath + "/ModifiedHTML/modified.html";
 
 			// Ensure the directory exists; create it if not
 			Files.createDirectories(Paths.get(modifiedHtmlFilePath).getParent());
@@ -1499,13 +1499,16 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		return htmlContent.replace("$title", "YourTitle").replace("$body", "YourBody");
 	}
 
+	@Autowired
+	CommonUtils commonUtils;
+
 	private String generatePdfFromHtml(String modifiedHtmlContent, String employeeName) throws IOException {
 		// Implement your logic to generate PDF from HTML
 		// For example, use a PDF generation library like Flying Saucer or iText
 
 		// Modify the PDF file path as needed
-
-		String pdfFilePath = "C:\\Users\\Rameshrao.k\\Appointment Letter/Appointment Letter  " + employeeName + ".pdf";
+		String basePath = commonUtils.getBasePath();
+		String pdfFilePath = basePath + "/appointment_letters/Appointment_Letter_" + employeeName + ".pdf";
 		File newHtmlFile = new File(pdfFilePath);
 
 		/*
@@ -1604,8 +1607,20 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		Employee employee = new Employee();
 
 		employee.setCandidateId(candidateId);
-		long nextEmployeeIdNumber = this.employeeRepository.count() + 1;
-		employee.setEmployeeId(String.format("EIS%05d", nextEmployeeIdNumber));
+		
+
+		List<Employee> employees = this.employeeRepository.findAll();
+
+        if (!employees.isEmpty()) {
+            long maxEmployeeSn = Long.MIN_VALUE;
+
+            for (Employee emp : employees) {
+                long currentEmployeeSn = emp.getEmployeeSn();
+                if (currentEmployeeSn > maxEmployeeSn) {
+                    maxEmployeeSn = currentEmployeeSn;
+                }
+
+		employee.setEmployeeId(String.format("EIS%05d", maxEmployeeSn+1));
 		employee.setName(appointmentLetterDto.getName());
 		employee.setDesignation(appointmentLetterDto.getDesignation());
 		employee.setWorkLocation(appointmentLetterDto.getWorkLocation());

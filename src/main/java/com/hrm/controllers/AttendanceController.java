@@ -22,7 +22,10 @@ import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.UserAttendanceDto;
 import com.hrm.services.IAttendanceService;
 
-@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
+/*@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
+*/
+
+@CrossOrigin(origins = "*")
 
 @RestController
 @RequestMapping("/attendance")
