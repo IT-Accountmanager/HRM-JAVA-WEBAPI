@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class BillableHoursDto {
-//	private List<LocalDate> listOfDate;
 	private LocalDate date;
 	private float productionHours;
 	private float otherHours;
