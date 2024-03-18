@@ -10,14 +10,6 @@ public class BillableHoursDto {
 	private float otherHours;
 	private float totalHours;
 
-//	public List<LocalDate> getListOfDate() {
-//		return listOfDate;
-//	}
-//
-//	public void setListOfDate(List<LocalDate> listOfDate) {
-//		this.listOfDate = listOfDate;
-//	}
-	
 	public LocalDate getDate() {
 		return date;
 	}
