@@ -8,7 +8,7 @@ public class BillableHoursDto {
 	private float productionHours;
 	private float otherHours;
 	private float totalHours;
-
+//
 	public LocalDate getDate() {
 		return date;
 	}
