@@ -50,9 +50,9 @@ public class Attendance {
 	
 
 	//<<<<<<< HEAD
-	private float productionHours;
-	private float otherHours;
-	private float totalHours;
+	private String productionHours;
+	private String otherHours;
+	private String totalHours;
 	private LocalTime exactInTime;
 	private LocalTime exactOutTime;
 	private Duration regularisationRequestHours;
@@ -253,27 +253,27 @@ public class Attendance {
 		this.leaveType = leaveType;
 	}
 
-	public float getProductionHours() {
+	public String getProductionHours() {
 		return productionHours;
 	}
 
-	public void setProductionHours(float productionHours) {
+	public void setProductionHours(String productionHours) {
 		this.productionHours = productionHours;
 	}
 
-	public float getOtherHours() {
+	public String getOtherHours() {
 		return otherHours;
 	}
 
-	public void setOtherHours(float otherHours) {
+	public void setOtherHours(String otherHours) {
 		this.otherHours = otherHours;
 	}
 
-	public float getTotalHours() {
+	public String getTotalHours() {
 		return totalHours;
 	}
 
-	public void setTotalHours(float totalHours) {
+	public void setTotalHours(String totalHours) {
 		this.totalHours = totalHours;
 	}
 

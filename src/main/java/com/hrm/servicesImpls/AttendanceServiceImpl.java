@@ -195,33 +195,45 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	
 	
 	
-	 @Override
-	    public String addBillableHours(BillableHoursDto billableHoursDto, String employeeId) {
-		    LocalDate date = billableHoursDto.getDate();
-	        float productionHours = billableHoursDto.getProductionHours();
-	        float otherHours = billableHoursDto.getOtherHours();
+	@Override
+	public String addBillableHours(BillableHoursDto billableHoursDto, String employeeId) {
+	    LocalDate date = billableHoursDto.getDate();
+	    String productionHours = billableHoursDto.getProductionHours();
+	    String otherHours = billableHoursDto.getOtherHours();
+
+	    
+	    double productionHoursDouble = Double.parseDouble(productionHours);
+	    double otherHoursDouble = Double.parseDouble(otherHours);
+
+	    
+	    double totalHoursDouble = productionHoursDouble + otherHoursDouble;
+
+	    
+	    int totalHoursInt = (int) totalHoursDouble;
+	    int minutes = (int) ((totalHoursDouble - totalHoursInt) * 60); // Get remaining minutes
+	    String totalHoursFormatted = String.format("%02d:%02d", totalHoursInt, minutes);
+
+	   
+	    LocalDate currentDate = LocalDate.now();
+
+	    
+	    Attendance attendance = attendanceRepository.findByEmployeeIdAndDate(employeeId, currentDate);
+
+	    if (attendance != null) {
 	        
-	        
-	        float totalHours = productionHours + otherHours;
+	        attendance.setProductionHours(String.valueOf(productionHoursDouble));
+	        attendance.setOtherHours(String.valueOf(otherHoursDouble));
+	        attendance.setTotalHours(totalHoursFormatted); 
 
-	        
-	        LocalDate date1 = LocalDate.now();
+	       
+	        attendanceRepository.save(attendance);
 
-	        Attendance attendance = attendanceRepository.findByEmployeeIdAndDate(employeeId, date1);
-
-	        if (attendance != null) {
-	            
-	            attendance.setProductionHours(productionHours);
-	            attendance.setOtherHours(otherHours);
-	            attendance.setTotalHours(totalHours);
-
-	            attendanceRepository.save(attendance);
-	            return "Billable hours added for employee " + employeeId + " on " + date1;
-	        } else {
-	            return "Attendance record not found for employee " + employeeId + " on " + date1;
-	        }
+	        return "Billable hours added for employee " + employeeId + " on " + currentDate;
+	    } else {
+	        return "Attendance record not found for employee " + employeeId + " on " + currentDate;
 	    }
-	
+	}
+
 	
 	
 	 @Override
