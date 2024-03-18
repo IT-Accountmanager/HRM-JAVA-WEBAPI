@@ -186,7 +186,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 			dto.setAttendanceStatus(attendance.getAttendanceStatus());
 			dto.setManager(employee.getManager());
 			dto.setProjectId(null);
-			dto.setAppliedHoursForBilling(null);
+			dto.setAppliedHoursForBilling(attendance.getAppliedHrsForBilling());
 			dto.setApprovedHoursForBilling(null);
 			dto.setBillingHoursStatus(null);
 

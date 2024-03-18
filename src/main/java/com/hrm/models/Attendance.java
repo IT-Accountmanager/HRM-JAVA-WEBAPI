@@ -39,8 +39,8 @@ public class Attendance {
 	private AttendanceStatus attendanceStatus = AttendanceStatus.Anomaly;
 	private LeaveType leaveType;
 	private String projectId;
-	private float appliedHrsForBilling;
-	private float approvedHrsForBilling;
+	private String appliedHrsForBilling;
+	private String approvedHrsForBilling;
 	private float regularizedHours;
 	private ApprovalStatus status;
 	private LocalDate startDate;
@@ -175,19 +175,19 @@ public class Attendance {
 		this.projectId = projectId;
 	}
 
-	public float getAppliedHrsForBilling() {
+	public String getAppliedHrsForBilling() {
 		return appliedHrsForBilling;
 	}
 
-	public void setAppliedHrsForBilling(float appliedHrsForBilling) {
+	public void setAppliedHrsForBilling(String appliedHrsForBilling) {
 		this.appliedHrsForBilling = appliedHrsForBilling;
 	}
 
-	public float getApprovedHrsForBilling() {
+	public String getApprovedHrsForBilling() {
 		return approvedHrsForBilling;
 	}
 
-	public void setApprovedHrsForBilling(float approvedHrsForBilling) {
+	public void setApprovedHrsForBilling(String approvedHrsForBilling) {
 		this.approvedHrsForBilling = approvedHrsForBilling;
 	}
 

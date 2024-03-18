@@ -8,9 +8,9 @@ public class BillableHoursDto {
 
 	private String productionHours;
 	private String otherHours;
-	private String totalHours;
+//	private String totalHours;
 	
-//	private float appliedHrsForBilling;
+	private String appliedHrsForBilling;
 
 
 
@@ -39,21 +39,21 @@ public class BillableHoursDto {
 		this.otherHours = otherHours;
 	}
 
-	public String getTotalHours() {
-		return totalHours;
-	}
-
-	public void setTotalHours(String totalHours) {
-		this.totalHours = totalHours;
-	}
-
-//	public float getAppliedHrsForBilling() {
-//		return appliedHrsForBilling;
+//	public String getTotalHours() {
+//		return totalHours;
 //	}
 //
-//	public void setAppliedHrsForBilling(float appliedHrsForBilling) {
-//		this.appliedHrsForBilling = appliedHrsForBilling;
+//	public void setTotalHours(String totalHours) {
+//		this.totalHours = totalHours;
 //	}
+
+	public String getAppliedHrsForBilling() {
+		return appliedHrsForBilling;
+	}
+
+	public void setAppliedHrsForBilling(String appliedHrsForBilling) {
+		this.appliedHrsForBilling = appliedHrsForBilling;
+	}
 
 
 }
