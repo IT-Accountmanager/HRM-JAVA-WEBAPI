@@ -1,14 +1,18 @@
 package com.hrm.payloads;
 
-import java.time.LocalDate;
-
 public class UserLoginResponseDto {
 
-	private LocalDate duration;
+	private String duration;
 	private String message;
 	private long candidateId;
-	
-	
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
 
 	public String getMessage() {
 		return message;
@@ -25,15 +29,5 @@ public class UserLoginResponseDto {
 	public void setCandidateId(long candidateId) {
 		this.candidateId = candidateId;
 	}
-
-	public LocalDate getDuration() {
-		return duration;
-	}
-
-	public void setDuration(LocalDate duration) {
-		this.duration = duration;
-	}
-	
-	
 
 }

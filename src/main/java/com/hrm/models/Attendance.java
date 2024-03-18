@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hrm.helper.EnumCollection.ApprovalStatus;
 import com.hrm.helper.EnumCollection.AttendanceStatus;
 import com.hrm.helper.EnumCollection.Half;
@@ -30,6 +31,7 @@ public class Attendance {
 
 	private String employeeId;
 	private Month month;
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	private LocalDate date;
 	private LocalTime inTime;
 	private LocalTime outTime;
@@ -55,16 +57,16 @@ public class Attendance {
 	private String totalHours;
 	private LocalTime exactInTime;
 	private LocalTime exactOutTime;
+
+
 	private Duration regularisationRequestHours;
 	private String regularisationReason;
-	
 	private float monthlyPresentDays;
 	private float monthlyLossOfPayDays;
 	private Duration monthlyAppliedHoursForBilling;
 	private Duration monthlyApprovedHoursForBilling;
-	
-	
-    public float getMonthlyPresentDays() {
+
+	public float getMonthlyPresentDays() {
 		return monthlyPresentDays;
 	}
 
@@ -96,7 +98,7 @@ public class Attendance {
 		this.monthlyApprovedHoursForBilling = monthlyApprovedHoursForBilling;
 	}
 
-	//=======
+	// =======
 	private Half half1;
 	private Half half2;
 

@@ -365,9 +365,9 @@ public class OnboardingServiceImpl implements IOnboardingService {
 
 			System.out.println("_____________________________________________");
 
-		//	Message.creator(to, //from, smsBody).create();
+			// Message.creator(to, //from, smsBody).create();
 
-			//smsResponseDto = new SMSResponseDto(SmsStatus.DELIVERED, smsBody);
+			// smsResponseDto = new SMSResponseDto(SmsStatus.DELIVERED, smsBody);
 		} catch (Exception e) {
 			e.printStackTrace();
 			smsResponseDto = new SMSResponseDto(SmsStatus.FAILED, e.getMessage());
@@ -484,40 +484,59 @@ public class OnboardingServiceImpl implements IOnboardingService {
 		String password = authenticateUserDto.getPassword();
 
 		Onboarding user = null;
+
 		// Employee employee = null;
 
 		if (isValidEmail(username)) {
 			user = onboardingRepository.findByEmailIdOrContactNumber(username, 0L);
-			// long candidateId = user.getCandidateId();
-			// employee = this.employeeRepository.findByCandidateId(candidateId);
 		} else {
 			try {
 				long contactNumber = Long.parseLong(username);
 				user = onboardingRepository.findByEmailIdOrContactNumber("", contactNumber);
 			} catch (NumberFormatException e) {
-				return null;
-				// return "Invalid username format";
+				userLoginResponseDto.setMessage(e.getMessage());
+				return userLoginResponseDto;
 			}
 		}
+
+		// UserLoginResponseDto userLoginResponseDto;
 
 		if (user != null && user.getPassword().equals(password)) {
 
 			Employee employee = this.employeeRepository.findByCandidateId(user.getCandidateId());
 
-			LocalDate today = LocalDate.now();
-			Attendance toDaysAttendance = this.attendanceRepository.findByEmployeeIdAndDate(employee.getEmployeeId(),
-					today);
+			if (employee != null) {
+				userLoginResponseDto.setMessage("Authenticated !!");
+				// userLoginResponseDto = new UserLoginResponseDto();
+				userLoginResponseDto.setCandidateId(user.getCandidateId());
 
-			if (toDaysAttendance != null) {
+				LocalDate today = LocalDate.now();
+				Attendance toDaysAttendance = this.attendanceRepository
+						.findByEmployeeIdAndDate(employee.getEmployeeId(), today);
 
+				if (toDaysAttendance != null) {
+					Duration duration = Duration.between(toDaysAttendance.getInTime(), LocalDateTime.now());
+
+					long hours = duration.toHours();
+					long min = duration.minusHours(hours).toMinutes();
+					long sec = duration.minusHours(hours).minusMinutes(min).getSeconds();
+
+					String formattedDuration = String.format("%02d:%02d:%02d", hours, min, sec);
+					userLoginResponseDto.setDuration(formattedDuration);
+				} else {
+					userLoginResponseDto.setDuration("00:00:00");
+				}
+			} else if (employee == null) {
+				userLoginResponseDto.setMessage("Authenticated !!");
+				userLoginResponseDto.setDuration("00:00:00");
+				userLoginResponseDto.setCandidateId(user.getCandidateId());
 			}
-
-			// return "Authentication successful and candidate Id is : " +
-			// user.getCandidateId();
+			return userLoginResponseDto;
 		} else {
-			// return "Authentication failed";
+			userLoginResponseDto.setMessage("Not Authenticated !!");
+			userLoginResponseDto.setDuration("00:00:00");
+			return userLoginResponseDto;
 		}
-		return null;
 	}
 
 	private boolean isValidEmail(String email) {

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
+import java.util.OptionalLong;
 import com.hrm.helper.Convert;
 import com.hrm.helper.CtcBreakup;
 import com.hrm.helper.Format;
@@ -56,6 +57,7 @@ import com.hrm.repositories.IOnboardingRepository;
 import com.hrm.repositories.IPersonalRepository;
 import com.hrm.repositories.IWorkRepository;
 import com.hrm.services.IHRManagerService;
+import com.hrm.utils.CommonUtils;
 
 import org.springframework.mail.javamail.MimeMessageHelper;
 import jakarta.mail.MessagingException;
@@ -1244,7 +1246,6 @@ public class HRManagerServiceImpl implements IHRManagerService {
 
 				return releaseAppointmentLetterDto;
 			} else {
-				// Set an error message in the result
 				releaseAppointmentLetterDto
 						.setError("Error in releasing Appointment Letter: Not all approvals are approved.");
 			}
@@ -1252,11 +1253,9 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			// Log the exception or handle it appropriately
 			e.printStackTrace();
 
-			// Set an error message in the result
 			releaseAppointmentLetterDto.setError("Error in releasing Appointment Letter");
 		}
 
-		// If an error occurred, you can return the result with the error information
 		return releaseAppointmentLetterDto;
 	}
 
@@ -1332,7 +1331,7 @@ public class HRManagerServiceImpl implements IHRManagerService {
 	 * }
 	 */
 
-	@Autowired(required=true)
+	@Autowired(required = true)
 	PdfGenerator pdfGenerator;
 
 	private String generatePdf1(Employee employee) throws IOException {
@@ -1351,11 +1350,12 @@ public class HRManagerServiceImpl implements IHRManagerService {
 			String htmlContent = processTemplate(htmlTemplate, employee);
 
 			// Modify the PDF file path as needed
-			String pdfDirectoryPath = "C:\\Users\\Rameshrao.k\\Appointment Letter";
-			String pdfFilePath = pdfDirectoryPath + "\\ Appointment Letter " + employee.getName() + ".pdf";
+			String basePath = commonUtils.getBasePath() + "/appointment_letter";
+			Files.createDirectories(Paths.get(basePath));
+//			String pdfDirectoryPath = "C:\\Users\\Rameshrao.k\\Appointment Letter";
+			String pdfFilePath = basePath + "/Appointment_Letter_" + employee.getName() + ".pdf";
 
 			// Ensure the directory exists; create it if not
-			Files.createDirectories(Paths.get(pdfDirectoryPath));
 
 			// Convert HTML to PDF and save it to the specified path
 			/*
@@ -1380,43 +1380,44 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		CtcBreakup createCtcBreakUp = breakup.createCtcBreakUp(employee.getCtc());
 
 		Map<String, Object> values = new HashMap();
-		values.put("Employee Id", employee.getEmployeeId());
+		values.put("Employee_Id", employee.getEmployeeId());
 		values.put("Name", employee.getName());
 		values.put("Designation", employee.getDesignation().toString().replace("_", " "));
-		values.put("Date Of Joining", Format.getFormattedDate(employee.getDateOfJoining()));
+		values.put("Date_Of_Joining", Format.getFormattedDate(employee.getDateOfJoining()));
 		values.put("Location", employee.getWorkLocation());
 		values.put("CTC", (int) employee.getCtc());
-		values.put("Service Commitement", (int) employee.getServiceCommitment());
+		values.put("Service_Commitement", (int) employee.getServiceCommitment());
+		values.put("Service_Break_Amount", (int) employee.getBondBreakAmount());
 		values.put("Basic", (int) createCtcBreakUp.getBasicSalary());
-		values.put("M Basic", (int) createCtcBreakUp.getMonthlyBasicSalary());
-		values.put("House Rent Allowance", (int) createCtcBreakUp.getHouseRentAllowance());
-		values.put("M House Rent Allowance", (int) createCtcBreakUp.getMonthlyHouseRentAllowance());
-		values.put("Special Allowance", (int) createCtcBreakUp.getSpecialAllowance());
-		values.put("M Special Allowance", (int) createCtcBreakUp.getMonthlySpecialAllowance());
+		values.put("M_Basic", (int) createCtcBreakUp.getMonthlyBasicSalary());
+		values.put("House_Rent_Allowance", (int) createCtcBreakUp.getHouseRentAllowance());
+		values.put("M_House_Rent_Allowance", (int) createCtcBreakUp.getMonthlyHouseRentAllowance());
+		values.put("Special_Allowance", (int) createCtcBreakUp.getSpecialAllowance());
+		values.put("M_Special_Allowance", (int) createCtcBreakUp.getMonthlySpecialAllowance());
 		values.put("Medical", (int) createCtcBreakUp.getMedicalAllowance());
-		values.put("M Medical", (int) createCtcBreakUp.getMonthlyMedicalAllowance());
+		values.put("M_Medical", (int) createCtcBreakUp.getMonthlyMedicalAllowance());
 		values.put("Telephone", (int) (int) createCtcBreakUp.getTelephoneAllowance());
-		values.put("M Telephone", createCtcBreakUp.getMonthlyTelephoneAllowance());
-		values.put("Leave Travel Allowance", (int) createCtcBreakUp.getLeaveTravelAllowance());
-		values.put("M Leave Travel Allowance", (int) createCtcBreakUp.getMonthlyLeaveTravelAllowance());
-		values.put("Gross Salary", (int) createCtcBreakUp.getGrossSalary());
-		values.put("M Gross Salary", (int) createCtcBreakUp.getMonthlyGrossSalary());
-		values.put("Employee Pf", (int) createCtcBreakUp.getEmployeePF());
-		values.put("M Employee Pf", (int) createCtcBreakUp.getMonthlyEmployeePF());
+		values.put("M_Telephone", createCtcBreakUp.getMonthlyTelephoneAllowance());
+		values.put("Leave_Travel_Allowance", (int) createCtcBreakUp.getLeaveTravelAllowance());
+		values.put("M_Leave_Travel_Allowance", (int) createCtcBreakUp.getMonthlyLeaveTravelAllowance());
+		values.put("Gross_Salary", (int) createCtcBreakUp.getGrossSalary());
+		values.put("M_Gross_Salary", (int) createCtcBreakUp.getMonthlyGrossSalary());
+		values.put("Employee_Pf", (int) createCtcBreakUp.getEmployeePF());
+		values.put("M_Employee_Pf", (int) createCtcBreakUp.getMonthlyEmployeePF());
 		values.put("Gratuity", (int) createCtcBreakUp.getGratuity());
-		values.put("M Gratuity", (int) createCtcBreakUp.getMonthlyGratuity());
-		values.put("Professional Tax", (int) createCtcBreakUp.getProfessionalTax());
-		values.put("M Professional Tax", (int) createCtcBreakUp.getMonthlyProfessionalTax());
-		values.put("Net Take Home", (int) createCtcBreakUp.getNetTakeHome());
-		values.put("M Net Take Home", (int) createCtcBreakUp.getMonthlyNetTakeHome());
-		values.put("Employer Pf", (int) createCtcBreakUp.getEmployerPF());
-		values.put("M Employer Pf", (int) createCtcBreakUp.getMonthlyEmployerPF());
-		values.put("Group Insurance", (int) createCtcBreakUp.getGroupInsurance());
-		values.put("M Group Insurance", (int) createCtcBreakUp.getMonthlyGroupInsurance());
-		values.put("Cost To Company", (int) createCtcBreakUp.getTotalCTC());
-		values.put("M Cost To Company", (int) createCtcBreakUp.getMonthlytotalCTC());
+		values.put("M_Gratuity", (int) createCtcBreakUp.getMonthlyGratuity());
+		values.put("Professional_Tax", (int) createCtcBreakUp.getProfessionalTax());
+		values.put("M_Professional_Tax", (int) createCtcBreakUp.getMonthlyProfessionalTax());
+		values.put("Net_Take_Home", (int) createCtcBreakUp.getNetTakeHome());
+		values.put("M_Net_Take_Home", (int) createCtcBreakUp.getMonthlyNetTakeHome());
+		values.put("Employer_Pf", (int) createCtcBreakUp.getEmployerPF());
+		values.put("M_Employer_Pf", (int) createCtcBreakUp.getMonthlyEmployerPF());
+		values.put("Group_Insurance", (int) createCtcBreakUp.getGroupInsurance());
+		values.put("M_Group_Insurance", (int) createCtcBreakUp.getMonthlyGroupInsurance());
+		values.put("Cost_To_Company", (int) createCtcBreakUp.getTotalCTC());
+		values.put("M_Cost_To_Company", (int) createCtcBreakUp.getMonthlytotalCTC());
 		values.put("Salary", Convert.convertToWords((int) createCtcBreakUp.getMonthlytotalCTC()));
-		values.put("Sign", employee.getSign());
+		values.put("Sign", Base64.getEncoder().encodeToString(employee.getSign()));
 
 		// Replace placeholders with actual values
 		for (Map.Entry<String, Object> entry : values.entrySet()) {
@@ -1438,7 +1439,8 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		String modifiedHtml = template;
 		try {
 			// Modify the file path and name as needed
-			String modifiedHtmlFilePath = "C:\\Users\\Rameshrao.k\\ModifiedHTML\\modified.html";
+			String basePath = commonUtils.getBasePath();
+			String modifiedHtmlFilePath = basePath + "/ModifiedHTML/modified.html";
 
 			// Ensure the directory exists; create it if not
 			Files.createDirectories(Paths.get(modifiedHtmlFilePath).getParent());
@@ -1497,13 +1499,16 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		return htmlContent.replace("$title", "YourTitle").replace("$body", "YourBody");
 	}
 
+	@Autowired
+	CommonUtils commonUtils;
+
 	private String generatePdfFromHtml(String modifiedHtmlContent, String employeeName) throws IOException {
 		// Implement your logic to generate PDF from HTML
 		// For example, use a PDF generation library like Flying Saucer or iText
 
 		// Modify the PDF file path as needed
-
-		String pdfFilePath = "C:\\Users\\Rameshrao.k\\Appointment Letter/Appointment Letter  " + employeeName + ".pdf";
+		String basePath = commonUtils.getBasePath();
+		String pdfFilePath = basePath + "/appointment_letters/Appointment_Letter_" + employeeName + ".pdf";
 		File newHtmlFile = new File(pdfFilePath);
 
 		/*
@@ -1594,46 +1599,59 @@ public class HRManagerServiceImpl implements IHRManagerService {
 //__________________CREATE____________________
 	@Override
 	public String createAppointmentLetter(CreateAppointmentLetterDto appointmentLetterDto, long candidateId) {
-		Boolean existed = this.employeeRepository.existsByCandidateId(candidateId);
+	    Boolean existed = this.employeeRepository.existsByCandidateId(candidateId);
 
-		if (existed) {
-			return "Employee Already Existed of Candidate Id : " + candidateId;
-		}
-		Employee employee = new Employee();
+	    if (existed) {
+	        return "Employee Already Existed of Candidate Id : " + candidateId;
+	    }
 
-		employee.setCandidateId(candidateId);
-		long nextEmployeeIdNumber = this.employeeRepository.count() + 1;
-		employee.setEmployeeId(String.format("EIS%05d", nextEmployeeIdNumber));
-		employee.setName(appointmentLetterDto.getName());
-		employee.setDesignation(appointmentLetterDto.getDesignation());
-		employee.setWorkLocation(appointmentLetterDto.getWorkLocation());
-		employee.setDateOfJoining(appointmentLetterDto.getDateOfJoining());
-		employee.setCtc(appointmentLetterDto.getCtc());
-		employee.setServiceCommitment(appointmentLetterDto.getBondPeriod());
-		employee.setBondBreakAmount(appointmentLetterDto.getBondBreakAmount());
-		employee.setEmailId(appointmentLetterDto.getEmailId());
-		employee.setContactNumber(appointmentLetterDto.getContactNumber());
-		employee.setJobTitle(appointmentLetterDto.getJobTitle());
-		employee.setAuthorisedSignature(appointmentLetterDto.getAuthorisedSignature());
-		employee.setSign(appointmentLetterDto.getSign());
-		employee.setEmployeeStatus(EmployeeStatus.Active);
+	    Employee employee = new Employee();
+	    employee.setCandidateId(candidateId);
 
-		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
-		System.out.println("------------------------------------");
-		System.out.println("Status Of Candidate : " + onboarding.getCandidatesStatus());
-		onboarding.setCandidatesStatus(CandidatesStatus.Approved);
-		System.out.println("Status Of Candidate : " + onboarding.getCandidatesStatus());
+	    List<Employee> employees = this.employeeRepository.findAll();
+	    if (!employees.isEmpty()) {
+	        long maxEmployeeSn = Long.MIN_VALUE;
+	        for (Employee emp : employees) {
+	            long currentEmployeeSn = emp.getEmployeeSn();
+	            if (currentEmployeeSn > maxEmployeeSn) {
+	                maxEmployeeSn = currentEmployeeSn;
+	            }
+	        }
 
-		this.onboardingRepository.save(onboarding);
-		System.out.println("Status Of Candidate : "
-				+ this.onboardingRepository.findByCandidateId(candidateId).getCandidatesStatus());
-		System.out.println("------------------------------------");
+	        employee.setEmployeeId(String.format("EIS%05d", maxEmployeeSn + 1));
+	        employee.setName(appointmentLetterDto.getName());
+	        employee.setDesignation(appointmentLetterDto.getDesignation());
+	        employee.setWorkLocation(appointmentLetterDto.getWorkLocation());
+	        employee.setDateOfJoining(appointmentLetterDto.getDateOfJoining());
+	        employee.setCtc(appointmentLetterDto.getCtc());
+	        employee.setServiceCommitment(appointmentLetterDto.getBondPeriod());
+	        employee.setBondBreakAmount(appointmentLetterDto.getBondBreakAmount());
+	        employee.setEmailId(appointmentLetterDto.getEmailId());
+	        employee.setContactNumber(appointmentLetterDto.getContactNumber());
+	        employee.setJobTitle(appointmentLetterDto.getJobTitle());
+	        employee.setAuthorisedSignature(appointmentLetterDto.getAuthorisedSignature());
+	        employee.setSign(appointmentLetterDto.getSign());
+	        employee.setEmployeeStatus(EmployeeStatus.Active);
 
-		// employee.setAppointmentLetter(appointmentLetterDto.getAppointmentLetter());
+	        Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
+	        System.out.println("------------------------------------");
+	        System.out.println("Status Of Candidate : " + onboarding.getCandidatesStatus());
+	        onboarding.setCandidatesStatus(CandidatesStatus.Approved);
+	        System.out.println("Status Of Candidate : " + onboarding.getCandidatesStatus());
 
-		this.employeeRepository.save(employee);
+	        this.onboardingRepository.save(onboarding);
+	        System.out.println("Status Of Candidate : "
+	                + this.onboardingRepository.findByCandidateId(candidateId).getCandidatesStatus());
+	        System.out.println("------------------------------------");
 
-		return "Appointment Letter Created";
+	        // employee.setAppointmentLetter(appointmentLetterDto.getAppointmentLetter());
+
+	        this.employeeRepository.save(employee);
+
+	        return "Appointment Letter Created";
+	    }
+
+	    return ""; // Add a default return statement
 	}
 
 	@Override

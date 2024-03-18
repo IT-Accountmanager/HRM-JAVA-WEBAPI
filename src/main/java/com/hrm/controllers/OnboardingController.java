@@ -129,7 +129,21 @@ public class OnboardingController {
 	 * return new ResponseEntity<AuthenticateUserDto>(result, HttpStatus.OK); }
 	 */
 
-	
+//<<<<<<< HEAD
+	/*
+	 * @PostMapping("authenticate") public ResponseEntity<UserLoginResponseDto>
+	 * authenticate(@RequestBody AuthenticateUserDto authenticateUserDto) {
+	 * UserLoginResponseDto result = null;
+	 * 
+	 * if (authenticateUserDto != null) { result =
+	 * this.onboardingService.authenticate(authenticateUserDto);
+	 * 
+	 * if (result != null) { return new ResponseEntity<>(result,
+	 * HttpStatus.ACCEPTED); } else { return new
+	 * ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED); } } else
+	 * { return new ResponseEntity<>("Invalid input", HttpStatus.BAD_REQUEST); } }
+	 */
+
 //	  @PostMapping("authenticate") 
 //	  public ResponseEntity<UserLoginResponseDto>
 //	  authenticate(@RequestBody AuthenticateUserDto authenticateUserDto) { String
@@ -150,6 +164,22 @@ public class OnboardingController {
 //		  return new ResponseEntity<>("Invalid input", HttpStatus.BAD_REQUEST); }
 //	  }
 //	 
+//>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
+
+	@PostMapping("authenticate")
+	public ResponseEntity<?> authenticate(@RequestBody AuthenticateUserDto authenticateUserDto) {
+		if (authenticateUserDto == null) {
+			return new ResponseEntity<>("Invalid input", HttpStatus.BAD_REQUEST);
+		}
+
+		UserLoginResponseDto result = onboardingService.authenticate(authenticateUserDto);
+
+		if (result != null) {
+			return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+		} else {
+			return new ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED);
+		}
+	}
 
 	@GetMapping("employee/{employeeId}")
 	public ResponseEntity<WelcomeDto> getEmployee(@PathVariable String employeeId) {
@@ -214,7 +244,5 @@ public class OnboardingController {
 		LoginWelcomeDto details = this.onboardingService.getDetails(candidateId);
 		return new ResponseEntity<LoginWelcomeDto>(details, HttpStatus.OK);
 	}
-	
-	
 
 }

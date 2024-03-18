@@ -7,6 +7,7 @@ import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.AttendanceEmployeeDto;
 import com.hrm.payloads.BillableHoursDto;
 import com.hrm.payloads.RegularizationHoursDto;
+import com.hrm.payloads.UserAttendanceDto;
 
 public interface IAttendanceService {
 
@@ -14,7 +15,7 @@ public interface IAttendanceService {
 
 	String clockOut(String employeeId);
 
-	List<Attendance> allAttendance(String employeeId);
+	List<UserAttendanceDto> allAttendance(String employeeId);
 
 	AttendanceEmployeeDto getAttendance(String employeeId);
 
@@ -22,19 +23,22 @@ public interface IAttendanceService {
 
 	String editAttendance(Attendance attendance, Integer id);
 
+//	ApplyLeaveDto getLeave(String employeeId);
+
+	// ApplyLeaveDto createOrUpdateLeave(ApplyLeaveDto leaveDto);
+
 	String addBillableHours(BillableHoursDto billableHoursDto, String employeeId);
 
 	String addRegularizationHours(RegularizationHoursDto regularizationHoursDto, String employeeId);
-	
+
 	String addLeave(ApplyLeaveDto applyLeaveDto, String employeeId);
-	
+
 //	ApplyLeaveDto addLeave(ApplyLeaveDto leaveDto);
-	
+
 //	float gettotalHoursFromBillableHoursDto(String employeeId);
-	
+
 //	LocalTime getinTimeFromAttendance(String employeeId);
-	
+
 //	LocalTime getoutTimeFromAttendance(String employeeId);
-	
 
 }

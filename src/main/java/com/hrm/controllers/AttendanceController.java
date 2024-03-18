@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,15 +14,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.hrm.models.Attendance;
 import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.AttendanceEmployeeDto;
 import com.hrm.payloads.BillableHoursDto;
 import com.hrm.payloads.RegularizationHoursDto;
+import com.hrm.payloads.UserAttendanceDto;
 import com.hrm.services.IAttendanceService;
 
-@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
+/*@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
+*/
+
+@CrossOrigin(origins = "*")
 
 @RestController
 @RequestMapping("/attendance")
@@ -57,9 +59,9 @@ public class AttendanceController {
 
 	// -------------------GET ALL ATTENDANCE BY EMPLOYEE ID-------------------
 	@GetMapping("/allattendance/{employeeId}")
-	public ResponseEntity<List<Attendance>> getAllAttendenceByEmployeeId(@PathVariable String employeeId) {
-		List<Attendance> allAttendance = this.attendanceService.allAttendance(employeeId);
-		return new ResponseEntity<List<Attendance>>(allAttendance, HttpStatus.OK);
+	public ResponseEntity<List<UserAttendanceDto>> getAllAttendenceByEmployeeId(@PathVariable String employeeId) {
+		List<UserAttendanceDto> allAttendance = this.attendanceService.allAttendance(employeeId);
+		return new ResponseEntity<List<UserAttendanceDto>>(allAttendance, HttpStatus.OK);
 	}
 
 	// --------------------------POST BILLABLE HOURS-------------------------
@@ -89,12 +91,12 @@ public class AttendanceController {
 		String result = this.attendanceService.deleteAttendance(id);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/addLeave/{employeeId}")
-    public ResponseEntity<String> addLeave(@RequestBody ApplyLeaveDto applyLeaveDto, @PathVariable String employeeId) {
-        String result = attendanceService.addLeave(applyLeaveDto, employeeId);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
+	public ResponseEntity<String> addLeave(@RequestBody ApplyLeaveDto applyLeaveDto, @PathVariable String employeeId) {
+		String result = attendanceService.addLeave(applyLeaveDto, employeeId);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 
 //	@PostMapping("/createOrUpdate/leave/{employeeId}")
 //	public ResponseEntity<ApplyLeaveDto> createOrUpdateLeave(@PathVariable String employeeId,
@@ -105,14 +107,15 @@ public class AttendanceController {
 //		ApplyLeaveDto updatedLeaveDto = attendanceService.createOrUpdateLeave(leaveDto);
 //		return new ResponseEntity<>(updatedLeaveDto, HttpStatus.CREATED);
 //	}
-	
+
+//>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
 //	@PostMapping("/regularization-hours/{employeeId}")
 //    public ResponseEntity<String> addRegularizationHours(@RequestBody RegularizationHoursDto regularizationHoursDto,
 //                                                         @PathVariable String employeeId) {
 //        String response = attendanceService.addRegularizationHours(regularizationHoursDto, employeeId);
 //        return ResponseEntity.ok(response);
 //    }
-	
+
 //	@PostMapping("/add/leave/{employeeId}")
 //	public ResponseEntity<ApplyLeaveDto> addLeave(@PathVariable String employeeId,
 //			@RequestBody ApplyLeaveDto leaveDto) {
@@ -122,14 +125,14 @@ public class AttendanceController {
 //		ApplyLeaveDto updatedLeaveDto = attendanceService.addLeave(leaveDto);
 //		return new ResponseEntity<>(updatedLeaveDto, HttpStatus.CREATED);
 //	}
-	
+
 //	@PostMapping("/billableHours/{employeeId}")
 //	public ResponseEntity<String> addBillableHours(@RequestBody BillableHoursDto billableHoursDto,
 //			@PathVariable String employeeId) {
 //		String result = this.attendanceService.addBillableHours(billableHoursDto, employeeId);
 //		return new ResponseEntity<String>(result, HttpStatus.OK);
 //	}
-	
+
 //	---------------------------GET TOTAL HOURS-----------------------------
 
 //	@GetMapping("/total-hours/{employeeId}")
@@ -138,20 +141,19 @@ public class AttendanceController {
 //
 //		return new ResponseEntity<Float>(attendance, HttpStatus.OK);
 //	}
-	
+
 //	----------------------------------GET CLOCKIN TIME FOR REGULARIZATION-----------------------------
 //	@GetMapping("/clockinTime/{employeeId}")
 //	public ResponseEntity<LocalTime> getinTime(@PathVariable String employeeId) {
 //		LocalTime attendance = this.attendanceService.getinTimeFromAttendance(employeeId);
 //		return new ResponseEntity<LocalTime>(attendance, HttpStatus.OK);
 //	}
-	
+
 //	----------------------------------GET CLOCK OUT TIME FOR REGULARIZATION-----------------------------
 //	@GetMapping("/clockoutTime/{employeeId}")
 //	public ResponseEntity<LocalTime> getoutTime(@PathVariable String employeeId) {
 //		LocalTime attendance = this.attendanceService.getoutTimeFromAttendance(employeeId);
 //		return new ResponseEntity<LocalTime>(attendance, HttpStatus.OK);
 //	}
-
 
 }

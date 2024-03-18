@@ -5,10 +5,16 @@ import java.util.List;
 
 public class BillableHoursDto {
 	private LocalDate date;
+
 	private String productionHours;
 	private String otherHours;
 	private String totalHours;
-//
+	
+//	private float appliedHrsForBilling;
+
+
+
+
 	public LocalDate getDate() {
 		return date;
 	}
@@ -41,6 +47,13 @@ public class BillableHoursDto {
 		this.totalHours = totalHours;
 	}
 
-	
+//	public float getAppliedHrsForBilling() {
+//		return appliedHrsForBilling;
+//	}
+//
+//	public void setAppliedHrsForBilling(float appliedHrsForBilling) {
+//		this.appliedHrsForBilling = appliedHrsForBilling;
+//	}
+
 
 }

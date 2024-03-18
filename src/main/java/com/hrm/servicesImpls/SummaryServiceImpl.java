@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,6 +67,10 @@ public class SummaryServiceImpl implements ISummaryService {
 	IBankDetailsRepository bankDetailsRepository;
 	@Autowired
 	ModelMapper modelMapper;
+	@Autowired
+	JavaMailSender javaMailSender;
+	@Value("${spring.mail.username}")
+	private String sender;
 
 	@Override
 	public List<SummaryDto> getAll() {
@@ -324,6 +331,21 @@ public class SummaryServiceImpl implements ISummaryService {
 				employee.setUanNumber(singleEmployee.getUanNumber());
 				employee.setImported(true);
 				this.employeeRepository.save(employee);
+
+				// Send mail to fill personal details with link
+				Long candidateId = onboarding.getCandidateId();
+				String link = "http://10.10.20.9:8082/#/welcome/" + candidateId;
+				String name = onboarding.getCandidateName();
+				SimpleMailMessage mailMessage = new SimpleMailMessage();
+
+				mailMessage.setFrom(sender);
+				mailMessage.setTo(onboarding.getEmailId());
+				mailMessage.setSubject("Fill all personal details");
+				mailMessage.setText("Dear " + name + "," + "\n\r" + "\n\r"
+						+ "Please click the link below and fill your information. " + "\n\r" + "\n\r" + "Link : "
+						+ link);
+
+				this.javaMailSender.send(mailMessage);
 			}
 		} catch (Exception e) {
 			return "Error importing employees: " + e.getMessage();
@@ -441,8 +463,8 @@ public class SummaryServiceImpl implements ISummaryService {
 				return workInfo;
 			}
 		} catch (Exception e) {
-			return null;
-
+			e.printStackTrace();
+			return new WorkInfoDto();
 		}
 	}
 
