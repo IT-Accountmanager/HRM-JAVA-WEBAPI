@@ -25,6 +25,10 @@ import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.UserAttendanceDto;
 import com.hrm.services.IAttendanceService;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 /*@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
 */
 
@@ -103,30 +107,37 @@ public class AttendanceController {
 		String result = attendanceService.addLeave(applyLeaveDto, employeeId);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
-	
-	
+
 	// --------------------------GET APPLY LEAVE-------------------------
 	@GetMapping("/getleave/{employeeId}")
 	public ResponseEntity<ApplyLeaveDto> getLeave(@PathVariable String employeeId) {
 		ApplyLeaveDto attendance = this.attendanceService.getLeave(employeeId);
 		return new ResponseEntity<ApplyLeaveDto>(attendance, HttpStatus.OK);
 	}
-	
+
 	// --------------------------GET BILLABLE HOURS-------------------------
-	
+
 	@GetMapping("/billablehours/{employeeId}")
 	public ResponseEntity<BillableHoursDto> getBillableHours(@PathVariable String employeeId) {
 		BillableHoursDto attendance = this.attendanceService.getBillableHours(employeeId);
 		return new ResponseEntity<BillableHoursDto>(attendance, HttpStatus.OK);
 	}
-    
+
 	// --------------------------GET REGULARISATION HOURS-------------------------
-    
+
 	@GetMapping("/getregularizationhours/{employeeId}")
 	public ResponseEntity<RegularizationHoursDto> getRegularizationHours(@PathVariable String employeeId) {
 		RegularizationHoursDto attendance = this.attendanceService.getRegularizationHours(employeeId);
 		return new ResponseEntity<RegularizationHoursDto>(attendance, HttpStatus.OK);
+	}
+
+	@PostMapping("/getEmployeeHoursBilling")
+	public String getEmployee(@RequestBody ObjectNode req) {
+
+		String managerId = req.get("employeeId").asText();
+		String month = req.get("month").asText();
+		String attendance = this.attendanceService.getAttendanceAsJson(managerId, month);
+		return attendance;
 	}
 
 //	@PostMapping("/createOrUpdate/leave/{employeeId}")

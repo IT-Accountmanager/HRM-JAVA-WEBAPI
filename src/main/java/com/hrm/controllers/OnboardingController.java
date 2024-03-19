@@ -28,11 +28,8 @@ import com.hrm.payloads.VerifyOtpDto;
 import com.hrm.payloads.WelcomeDto;
 import com.hrm.services.IOnboardingService;
 
-<<<<<<< HEAD
-=======
 //@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
 
->>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/Onboarding")

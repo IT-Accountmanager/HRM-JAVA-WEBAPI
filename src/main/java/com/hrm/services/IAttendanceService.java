@@ -3,6 +3,7 @@ package com.hrm.services;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.hrm.models.Attendance;
 import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.AttendanceEmployeeDto;
@@ -39,6 +40,8 @@ public interface IAttendanceService {
 	RegularizationHoursDto getRegularizationHours(String employeeId);
 	
 	BillableHoursDto getBillableHours(String employeeId);
+
+	String getAttendanceAsJson(String managerId, String month);
 
 //	ApplyLeaveDto addLeave(ApplyLeaveDto leaveDto);
 
