@@ -63,39 +63,37 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 	@Override
 	public String clockIn(String employeeId) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-		String formattedTime = LocalTime.now().format(formatter);
+		try {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+			String formattedTime = LocalTime.now().format(formatter);
+			LocalDate currentDate = LocalDate.now();
 
-		LocalTime parsedTime = LocalTime.parse(formattedTime, formatter);
+			LocalTime parsedTime = LocalTime.parse(formattedTime, formatter);
 
-		/*
-		 * DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm"); String
-		 * formattedTime = LocalTime.now().format(formatter); LocalTime parsedTime =
-		 * LocalTime.parse(formattedTime, formatter);
-		 */
-		Attendance existingAttendance = this.attendanceRepository.findByEmployeeIdAndDate(employeeId, LocalDate.now());
-		if (existingAttendance != null) {
+			Attendance existingAttendance = this.attendanceRepository.findByEmployeeIdAndDate(employeeId, currentDate);
+			if (existingAttendance != null) {
+				logger.info("Clock-in record already exists for Employee Id: {}", employeeId);
+				return "Clock-in record already exists for Employee Id : " + employeeId;
+			} else {
+				logger.info("Clock-in record not present for the employee Id: {}", employeeId);
 
-			return "Clock-in record already exist for Employee Id : " + employeeId;
+				Attendance attendance = new Attendance();
+				attendance.setEmployeeId(employeeId);
+				attendance.setMonth(LocalDateTime.now().getMonth());
+				attendance.setDate(currentDate);
+				attendance.setInTime(LocalTime.now());
+				// attendance.setInTime(parsedTime);
+				attendance.setAttendanceStatus(AttendanceStatus.Present);
 
-		} else {
+				this.attendanceRepository.save(attendance);
 
-			Attendance attendance = new Attendance();
-			attendance.setEmployeeId(employeeId);
-
-			attendance.setMonth(LocalDateTime.now().getMonth());
-
-			attendance.setDate(LocalDate.now());
-			attendance.setInTime(LocalTime.now());
-			// attendance.setInTime(parsedTime);
-			attendance.setAttendanceStatus(AttendanceStatus.Present);
-
-			this.attendanceRepository.save(attendance);
-
-			return "attendence added of Employee Id : " + employeeId;
-
+				logger.info("Attendance added for Employee Id: {}", employeeId);
+				return "Attendance added for Employee Id : " + employeeId;
+			}
+		} catch (Exception e) {
+			logger.error("Error occurred while clocking in for Employee Id: {}", employeeId, e);
+			return "Error occurred while clocking in for Employee Id : " + employeeId;
 		}
-
 	}
 
 	@Override
@@ -134,7 +132,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		for (Attendance attendance : allByEmployeeId) {
 			UserAttendanceDto attendanceDto = new UserAttendanceDto();
 
-			Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
+			// Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
 
 			attendanceDto.setEmployeeId(employeeId);
 			attendanceDto.setMonth(getMonthName(attendance.getMonth()));
@@ -149,9 +147,9 @@ public class AttendanceServiceImpl implements IAttendanceService {
 			}
 
 			attendanceDto.setAttendanceStatus(attendance.getAttendanceStatus());
-			attendanceDto.setManager(employee.getManager()); // Set manager value based on your logic
+			// attendanceDto.setManager(employee.getManager()); // Set manager value based
+			// on your logic
 			attendanceDto.setProjectId(attendance.getProjectId());
-			System.out.println("************************************ : " + attendance.getAppliedHrsForBilling());
 			attendanceDto.setAppliedHrsForBilling(String.valueOf(attendance.getAppliedHrsForBilling()));
 			attendanceDto.setApprovedHrsForBilling(String.valueOf(attendance.getApprovedHrsForBilling()));
 			// attendanceDto.setRemarks(""); // Set remarks value based on your logic

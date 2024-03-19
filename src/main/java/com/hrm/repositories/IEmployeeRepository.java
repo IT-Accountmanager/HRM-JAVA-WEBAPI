@@ -51,5 +51,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 
 	List<Employee> findAllByManager(String manager);
 
+	boolean existsByEmployeeId(String employeeId);
+
 
 }

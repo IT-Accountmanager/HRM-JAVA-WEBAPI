@@ -19,7 +19,7 @@ public class Format {
 	public static String getFormattedTime(LocalTime time) {
 		if (time != null) {
 
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 			return time.format(formatter);
 		}
 		return null;

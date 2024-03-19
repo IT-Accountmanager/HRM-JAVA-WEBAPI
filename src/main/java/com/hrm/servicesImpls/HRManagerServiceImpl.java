@@ -1602,25 +1602,24 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		Boolean existed = this.employeeRepository.existsByCandidateId(candidateId);
 
 		if (existed) {
-			return "Employee Already Existed of Candidate Id : " + candidateId;
+			return "Employee already exists with Candidate ID: " + candidateId;
 		}
-		Employee employee = new Employee();
 
+		Employee employee = new Employee();
 		employee.setCandidateId(candidateId);
-		
 
 		List<Employee> employees = this.employeeRepository.findAll();
 
-        if (!employees.isEmpty()) {
-            long maxEmployeeSn = Long.MIN_VALUE;
+		long maxEmployeeSn = 0;
+		for (Employee emp : employees) {
+			long currentEmployeeSn = emp.getEmployeeSn();
+			if (currentEmployeeSn > maxEmployeeSn) {
+				maxEmployeeSn = currentEmployeeSn;
+			}
+		}
+		maxEmployeeSn++;
 
-            for (Employee emp : employees) {
-                long currentEmployeeSn = emp.getEmployeeSn();
-                if (currentEmployeeSn > maxEmployeeSn) {
-                    maxEmployeeSn = currentEmployeeSn;
-                }
-
-		employee.setEmployeeId(String.format("EIS%05d", maxEmployeeSn+1));
+		employee.setEmployeeId(String.format("EIS%05d", maxEmployeeSn));
 		employee.setName(appointmentLetterDto.getName());
 		employee.setDesignation(appointmentLetterDto.getDesignation());
 		employee.setWorkLocation(appointmentLetterDto.getWorkLocation());
@@ -1636,17 +1635,10 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		employee.setEmployeeStatus(EmployeeStatus.Active);
 
 		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
-		System.out.println("------------------------------------");
-		System.out.println("Status Of Candidate : " + onboarding.getCandidatesStatus());
-		onboarding.setCandidatesStatus(CandidatesStatus.Approved);
-		System.out.println("Status Of Candidate : " + onboarding.getCandidatesStatus());
-
-		this.onboardingRepository.save(onboarding);
-		System.out.println("Status Of Candidate : "
-				+ this.onboardingRepository.findByCandidateId(candidateId).getCandidatesStatus());
-		System.out.println("------------------------------------");
-
-		// employee.setAppointmentLetter(appointmentLetterDto.getAppointmentLetter());
+		if (onboarding != null) {
+			onboarding.setCandidatesStatus(CandidatesStatus.Approved);
+			this.onboardingRepository.save(onboarding);
+		}
 
 		this.employeeRepository.save(employee);
 

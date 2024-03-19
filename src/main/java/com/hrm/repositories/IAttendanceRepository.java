@@ -13,11 +13,8 @@ public interface IAttendanceRepository extends JpaRepository<Attendance, Integer
 
 	Attendance findByEmployeeId(String employeeId);
 
-	Attendance findByEmployeeIdAndDate(String employeeId, LocalDate now);
+	Attendance findByEmployeeIdAndDate(String employeeId, LocalDate currentDate);
 
 	List<Attendance> findAllByEmployeeId(String employeeId);
-	
-	
 
 }
-

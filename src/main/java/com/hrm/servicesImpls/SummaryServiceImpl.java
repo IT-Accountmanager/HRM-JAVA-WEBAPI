@@ -258,9 +258,29 @@ public class SummaryServiceImpl implements ISummaryService {
 				if (employeeRepository.existsByContactNumber(singleEmployee.getContactNumber())) {
 					return "Candidate with this Mobile No. already exist";
 				}
+				List<Employee> emps = this.employeeRepository.findAll();
 
+				long maxEmployeeSn = 0;
+				for (Employee emp : emps) {
+					long currentEmployeeSn = emp.getEmployeeSn();
+					if (currentEmployeeSn > maxEmployeeSn) {
+						maxEmployeeSn = currentEmployeeSn;
+					}
+				}
+				maxEmployeeSn++;
+
+				List<Onboarding> findAll = this.onboardingRepository.findAll();
+
+				long maxCandidateId = 0;
+				for (Onboarding candidate : findAll) {
+					long currentCandidateId = candidate.getCandidateId();
+					if (currentCandidateId > maxCandidateId) {
+						maxCandidateId = currentCandidateId;
+					}
+				}
+				maxCandidateId++;
 				Onboarding onboarding = new Onboarding();
-				onboarding.setCandidateId(onboardingRepository.count() + 1);
+				onboarding.setCandidateId(maxCandidateId);
 				onboarding.setCandidateName(singleEmployee.getName());
 				onboarding.setCandidatesStatus(CandidatesStatus.Approved);
 				onboarding.setContactNumber(singleEmployee.getContactNumber());
@@ -309,7 +329,7 @@ public class SummaryServiceImpl implements ISummaryService {
 
 				Employee employee = new Employee();
 				employee.setCandidateId(onboarding.getCandidateId());
-				employee.setEmployeeId(singleEmployee.getEmployeeId());
+				employee.setEmployeeId(String.format("EIS%05d", maxEmployeeSn));
 				employee.setName(singleEmployee.getName());
 				employee.setEmployeeStatus(singleEmployee.getEmployeeStatus());
 				employee.setEmployeeCategory(singleEmployee.getCategory());
@@ -437,8 +457,10 @@ public class SummaryServiceImpl implements ISummaryService {
 	@Override
 	public WorkInfoDto getWorkInfo(String employeeId) {
 		try {
-			Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
-			if (employee != null) {
+			boolean employeeExists = this.employeeRepository.existsByEmployeeId(employeeId);
+
+			if (employeeExists) {
+				Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
 
 				WorkInfoDto workInfo = new WorkInfoDto();
 
@@ -452,19 +474,12 @@ public class SummaryServiceImpl implements ISummaryService {
 				return workInfo;
 
 			} else {
-				long candidateId = employee.getCandidateId();
-				Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
-
-				WorkInfoDto workInfo = new WorkInfoDto();
-
-				workInfo.setDesignation(onboarding.getJobTitleDesignation());
-				// workInfo.setWorkLocation(onboarding.getWorkLocation());
-
-				return workInfo;
+				return null;
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new WorkInfoDto();
+			return null;
 		}
 	}
 

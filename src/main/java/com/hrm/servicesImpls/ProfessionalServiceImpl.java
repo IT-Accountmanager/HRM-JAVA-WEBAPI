@@ -36,8 +36,10 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 	@Override
 	public WorkHistoryDto getWorkHistory(String employeeId) {
 		try {
-			Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
-			if (employee != null) {
+			boolean employeeExists = this.employeeRepository.existsByEmployeeId(employeeId);
+
+			if (employeeExists) {
+				Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
 				WorkHistoryDto workHistory = new WorkHistoryDto();
 				workHistory.setDesignation(employee.getDesignation());
 				workHistory.setProjectManager(null);
@@ -46,14 +48,12 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 				workHistory.setFrom(employee.getDateOfJoining());
 
 				return workHistory;
-
 			} else {
-				long candidateId = employee.getCandidateId();
-				Work work = this.workRepository.findByCandidateId(candidateId);
-
-				return modelMapper.map(work, WorkHistoryDto.class);
+				return null;
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
+
 			return null;
 
 		}

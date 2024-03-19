@@ -2,6 +2,9 @@ package com.hrm.controllers;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,11 +37,14 @@ public class AttendanceController {
 	@Autowired
 	IAttendanceService attendanceService;
 
+	private static final Logger logger = LoggerFactory.getLogger(IAttendanceService.class);
+
 	// ----------------FOR CLOCK IN------------------
 	@PostMapping("/clockIn/{employeeId}")
 	public ResponseEntity<String> addInTime(@PathVariable String employeeId) {
-		LocalDate currentDate = LocalDate.now();
+		logger.info("Start of addInTime {}", employeeId);
 		String result = this.attendanceService.clockIn(employeeId);
+		logger.info("End of addInTime {}", result);
 
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
