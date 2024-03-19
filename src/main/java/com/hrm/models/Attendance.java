@@ -39,15 +39,26 @@ public class Attendance {
 	private AttendanceStatus attendanceStatus = AttendanceStatus.Anomaly;
 	private LeaveType leaveType;
 	private String projectId;
-	private float appliedHrsForBilling;
-	private float approvedHrsForBilling;
+	private String appliedHrsForBilling;
+	private String approvedHrsForBilling;
 	private float regularizedHours;
 	private ApprovalStatus status;
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private String leaveReason;
-	private float productionHours;
-	private float otherHours;
+	
+
+	
+	
+
+	//<<<<<<< HEAD
+	private String productionHours;
+	private String otherHours;
+	private String totalHours;
+	private LocalTime exactInTime;
+	private LocalTime exactOutTime;
+
+
 	private Duration regularisationRequestHours;
 	private String regularisationReason;
 	private float monthlyPresentDays;
@@ -164,19 +175,19 @@ public class Attendance {
 		this.projectId = projectId;
 	}
 
-	public float getAppliedHrsForBilling() {
+	public String getAppliedHrsForBilling() {
 		return appliedHrsForBilling;
 	}
 
-	public void setAppliedHrsForBilling(float appliedHrsForBilling) {
+	public void setAppliedHrsForBilling(String appliedHrsForBilling) {
 		this.appliedHrsForBilling = appliedHrsForBilling;
 	}
 
-	public float getApprovedHrsForBilling() {
+	public String getApprovedHrsForBilling() {
 		return approvedHrsForBilling;
 	}
 
-	public void setApprovedHrsForBilling(float approvedHrsForBilling) {
+	public void setApprovedHrsForBilling(String approvedHrsForBilling) {
 		this.approvedHrsForBilling = approvedHrsForBilling;
 	}
 
@@ -244,20 +255,44 @@ public class Attendance {
 		this.leaveType = leaveType;
 	}
 
-	public float getProductionHours() {
+	public String getProductionHours() {
 		return productionHours;
 	}
 
-	public void setProductionHours(float productionHours) {
+	public void setProductionHours(String productionHours) {
 		this.productionHours = productionHours;
 	}
 
-	public float getOtherHours() {
+	public String getOtherHours() {
 		return otherHours;
 	}
 
-	public void setOtherHours(float otherHours) {
+	public void setOtherHours(String otherHours) {
 		this.otherHours = otherHours;
+	}
+
+	public String getTotalHours() {
+		return totalHours;
+	}
+
+	public void setTotalHours(String totalHours) {
+		this.totalHours = totalHours;
+	}
+
+	public LocalTime getExactInTime() {
+		return exactInTime;
+	}
+
+	public void setExactInTime(LocalTime exactInTime) {
+		this.exactInTime = exactInTime;
+	}
+
+	public LocalTime getExactOutTime() {
+		return exactOutTime;
+	}
+
+	public void setExactOutTime(LocalTime exactOutTime) {
+		this.exactOutTime = exactOutTime;
 	}
 
 	public Duration getRegularisationRequestHours() {

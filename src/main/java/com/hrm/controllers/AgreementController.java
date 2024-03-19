@@ -19,7 +19,8 @@ import com.hrm.payloads.AgreementEditDto;
 import com.hrm.payloads.AgreementStatusResponse;
 import com.hrm.services.IAgreementService;
 
-@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
+//@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/agreement")
 public class AgreementController {

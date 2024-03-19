@@ -18,7 +18,9 @@ import com.hrm.models.DocumentDetails;
 import com.hrm.models.DocumentUpload;
 import com.hrm.services.IDocumentsDetailsService;
 
-@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
+//@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
+
+@CrossOrigin(origins = "*")
 
 @RestController
 

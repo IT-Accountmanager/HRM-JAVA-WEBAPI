@@ -4,19 +4,16 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class BillableHoursDto {
-//	private List<LocalDate> listOfDate;
 	private LocalDate date;
-	private float productionHours;
-	private float otherHours;
-	private float appliedHrsForBilling;
 
-//	public List<LocalDate> getListOfDate() {
-//		return listOfDate;
-//	}
-//
-//	public void setListOfDate(List<LocalDate> listOfDate) {
-//		this.listOfDate = listOfDate;
-//	}
+	private String productionHours;
+	private String otherHours;
+//	private String totalHours;
+	
+	private String appliedHrsForBilling;
+
+
+
 
 	public LocalDate getDate() {
 		return date;
@@ -26,28 +23,37 @@ public class BillableHoursDto {
 		this.date = date;
 	}
 
-	public float getProductionHours() {
+	public String getProductionHours() {
 		return productionHours;
 	}
 
-	public void setProductionHours(float productionHours) {
+	public void setProductionHours(String productionHours) {
 		this.productionHours = productionHours;
 	}
 
-	public float getOtherHours() {
+	public String getOtherHours() {
 		return otherHours;
 	}
 
-	public void setOtherHours(float otherHours) {
+	public void setOtherHours(String otherHours) {
 		this.otherHours = otherHours;
 	}
 
-	public float getAppliedHrsForBilling() {
+//	public String getTotalHours() {
+//		return totalHours;
+//	}
+//
+//	public void setTotalHours(String totalHours) {
+//		this.totalHours = totalHours;
+//	}
+
+	public String getAppliedHrsForBilling() {
 		return appliedHrsForBilling;
 	}
 
-	public void setAppliedHrsForBilling(float appliedHrsForBilling) {
+	public void setAppliedHrsForBilling(String appliedHrsForBilling) {
 		this.appliedHrsForBilling = appliedHrsForBilling;
 	}
+
 
 }

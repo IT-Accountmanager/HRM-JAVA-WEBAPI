@@ -4,6 +4,8 @@ package com.hrm.helper;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Value;
+
+
 import jakarta.mail.Authenticator;
 import jakarta.mail.Message;
 import jakarta.mail.PasswordAuthentication;

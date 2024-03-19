@@ -33,6 +33,12 @@ public interface IAttendanceService {
 	String addRegularizationHours(RegularizationHoursDto regularizationHoursDto, String employeeId);
 
 	String addLeave(ApplyLeaveDto applyLeaveDto, String employeeId);
+	
+	ApplyLeaveDto getLeave(String employeeId);
+	
+	RegularizationHoursDto getRegularizationHours(String employeeId);
+	
+	BillableHoursDto getBillableHours(String employeeId);
 
 //	ApplyLeaveDto addLeave(ApplyLeaveDto leaveDto);
 
