@@ -22,7 +22,9 @@ import com.hrm.models.PersonalDetails;
 import com.hrm.payloads.PersonalStatusResponse;
 import com.hrm.services.IPersonalService;
 
-@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
+//@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
+
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/Personal")
 public class PersonalController {

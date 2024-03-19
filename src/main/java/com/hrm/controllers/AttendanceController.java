@@ -65,7 +65,7 @@ public class AttendanceController {
 	}
 
 	// --------------------------POST BILLABLE HOURS-------------------------
-	@PostMapping("billableHours/{employeeId}")
+	@PostMapping("/billableHours/{employeeId}")
 	public ResponseEntity<String> addBillableHours(@RequestBody BillableHoursDto billableHoursDto,
 			@PathVariable String employeeId) {
 		String result = this.attendanceService.addBillableHours(billableHoursDto, employeeId);
@@ -96,6 +96,31 @@ public class AttendanceController {
 	public ResponseEntity<String> addLeave(@RequestBody ApplyLeaveDto applyLeaveDto, @PathVariable String employeeId) {
 		String result = attendanceService.addLeave(applyLeaveDto, employeeId);
 		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	
+	
+	// --------------------------GET APPLY LEAVE-------------------------
+	@GetMapping("/getleave/{employeeId}")
+	public ResponseEntity<ApplyLeaveDto> getLeave(@PathVariable String employeeId) {
+		ApplyLeaveDto attendance = this.attendanceService.getLeave(employeeId);
+		return new ResponseEntity<ApplyLeaveDto>(attendance, HttpStatus.OK);
+	}
+	
+	// --------------------------GET BILLABLE HOURS-------------------------
+	
+	@GetMapping("/billablehours/{employeeId}")
+	public ResponseEntity<BillableHoursDto> getBillableHours(@PathVariable String employeeId) {
+		BillableHoursDto attendance = this.attendanceService.getBillableHours(employeeId);
+		return new ResponseEntity<BillableHoursDto>(attendance, HttpStatus.OK);
+	}
+    
+	// --------------------------GET REGULARISATION HOURS-------------------------
+    
+	@GetMapping("/getregularizationhours/{employeeId}")
+	public ResponseEntity<RegularizationHoursDto> getRegularizationHours(@PathVariable String employeeId) {
+		RegularizationHoursDto attendance = this.attendanceService.getRegularizationHours(employeeId);
+		return new ResponseEntity<RegularizationHoursDto>(attendance, HttpStatus.OK);
 	}
 
 //	@PostMapping("/createOrUpdate/leave/{employeeId}")
