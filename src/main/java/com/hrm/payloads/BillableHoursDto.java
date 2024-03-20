@@ -4,56 +4,51 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class BillableHoursDto {
-	private LocalDate date;
+// private List<LocalDate> listOfDate;
+private LocalDate date;
+private String productionHours;
+private String otherHours;
+private String appliedHrsForBilling;
 
-	private String productionHours;
-	private String otherHours;
-//	private String totalHours;
-	
-	private String appliedHrsForBilling;
-
-
-
-
-	public LocalDate getDate() {
-		return date;
-	}
-
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
-
-	public String getProductionHours() {
-		return productionHours;
-	}
-
-	public void setProductionHours(String productionHours) {
-		this.productionHours = productionHours;
-	}
-
-	public String getOtherHours() {
-		return otherHours;
-	}
-
-	public void setOtherHours(String otherHours) {
-		this.otherHours = otherHours;
-	}
-
-//	public String getTotalHours() {
-//		return totalHours;
-//	}
+// public List<LocalDate> getListOfDate() {
+// return listOfDate;
+// }
 //
-//	public void setTotalHours(String totalHours) {
-//		this.totalHours = totalHours;
-//	}
+// public void setListOfDate(List<LocalDate> listOfDate) {
+// this.listOfDate = listOfDate;
+// }
 
-	public String getAppliedHrsForBilling() {
-		return appliedHrsForBilling;
-	}
+public LocalDate getDate() {
+return date;
+}
 
-	public void setAppliedHrsForBilling(String appliedHrsForBilling) {
-		this.appliedHrsForBilling = appliedHrsForBilling;
-	}
+public void setDate(LocalDate date) {
+this.date = date;
+}
+
+public String getProductionHours() {
+	return productionHours;
+}
+
+public void setProductionHours(String productionHours) {
+	this.productionHours = productionHours;
+}
+
+public String getOtherHours() {
+	return otherHours;
+}
+
+public void setOtherHours(String otherHours) {
+	this.otherHours = otherHours;
+}
+
+public String getAppliedHrsForBilling() {
+	return appliedHrsForBilling;
+}
+
+public void setAppliedHrsForBilling(String appliedHrsForBilling) {
+	this.appliedHrsForBilling = appliedHrsForBilling;
+}
 
 
 }

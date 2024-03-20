@@ -136,11 +136,11 @@ public class EnumCollection {
 	}
 
 	public enum LeaveType {
-		EarnedLeave, CompensatoryLeave, LossOfPay
+		Earned_Leave, Compensatory_Leave, Loss_Of_Pay
 	}
 
 	public enum Half {
-		FirstHalf, SecondHalf
+		First_Half, Second_Half
 	}
 	
 	public enum CategoryControll {

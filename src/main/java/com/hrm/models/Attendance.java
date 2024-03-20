@@ -54,7 +54,7 @@ public class Attendance {
 	//<<<<<<< HEAD
 	private String productionHours;
 	private String otherHours;
-	private String totalHours;
+	private float totalHours;
 	private LocalTime exactInTime;
 	private LocalTime exactOutTime;
 
@@ -271,11 +271,11 @@ public class Attendance {
 		this.otherHours = otherHours;
 	}
 
-	public String getTotalHours() {
+	public float getTotalHours() {
 		return totalHours;
 	}
 
-	public void setTotalHours(String totalHours) {
+	public void setTotalHours(float totalHours) {
 		this.totalHours = totalHours;
 	}
 

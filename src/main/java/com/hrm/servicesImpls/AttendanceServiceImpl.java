@@ -183,11 +183,11 @@ public class AttendanceServiceImpl implements IAttendanceService {
 			dto.setOutTime(attendance.getOutTime());
 			dto.setWorkHours(dto.calculateWorkHours());
 			dto.setWorkHrs(dto.formatWorkHours());
-			dto.setAttendanceStatus(attendance.getAttendanceStatus());
-			dto.setManager(employee.getManager());
+			dto.setAttendanceStatus(null);
+			dto.setManager(null);
 			dto.setProjectId(null);
-			dto.setAppliedHoursForBilling(attendance.getAppliedHrsForBilling());
-			dto.setApprovedHoursForBilling(attendance.getApprovedHrsForBilling());
+			dto.setAppliedHoursForBilling(null);
+			dto.setApprovedHoursForBilling(null);
 			dto.setBillingHoursStatus(null);
 
 			logger.info("Attendance retrieved successfully for employee with ID: {}", employeeId);
@@ -253,71 +253,28 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 
 	
-	
-	
-	
 	@Override
 	public String addBillableHours(BillableHoursDto billableHoursDto, String employeeId) {
-	    LocalDate date = billableHoursDto.getDate();
-	    String productionHours = billableHoursDto.getProductionHours();
-	    String otherHours = billableHoursDto.getOtherHours();
+		LocalDate date = billableHoursDto.getDate();
+		String productionHours = billableHoursDto.getProductionHours();
+		String otherHours = billableHoursDto.getOtherHours();
+		String appliedHrsForBilling = billableHoursDto.getAppliedHrsForBilling();
 
-	    
-	    double productionHoursDouble = Double.parseDouble(productionHours);
-	    double otherHoursDouble = Double.parseDouble(otherHours);
 
-	    
-	    double totalHoursDouble = productionHoursDouble + otherHoursDouble;
+		Attendance attendance = attendanceRepository.findByEmployeeIdAndDate(employeeId, date);
 
-	    
-	    int totalHoursInt = (int) totalHoursDouble;
-	    int minutes = (int) ((totalHoursDouble - totalHoursInt) * 60); // Get remaining minutes
-	    String totalHoursFormatted = String.format("%02d:%02d", totalHoursInt, minutes);
+		if (attendance != null) {
 
-	   
-	    LocalDate currentDate = LocalDate.now();
+			attendance.setProductionHours(productionHours);
+			attendance.setOtherHours(otherHours);
+			attendance.setAppliedHrsForBilling(appliedHrsForBilling);
 
-	    
-	    Attendance attendance = attendanceRepository.findByEmployeeIdAndDate(employeeId, currentDate);
-
-	    if (attendance != null) {
-	        
-	        attendance.setProductionHours(String.valueOf(productionHoursDouble));
-	        attendance.setOtherHours(String.valueOf(otherHoursDouble));
-	        attendance.setTotalHours(totalHoursFormatted); 
-	       
-	        attendanceRepository.save(attendance);
-
-	
-	        return "Billable hours added for employee " + employeeId + " on " + currentDate;
-	    } else {
-	        return "Attendance record not found for employee " + employeeId + " on " + currentDate;
-	    }
+			attendanceRepository.save(attendance);
+			return "Billable hours added for employee " + employeeId + " on " + date;
+		} else {
+			return "Attendance not existed for employee " + employeeId + " on " + date;
+		}
 	}
-
-	
-//	@Override
-//	public String addBillableHours(BillableHoursDto billableHoursDto, String employeeId) {
-//		LocalDate date = billableHoursDto.getDate();
-//		float productionHours = billableHoursDto.getProductionHours();
-//		float otherHours = billableHoursDto.getOtherHours();
-//		float totalHours = billableHoursDto.getAppliedHrsForBilling();
-//
-//
-//		Attendance attendance = attendanceRepository.findByEmployeeIdAndDate(employeeId, date);
-//
-//		if (attendance != null) {
-//
-//			attendance.setProductionHours(productionHours);
-//			attendance.setOtherHours(otherHours);
-//			attendance.setAppliedHrsForBilling(totalHours);
-//
-//			attendanceRepository.save(attendance);
-//			return "Billable hours added for employee " + employeeId + " on " + date;
-//		} else {
-//			return "Attendance not existed for employee " + employeeId + " on " + date;
-//		}
-//	}
 
 	/*
 	 * @Override public String addRegularizationHours(RegularizationHoursDto
