@@ -2,6 +2,9 @@ package com.hrm.controllers;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +21,14 @@ import com.hrm.models.Attendance;
 import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.AttendanceEmployeeDto;
 import com.hrm.payloads.BillableHoursDto;
+import com.hrm.payloads.ManagerAttendanceViewDto;
 import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.UserAttendanceDto;
 import com.hrm.services.IAttendanceService;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /*@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
 */
@@ -34,11 +42,14 @@ public class AttendanceController {
 	@Autowired
 	IAttendanceService attendanceService;
 
+	private static final Logger logger = LoggerFactory.getLogger(IAttendanceService.class);
+
 	// ----------------FOR CLOCK IN------------------
 	@PostMapping("/clockIn/{employeeId}")
 	public ResponseEntity<String> addInTime(@PathVariable String employeeId) {
-		LocalDate currentDate = LocalDate.now();
+		logger.info("Start of addInTime {}", employeeId);
 		String result = this.attendanceService.clockIn(employeeId);
+		logger.info("End of addInTime {}", result);
 
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
@@ -97,31 +108,44 @@ public class AttendanceController {
 		String result = attendanceService.addLeave(applyLeaveDto, employeeId);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
-	
-	
+
 	// --------------------------GET APPLY LEAVE-------------------------
 	@GetMapping("/getleave/{employeeId}")
 	public ResponseEntity<ApplyLeaveDto> getLeave(@PathVariable String employeeId) {
 		ApplyLeaveDto attendance = this.attendanceService.getLeave(employeeId);
 		return new ResponseEntity<ApplyLeaveDto>(attendance, HttpStatus.OK);
 	}
-	
+
 	// --------------------------GET BILLABLE HOURS-------------------------
-	
+
 	@GetMapping("/billablehours/{employeeId}")
 	public ResponseEntity<BillableHoursDto> getBillableHours(@PathVariable String employeeId) {
 		BillableHoursDto attendance = this.attendanceService.getBillableHours(employeeId);
 		return new ResponseEntity<BillableHoursDto>(attendance, HttpStatus.OK);
 	}
-    
+
 	// --------------------------GET REGULARISATION HOURS-------------------------
-    
+
 	@GetMapping("/getregularizationhours/{employeeId}")
 	public ResponseEntity<RegularizationHoursDto> getRegularizationHours(@PathVariable String employeeId) {
 		RegularizationHoursDto attendance = this.attendanceService.getRegularizationHours(employeeId);
 		return new ResponseEntity<RegularizationHoursDto>(attendance, HttpStatus.OK);
 	}
+
+	@PostMapping("/getEmployeeHoursBilling")
+	public String getEmployee(@RequestBody ObjectNode req) {
+
+		String managerId = req.get("employeeId").asText();
+		String month = req.get("month").asText();
+		String attendance = this.attendanceService.getAttendanceAsJson(managerId, month);
+		return attendance;
+	}
+	
+//	@PostMapping("/managerattendance/{date}")
+//	public ResponseEntity<String>addManagerAttendance ( @RequestBody ManagerAttendanceViewDto managerAttendanceViewDto, @PathVariable("date") LocalDate date) {
+//	    String result = this.attendanceService.addManagerAttendance(managerAttendanceViewDto, date);
+//		return new ResponseEntity<String>(result,HttpStatus.OK);
+//	}
 
 //	@PostMapping("/createOrUpdate/leave/{employeeId}")
 //	public ResponseEntity<ApplyLeaveDto> createOrUpdateLeave(@PathVariable String employeeId,

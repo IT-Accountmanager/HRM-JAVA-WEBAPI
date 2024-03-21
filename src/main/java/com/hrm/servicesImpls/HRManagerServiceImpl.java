@@ -1599,59 +1599,52 @@ public class HRManagerServiceImpl implements IHRManagerService {
 //__________________CREATE____________________
 	@Override
 	public String createAppointmentLetter(CreateAppointmentLetterDto appointmentLetterDto, long candidateId) {
-	    Boolean existed = this.employeeRepository.existsByCandidateId(candidateId);
+		Boolean existed = this.employeeRepository.existsByCandidateId(candidateId);
 
-	    if (existed) {
-	        return "Employee Already Existed of Candidate Id : " + candidateId;
-	    }
+		if (existed) {
+			return "Employee Already Exists with Candidate ID: " + candidateId;
+		}
 
-	    Employee employee = new Employee();
-	    employee.setCandidateId(candidateId);
+		Employee employee = new Employee();
+		employee.setCandidateId(candidateId);
 
-	    List<Employee> employees = this.employeeRepository.findAll();
-	    if (!employees.isEmpty()) {
-	        long maxEmployeeSn = Long.MIN_VALUE;
-	        for (Employee emp : employees) {
-	            long currentEmployeeSn = emp.getEmployeeSn();
-	            if (currentEmployeeSn > maxEmployeeSn) {
-	                maxEmployeeSn = currentEmployeeSn;
-	            }
-	        }
+		List<Employee> employees = this.employeeRepository.findAll();
+		if (!employees.isEmpty()) {
+			long maxEmployeeSn = Long.MIN_VALUE;
+			for (Employee emp : employees) {
+				long currentEmployeeSn = emp.getEmployeeSn();
+				if (currentEmployeeSn > maxEmployeeSn) {
+					maxEmployeeSn = currentEmployeeSn;
+				}
+			}
 
-	        employee.setEmployeeId(String.format("EIS%05d", maxEmployeeSn + 1));
-	        employee.setName(appointmentLetterDto.getName());
-	        employee.setDesignation(appointmentLetterDto.getDesignation());
-	        employee.setWorkLocation(appointmentLetterDto.getWorkLocation());
-	        employee.setDateOfJoining(appointmentLetterDto.getDateOfJoining());
-	        employee.setCtc(appointmentLetterDto.getCtc());
-	        employee.setServiceCommitment(appointmentLetterDto.getBondPeriod());
-	        employee.setBondBreakAmount(appointmentLetterDto.getBondBreakAmount());
-	        employee.setEmailId(appointmentLetterDto.getEmailId());
-	        employee.setContactNumber(appointmentLetterDto.getContactNumber());
-	        employee.setJobTitle(appointmentLetterDto.getJobTitle());
-	        employee.setAuthorisedSignature(appointmentLetterDto.getAuthorisedSignature());
-	        employee.setSign(appointmentLetterDto.getSign());
-	        employee.setEmployeeStatus(EmployeeStatus.Active);
+			employee.setEmployeeId(String.format("EIS%05d", maxEmployeeSn + 1));
+			employee.setName(appointmentLetterDto.getName());
+			employee.setDesignation(appointmentLetterDto.getDesignation());
+			employee.setWorkLocation(appointmentLetterDto.getWorkLocation());
+			employee.setDateOfJoining(appointmentLetterDto.getDateOfJoining());
+			employee.setCtc(appointmentLetterDto.getCtc());
+			employee.setServiceCommitment(appointmentLetterDto.getBondPeriod());
+			employee.setBondBreakAmount(appointmentLetterDto.getBondBreakAmount());
+			employee.setEmailId(appointmentLetterDto.getEmailId());
+			employee.setContactNumber(appointmentLetterDto.getContactNumber());
+			employee.setJobTitle(appointmentLetterDto.getJobTitle());
+			employee.setAuthorisedSignature(appointmentLetterDto.getAuthorisedSignature());
+			employee.setSign(appointmentLetterDto.getSign());
+			employee.setEmployeeStatus(EmployeeStatus.Active);
 
-	        Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
-	        System.out.println("------------------------------------");
-	        System.out.println("Status Of Candidate : " + onboarding.getCandidatesStatus());
-	        onboarding.setCandidatesStatus(CandidatesStatus.Approved);
-	        System.out.println("Status Of Candidate : " + onboarding.getCandidatesStatus());
+			Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
+			if (onboarding != null) {
+				onboarding.setCandidatesStatus(CandidatesStatus.Approved);
+				this.onboardingRepository.save(onboarding);
+			}
 
-	        this.onboardingRepository.save(onboarding);
-	        System.out.println("Status Of Candidate : "
-	                + this.onboardingRepository.findByCandidateId(candidateId).getCandidatesStatus());
-	        System.out.println("------------------------------------");
+			this.employeeRepository.save(employee);
 
-	        // employee.setAppointmentLetter(appointmentLetterDto.getAppointmentLetter());
+			return "Appointment Letter Created";
+		}
 
-	        this.employeeRepository.save(employee);
-
-	        return "Appointment Letter Created";
-	    }
-
-	    return ""; // Add a default return statement
+		return "No Employees Found";
 	}
 
 	@Override

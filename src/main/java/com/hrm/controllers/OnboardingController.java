@@ -168,7 +168,7 @@ public class OnboardingController {
 //	 
 //>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
 
-	@PostMapping("authenticate")
+	@PostMapping("/authenticate")
 	public ResponseEntity<?> authenticate(@RequestBody AuthenticateUserDto authenticateUserDto) {
 		if (authenticateUserDto == null) {
 			return new ResponseEntity<>("Invalid input", HttpStatus.BAD_REQUEST);

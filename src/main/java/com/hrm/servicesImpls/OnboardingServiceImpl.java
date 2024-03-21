@@ -3,6 +3,7 @@ package com.hrm.servicesImpls;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,9 +84,21 @@ public class OnboardingServiceImpl implements IOnboardingService {
 
 	@Override
 	public Onboarding createOnboarding(Onboarding onboardingRequest) {
+
+		List<Onboarding> findAll = this.onboardingRepository.findAll();
+
+		long maxCandidateId = 0;
+		for (Onboarding candidate : findAll) {
+			long currentCandidateId = candidate.getCandidateId();
+			if (currentCandidateId > maxCandidateId) {
+				maxCandidateId = currentCandidateId;
+			}
+		}
+		maxCandidateId++;
+
 		Onboarding onboarding = new Onboarding();
 		onboarding.setJobTitleDesignation(onboardingRequest.getJobTitleDesignation());
-		onboarding.setCandidateId(onboardingRepository.count() + 1);
+		onboarding.setCandidateId(maxCandidateId);
 		onboarding.setCandidateName(onboardingRequest.getCandidateName());
 		onboarding.setContactNumber(onboardingRequest.getContactNumber());
 		onboarding.setEmailId(onboardingRequest.getEmailId());
@@ -195,8 +208,19 @@ public class OnboardingServiceImpl implements IOnboardingService {
 			for (Onboarding singleOnboarding : onboardings) {
 				Onboarding onboarding = new Onboarding();
 
+				List<Onboarding> findAll = this.onboardingRepository.findAll();
+
+				long maxCandidateId = 0;
+				for (Onboarding candidate : findAll) {
+					long currentCandidateId = candidate.getCandidateId();
+					if (currentCandidateId > maxCandidateId) {
+						maxCandidateId = currentCandidateId;
+					}
+				}
+				maxCandidateId++;
+
 				onboarding.setJobTitleDesignation(singleOnboarding.getJobTitleDesignation());
-				onboarding.setCandidateId(onboardingRepository.count() + 1);
+				onboarding.setCandidateId(maxCandidateId);
 				onboarding.setCandidateName(singleOnboarding.getCandidateName());
 				onboarding.setContactNumber(singleOnboarding.getContactNumber());
 				onboarding.setEmailId(singleOnboarding.getEmailId());
@@ -514,7 +538,9 @@ public class OnboardingServiceImpl implements IOnboardingService {
 				Attendance toDaysAttendance = this.attendanceRepository
 						.findByEmployeeIdAndDate(employee.getEmployeeId(), today);
 
-				if (toDaysAttendance != null) {
+				if (isExisted(employee.getEmployeeId(), toDaysAttendance.getOutTime())) {
+					userLoginResponseDto.setDuration("00:00:00");
+				} else if (toDaysAttendance != null) {
 					Duration duration = Duration.between(toDaysAttendance.getInTime(), LocalDateTime.now());
 
 					long hours = duration.toHours();
@@ -537,6 +563,12 @@ public class OnboardingServiceImpl implements IOnboardingService {
 			userLoginResponseDto.setDuration("00:00:00");
 			return userLoginResponseDto;
 		}
+	}
+
+	private boolean isExisted(String employeeId, LocalTime outTime) {
+		LocalDate today = LocalDate.now();
+		Attendance toDaysAttendance = this.attendanceRepository.findByEmployeeIdAndDate(employeeId, today);
+		return toDaysAttendance != null && toDaysAttendance.getOutTime().equals(outTime);
 	}
 
 	private boolean isValidEmail(String email) {

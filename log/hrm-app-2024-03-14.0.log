@@ -1,0 +1,326 @@
+2024-03-14 20:25:46 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-03-14 20:25:46 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-03-14 20:25:46 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-03-14 20:27:22 INFO  com.hrm.services.IAttendanceService - Attendance added for Employee Id: EIS00004
+2024-03-14 20:28:32 INFO  com.hrm.services.IAttendanceService - Clock-in record already exists for Employee Id: EIS00004
+2024-03-14 20:34:12 INFO  com.hrm.HrmWebApi2Application - Starting HrmWebApi2Application using Java 17.0.7 with PID 14576 (C:\Users\Rameshrao.k\Desktop\New folder (3)\HRM-JAVA-WEBAPI\target\classes started by Rameshrao.k in C:\Users\Rameshrao.k\Desktop\New folder (3)\HRM-JAVA-WEBAPI)
+2024-03-14 20:34:12 DEBUG com.hrm.HrmWebApi2Application - Running with Spring Boot v3.1.2, Spring v6.0.11
+2024-03-14 20:34:12 INFO  com.hrm.HrmWebApi2Application - No active profile set, falling back to 1 default profile: "default"
+2024-03-14 20:34:14 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-03-14 20:34:14 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 278 ms. Found 29 JPA repository interfaces.
+2024-03-14 20:34:15 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8282 (http)
+2024-03-14 20:34:15 INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8282"]
+2024-03-14 20:34:15 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-03-14 20:34:15 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.11]
+2024-03-14 20:34:15 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-03-14 20:34:15 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2514 ms
+2024-03-14 20:34:15 DEBUG com.zaxxer.hikari.HikariConfig - Driver class com.mysql.cj.jdbc.Driver found in Thread context class loader jdk.internal.loader.ClassLoaders$AppClassLoader@2f333739
+2024-03-14 20:34:15 DEBUG org.jboss.logging - Logging Provider: org.jboss.logging.Slf4jLoggerProvider found via system property
+2024-03-14 20:34:16 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - HikariPool-1 - configuration:
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - allowPoolSuspension.............false
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - autoCommit......................true
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - catalog.........................none
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - connectionInitSql...............none
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - connectionTestQuery.............none
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - connectionTimeout...............30000
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - dataSource......................none
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - dataSourceClassName.............none
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - dataSourceJNDI..................none
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - dataSourceProperties............{password=<masked>}
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - driverClassName................."com.mysql.cj.jdbc.Driver"
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - exceptionOverrideClassName......none
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - healthCheckProperties...........{}
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - healthCheckRegistry.............none
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - idleTimeout.....................600000
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - initializationFailTimeout.......1
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - isolateInternalQueries..........false
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - jdbcUrl.........................jdbc:mysql://localhost:3306/hrm
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - keepaliveTime...................0
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - leakDetectionThreshold..........0
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - maxLifetime.....................1800000
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - maximumPoolSize.................10
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - metricRegistry..................none
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - metricsTrackerFactory...........none
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - minimumIdle.....................10
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - password........................<masked>
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - poolName........................"HikariPool-1"
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - readOnly........................false
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - registerMbeans..................false
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - scheduledExecutor...............none
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - schema..........................none
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - threadFactory...................internal
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - transactionIsolation............default
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - username........................"root"
+2024-03-14 20:34:16 DEBUG com.zaxxer.hikari.HikariConfig - validationTimeout...............5000
+2024-03-14 20:34:16 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-03-14 20:34:16 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-03-14 20:34:19 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-03-14 20:34:21 INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-03-14 20:34:22 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.AddressDetailsController:
+	{POST [/AddressDetails/AddAddress]}: addAddress(AddressDetails)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.AgreementController:
+	{POST [/agreement/add/{candidateId}]}: add(Agreement,long)
+	{GET [/agreement/getPreAgreementInfo/{candidateId}]}: getPreAgreementInfo(long)
+	{PUT [/agreement/editAgreement/{candidateId}]}: editAgreement(AgreementEditDto,long)
+	{GET [/agreement/getAgreement/{candidateId}]}: getByCandidateId(long)
+	{GET [/agreement/getAgreementStatus/{candidateId}]}: getAgreementStatus(long)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.AttendanceController:
+	{POST [/attendance/regularizationHours/{employeeId}]}: addRegularizationHours(RegularizationHoursDto,String)
+	{GET [/attendance/allattendance/{employeeId}]}: getAllAttendenceByEmployeeId(String)
+	{POST [/attendance/clockOut/{employeeId}]}: addOutTime(String)
+	{GET [/attendance/getClockIn/{employeeId}]}: getAttendance(String)
+	{POST [/attendance/clockIn/{employeeId}]}: addInTime(String)
+	{PUT [/attendance/editattendance/{id}]}: editAttendance(Attendance,Integer)
+	{POST [/attendance/addLeave/{employeeId}]}: addLeave(ApplyLeaveDto,String)
+	{DELETE [/attendance/deleteattendance/{id}]}: deletAttendance(int)
+	{POST [/attendance/billableHours/{employeeId}]}: addBillableHours(BillableHoursDto,String)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.BankDetailsController:
+	{POST [/BankDetails/add]}: addBankDetails(BankDetails)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.DocumentController:
+	{DELETE [/document/deleteDocument/{id}]}: deleteDocument(Integer)
+	{GET [/document/getDocument/{id}]}: getDocumentById(Integer)
+	{PUT [/document/updateDocument/{id}]}: updateDocument(Document,Integer)
+	{GET [/document/getDocument]}: getAllDocument()
+	{POST [/document/addDocument]}: createDocument(Document)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.DocumentsDetailsController:
+	{POST [/DocumentsDetails/Add]}: addDocumentDetails(DocumentDetails)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.EducationController:
+	{GET [/education/get/status/{candidateId}]}: getEducationStatusByCandidateId(long)
+	{PUT [/education/updateEducation/{id}]}: updateEducation(Education,Integer)
+	{GET [/education/getAllEducation/{candidateId}]}: getAllEducation(long)
+	{GET [/education/getEducation/{id}]}: getEducationById(Integer)
+	{DELETE [/education/deleteEducation/{id}]}: deleteEducation(Integer)
+	{POST [/education/AddEducation/{candidateId}]}: createEducation(Education,long)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.EmailController:
+	{POST [/sendMailAttachment]}: sendMailWithAttachment(Email)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.EnumController:
+	{GET [/Enum/weekrule]}: getWeek()
+	{GET [/Enum/noticePeriod]}: getNotice()
+	{GET [/Enum/categoryControl]}: getCategoryControl()
+	{GET [/Enum/marital-status]}: getMaritalStatus()
+	{GET [/Enum/courses]}: getCourses()
+	{GET [/Enum/category]}: getCategory()
+	{GET [/Enum/genders]}: getGenders()
+	{GET [/Enum/resignation]}: getResignation()
+	{GET [/Enum/shiftrule]}: getShift()
+	{GET [/Enum/relationship]}: getRelationship()
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.FamilyController:
+	{GET [/family/getAllFamily/{candidateId}]}: getAllFamilyByCandidateId(long)
+	{POST [/family/AddFamily/{candidateId}]}: createFamily(Family,long)
+	{PUT [/family/updateFamily/{id}]}: updateFamily(Family,Integer)
+	{GET [/family/getFamily/{id}]}: getFamilyById(int)
+	{DELETE [/family/deleteFamily/{family_id}]}: deleteFamily(Integer)
+	{GET [/family/get/status/{candidateId}]}: getFamilyStatusByCandidateId(long)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.HolidayController:
+	
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.HRExecutiveController:
+	{GET [/HRExecutive/get/{candidateId}]}: getByCandidateId(long)
+	{GET [/HRExecutive/getExecutveById/{id}]}: getExecutiveById(int)
+	{GET [/HRExecutive/getAllExecutive/{inReview}/{hrManagerRejected}]}: getAllExecutive(CandidatesStatus,CandidatesStatus)
+	{POST [/HRExecutive/AddExecutive]}: createExecutive(HRExecutive)
+	{PUT [/HRExecutive/updateExecutive/{id}]}: updateHRExecutive(HRExecutive,Integer)
+	{POST [/HRExecutive/workApproval/{candidateId}]}: workApproval(HrExecutiveWorkApprovalDto,long)
+	{DELETE [/HRExecutive/deleteExecutive/{id}]}: deleteHrExecutive(Integer)
+	{POST [/HRExecutive/familyApproval/{candidateId}]}: familyApproval(HrExecutiveFamilyApprovalDto,long)
+	{POST [/HRExecutive/educationApproval/{candidateId}]}: educationApproval(HrExecutiveEducationApprovalDto,long)
+	{GET [/HRExecutive/getWorkApproval/{candidateId}]}: getWorkApproval(long)
+	{GET [/HRExecutive/getFamilyApproval/{candidateId}]}: getFamilyApproval(long)
+	{POST [/HRExecutive/personalApproval/{candidateId}]}: personalApproval(HrExecutivePersonalApprovalDto,long)
+	{POST [/HRExecutive/reject/{candiateId}]}: rejectHrExecutive(long)
+	{GET [/HRExecutive/get/bgvApproval/{candidateId}]}: getBgvApproval(long)
+	{POST [/HRExecutive/post/bgv/{candidateId}]}: postBgv(BackgroundVerification,long)
+	{POST [/HRExecutive/agreementApproval/{candidateId}]}: agreementApproval(HrExecutiveAgreementApprovalDto,long)
+	{POST [/HRExecutive/submit/{candiateId}]}: submitHrExecutive(long)
+	{GET [/HRExecutive/get/bgv/{candidateId}]}: getBgv(long)
+	{GET [/HRExecutive/getEducationApproval/{candidateId}]}: getEducationApproval(long)
+	{GET [/HRExecutive/getPersonalApproval/{candidateId}]}: getPersonalApproval(long)
+	{POST [/HRExecutive/postToHrExecutive/{status}]}: addCandidatesInHrExecutive(CandidatesStatus)
+	{GET [/HRExecutive/getAgreementApproval/{candidateId}]}: getAgreementApproval(long)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.HRManagerController:
+	{GET [/HRManager/ctc/{candidateId}], produces [application/json]}: check(long)
+	{GET [/HRManager/get/{candidateId}]}: getByCandidateId(long)
+	{POST [/HRManager/workApproval/{candidateId}]}: workApproval(HrManagerWorkApprovalDto,long)
+	{POST [/HRManager/familyApproval/{candidateId}]}: familyApproval(HrManagerFamilyApprovalDto,long)
+	{POST [/HRManager/educationApproval/{candidateId}]}: educationApproval(HrManagerEducationApprovalDto,long)
+	{GET [/HRManager/getWorkApproval/{candidateId}]}: getWorkApproval(long)
+	{GET [/HRManager/getFamilyApproval/{candidateId}]}: getFamilyApproval(long)
+	{POST [/HRManager/personalApproval/{candidateId}]}: personalApproval(HrManagerPersonalApprovalDto,long)
+	{GET [/HRManager/getBgvApproval/{candidateId}]}: getBgvApproval(long)
+	{POST [/HRManager/agreementApproval/{candidateId}]}: agreementApproval(HrManagerAgreementApprovalDto,long)
+	{GET [/HRManager/getAll/{status}]}: getAllCandidates(CandidatesStatus)
+	{POST [/HRManager/reject/{candidateId}]}: rejectHrManager(long)
+	{POST [/HRManager/BgvApproval/{candidateId}]}: bgvApproval(HrManagerBackgroundVerificationDto,long)
+	{PUT [/HRManager/updateManager/{id}]}: updateHRManager(HRManager,Integer)
+	{DELETE [/HRManager/deleteManager/{id}]}: deleteHRManager(Integer)
+	{POST [/HRManager/Edit/AppointmentLetterInfo/{candidateId}]}: editAppointment(EmployeeGenerateDto,long)
+	{GET [/HRManager/getRelease/{candidateId}]}: getReleaseAppointmentLetter(long)
+	{GET [/HRManager/getEducationApproval/{candidateId}]}: getEducationApproval(long)
+	{GET [/HRManager/getPersonalApproval/{candidateId}]}: getPersonalApproval(long)
+	{GET [/HRManager/getAgreementApproval/{candidateId}]}: getAgreementApproval(long)
+	{GET [/HRManager/getAppointmentLetterInfo/{candidateId}]}: getAppointmentLetter(long)
+	{POST [/HRManager/Create/{candidateId}]}: createAppointmentLetter(CreateAppointmentLetterDto,long)
+	{POST [/HRManager/release/{candidateId}]}: releaseAppointmentLetter(long,CreateAppointmentLetterDto,Model)
+	{GET [/HRManager/Add/{status}]}: addCandidatesInHRManager(CandidatesStatus)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.HRMController:
+	
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.JVMController:
+	{GET [/general/jvm/get]}: allJvm()
+	{DELETE [/general/jvm/delete/{id}]}: deleteJvm(Integer)
+	{GET [/general/jvm/get/{id}]}: getJvm(Integer)
+	{PUT [/general/jvm/update/{id}]}: addJvm(JVM,Integer)
+	{POST [/general/jvm/add]}: addJvm(JVM)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.NewJobsController:
+	{PUT [/general/newjobs/update/{id}]}: addNewJob(NewJobs,Integer)
+	{POST [/general/newjobs/add]}: addNewJob(NewJobs)
+	{GET [/general/newjobs/get]}: allNewJob()
+	{GET [/general/newjobs/get/{id}]}: getNewJob(Integer)
+	{DELETE [/general/newjobs/delete/{id}]}: deleteNewJob(Integer)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.OnboardingController:
+	{POST [/Onboarding/authenticate]}: authenticate(AuthenticateUserDto)
+	{GET [/Onboarding/status/{candidateId}]}: getStatus(long)
+	{GET [/Onboarding/get]}: getAllOnboarding()
+	{POST [/Onboarding/post]}: addOnboarding(Onboarding)
+	{POST [/Onboarding/post/import]}: addOnboarding(List)
+	{GET [/Onboarding/get/{candidateId}]}: getOnboarding(long)
+	{POST [/Onboarding/update/{candidateId}]}: getOnboarding(OnboardingEditDto,long)
+	{DELETE [/Onboarding/delete/{id}]}: deleteOnboarding(Integer)
+	{GET [/Onboarding/sms/{candidateId}]}: sendSmsToCandidate(long)
+	{GET [/Onboarding/employee/{employeeId}]}: getEmployee(String)
+	{POST [/Onboarding/verify-otp/{candidateId}]}: verifyOtp(VerifyOtpDto,long)
+	{POST [/Onboarding/send-otp-e/{candidateId}]}: sendOtpToMail(long)
+	{POST [/Onboarding/send-link-e/{candidateId}]}: sendMail(long)
+	{POST [/Onboarding/send-otp-m/{candidateId}]}: sendOtp(long)
+	{POST [/Onboarding/add-password/{candidateId}]}: addPassword(PasswordDto,long)
+	{POST [/Onboarding/send-link/{candidateId}]}: sendLink(long)
+	{GET [/Onboarding/departments]}: getDepartments()
+	{GET [/Onboarding/detail/{candidateId}]}: getDetails(long)
+	{GET [/Onboarding/subDepartments/{department}]}: getSubDepartments(Departments)
+	{POST [/Onboarding/experience-status/{candidateId}]}: updateFresherStatus(ExperiencedDto,long)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.PersonalController:
+	{GET [/Personal/get/status/{candidateId}]}: getStatusByCandidateId(long)
+	{POST [/Personal/add/{candidateId}]}: addPersonal(Personal,long)
+	{GET [/Personal/get/{candidateId}]}: getPersonalDetailsByCandidateId(long)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.PersonalDetailsController:
+	{POST [/PersonalDetails/add]}: addPersonalDetails(PersonalDetails)
+	{GET [/PersonalDetails/bloodGroup]}: getBloodGroup()
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.PoliciesController:
+	{DELETE [/general/policies/delete/{id}]}: deletePolicies(Integer)
+	{PUT [/general/policies/update/{id}]}: addPolicies(Policies,Integer)
+	{POST [/general/policies/add]}: addPolicies(Policies)
+	{GET [/general/policies/get]}: allPolicies()
+	{GET [/general/policies/get/{id}]}: getPolicies(Integer)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.ProfessionalController:
+	{PUT [/professional/reporting_manager/{employeeId}]}: add(ReportingManagerDto,String)
+	{GET [/professional/get_reporting_manager/{employeeId}]}: get(String)
+	{GET [/professional/resignation/get/{employeeId}]}: getResignationInfo(String)
+	{PUT [/professional/resignation/edit/{employeeId}]}: addResignationInfo(MResignationEditDto,String)
+	{GET [/professional/workHistory/{employeeId}]}: getWorkHistory(String)
+	{PUT [/professional/basicInfo/add/{employeeId}]}: editBasicInfo(BasicInfoDto,String)
+	{GET [/professional/directReports/{employeeId}]}: getDirectReoprts(String)
+	{GET [/professional/basicInfo/get/{employeeId}]}: getBasicInfo(String)
+	{PUT [/professional/user/resignation/edit/{employeeId}]}: addUserResignationInfo(UResignationEditDto,String)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.ProfileController:
+	{GET [/Profile/get/{candidateId}]}: getOnboarding(long)
+	{POST [/Profile/post]}: postProfile(Profile)
+	{GET [/Profile/getAll]}: getPendingOnboarding()
+	{PUT [/Profile/update/status/{candidateId}]}: updatingCandidatesStatus(long)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.RegisterUserController:
+	{POST [/RegisterUser/Authenticate]}: authenticateUser(RegisterUserEntity)
+	{POST [/RegisterUser/Register]}: registerUser(RegisterUserEntity)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.RegularizationController:
+	{PUT [/attendance/regularization/edit/{id}]}: editRegularization(Regularization,Integer)
+	{GET [/attendance/regularization/get/{id}]}: getRegularization(Integer)
+	{POST [/attendance/regularization/post]}: addRegularization(Regularization)
+	{GET [/attendance/regularization/get]}: getAllRegularization()
+	{DELETE [/attendance/regularization/delete/{id}]}: deleteRegularization(Integer)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.SocialDetailsController:
+	{POST [/SocialDetails/add]}: addSocialDetails(SocialDetails)
+	{GET [/SocialDetails/get/{id}]}: getSocialServiceById(Integer)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.StructureController:
+	{GET [/Structure/getEmployeeByDepartment/{department}]}: findEmployee(Departments)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.SummaryController:
+	{GET [/Summary/subdepartment/{department}]}: getSubdepartments(String)
+	{POST [/Summary/import]}: createSummary(List)
+	{GET [/Summary/import/listOfEmployee]}: getListOfEmployees(String)
+	{GET [/Summary/getAll]}: getAllSummary()
+	{GET [/Summary/getContactInfo/{employeeId}]}: getContactInfo(String)
+	{GET [/Summary/workInfo/get/{employeeId}]}: getWorkInfo(String)
+	{GET [/Summary/getAddressInfo/{employeeId}]}: getAddressInfo(String)
+	{POST [/Summary/workInfo/add/{employeeId}]}: addWorkInfo(WorkInfoDto,String)
+	{GET [/Summary/getPersonalInfo/{employeeId}]}: getPersonalInfo(String)
+	{POST [/Summary/setManager/{employeeId}]}: setManager(SetManagerDto,String)
+	{POST [/Summary/workHistory/add/{employeeId}]}: addWorkHistory(WorkHistoryDto,String)
+	{GET [/Summary/department]}: getAllDepartments()
+	{GET [/Summary/manager_type_list]}: getManagerTypeList()
+	{GET [/Summary/designation_list]}: getDesignationList()
+	{GET [/Summary/getSummaryByCandidateId/{candidateId}]}: getSummaryByCandidateId(long)
+	{GET [/Summary/get/employeeStatusList]}: getEmployeeStatusList()
+	{GET [/Summary/probation_period_list]}: getProbationPeriodList()
+	{POST [/Summary/employeeStatus/{employeeId}]}: changeEmployeeStatus(String,EmployeeGenerateDto)
+	{GET [/Summary/work_location_list]}: getWorkLocationList()
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.TeamDirectoryController:
+	{POST [/Team/addDirectory]}: createTeamDirectory(TeamDirectory)
+	{GET [/Team/getAllDirectory]}: getAllTeamDirectory()
+	{DELETE [/Team/deleteDirectory/{id}]}: deleteTeamDirectory(Integer)
+	{PUT [/Team/updateDirectory/{id}]}: updateTeamDirectory(TeamDirectory,Integer)
+	{GET [/Team/getDirectoryById/{id}]}: getDirectoryById(int)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.TestController:
+	{GET [/testWorkStatus]}: testWorkStatus()
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.WorkExperienceController:
+	{GET [/work/getDocument/{id}]}: getDocument(Integer)
+	{GET [/work/get/status/{candidateId}]}: getWorkStatusByCandidateId(long)
+	{GET [/work/getAll/{candidateId}]}: getAllWork(long)
+	{POST [/work/AddWork/{candidateId}]}: createWork(Work,long)
+	{GET [/work/getWork/{id}]}: getWorkById(Integer)
+	{PUT [/work/EditWork/{id}]}: updateWork(Work,Integer)
+	{DELETE [/work/DeleteWork/{id}]}: deleteWork(Integer)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	o.s.b.a.w.s.e.BasicErrorController:
+	{ [/error]}: error(HttpServletRequest)
+	{ [/error], produces [text/html]}: errorHtml(HttpServletRequest,HttpServletResponse)
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 'beanNameHandlerMapping' {}
+2024-03-14 20:34:22 DEBUG _.s.w.s.HandlerMapping.Mappings - 'resourceHandlerMapping' {/webjars/**=ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]], /**=ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]}
+2024-03-14 20:34:22 INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8282"]
+2024-03-14 20:34:22 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8282 (http) with context path ''
+2024-03-14 20:34:22 INFO  com.hrm.HrmWebApi2Application - Started HrmWebApi2Application in 11.134 seconds (process running for 13.589)
+2024-03-14 20:35:19 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-03-14 20:35:19 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-03-14 20:35:19 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 6 ms
+2024-03-14 20:36:27 INFO  com.hrm.services.IAttendanceService - Start of addInTime EIS00004
+2024-03-14 21:08:27 INFO  com.hrm.services.IAttendanceService - Clock-in record already exists for Employee Id: EIS00004
+2024-03-14 21:08:27 INFO  com.hrm.services.IAttendanceService - End of addInTime Clock-in record already exists for Employee Id : EIS00004
+2024-03-14 21:08:31 INFO  com.hrm.services.IAttendanceService - Start of addInTime EIS00004
+2024-03-14 21:08:33 INFO  com.hrm.services.IAttendanceService - Clock-in record already exists for Employee Id: EIS00004
+2024-03-14 21:08:33 INFO  com.hrm.services.IAttendanceService - End of addInTime Clock-in record already exists for Employee Id : EIS00004
