@@ -1850,3 +1850,400 @@ java.sql.SQLException: Access denied for user 'root'@'localhost' (using password
 2024-03-21 14:44:24 INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
 2024-03-21 14:44:24 INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8282"]
 2024-03-21 14:44:24 INFO  o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8282"]
+2024-03-21 14:53:52 INFO  com.hrm.HrmWebApi2Application - Starting HrmWebApi2Application using Java 17.0.7 with PID 8500 (C:\Users\Lenovo\git\HRM-JAVA-WEBAPI\target\classes started by Lenovo in C:\Users\Lenovo\git\HRM-JAVA-WEBAPI)
+2024-03-21 14:53:52 DEBUG com.hrm.HrmWebApi2Application - Running with Spring Boot v3.1.2, Spring v6.0.11
+2024-03-21 14:53:52 INFO  com.hrm.HrmWebApi2Application - No active profile set, falling back to 1 default profile: "default"
+2024-03-21 14:53:55 INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8282"]
+2024-03-21 14:53:55 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-03-21 14:53:55 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.11]
+2024-03-21 14:53:55 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-03-21 14:53:55 DEBUG org.jboss.logging - Logging Provider: org.jboss.logging.Slf4jLoggerProvider found via system property
+2024-03-21 14:53:57 ERROR com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Exception during pool initialization.
+java.sql.SQLException: Access denied for user 'root'@'localhost' (using password: YES)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:833)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:453)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:246)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:198)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:359)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:201)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:470)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:100)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112)
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:316)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:152)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:34)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:119)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:264)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:239)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:216)
+	at org.hibernate.boot.model.relational.Database.<init>(Database.java:45)
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.getDatabase(InFlightMetadataCollectorImpl.java:230)
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:198)
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:166)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1380)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1451)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1817)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1766)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1155)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:932)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:608)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:436)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:312)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
+	at com.hrm.HrmWebApi2Application.main(HrmWebApi2Application.java:38)
+2024-03-21 14:54:00 ERROR com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Exception during pool initialization.
+java.sql.SQLException: Access denied for user 'root'@'localhost' (using password: YES)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:833)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:453)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:246)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:198)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:359)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:201)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:470)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:100)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112)
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:316)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:46)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:39)
+	at org.hibernate.tool.schema.internal.exec.ImprovedExtractionContextImpl.getJdbcConnection(ImprovedExtractionContextImpl.java:63)
+	at org.hibernate.tool.schema.internal.exec.ImprovedExtractionContextImpl.getJdbcDatabaseMetaData(ImprovedExtractionContextImpl.java:70)
+	at org.hibernate.tool.schema.extract.internal.InformationExtractorJdbcDatabaseMetaDataImpl.processTableResultSet(InformationExtractorJdbcDatabaseMetaDataImpl.java:64)
+	at org.hibernate.tool.schema.extract.internal.AbstractInformationExtractorImpl.getTables(AbstractInformationExtractorImpl.java:564)
+	at org.hibernate.tool.schema.extract.internal.DatabaseInformationImpl.getTablesInformation(DatabaseInformationImpl.java:122)
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:72)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:232)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:117)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:284)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:143)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1421)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:140)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:292)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:431)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1455)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1817)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1766)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1155)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:932)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:608)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:436)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:312)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
+	at com.hrm.HrmWebApi2Application.main(HrmWebApi2Application.java:38)
+2024-03-21 14:54:00 ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Access denied for user 'root'@'localhost' (using password: YES)
+2024-03-21 14:54:00 INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2024-03-21 14:54:31 INFO  com.hrm.HrmWebApi2Application - Starting HrmWebApi2Application using Java 17.0.7 with PID 11820 (C:\Users\Lenovo\git\HRM-JAVA-WEBAPI\target\classes started by Lenovo in C:\Users\Lenovo\git\HRM-JAVA-WEBAPI)
+2024-03-21 14:54:31 DEBUG com.hrm.HrmWebApi2Application - Running with Spring Boot v3.1.2, Spring v6.0.11
+2024-03-21 14:54:31 INFO  com.hrm.HrmWebApi2Application - No active profile set, falling back to 1 default profile: "default"
+2024-03-21 14:54:33 INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8282"]
+2024-03-21 14:54:33 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-03-21 14:54:33 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.11]
+2024-03-21 14:54:33 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-03-21 14:54:33 DEBUG org.jboss.logging - Logging Provider: org.jboss.logging.Slf4jLoggerProvider found via system property
+2024-03-21 14:54:41 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.AddressDetailsController:
+	{POST [/AddressDetails/AddAddress]}: addAddress(AddressDetails)
+2024-03-21 14:54:41 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.AgreementController:
+	{POST [/agreement/add/{candidateId}]}: add(Agreement,long)
+	{GET [/agreement/getPreAgreementInfo/{candidateId}]}: getPreAgreementInfo(long)
+	{GET [/agreement/getAgreementStatus/{candidateId}]}: getAgreementStatus(long)
+	{GET [/agreement/getAgreement/{candidateId}]}: getByCandidateId(long)
+	{PUT [/agreement/editAgreement/{candidateId}]}: editAgreement(AgreementEditDto,long)
+2024-03-21 14:54:41 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.AttendanceController:
+	{GET [/attendance/allattendance/{employeeId}]}: getAllAttendenceByEmployeeId(String)
+	{POST [/attendance/regularizationHours/{employeeId}]}: addRegularizationHours(RegularizationHoursDto,String)
+	{GET [/attendance/getregularizationhours/{employeeId}]}: getRegularizationHours(String)
+	{GET [/attendance/getClockIn/{employeeId}]}: getAttendance(String)
+	{POST [/attendance/clockIn/{employeeId}]}: addInTime(String)
+	{POST [/attendance/clockOut/{employeeId}]}: addOutTime(String)
+	{POST [/attendance/billableHours/{employeeId}]}: addBillableHours(BillableHoursDto,String)
+	{POST [/attendance/getEmployeeHoursBilling]}: getEmployee(ObjectNode)
+	{PUT [/attendance/editattendance/{id}]}: editAttendance(Attendance,Integer)
+	{GET [/attendance/getleave/{employeeId}]}: getLeave(String)
+	{POST [/attendance/addLeave/{employeeId}]}: addLeave(ApplyLeaveDto,String)
+	{DELETE [/attendance/deleteattendance/{id}]}: deletAttendance(int)
+	{GET [/attendance/billablehours/{employeeId}]}: getBillableHours(String)
+2024-03-21 14:54:41 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.BankDetailsController:
+	{POST [/BankDetails/add]}: addBankDetails(BankDetails)
+2024-03-21 14:54:41 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.DocumentController:
+	{DELETE [/document/deleteDocument/{id}]}: deleteDocument(Integer)
+	{GET [/document/getDocument/{id}]}: getDocumentById(Integer)
+	{POST [/document/addDocument]}: createDocument(Document)
+	{GET [/document/getDocument]}: getAllDocument()
+	{PUT [/document/updateDocument/{id}]}: updateDocument(Document,Integer)
+2024-03-21 14:54:41 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.DocumentsDetailsController:
+	{POST [/DocumentsDetails/Add]}: addDocumentDetails(DocumentDetails)
+2024-03-21 14:54:41 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.EducationController:
+	{GET [/education/get/status/{candidateId}]}: getEducationStatusByCandidateId(long)
+	{GET [/education/getEducation/{id}]}: getEducationById(Integer)
+	{POST [/education/AddEducation/{candidateId}]}: createEducation(Education,long)
+	{GET [/education/getAllEducation/{candidateId}]}: getAllEducation(long)
+	{DELETE [/education/deleteEducation/{id}]}: deleteEducation(Integer)
+	{PUT [/education/updateEducation/{id}]}: updateEducation(Education,Integer)
+2024-03-21 14:54:41 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.EmailController:
+	{POST [/sendMailAttachment]}: sendMailWithAttachment(Email)
+2024-03-21 14:54:41 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.EnumController:
+	{GET [/Enum/weekrule]}: getWeek()
+	{GET [/Enum/courses]}: getCourses()
+	{GET [/Enum/genders]}: getGenders()
+	{GET [/Enum/marital-status]}: getMaritalStatus()
+	{GET [/Enum/leavetype]}: getLeaveType()
+	{GET [/Enum/resignation]}: getResignation()
+	{GET [/Enum/relationship]}: getRelationship()
+	{GET [/Enum/half]}: getHalf()
+	{GET [/Enum/noticePeriod]}: getNotice()
+	{GET [/Enum/category]}: getCategory()
+	{GET [/Enum/shiftrule]}: getShift()
+	{GET [/Enum/categoryControl]}: getCategoryControl()
+2024-03-21 14:54:41 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.FamilyController:
+	{GET [/family/get/status/{candidateId}]}: getFamilyStatusByCandidateId(long)
+	{GET [/family/getAllFamily/{candidateId}]}: getAllFamilyByCandidateId(long)
+	{POST [/family/AddFamily/{candidateId}]}: createFamily(Family,long)
+	{GET [/family/getFamily/{id}]}: getFamilyById(int)
+	{PUT [/family/updateFamily/{id}]}: updateFamily(Family,Integer)
+	{DELETE [/family/deleteFamily/{family_id}]}: deleteFamily(Integer)
+2024-03-21 14:54:41 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.HolidayController:
+	
+2024-03-21 14:54:41 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.HRExecutiveController:
+	{GET [/HRExecutive/getPersonalApproval/{candidateId}]}: getPersonalApproval(long)
+	{POST [/HRExecutive/postToHrExecutive/{status}]}: addCandidatesInHrExecutive(CandidatesStatus)
+	{GET [/HRExecutive/getEducationApproval/{candidateId}]}: getEducationApproval(long)
+	{GET [/HRExecutive/getAgreementApproval/{candidateId}]}: getAgreementApproval(long)
+	{GET [/HRExecutive/get/{candidateId}]}: getByCandidateId(long)
+	{POST [/HRExecutive/personalApproval/{candidateId}]}: personalApproval(HrExecutivePersonalApprovalDto,long)
+	{POST [/HRExecutive/AddExecutive]}: createExecutive(HRExecutive)
+	{GET [/HRExecutive/getExecutveById/{id}]}: getExecutiveById(int)
+	{DELETE [/HRExecutive/deleteExecutive/{id}]}: deleteHrExecutive(Integer)
+	{GET [/HRExecutive/getAllExecutive/{inReview}/{hrManagerRejected}]}: getAllExecutive(CandidatesStatus,CandidatesStatus)
+	{PUT [/HRExecutive/updateExecutive/{id}]}: updateHRExecutive(HRExecutive,Integer)
+	{POST [/HRExecutive/post/bgv/{candidateId}]}: postBgv(BackgroundVerification,long)
+	{POST [/HRExecutive/educationApproval/{candidateId}]}: educationApproval(HrExecutiveEducationApprovalDto,long)
+	{GET [/HRExecutive/getWorkApproval/{candidateId}]}: getWorkApproval(long)
+	{POST [/HRExecutive/familyApproval/{candidateId}]}: familyApproval(HrExecutiveFamilyApprovalDto,long)
+	{GET [/HRExecutive/getFamilyApproval/{candidateId}]}: getFamilyApproval(long)
+	{POST [/HRExecutive/workApproval/{candidateId}]}: workApproval(HrExecutiveWorkApprovalDto,long)
+	{POST [/HRExecutive/agreementApproval/{candidateId}]}: agreementApproval(HrExecutiveAgreementApprovalDto,long)
+	{POST [/HRExecutive/reject/{candiateId}]}: rejectHrExecutive(long)
+	{GET [/HRExecutive/get/bgv/{candidateId}]}: getBgv(long)
+	{GET [/HRExecutive/get/bgvApproval/{candidateId}]}: getBgvApproval(long)
+	{POST [/HRExecutive/submit/{candiateId}]}: submitHrExecutive(long)
+2024-03-21 14:54:41 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.HRManagerController:
+	{GET [/HRManager/ctc/{candidateId}], produces [application/json]}: check(long)
+	{GET [/HRManager/getPersonalApproval/{candidateId}]}: getPersonalApproval(long)
+	{GET [/HRManager/getEducationApproval/{candidateId}]}: getEducationApproval(long)
+	{GET [/HRManager/getAgreementApproval/{candidateId}]}: getAgreementApproval(long)
+	{GET [/HRManager/get/{candidateId}]}: getByCandidateId(long)
+	{POST [/HRManager/personalApproval/{candidateId}]}: personalApproval(HrManagerPersonalApprovalDto,long)
+	{POST [/HRManager/educationApproval/{candidateId}]}: educationApproval(HrManagerEducationApprovalDto,long)
+	{GET [/HRManager/getWorkApproval/{candidateId}]}: getWorkApproval(long)
+	{POST [/HRManager/familyApproval/{candidateId}]}: familyApproval(HrManagerFamilyApprovalDto,long)
+	{GET [/HRManager/getFamilyApproval/{candidateId}]}: getFamilyApproval(long)
+	{POST [/HRManager/workApproval/{candidateId}]}: workApproval(HrManagerWorkApprovalDto,long)
+	{POST [/HRManager/agreementApproval/{candidateId}]}: agreementApproval(HrManagerAgreementApprovalDto,long)
+	{GET [/HRManager/getAll/{status}]}: getAllCandidates(CandidatesStatus)
+	{GET [/HRManager/getBgvApproval/{candidateId}]}: getBgvApproval(long)
+	{POST [/HRManager/BgvApproval/{candidateId}]}: bgvApproval(HrManagerBackgroundVerificationDto,long)
+	{POST [/HRManager/Edit/AppointmentLetterInfo/{candidateId}]}: editAppointment(EmployeeGenerateDto,long)
+	{POST [/HRManager/reject/{candidateId}]}: rejectHrManager(long)
+	{DELETE [/HRManager/deleteManager/{id}]}: deleteHRManager(Integer)
+	{PUT [/HRManager/updateManager/{id}]}: updateHRManager(HRManager,Integer)
+	{POST [/HRManager/release/{candidateId}]}: releaseAppointmentLetter(long,CreateAppointmentLetterDto,Model)
+	{GET [/HRManager/getRelease/{candidateId}]}: getReleaseAppointmentLetter(long)
+	{POST [/HRManager/Create/{candidateId}]}: createAppointmentLetter(CreateAppointmentLetterDto,long)
+	{GET [/HRManager/getAppointmentLetterInfo/{candidateId}]}: getAppointmentLetter(long)
+	{GET [/HRManager/Add/{status}]}: addCandidatesInHRManager(CandidatesStatus)
+2024-03-21 14:54:41 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.HRMController:
+	
+2024-03-21 14:54:41 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.JVMController:
+	{PUT [/general/jvm/update/{id}]}: addJvm(JVM,Integer)
+	{POST [/general/jvm/add]}: addJvm(JVM)
+	{GET [/general/jvm/get]}: allJvm()
+	{GET [/general/jvm/get/{id}]}: getJvm(Integer)
+	{DELETE [/general/jvm/delete/{id}]}: deleteJvm(Integer)
+2024-03-21 14:54:41 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.NewJobsController:
+	{GET [/general/newjobs/get/{id}]}: getNewJob(Integer)
+	{DELETE [/general/newjobs/delete/{id}]}: deleteNewJob(Integer)
+	{GET [/general/newjobs/get]}: allNewJob()
+	{POST [/general/newjobs/add]}: addNewJob(NewJobs)
+	{PUT [/general/newjobs/update/{id}]}: addNewJob(NewJobs,Integer)
+2024-03-21 14:54:41 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.OnboardingController:
+	{POST [/Onboarding/authenticate]}: authenticate(AuthenticateUserDto)
+	{GET [/Onboarding/status/{candidateId}]}: getStatus(long)
+	{GET [/Onboarding/employee/{employeeId}]}: getEmployee(String)
+	{POST [/Onboarding/send-otp-m/{candidateId}]}: sendOtp(long)
+	{POST [/Onboarding/send-link/{candidateId}]}: sendLink(long)
+	{POST [/Onboarding/update/{candidateId}]}: getOnboarding(OnboardingEditDto,long)
+	{GET [/Onboarding/get/{candidateId}]}: getOnboarding(long)
+	{GET [/Onboarding/get]}: getAllOnboarding()
+	{POST [/Onboarding/send-link-e/{candidateId}]}: sendMail(long)
+	{POST [/Onboarding/post]}: addOnboarding(Onboarding)
+	{POST [/Onboarding/post/import]}: addOnboarding(List)
+	{DELETE [/Onboarding/delete/{id}]}: deleteOnboarding(Integer)
+	{GET [/Onboarding/sms/{candidateId}]}: sendSmsToCandidate(long)
+	{GET [/Onboarding/departments]}: getDepartments()
+	{POST [/Onboarding/add-password/{candidateId}]}: addPassword(PasswordDto,long)
+	{GET [/Onboarding/subDepartments/{department}]}: getSubDepartments(Departments)
+	{POST [/Onboarding/send-otp-e/{candidateId}]}: sendOtpToMail(long)
+	{POST [/Onboarding/verify-otp/{candidateId}]}: verifyOtp(VerifyOtpDto,long)
+	{GET [/Onboarding/detail/{candidateId}]}: getDetails(long)
+	{POST [/Onboarding/experience-status/{candidateId}]}: updateFresherStatus(ExperiencedDto,long)
+2024-03-21 14:54:41 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.PersonalController:
+	{GET [/Personal/get/status/{candidateId}]}: getStatusByCandidateId(long)
+	{POST [/Personal/add/{candidateId}]}: addPersonal(Personal,long)
+	{GET [/Personal/get/{candidateId}]}: getPersonalDetailsByCandidateId(long)
+2024-03-21 14:54:41 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.PersonalDetailsController:
+	{GET [/PersonalDetails/bloodGroup]}: getBloodGroup()
+	{POST [/PersonalDetails/add]}: addPersonalDetails(PersonalDetails)
+2024-03-21 14:54:42 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.PoliciesController:
+	{GET [/general/policies/get]}: allPolicies()
+	{GET [/general/policies/get/{id}]}: getPolicies(Integer)
+	{POST [/general/policies/add]}: addPolicies(Policies)
+	{PUT [/general/policies/update/{id}]}: addPolicies(Policies,Integer)
+	{DELETE [/general/policies/delete/{id}]}: deletePolicies(Integer)
+2024-03-21 14:54:42 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.ProfessionalController:
+	{PUT [/professional/reporting_manager/{employeeId}]}: add(ReportingManagerDto,String)
+	{GET [/professional/get_reporting_manager/{employeeId}]}: get(String)
+	{PUT [/professional/basicInfo/add/{employeeId}]}: editBasicInfo(BasicInfoDto,String)
+	{GET [/professional/basicInfo/get/{employeeId}]}: getBasicInfo(String)
+	{GET [/professional/workHistory/{employeeId}]}: getWorkHistory(String)
+	{PUT [/professional/resignation/edit/{employeeId}]}: addResignationInfo(MResignationEditDto,String)
+	{GET [/professional/resignation/get/{employeeId}]}: getResignationInfo(String)
+	{GET [/professional/directReports/{employeeId}]}: getDirectReoprts(String)
+	{PUT [/professional/user/resignation/edit/{employeeId}]}: addUserResignationInfo(UResignationEditDto,String)
+2024-03-21 14:54:42 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.ProfileController:
+	{GET [/Profile/get/{candidateId}]}: getOnboarding(long)
+	{POST [/Profile/post]}: postProfile(Profile)
+	{GET [/Profile/getAll]}: getPendingOnboarding()
+	{PUT [/Profile/update/status/{candidateId}]}: updatingCandidatesStatus(long)
+2024-03-21 14:54:42 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.RegisterUserController:
+	{POST [/RegisterUser/Register]}: registerUser(RegisterUserEntity)
+	{POST [/RegisterUser/Authenticate]}: authenticateUser(RegisterUserEntity)
+2024-03-21 14:54:42 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.RegularizationController:
+	{POST [/attendance/regularization/post]}: addRegularization(Regularization)
+	{GET [/attendance/regularization/get/{id}]}: getRegularization(Integer)
+	{PUT [/attendance/regularization/edit/{id}]}: editRegularization(Regularization,Integer)
+	{GET [/attendance/regularization/get]}: getAllRegularization()
+	{DELETE [/attendance/regularization/delete/{id}]}: deleteRegularization(Integer)
+2024-03-21 14:54:42 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.SocialDetailsController:
+	{POST [/SocialDetails/add]}: addSocialDetails(SocialDetails)
+	{GET [/SocialDetails/get/{id}]}: getSocialServiceById(Integer)
+2024-03-21 14:54:42 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.StructureController:
+	{GET [/Structure/getEmployeeByDepartment/{department}]}: findEmployee(Departments)
+2024-03-21 14:54:42 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.SummaryController:
+	{GET [/Summary/subdepartment/{department}]}: getSubdepartments(String)
+	{GET [/Summary/import/listOfEmployee]}: getListOfEmployees(String)
+	{POST [/Summary/setManager/{employeeId}]}: setManager(SetManagerDto,String)
+	{POST [/Summary/workInfo/add/{employeeId}]}: addWorkInfo(WorkInfoDto,String)
+	{GET [/Summary/getAll]}: getAllSummary()
+	{POST [/Summary/import]}: createSummary(List)
+	{POST [/Summary/workHistory/add/{employeeId}]}: addWorkHistory(WorkHistoryDto,String)
+	{GET [/Summary/getPersonalInfo/{employeeId}]}: getPersonalInfo(String)
+	{GET [/Summary/getContactInfo/{employeeId}]}: getContactInfo(String)
+	{GET [/Summary/workInfo/get/{employeeId}]}: getWorkInfo(String)
+	{GET [/Summary/department]}: getAllDepartments()
+	{GET [/Summary/getAddressInfo/{employeeId}]}: getAddressInfo(String)
+	{GET [/Summary/manager_type_list]}: getManagerTypeList()
+	{GET [/Summary/designation_list]}: getDesignationList()
+	{GET [/Summary/get/employeeStatusList]}: getEmployeeStatusList()
+	{GET [/Summary/probation_period_list]}: getProbationPeriodList()
+	{GET [/Summary/getSummaryByCandidateId/{candidateId}]}: getSummaryByCandidateId(long)
+	{GET [/Summary/work_location_list]}: getWorkLocationList()
+	{POST [/Summary/employeeStatus/{employeeId}]}: changeEmployeeStatus(String,EmployeeGenerateDto)
+2024-03-21 14:54:42 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.TeamDirectoryController:
+	{GET [/Team/getDirectoryById/{id}]}: getDirectoryById(int)
+	{GET [/Team/getAllDirectory]}: getAllTeamDirectory()
+	{POST [/Team/addDirectory]}: createTeamDirectory(TeamDirectory)
+	{DELETE [/Team/deleteDirectory/{id}]}: deleteTeamDirectory(Integer)
+	{PUT [/Team/updateDirectory/{id}]}: updateTeamDirectory(TeamDirectory,Integer)
+2024-03-21 14:54:42 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.TestController:
+	{GET [/testWorkStatus]}: testWorkStatus()
+2024-03-21 14:54:42 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.WorkExperienceController:
+	{GET [/work/getDocument/{id}]}: getDocument(Integer)
+	{POST [/work/AddWork/{candidateId}]}: createWork(Work,long)
+	{GET [/work/getAll/{candidateId}]}: getAllWork(long)
+	{GET [/work/getWork/{id}]}: getWorkById(Integer)
+	{DELETE [/work/DeleteWork/{id}]}: deleteWork(Integer)
+	{PUT [/work/EditWork/{id}]}: updateWork(Work,Integer)
+	{GET [/work/get/status/{candidateId}]}: getWorkStatusByCandidateId(long)
+2024-03-21 14:54:42 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	o.s.b.a.w.s.e.BasicErrorController:
+	{ [/error]}: error(HttpServletRequest)
+	{ [/error], produces [text/html]}: errorHtml(HttpServletRequest,HttpServletResponse)
+2024-03-21 14:54:42 DEBUG _.s.w.s.HandlerMapping.Mappings - 'beanNameHandlerMapping' {}
+2024-03-21 14:54:42 DEBUG _.s.w.s.HandlerMapping.Mappings - 'resourceHandlerMapping' {/webjars/**=ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]], /**=ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]}
+2024-03-21 14:54:42 INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8282"]
+2024-03-21 14:54:42 INFO  com.hrm.HrmWebApi2Application - Started HrmWebApi2Application in 11.922 seconds (process running for 12.885)
+2024-03-21 14:54:42 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-03-21 15:22:18 INFO  o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8282"]
+2024-03-21 15:22:18 INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2024-03-21 15:22:18 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Destroying Spring FrameworkServlet 'dispatcherServlet'
+2024-03-21 15:22:18 INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8282"]
+2024-03-21 15:22:18 INFO  o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8282"]
