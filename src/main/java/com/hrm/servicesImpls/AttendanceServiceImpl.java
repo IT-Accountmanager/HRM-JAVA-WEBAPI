@@ -87,7 +87,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 				attendance.setDate(currentDate);
 				attendance.setInTime(LocalTime.now());
 				// attendance.setInTime(parsedTime);
-				attendance.setAttendanceStatus(AttendanceStatus.Present);
+				// attendance.setAttendanceStatus(AttendanceStatus.Present);
 
 				this.attendanceRepository.save(attendance);
 
@@ -467,7 +467,6 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 	ObjectMapper mapper = new ObjectMapper();
 
-	
 	public String getAttendanceAsJson(String managerId, String month) {
 		List<Object[]> attendanceData = attendanceRepository.findAttendanceByManagerAndMonth(managerId, month);
 		try {

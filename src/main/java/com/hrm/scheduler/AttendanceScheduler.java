@@ -4,43 +4,63 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import com.hrm.repositories.IAttendanceRepository;
+import org.springframework.stereotype.Component;
 
+import com.hrm.models.Attendance;
+import com.hrm.repositories.IAttendanceRepository;
+import com.hrm.repositories.IHolidayRepository;
+@Component
 public class AttendanceScheduler {
 
 	@Autowired
 	IAttendanceRepository attendanceRepository;
 
+	@Autowired
+	IHolidayRepository holidayRepository;
+
 	private boolean isClockInPresent = true;
 	private boolean isClockOutPresent = true;
 	private boolean isComboOff = false;
-	private boolean isWeakOff = false;
 
-	@Scheduled(cron = "0 0 2 * * ?")
-	public char performAttendanceCheck(LocalTime inTime, LocalTime outTime) {
-		char attendanceResult = calculateAttendanceResult(inTime, outTime);
-		return attendanceResult;
+	@Scheduled(fixedRate = 1 ,timeUnit = TimeUnit.MINUTES)
+	public void performAttendanceStatus() {
+		LocalDate date = LocalDate.now();
+		List<Attendance> employeesTodaysAttendance = attendanceRepository.findAllByDate(date);
+
+		for (Attendance todaysAttendance : employeesTodaysAttendance) {
+			LocalTime inTime = todaysAttendance.getInTime();
+			LocalTime outTime = todaysAttendance.getOutTime();
+			char attendanceResult = calculateAttendanceResult(inTime, outTime);
+			todaysAttendance.setAttendanceStatus(attendanceResult);
+			this.attendanceRepository.save(todaysAttendance);
+		}
+
 	}
 
 	private char calculateAttendanceResult(LocalTime inTime, LocalTime outTime) {
 		if (isClockInPresent && !isClockOutPresent) {
 			return 'A'; // Anomaly
 		} else if (isClockInPresent && isClockOutPresent) {
-			long timeDifference = 9; // Assuming the time difference is in minutes
+			long timeDifference = 9 * 60; // Assuming the time difference is in minutes
 			if (calculateTimeDifference(inTime, outTime) <= timeDifference) {
-				return 'V'; // Very short time between clock in and clock out
+				return 'S'; // Very short time between clock in and clock out
+			} else if (calculateTimeDifference(inTime, outTime) >= 10 * 60) {
+				return 'P';
 			}
 		} else if (!isClockInPresent && !isClockOutPresent) {
 			if (isHoliday()) {
 				return 'H'; // Holiday
 			} else if (isComboOff) {
 				return 'C'; // Combo off
-			} else if (isWeakOff) {
+			} else if (isWeakOff()) {
 				return 'W'; // Weak off
 			} else {
-				return 'X'; // Some other scenario
+				return 'X'; // Default
 			}
 		}
 		return 'X'; // Default case
@@ -53,13 +73,14 @@ public class AttendanceScheduler {
 
 	private boolean isHoliday() {
 		LocalDate currentDate = LocalDate.now();
-
-		// boolean isHoliday = holidayRepository.isHoliday(currentDate);
-
-		DayOfWeek dayOfWeek = currentDate.getDayOfWeek();
-		boolean isWeekend = dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
-
-		return /* isHoliday || */ isWeekend;
+		boolean isHoliday = holidayRepository.existsByDate(currentDate);
+		return isHoliday;
 	}
 
+	private boolean isWeakOff() {
+		LocalDate currentDate = LocalDate.now();
+		DayOfWeek dayOfWeek = currentDate.getDayOfWeek();
+		boolean isWeekend = dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
+		return isWeekend;
+	}
 }

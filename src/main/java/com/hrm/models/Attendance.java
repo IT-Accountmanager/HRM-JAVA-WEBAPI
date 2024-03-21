@@ -36,7 +36,7 @@ public class Attendance {
 	private LocalTime inTime;
 	private LocalTime outTime;
 	private Duration workHrs;
-	private AttendanceStatus attendanceStatus = AttendanceStatus.Anomaly;
+	private char attendanceStatus;
 	private LeaveType leaveType;
 	private String projectId;
 	private String appliedHrsForBilling;
@@ -46,19 +46,11 @@ public class Attendance {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private String leaveReason;
-	
-
-	
-	
-
-	//<<<<<<< HEAD
 	private String productionHours;
 	private String otherHours;
 	private String totalHours;
 	private LocalTime exactInTime;
 	private LocalTime exactOutTime;
-
-
 	private Duration regularisationRequestHours;
 	private String regularisationReason;
 	private float monthlyPresentDays;
@@ -199,11 +191,11 @@ public class Attendance {
 		this.regularizedHours = regularizedHours;
 	}
 
-	public AttendanceStatus getAttendanceStatus() {
+	public char getAttendanceStatus() {
 		return attendanceStatus;
 	}
 
-	public void setAttendanceStatus(AttendanceStatus attendanceStatus) {
+	public void setAttendanceStatus(char attendanceStatus) {
 		this.attendanceStatus = attendanceStatus;
 	}
 

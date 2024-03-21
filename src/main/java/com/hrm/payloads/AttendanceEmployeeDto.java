@@ -18,7 +18,7 @@ public class AttendanceEmployeeDto {
 	private LocalTime outTime;
 	private String workHrs;
 	private Duration workHours;
-	private AttendanceStatus attendanceStatus;
+	private char attendanceStatus;
 	private String manager;
 	private String projectId;
 	private String appliedHoursForBilling;
@@ -81,11 +81,11 @@ public class AttendanceEmployeeDto {
 		this.workHours = workHours;
 	}
 
-	public AttendanceStatus getAttendanceStatus() {
+	public char getAttendanceStatus() {
 		return attendanceStatus;
 	}
 
-	public void setAttendanceStatus(AttendanceStatus attendanceStatus) {
+	public void setAttendanceStatus(char attendanceStatus) {
 		this.attendanceStatus = attendanceStatus;
 	}
 

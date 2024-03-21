@@ -96,7 +96,7 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 	public String addReportingManager(ReportingManagerDto reportingManagerDto, String employeeId) {
 		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
 
-		employee.setManager(reportingManagerDto.getName());
+		employee.setManager(reportingManagerDto.getManager());
 		employee.setManagerType(reportingManagerDto.getManagerType());
 		employee.setManagerTo(reportingManagerDto.getTo());
 		employee.setManagerFrom(reportingManagerDto.getFrom());
@@ -113,7 +113,7 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 
 		if (employee != null) {
 			ReportingManagerDto reportingManagerDto = new ReportingManagerDto();
-			reportingManagerDto.setName(employee.getManager());
+			reportingManagerDto.setManager(employee.getManager());
 			reportingManagerDto.setManagerType(employee.getManagerType());
 			reportingManagerDto.setDepartment(employee.getDepartment());
 			reportingManagerDto.setDesignation(employee.getDesignation());

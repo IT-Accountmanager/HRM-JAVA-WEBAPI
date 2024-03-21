@@ -23,6 +23,7 @@ import com.hrm.payloads.AttendanceEmployeeDto;
 import com.hrm.payloads.BillableHoursDto;
 import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.UserAttendanceDto;
+import com.hrm.payloads.managerAttendanceView;
 import com.hrm.services.IAttendanceService;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -139,6 +140,18 @@ public class AttendanceController {
 		String attendance = this.attendanceService.getAttendanceAsJson(managerId, month);
 		return attendance;
 	}
+	
+	// Manager get all Attendance 
+	
+	/*
+	 * @GetMapping("/manager/getAllAttendance/{managerId}") public
+	 * ResponseEntity<managerAttendanceView> getAll(@PathVariable String managerId)
+	 * {
+	 * 
+	 * }
+	 */
+	
+	
 
 //	@PostMapping("/createOrUpdate/leave/{employeeId}")
 //	public ResponseEntity<ApplyLeaveDto> createOrUpdateLeave(@PathVariable String employeeId,

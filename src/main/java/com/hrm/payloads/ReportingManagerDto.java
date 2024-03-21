@@ -7,7 +7,7 @@ import com.hrm.helper.EnumCollection.Designation;
 import com.hrm.helper.EnumCollection.ManagerType;
 
 public class ReportingManagerDto {
-	private String name;
+	private String manager;
 	private ManagerType managerType;
 	private Departments department;
 	private Designation designation;
@@ -18,12 +18,12 @@ public class ReportingManagerDto {
 		super();
 	}
 
-	public String getName() {
-		return name;
+	public String getManager() {
+		return manager;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setManager(String manager) {
+		this.manager = manager;
 	}
 
 	public ManagerType getManagerType() {
