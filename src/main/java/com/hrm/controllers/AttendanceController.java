@@ -21,6 +21,7 @@ import com.hrm.models.Attendance;
 import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.AttendanceEmployeeDto;
 import com.hrm.payloads.BillableHoursDto;
+import com.hrm.payloads.ManagerAttendanceViewDto;
 import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.UserAttendanceDto;
 import com.hrm.payloads.managerAttendanceView;
@@ -141,17 +142,11 @@ public class AttendanceController {
 		return attendance;
 	}
 	
-	// Manager get all Attendance 
-	
-	/*
-	 * @GetMapping("/manager/getAllAttendance/{managerId}") public
-	 * ResponseEntity<managerAttendanceView> getAll(@PathVariable String managerId)
-	 * {
-	 * 
-	 * }
-	 */
-	
-	
+//	@PostMapping("/managerattendance/{date}")
+//	public ResponseEntity<String>addManagerAttendance ( @RequestBody ManagerAttendanceViewDto managerAttendanceViewDto, @PathVariable("date") LocalDate date) {
+//	    String result = this.attendanceService.addManagerAttendance(managerAttendanceViewDto, date);
+//		return new ResponseEntity<String>(result,HttpStatus.OK);
+//	}
 
 //	@PostMapping("/createOrUpdate/leave/{employeeId}")
 //	public ResponseEntity<ApplyLeaveDto> createOrUpdateLeave(@PathVariable String employeeId,

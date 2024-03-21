@@ -8,6 +8,7 @@ import com.hrm.models.Attendance;
 import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.AttendanceEmployeeDto;
 import com.hrm.payloads.BillableHoursDto;
+import com.hrm.payloads.ManagerAttendanceViewDto;
 import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.UserAttendanceDto;
 
@@ -42,6 +43,10 @@ public interface IAttendanceService {
 	BillableHoursDto getBillableHours(String employeeId);
 
 	String getAttendanceAsJson(String managerId, String month);
+	
+//	String addManagerAttendance(ManagerAttendanceViewDto managerAttendanceViewDto, LocalDate date);
+//	
+//	void updateManagerAttendance(ManagerAttendanceViewDto managerAttendanceViewDto, LocalDate date);
 
 //	ApplyLeaveDto addLeave(ApplyLeaveDto leaveDto);
 

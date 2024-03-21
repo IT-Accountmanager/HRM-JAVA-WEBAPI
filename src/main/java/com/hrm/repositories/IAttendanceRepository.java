@@ -39,4 +39,6 @@ public interface IAttendanceRepository extends JpaRepository<Attendance, Integer
 
 	List<Attendance> findAllByDate(LocalDate date);
 
+//	Attendance findByDate(LocalDate date);
+
 }

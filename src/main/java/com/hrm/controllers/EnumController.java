@@ -9,6 +9,8 @@ import com.hrm.helper.EnumCollection.CategoryControl;
 import com.hrm.helper.EnumCollection.CourseType;
 import com.hrm.helper.EnumCollection.EmployeeCategory;
 import com.hrm.helper.EnumCollection.Gender;
+import com.hrm.helper.EnumCollection.Half;
+import com.hrm.helper.EnumCollection.LeaveType;
 import com.hrm.helper.EnumCollection.MaritalStatus;
 import com.hrm.helper.EnumCollection.NoticePeriod;
 import com.hrm.helper.EnumCollection.Relationship;
@@ -69,5 +71,15 @@ public class EnumController {
 	@GetMapping("/relationship")
 	public Relationship[] getRelationship() {
 		return Relationship.values();
+	}
+	
+	@GetMapping("/half")
+	public Half[] getHalf() {
+		return Half.values();
+	}
+	
+	@GetMapping("/leavetype")
+	public LeaveType[] getLeaveType() {
+		return LeaveType.values();
 	}
 }
