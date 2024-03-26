@@ -35,5 +35,7 @@ public class LeaveManagementTableController {
 		ApplyLeaveDto attendance = this.leaveManagementService.getLeave(employeeId);
 		return new ResponseEntity<ApplyLeaveDto>(attendance, HttpStatus.OK);
 	}
+	
+	
 
 }

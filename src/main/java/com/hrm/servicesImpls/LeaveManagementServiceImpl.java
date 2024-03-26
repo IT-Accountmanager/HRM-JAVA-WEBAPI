@@ -40,6 +40,7 @@ public class LeaveManagementServiceImpl implements LeaveManagementService{
 		        leaveManagementTable = new LeaveManagementTable();
 		        leaveManagementTable.setEmployeeId(employeeId);
 		    }
+		    
 	
 		    leaveManagementTable.setLeaveType(leaveType);
 		    leaveManagementTable.setLeaveStartDate(startDate);

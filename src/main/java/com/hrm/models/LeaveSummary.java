@@ -18,6 +18,8 @@ public class LeaveSummary {
 	private float openingBalance;
 	private float appliedLeaves;
 	private float carryForward;
+	
+	
 	private float totalBalance;
 	
 	public int getId() {

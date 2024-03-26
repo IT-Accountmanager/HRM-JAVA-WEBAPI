@@ -30,6 +30,8 @@ public class LeaveManagementTable {
 	private String leaveReason;
 	
 	private float appliedDaysForLeave;
+	
+	
 	private float approvedDaysForLeave;
 
 	

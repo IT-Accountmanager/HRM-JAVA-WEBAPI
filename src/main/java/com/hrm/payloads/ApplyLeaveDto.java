@@ -10,6 +10,7 @@ public class ApplyLeaveDto {
 	
 	private LeaveType leaveType;
 	private LocalDate leaveStartDate;
+	
 	private LocalDate leaveEndDate;
 	private Half half1;
 	private Half half2;

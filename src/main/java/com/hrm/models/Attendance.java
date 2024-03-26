@@ -66,6 +66,7 @@ public class Attendance {
 //	private float approvedDaysForLeave;
 //	private String leaveRemarks;
 	
+	
 
 //	public float getAppliedDaysForLeave() {
 //		return appliedDaysForLeave;
@@ -90,6 +91,8 @@ public class Attendance {
 //	public void setLeaveRemarks(String leaveRemarks) {
 //		this.leaveRemarks = leaveRemarks;
 //	}
+
+	
 
 	public String getRemarks() {
 		return remarks;

@@ -13,6 +13,10 @@ public class LeaveDetailsDto {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private float appliedDaysForLeave;
+	
+	
+	
+	
 	private float approvedDaysForLeave;
 	private String remarks;
 	

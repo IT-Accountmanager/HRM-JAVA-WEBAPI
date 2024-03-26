@@ -19,6 +19,8 @@ public interface IAttendanceService {
 	String clockOut(String employeeId);
 
 	List<UserAttendanceDto> allAttendance(String employeeId);
+	
+	
 
 	AttendanceEmployeeDto getAttendance(String employeeId);
 

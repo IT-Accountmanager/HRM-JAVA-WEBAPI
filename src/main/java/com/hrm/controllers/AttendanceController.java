@@ -134,7 +134,8 @@ public class AttendanceController {
 	        return ResponseEntity.ok().body(attendance);
 	    } else {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Regularization Hours Record not found for employee " + employeeId + " on date " + date);
-	    }
+	    } 
+	    
 	}
 
 

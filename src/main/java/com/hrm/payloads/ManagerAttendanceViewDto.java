@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class ManagerAttendanceViewDto {
 	
 	private LocalDate date;
+	
 	private String approvedHrsForBilling;
 	private String remarks;
 	

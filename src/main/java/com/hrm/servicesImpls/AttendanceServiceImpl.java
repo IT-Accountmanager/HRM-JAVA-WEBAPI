@@ -149,6 +149,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 			attendanceDto.setInTime(Format.getFormattedTime(attendance.getInTime()));
 			attendanceDto.setOutTime(Format.getFormattedTime(attendance.getOutTime()));
 //			remarks edited
+			
 			attendanceDto.setRemarks(attendance.getRemarks());
 			if (attendance.getInTime() != null && attendance.getOutTime() != null) {
 				attendanceDto.setWorkHrs(Format

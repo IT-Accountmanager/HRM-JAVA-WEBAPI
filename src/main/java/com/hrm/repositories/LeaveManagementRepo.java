@@ -10,7 +10,7 @@ import com.hrm.models.LeaveManagementTable;
 public interface LeaveManagementRepo extends JpaRepository<LeaveManagementTable, Integer>{
 
 	LeaveManagementTable findByEmployeeId(String employeeId);
-	
+
 	
 
 }

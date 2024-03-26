@@ -35,5 +35,6 @@ public class HolidayController {
 	        List<Holiday> holidays = holidayService.getListOfHolidays();
 	        return new ResponseEntity<>(holidays, HttpStatus.OK);
 	    }
+	 
 
 }

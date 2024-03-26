@@ -31,6 +31,8 @@ public class RegularizationController {
 		String result = this.regularizationService.addRegularization(regularization);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
+	
+	
 
 	@GetMapping("/regularization/get")
 	public ResponseEntity<List<Regularization>> getAllRegularization() {

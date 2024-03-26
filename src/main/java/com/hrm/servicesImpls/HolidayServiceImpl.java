@@ -32,6 +32,7 @@ public class HolidayServiceImpl implements IHolidayService {
 				logger.warn("No holidays were saved");
 				return "Failed to add holidays";
 			}
+			
 		} catch (Exception e) {
 			logger.error("An error occurred while adding holidays", e);
 			return "Failed to add holidays: " + e.getMessage();
