@@ -71,9 +71,15 @@ public class AttendanceController {
 
 	// -------------------GET ALL ATTENDANCE BY EMPLOYEE ID-------------------
 	@GetMapping("/allattendance/{employeeId}")
-	public ResponseEntity<List<UserAttendanceDto>> getAllAttendenceByEmployeeId(@PathVariable String employeeId) {
-		List<UserAttendanceDto> allAttendance = this.attendanceService.allAttendance(employeeId);
-		return new ResponseEntity<List<UserAttendanceDto>>(allAttendance, HttpStatus.OK);
+	public ResponseEntity<List<UserAttendanceDto>> getAllAttendanceByEmployeeId(@PathVariable String employeeId) {
+		try {
+			List<UserAttendanceDto> allAttendance = attendanceService.allAttendance(employeeId);
+			return new ResponseEntity<>(allAttendance, HttpStatus.OK);
+		} catch (Exception e) {
+			// Log the error
+			logger.error("Error retrieving attendance for employeeId: {}", employeeId, e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	// --------------------------POST BILLABLE HOURS-------------------------
@@ -159,6 +165,14 @@ public class AttendanceController {
 	}
 
 	
+
+	@GetMapping("/refresh/{employeeId}")
+	public String getDuration(@PathVariable String employeeId) {
+		String duration = this.attendanceService.getDuration(employeeId);
+		return duration;
+	}
+
+//github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
 //	@PostMapping("/managerattendance/{date}")
 //	public ResponseEntity<String>addManagerAttendance ( @RequestBody ManagerAttendanceViewDto managerAttendanceViewDto, @PathVariable("date") LocalDate date) {
 //	    String result = this.attendanceService.addManagerAttendance(managerAttendanceViewDto, date);

@@ -13,6 +13,7 @@ import com.hrm.helper.EnumCollection.Half;
 import com.hrm.helper.EnumCollection.LeaveType;
 import com.hrm.payloads.AttendanceEmployeeDto;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,6 +30,7 @@ public class Attendance {
 
 	// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
 
+	@Column(name = "employee_id")
 	private String employeeId;
 	private Month month;
 	@JsonFormat(pattern = "dd-MM-yyyy")
@@ -39,22 +41,23 @@ public class Attendance {
 	private char attendanceStatus;
 	private LeaveType leaveType;
 	private String projectId;
+	@Column(name = "applied_hrs_for_billing")
 	private String appliedHrsForBilling;
 	private String approvedHrsForBilling;
-	private float regularizedHours;
+	private Float regularizedHours;
 	private ApprovalStatus status;
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private String leaveReason;
 	private String productionHours;
 	private String otherHours;
-	private float totalHours;
+	private String totalHours;
 	private LocalTime exactInTime;
 	private LocalTime exactOutTime;
 	private String regularisationRequestHours;
 	private String regularisationReason;
-	private float monthlyPresentDays;
-	private float monthlyLossOfPayDays;
+	private Float monthlyPresentDays;
+	private Float monthlyLossOfPayDays;
 	private Duration monthlyAppliedHoursForBilling;
 	private Duration monthlyApprovedHoursForBilling;
 	private String remarks;
@@ -307,12 +310,24 @@ public class Attendance {
 		this.otherHours = otherHours;
 	}
 
-	public float getTotalHours() {
+	public String getTotalHours() {
 		return totalHours;
 	}
 
-	public void setTotalHours(float totalHours) {
+	public void setTotalHours(String totalHours) {
 		this.totalHours = totalHours;
+	}
+
+	public void setRegularizedHours(Float regularizedHours) {
+		this.regularizedHours = regularizedHours;
+	}
+
+	public void setMonthlyPresentDays(Float monthlyPresentDays) {
+		this.monthlyPresentDays = monthlyPresentDays;
+	}
+
+	public void setMonthlyLossOfPayDays(Float monthlyLossOfPayDays) {
+		this.monthlyLossOfPayDays = monthlyLossOfPayDays;
 	}
 
 	public LocalTime getExactInTime() {

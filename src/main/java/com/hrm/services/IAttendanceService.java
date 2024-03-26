@@ -32,6 +32,7 @@ public interface IAttendanceService {
 
 	String addRegularizationHours(RegularizationHoursDto regularizationHoursDto, String employeeId);
 
+
 //	String addLeave(ApplyLeaveDto applyLeaveDto, String employeeId);
 	
 //	ApplyLeaveDto getLeave(String employeeId);
@@ -40,10 +41,25 @@ public interface IAttendanceService {
 	
 	BillableHoursDto getBillableHours(String employeeId, LocalDate date);
 
+	String addLeave(ApplyLeaveDto applyLeaveDto, String employeeId);
+
+	ApplyLeaveDto getLeave(String employeeId);
+
+	RegularizationHoursDto getRegularizationHours(String employeeId);
+
+	BillableHoursDto getBillableHours(String employeeId);
+
+
 	String getAttendanceAsJson(String managerId, String month);
+
 	
 	ManagerAttendanceViewDto editManagerAttendance(ManagerAttendanceViewDto managerAttendanceViewDto, String employeeId);
 	
+
+
+	String getDuration(String employeeId);
+
+
 //	String addManagerAttendance(ManagerAttendanceViewDto managerAttendanceViewDto, LocalDate date);
 //	
 //	void updateManagerAttendance(ManagerAttendanceViewDto managerAttendanceViewDto, LocalDate date);
