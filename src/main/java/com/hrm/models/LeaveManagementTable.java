@@ -29,23 +29,27 @@ public class LeaveManagementTable {
 	private Half half2;
 	private String leaveReason;
 	
-	private float appliedDaysForLeave;
+	private double appliedDaysForLeave;
 	
 	
-	private float approvedDaysForLeave;
+	private double approvedDaysForLeave;
 
 	
 	
 	
 	
-	public float getAppliedDaysForLeave() {
+	
+	public double getAppliedDaysForLeave() {
 		return appliedDaysForLeave;
 	}
-	public void setAppliedDaysForLeave(float appliedDaysForLeave) {
+	public void setAppliedDaysForLeave(double appliedDaysForLeave) {
 		this.appliedDaysForLeave = appliedDaysForLeave;
 	}
-	public float getApprovedDaysForLeave() {
+	public double getApprovedDaysForLeave() {
 		return approvedDaysForLeave;
+	}
+	public void setApprovedDaysForLeave(double approvedDaysForLeave) {
+		this.approvedDaysForLeave = approvedDaysForLeave;
 	}
 	public void setApprovedDaysForLeave(float approvedDaysForLeave) {
 		this.approvedDaysForLeave = approvedDaysForLeave;
