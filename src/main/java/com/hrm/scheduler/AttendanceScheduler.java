@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.hrm.models.Attendance;
 import com.hrm.repositories.IAttendanceRepository;
 import com.hrm.repositories.IHolidayRepository;
+
 @Component
 public class AttendanceScheduler {
 
@@ -23,11 +24,7 @@ public class AttendanceScheduler {
 	@Autowired
 	IHolidayRepository holidayRepository;
 
-	private boolean isClockInPresent = true;
-	private boolean isClockOutPresent = true;
-	private boolean isComboOff = false;
-
-	@Scheduled(fixedRate = 1 ,timeUnit = TimeUnit.MINUTES)
+	@Scheduled(fixedRate = 1, timeUnit = TimeUnit.MINUTES)
 	public void performAttendanceStatus() {
 		LocalDate date = LocalDate.now();
 		List<Attendance> employeesTodaysAttendance = attendanceRepository.findAllByDate(date);
@@ -42,7 +39,27 @@ public class AttendanceScheduler {
 
 	}
 
+	/*
+	 * private void getClockInData(LocalDate date, String employeeId) { LocalTime
+	 * result = this.attendanceRepository.findInTimeByDateAndEmployeeId(date,
+	 * employeeId); if(result != null){ this.isClockInPresent=true; } }
+	 * 
+	 * private void getClockOutData(LocalDate date, String employeeId) { LocalTime
+	 * result = this.attendanceRepository.findOutTimeByDateAndEmployeeId(date,
+	 * employeeId); if(result != null){ this.isClockOutPresent=true; } }
+	 */
+
 	private char calculateAttendanceResult(LocalTime inTime, LocalTime outTime) {
+		boolean isClockInPresent = false;
+		boolean isClockOutPresent = false;
+		boolean isComboOff = false;
+
+		if (inTime != null) {
+			isClockInPresent = true;
+		}
+		if (outTime != null) {
+			isClockOutPresent = true;
+		}
 		if (isClockInPresent && !isClockOutPresent) {
 			return 'A'; // Anomaly
 		} else if (isClockInPresent && isClockOutPresent) {

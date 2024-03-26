@@ -35,15 +35,17 @@ public interface IAttendanceService {
 	String addRegularizationHours(RegularizationHoursDto regularizationHoursDto, String employeeId);
 
 	String addLeave(ApplyLeaveDto applyLeaveDto, String employeeId);
-	
+
 	ApplyLeaveDto getLeave(String employeeId);
-	
+
 	RegularizationHoursDto getRegularizationHours(String employeeId);
-	
+
 	BillableHoursDto getBillableHours(String employeeId);
 
 	String getAttendanceAsJson(String managerId, String month);
-	
+
+	String getDuration(String employeeId);
+
 //	String addManagerAttendance(ManagerAttendanceViewDto managerAttendanceViewDto, LocalDate date);
 //	
 //	void updateManagerAttendance(ManagerAttendanceViewDto managerAttendanceViewDto, LocalDate date);
