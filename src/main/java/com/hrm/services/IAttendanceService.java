@@ -26,23 +26,21 @@ public interface IAttendanceService {
 
 	String editAttendance(Attendance attendance, Integer id);
 
-//	ApplyLeaveDto getLeave(String employeeId);
-
-	// ApplyLeaveDto createOrUpdateLeave(ApplyLeaveDto leaveDto);
-
 	String addBillableHours(BillableHoursDto billableHoursDto, String employeeId);
 
 	String addRegularizationHours(RegularizationHoursDto regularizationHoursDto, String employeeId);
 
-	String addLeave(ApplyLeaveDto applyLeaveDto, String employeeId);
+//	String addLeave(ApplyLeaveDto applyLeaveDto, String employeeId);
 	
-	ApplyLeaveDto getLeave(String employeeId);
+//	ApplyLeaveDto getLeave(String employeeId);
 	
-	RegularizationHoursDto getRegularizationHours(String employeeId);
+	RegularizationHoursDto getRegularizationHours(String employeeId, LocalDate date);
 	
-	BillableHoursDto getBillableHours(String employeeId);
+	BillableHoursDto getBillableHours(String employeeId, LocalDate date);
 
 	String getAttendanceAsJson(String managerId, String month);
+	
+	ManagerAttendanceViewDto editManagerAttendance(ManagerAttendanceViewDto managerAttendanceViewDto, String employeeId);
 	
 //	String addManagerAttendance(ManagerAttendanceViewDto managerAttendanceViewDto, LocalDate date);
 //	

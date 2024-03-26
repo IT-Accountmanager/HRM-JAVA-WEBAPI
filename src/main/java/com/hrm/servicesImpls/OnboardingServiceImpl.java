@@ -509,8 +509,6 @@ public class OnboardingServiceImpl implements IOnboardingService {
 
 		Onboarding user = null;
 
-		// Employee employee = null;
-
 		if (isValidEmail(username)) {
 			user = onboardingRepository.findByEmailIdOrContactNumber(username, 0L);
 		} else {
@@ -523,52 +521,45 @@ public class OnboardingServiceImpl implements IOnboardingService {
 			}
 		}
 
-		// UserLoginResponseDto userLoginResponseDto;
-
 		if (user != null && user.getPassword().equals(password)) {
-
 			Employee employee = this.employeeRepository.findByCandidateId(user.getCandidateId());
 
 			if (employee != null) {
-				userLoginResponseDto.setMessage("Authenticated !!");
-				// userLoginResponseDto = new UserLoginResponseDto();
+				userLoginResponseDto.setMessage("Authenticated!");
 				userLoginResponseDto.setCandidateId(user.getCandidateId());
 
 				LocalDate today = LocalDate.now();
 				Attendance toDaysAttendance = this.attendanceRepository
 						.findByEmployeeIdAndDate(employee.getEmployeeId(), today);
 
-				if (isExisted(employee.getEmployeeId(), toDaysAttendance.getOutTime())) {
+				if (toDaysAttendance != null && isExisted(toDaysAttendance.getOutTime())) {
 					userLoginResponseDto.setDuration("00:00:00");
-				} else if (toDaysAttendance != null) {
-					Duration duration = Duration.between(toDaysAttendance.getInTime(), LocalDateTime.now());
-
+				} else {
+					Duration duration = Duration.ZERO;
+					if (toDaysAttendance != null) {
+						duration = Duration.between(toDaysAttendance.getInTime(), LocalDateTime.now());
+					}
 					long hours = duration.toHours();
 					long min = duration.minusHours(hours).toMinutes();
 					long sec = duration.minusHours(hours).minusMinutes(min).getSeconds();
 
 					String formattedDuration = String.format("%02d:%02d:%02d", hours, min, sec);
 					userLoginResponseDto.setDuration(formattedDuration);
-				} else {
-					userLoginResponseDto.setDuration("00:00:00");
 				}
-			} else if (employee == null) {
-				userLoginResponseDto.setMessage("Authenticated !!");
+			} else {
+				userLoginResponseDto.setMessage("Authenticated!");
 				userLoginResponseDto.setDuration("00:00:00");
 				userLoginResponseDto.setCandidateId(user.getCandidateId());
 			}
-			return userLoginResponseDto;
 		} else {
-			userLoginResponseDto.setMessage("Not Authenticated !!");
+			userLoginResponseDto.setMessage("Not Authenticated!");
 			userLoginResponseDto.setDuration("00:00:00");
-			return userLoginResponseDto;
 		}
+		return userLoginResponseDto;
 	}
 
-	private boolean isExisted(String employeeId, LocalTime outTime) {
-		LocalDate today = LocalDate.now();
-		Attendance toDaysAttendance = this.attendanceRepository.findByEmployeeIdAndDate(employeeId, today);
-		return toDaysAttendance != null && toDaysAttendance.getOutTime().equals(outTime);
+	private boolean isExisted(LocalTime outTime) {
+		return outTime != null;
 	}
 
 	private boolean isValidEmail(String email) {

@@ -10,7 +10,7 @@ public class UserAttendanceDto {
 	private String inTime;
 	private String outTime;
 	private String workHrs;
-	private AttendanceStatus attendanceStatus = AttendanceStatus.Anomaly;
+	private char attendanceStatus;
 	private String manager;
 	private String projectId;
 	private String appliedHrsForBilling;
@@ -65,11 +65,11 @@ public class UserAttendanceDto {
 		this.workHrs = workHrs;
 	}
 
-	public AttendanceStatus getAttendanceStatus() {
+	public char getAttendanceStatus() {
 		return attendanceStatus;
 	}
 
-	public void setAttendanceStatus(AttendanceStatus attendanceStatus) {
+	public void setAttendanceStatus(char attendanceStatus) {
 		this.attendanceStatus = attendanceStatus;
 	}
 

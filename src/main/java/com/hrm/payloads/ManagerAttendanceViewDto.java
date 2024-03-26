@@ -1,17 +1,19 @@
 package com.hrm.payloads;
 
+import java.time.LocalDate;
+
 public class ManagerAttendanceViewDto {
 	
-
-	private String projectId;
+	private LocalDate date;
 	private String approvedHrsForBilling;
 	private String remarks;
 	
-	public String getProjectId() {
-		return projectId;
+
+	public LocalDate getDate() {
+		return date;
 	}
-	public void setProjectId(String projectId) {
-		this.projectId = projectId;
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
 	public String getApprovedHrsForBilling() {
 		return approvedHrsForBilling;

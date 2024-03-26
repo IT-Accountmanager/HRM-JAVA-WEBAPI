@@ -154,5 +154,9 @@ public class EnumCollection {
 	public enum CategoryControl {
 		USER, MANAGER, ADMIN, SUPER_ADMIN
 	}
+	
+	public enum LeaveStatus {
+		REJECTED,APPROVED,PENDING
+	}
 
 }

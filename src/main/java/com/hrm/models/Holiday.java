@@ -11,7 +11,8 @@ public class Holiday {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private LocalDate date;
+	private String day;
+    private LocalDate date;
 	private String holidayName;
 
 	public Integer getId() {
@@ -20,6 +21,14 @@ public class Holiday {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public String getDay() {
+		return day;
+	}
+
+	public void setDay(String day) {
+		this.day = day;
 	}
 
 	public LocalDate getDate() {

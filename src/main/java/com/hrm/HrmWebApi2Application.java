@@ -8,6 +8,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 //import com.hrm.config.TwilioConfig;
 import com.twilio.Twilio;
@@ -15,6 +16,8 @@ import jakarta.annotation.PostConstruct;
 
 @SpringBootApplication
 //@ComponentScan("com.hrm.config")
+
+@EnableScheduling
 public class HrmWebApi2Application extends SpringBootServletInitializer {
 
 	/*

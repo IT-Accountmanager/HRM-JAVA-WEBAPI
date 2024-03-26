@@ -36,7 +36,7 @@ public class Attendance {
 	private LocalTime inTime;
 	private LocalTime outTime;
 	private Duration workHrs;
-	private AttendanceStatus attendanceStatus = AttendanceStatus.Anomaly;
+	private char attendanceStatus;
 	private LeaveType leaveType;
 	private String projectId;
 	private String appliedHrsForBilling;
@@ -46,19 +46,11 @@ public class Attendance {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private String leaveReason;
-	
-
-	
-	
-
-	//<<<<<<< HEAD
 	private String productionHours;
 	private String otherHours;
 	private float totalHours;
 	private LocalTime exactInTime;
 	private LocalTime exactOutTime;
-
-
 	private String regularisationRequestHours;
 	private String regularisationReason;
 	private float monthlyPresentDays;
@@ -66,6 +58,38 @@ public class Attendance {
 	private Duration monthlyAppliedHoursForBilling;
 	private Duration monthlyApprovedHoursForBilling;
 	private String remarks;
+
+	
+//	edited
+
+//	private float appliedDaysForLeave;
+//	private float approvedDaysForLeave;
+//	private String leaveRemarks;
+	
+
+//	public float getAppliedDaysForLeave() {
+//		return appliedDaysForLeave;
+//	}
+//
+//	public void setAppliedDaysForLeave(float appliedDaysForLeave) {
+//		this.appliedDaysForLeave = appliedDaysForLeave;
+//	}
+//
+//	public float getApprovedDaysForLeave() {
+//		return approvedDaysForLeave;
+//	}
+//
+//	public void setApprovedDaysForLeave(float approvedDaysForLeave) {
+//		this.approvedDaysForLeave = approvedDaysForLeave;
+//	}
+//
+//	public String getLeaveRemarks() {
+//		return leaveRemarks;
+//	}
+//
+//	public void setLeaveRemarks(String leaveRemarks) {
+//		this.leaveRemarks = leaveRemarks;
+//	}
 
 	public String getRemarks() {
 		return remarks;
@@ -208,11 +232,11 @@ public class Attendance {
 		this.regularizedHours = regularizedHours;
 	}
 
-	public AttendanceStatus getAttendanceStatus() {
+	public char getAttendanceStatus() {
 		return attendanceStatus;
 	}
 
-	public void setAttendanceStatus(AttendanceStatus attendanceStatus) {
+	public void setAttendanceStatus(char attendanceStatus) {
 		this.attendanceStatus = attendanceStatus;
 	}
 

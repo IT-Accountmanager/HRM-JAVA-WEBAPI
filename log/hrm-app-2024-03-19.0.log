@@ -1,0 +1,271 @@
+2024-03-19 20:28:51 INFO  com.hrm.HrmWebApi2Application - Starting HrmWebApi2Application using Java 17.0.7 with PID 11232 (C:\Users\Rameshrao.k\Desktop\New folder (3)\HRM-JAVA-WEBAPI\target\classes started by Rameshrao.k in C:\Users\Rameshrao.k\Desktop\New folder (3)\HRM-JAVA-WEBAPI)
+2024-03-19 20:28:51 DEBUG com.hrm.HrmWebApi2Application - Running with Spring Boot v3.1.2, Spring v6.0.11
+2024-03-19 20:28:51 INFO  com.hrm.HrmWebApi2Application - No active profile set, falling back to 1 default profile: "default"
+2024-03-19 20:28:58 INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8282"]
+2024-03-19 20:28:58 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-03-19 20:28:58 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.11]
+2024-03-19 20:28:58 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-03-19 20:28:58 DEBUG org.jboss.logging - Logging Provider: org.jboss.logging.Slf4jLoggerProvider found via system property
+2024-03-19 20:29:07 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.AddressDetailsController:
+	{POST [/AddressDetails/AddAddress]}: addAddress(AddressDetails)
+2024-03-19 20:29:07 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.AgreementController:
+	{POST [/agreement/add/{candidateId}]}: add(Agreement,long)
+	{GET [/agreement/getPreAgreementInfo/{candidateId}]}: getPreAgreementInfo(long)
+	{GET [/agreement/getAgreement/{candidateId}]}: getByCandidateId(long)
+	{GET [/agreement/getAgreementStatus/{candidateId}]}: getAgreementStatus(long)
+	{PUT [/agreement/editAgreement/{candidateId}]}: editAgreement(AgreementEditDto,long)
+2024-03-19 20:29:07 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.AttendanceController:
+	{GET [/attendance/allattendance/{employeeId}]}: getAllAttendenceByEmployeeId(String)
+	{GET [/attendance/getregularizationhours/{employeeId}]}: getRegularizationHours(String)
+	{POST [/attendance/regularizationHours/{employeeId}]}: addRegularizationHours(RegularizationHoursDto,String)
+	{POST [/attendance/clockIn/{employeeId}]}: addInTime(String)
+	{GET [/attendance/getClockIn/{employeeId}]}: getAttendance(String)
+	{POST [/attendance/clockOut/{employeeId}]}: addOutTime(String)
+	{GET [/attendance/getleave/{employeeId}]}: getLeave(String)
+	{DELETE [/attendance/deleteattendance/{id}]}: deletAttendance(int)
+	{POST [/attendance/billableHours/{employeeId}]}: addBillableHours(BillableHoursDto,String)
+	{POST [/attendance/addLeave/{employeeId}]}: addLeave(ApplyLeaveDto,String)
+	{PUT [/attendance/editattendance/{id}]}: editAttendance(Attendance,Integer)
+	{GET [/attendance/billablehours/{employeeId}]}: getBillableHours(String)
+2024-03-19 20:29:07 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.BankDetailsController:
+	{POST [/BankDetails/add]}: addBankDetails(BankDetails)
+2024-03-19 20:29:07 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.DocumentController:
+	{DELETE [/document/deleteDocument/{id}]}: deleteDocument(Integer)
+	{POST [/document/addDocument]}: createDocument(Document)
+	{GET [/document/getDocument/{id}]}: getDocumentById(Integer)
+	{GET [/document/getDocument]}: getAllDocument()
+	{PUT [/document/updateDocument/{id}]}: updateDocument(Document,Integer)
+2024-03-19 20:29:07 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.DocumentsDetailsController:
+	{POST [/DocumentsDetails/Add]}: addDocumentDetails(DocumentDetails)
+2024-03-19 20:29:07 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.EducationController:
+	{GET [/education/get/status/{candidateId}]}: getEducationStatusByCandidateId(long)
+	{DELETE [/education/deleteEducation/{id}]}: deleteEducation(Integer)
+	{POST [/education/AddEducation/{candidateId}]}: createEducation(Education,long)
+	{GET [/education/getAllEducation/{candidateId}]}: getAllEducation(long)
+	{GET [/education/getEducation/{id}]}: getEducationById(Integer)
+	{PUT [/education/updateEducation/{id}]}: updateEducation(Education,Integer)
+2024-03-19 20:29:07 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.EmailController:
+	{POST [/sendMailAttachment]}: sendMailWithAttachment(Email)
+2024-03-19 20:29:07 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.EnumController:
+	{GET [/Enum/weekrule]}: getWeek()
+	{GET [/Enum/courses]}: getCourses()
+	{GET [/Enum/marital-status]}: getMaritalStatus()
+	{GET [/Enum/genders]}: getGenders()
+	{GET [/Enum/resignation]}: getResignation()
+	{GET [/Enum/relationship]}: getRelationship()
+	{GET [/Enum/category]}: getCategory()
+	{GET [/Enum/categoryControl]}: getCategoryControl()
+	{GET [/Enum/noticePeriod]}: getNotice()
+	{GET [/Enum/shiftrule]}: getShift()
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.FamilyController:
+	{GET [/family/get/status/{candidateId}]}: getFamilyStatusByCandidateId(long)
+	{GET [/family/getAllFamily/{candidateId}]}: getAllFamilyByCandidateId(long)
+	{POST [/family/AddFamily/{candidateId}]}: createFamily(Family,long)
+	{PUT [/family/updateFamily/{id}]}: updateFamily(Family,Integer)
+	{GET [/family/getFamily/{id}]}: getFamilyById(int)
+	{DELETE [/family/deleteFamily/{family_id}]}: deleteFamily(Integer)
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.HolidayController:
+	
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.HRExecutiveController:
+	{GET [/HRExecutive/getPersonalApproval/{candidateId}]}: getPersonalApproval(long)
+	{POST [/HRExecutive/postToHrExecutive/{status}]}: addCandidatesInHrExecutive(CandidatesStatus)
+	{GET [/HRExecutive/getEducationApproval/{candidateId}]}: getEducationApproval(long)
+	{GET [/HRExecutive/getAgreementApproval/{candidateId}]}: getAgreementApproval(long)
+	{GET [/HRExecutive/get/{candidateId}]}: getByCandidateId(long)
+	{POST [/HRExecutive/AddExecutive]}: createExecutive(HRExecutive)
+	{GET [/HRExecutive/getFamilyApproval/{candidateId}]}: getFamilyApproval(long)
+	{PUT [/HRExecutive/updateExecutive/{id}]}: updateHRExecutive(HRExecutive,Integer)
+	{GET [/HRExecutive/getExecutveById/{id}]}: getExecutiveById(int)
+	{DELETE [/HRExecutive/deleteExecutive/{id}]}: deleteHrExecutive(Integer)
+	{POST [/HRExecutive/personalApproval/{candidateId}]}: personalApproval(HrExecutivePersonalApprovalDto,long)
+	{GET [/HRExecutive/getAllExecutive/{inReview}/{hrManagerRejected}]}: getAllExecutive(CandidatesStatus,CandidatesStatus)
+	{POST [/HRExecutive/familyApproval/{candidateId}]}: familyApproval(HrExecutiveFamilyApprovalDto,long)
+	{GET [/HRExecutive/getWorkApproval/{candidateId}]}: getWorkApproval(long)
+	{GET [/HRExecutive/get/bgv/{candidateId}]}: getBgv(long)
+	{POST [/HRExecutive/educationApproval/{candidateId}]}: educationApproval(HrExecutiveEducationApprovalDto,long)
+	{POST [/HRExecutive/workApproval/{candidateId}]}: workApproval(HrExecutiveWorkApprovalDto,long)
+	{POST [/HRExecutive/post/bgv/{candidateId}]}: postBgv(BackgroundVerification,long)
+	{GET [/HRExecutive/get/bgvApproval/{candidateId}]}: getBgvApproval(long)
+	{POST [/HRExecutive/agreementApproval/{candidateId}]}: agreementApproval(HrExecutiveAgreementApprovalDto,long)
+	{POST [/HRExecutive/submit/{candiateId}]}: submitHrExecutive(long)
+	{POST [/HRExecutive/reject/{candiateId}]}: rejectHrExecutive(long)
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.HRManagerController:
+	{GET [/HRManager/ctc/{candidateId}], produces [application/json]}: check(long)
+	{GET [/HRManager/getPersonalApproval/{candidateId}]}: getPersonalApproval(long)
+	{GET [/HRManager/getRelease/{candidateId}]}: getReleaseAppointmentLetter(long)
+	{GET [/HRManager/getAppointmentLetterInfo/{candidateId}]}: getAppointmentLetter(long)
+	{POST [/HRManager/Create/{candidateId}]}: createAppointmentLetter(CreateAppointmentLetterDto,long)
+	{GET [/HRManager/getEducationApproval/{candidateId}]}: getEducationApproval(long)
+	{POST [/HRManager/release/{candidateId}]}: releaseAppointmentLetter(long,CreateAppointmentLetterDto,Model)
+	{GET [/HRManager/Add/{status}]}: addCandidatesInHRManager(CandidatesStatus)
+	{GET [/HRManager/getAgreementApproval/{candidateId}]}: getAgreementApproval(long)
+	{GET [/HRManager/get/{candidateId}]}: getByCandidateId(long)
+	{GET [/HRManager/getFamilyApproval/{candidateId}]}: getFamilyApproval(long)
+	{POST [/HRManager/personalApproval/{candidateId}]}: personalApproval(HrManagerPersonalApprovalDto,long)
+	{POST [/HRManager/familyApproval/{candidateId}]}: familyApproval(HrManagerFamilyApprovalDto,long)
+	{GET [/HRManager/getWorkApproval/{candidateId}]}: getWorkApproval(long)
+	{POST [/HRManager/educationApproval/{candidateId}]}: educationApproval(HrManagerEducationApprovalDto,long)
+	{POST [/HRManager/workApproval/{candidateId}]}: workApproval(HrManagerWorkApprovalDto,long)
+	{GET [/HRManager/getBgvApproval/{candidateId}]}: getBgvApproval(long)
+	{POST [/HRManager/agreementApproval/{candidateId}]}: agreementApproval(HrManagerAgreementApprovalDto,long)
+	{GET [/HRManager/getAll/{status}]}: getAllCandidates(CandidatesStatus)
+	{POST [/HRManager/reject/{candidateId}]}: rejectHrManager(long)
+	{POST [/HRManager/Edit/AppointmentLetterInfo/{candidateId}]}: editAppointment(EmployeeGenerateDto,long)
+	{POST [/HRManager/BgvApproval/{candidateId}]}: bgvApproval(HrManagerBackgroundVerificationDto,long)
+	{PUT [/HRManager/updateManager/{id}]}: updateHRManager(HRManager,Integer)
+	{DELETE [/HRManager/deleteManager/{id}]}: deleteHRManager(Integer)
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.HRMController:
+	
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.JVMController:
+	{DELETE [/general/jvm/delete/{id}]}: deleteJvm(Integer)
+	{GET [/general/jvm/get]}: allJvm()
+	{PUT [/general/jvm/update/{id}]}: addJvm(JVM,Integer)
+	{POST [/general/jvm/add]}: addJvm(JVM)
+	{GET [/general/jvm/get/{id}]}: getJvm(Integer)
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.NewJobsController:
+	{GET [/general/newjobs/get/{id}]}: getNewJob(Integer)
+	{DELETE [/general/newjobs/delete/{id}]}: deleteNewJob(Integer)
+	{PUT [/general/newjobs/update/{id}]}: addNewJob(NewJobs,Integer)
+	{POST [/general/newjobs/add]}: addNewJob(NewJobs)
+	{GET [/general/newjobs/get]}: allNewJob()
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.OnboardingController:
+	{POST [/Onboarding/authenticate]}: authenticate(AuthenticateUserDto)
+	{POST [/Onboarding/experience-status/{candidateId}]}: updateFresherStatus(ExperiencedDto,long)
+	{GET [/Onboarding/status/{candidateId}]}: getStatus(long)
+	{POST [/Onboarding/post/import]}: addOnboarding(List)
+	{POST [/Onboarding/post]}: addOnboarding(Onboarding)
+	{POST [/Onboarding/verify-otp/{candidateId}]}: verifyOtp(VerifyOtpDto,long)
+	{POST [/Onboarding/send-otp-e/{candidateId}]}: sendOtpToMail(long)
+	{POST [/Onboarding/add-password/{candidateId}]}: addPassword(PasswordDto,long)
+	{GET [/Onboarding/sms/{candidateId}]}: sendSmsToCandidate(long)
+	{POST [/Onboarding/send-link/{candidateId}]}: sendLink(long)
+	{POST [/Onboarding/send-link-e/{candidateId}]}: sendMail(long)
+	{GET [/Onboarding/get]}: getAllOnboarding()
+	{POST [/Onboarding/send-otp-m/{candidateId}]}: sendOtp(long)
+	{GET [/Onboarding/get/{candidateId}]}: getOnboarding(long)
+	{POST [/Onboarding/update/{candidateId}]}: getOnboarding(OnboardingEditDto,long)
+	{DELETE [/Onboarding/delete/{id}]}: deleteOnboarding(Integer)
+	{GET [/Onboarding/departments]}: getDepartments()
+	{GET [/Onboarding/subDepartments/{department}]}: getSubDepartments(Departments)
+	{GET [/Onboarding/employee/{employeeId}]}: getEmployee(String)
+	{GET [/Onboarding/detail/{candidateId}]}: getDetails(long)
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.PersonalController:
+	{GET [/Personal/get/status/{candidateId}]}: getStatusByCandidateId(long)
+	{GET [/Personal/get/{candidateId}]}: getPersonalDetailsByCandidateId(long)
+	{POST [/Personal/add/{candidateId}]}: addPersonal(Personal,long)
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.PersonalDetailsController:
+	{POST [/PersonalDetails/add]}: addPersonalDetails(PersonalDetails)
+	{GET [/PersonalDetails/bloodGroup]}: getBloodGroup()
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.PoliciesController:
+	{GET [/general/policies/get]}: allPolicies()
+	{GET [/general/policies/get/{id}]}: getPolicies(Integer)
+	{DELETE [/general/policies/delete/{id}]}: deletePolicies(Integer)
+	{PUT [/general/policies/update/{id}]}: addPolicies(Policies,Integer)
+	{POST [/general/policies/add]}: addPolicies(Policies)
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.ProfessionalController:
+	{PUT [/professional/reporting_manager/{employeeId}]}: add(ReportingManagerDto,String)
+	{GET [/professional/get_reporting_manager/{employeeId}]}: get(String)
+	{PUT [/professional/user/resignation/edit/{employeeId}]}: addUserResignationInfo(UResignationEditDto,String)
+	{GET [/professional/workHistory/{employeeId}]}: getWorkHistory(String)
+	{GET [/professional/basicInfo/get/{employeeId}]}: getBasicInfo(String)
+	{PUT [/professional/resignation/edit/{employeeId}]}: addResignationInfo(MResignationEditDto,String)
+	{GET [/professional/resignation/get/{employeeId}]}: getResignationInfo(String)
+	{GET [/professional/directReports/{employeeId}]}: getDirectReoprts(String)
+	{PUT [/professional/basicInfo/add/{employeeId}]}: editBasicInfo(BasicInfoDto,String)
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.ProfileController:
+	{GET [/Profile/getAll]}: getPendingOnboarding()
+	{PUT [/Profile/update/status/{candidateId}]}: updatingCandidatesStatus(long)
+	{POST [/Profile/post]}: postProfile(Profile)
+	{GET [/Profile/get/{candidateId}]}: getOnboarding(long)
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.RegisterUserController:
+	{POST [/RegisterUser/Authenticate]}: authenticateUser(RegisterUserEntity)
+	{POST [/RegisterUser/Register]}: registerUser(RegisterUserEntity)
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.RegularizationController:
+	{DELETE [/attendance/regularization/delete/{id}]}: deleteRegularization(Integer)
+	{GET [/attendance/regularization/get]}: getAllRegularization()
+	{GET [/attendance/regularization/get/{id}]}: getRegularization(Integer)
+	{PUT [/attendance/regularization/edit/{id}]}: editRegularization(Regularization,Integer)
+	{POST [/attendance/regularization/post]}: addRegularization(Regularization)
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.SocialDetailsController:
+	{GET [/SocialDetails/get/{id}]}: getSocialServiceById(Integer)
+	{POST [/SocialDetails/add]}: addSocialDetails(SocialDetails)
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.StructureController:
+	{GET [/Structure/getEmployeeByDepartment/{department}]}: findEmployee(Departments)
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.SummaryController:
+	{GET [/Summary/probation_period_list]}: getProbationPeriodList()
+	{GET [/Summary/work_location_list]}: getWorkLocationList()
+	{POST [/Summary/employeeStatus/{employeeId}]}: changeEmployeeStatus(String,EmployeeGenerateDto)
+	{GET [/Summary/getSummaryByCandidateId/{candidateId}]}: getSummaryByCandidateId(long)
+	{GET [/Summary/get/employeeStatusList]}: getEmployeeStatusList()
+	{GET [/Summary/getAll]}: getAllSummary()
+	{POST [/Summary/import]}: createSummary(List)
+	{GET [/Summary/import/listOfEmployee]}: getListOfEmployees(String)
+	{POST [/Summary/workHistory/add/{employeeId}]}: addWorkHistory(WorkHistoryDto,String)
+	{POST [/Summary/workInfo/add/{employeeId}]}: addWorkInfo(WorkInfoDto,String)
+	{GET [/Summary/workInfo/get/{employeeId}]}: getWorkInfo(String)
+	{POST [/Summary/setManager/{employeeId}]}: setManager(SetManagerDto,String)
+	{GET [/Summary/getPersonalInfo/{employeeId}]}: getPersonalInfo(String)
+	{GET [/Summary/department]}: getAllDepartments()
+	{GET [/Summary/getAddressInfo/{employeeId}]}: getAddressInfo(String)
+	{GET [/Summary/getContactInfo/{employeeId}]}: getContactInfo(String)
+	{GET [/Summary/manager_type_list]}: getManagerTypeList()
+	{GET [/Summary/designation_list]}: getDesignationList()
+	{GET [/Summary/subdepartment/{department}]}: getSubdepartments(String)
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.TeamDirectoryController:
+	{POST [/Team/addDirectory]}: createTeamDirectory(TeamDirectory)
+	{DELETE [/Team/deleteDirectory/{id}]}: deleteTeamDirectory(Integer)
+	{GET [/Team/getAllDirectory]}: getAllTeamDirectory()
+	{PUT [/Team/updateDirectory/{id}]}: updateTeamDirectory(TeamDirectory,Integer)
+	{GET [/Team/getDirectoryById/{id}]}: getDirectoryById(int)
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.TestController:
+	{GET [/testWorkStatus]}: testWorkStatus()
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	c.h.c.WorkExperienceController:
+	{GET [/work/get/status/{candidateId}]}: getWorkStatusByCandidateId(long)
+	{GET [/work/getWork/{id}]}: getWorkById(Integer)
+	{POST [/work/AddWork/{candidateId}]}: createWork(Work,long)
+	{GET [/work/getAll/{candidateId}]}: getAllWork(long)
+	{PUT [/work/EditWork/{id}]}: updateWork(Work,Integer)
+	{DELETE [/work/DeleteWork/{id}]}: deleteWork(Integer)
+	{GET [/work/getDocument/{id}]}: getDocument(Integer)
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 
+	o.s.b.a.w.s.e.BasicErrorController:
+	{ [/error]}: error(HttpServletRequest)
+	{ [/error], produces [text/html]}: errorHtml(HttpServletRequest,HttpServletResponse)
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 'beanNameHandlerMapping' {}
+2024-03-19 20:29:08 DEBUG _.s.w.s.HandlerMapping.Mappings - 'resourceHandlerMapping' {/webjars/**=ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]], /**=ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]}
+2024-03-19 20:29:08 INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8282"]
+2024-03-19 20:29:08 INFO  com.hrm.HrmWebApi2Application - Started HrmWebApi2Application in 18.513 seconds (process running for 21.695)
+2024-03-19 21:22:45 INFO  o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8282"]
+2024-03-19 21:22:45 INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2024-03-19 21:22:45 INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8282"]
+2024-03-19 21:22:45 INFO  o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8282"]

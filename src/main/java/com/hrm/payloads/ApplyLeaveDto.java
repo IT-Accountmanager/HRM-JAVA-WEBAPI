@@ -9,8 +9,8 @@ import com.hrm.helper.EnumCollection.LeaveType;
 public class ApplyLeaveDto {
 	
 	private LeaveType leaveType;
-	private LocalDate startDate;
-	private LocalDate endDate;
+	private LocalDate leaveStartDate;
+	private LocalDate leaveEndDate;
 	private Half half1;
 	private Half half2;
 //	private AttendanceStatus attendanceStatus = AttendanceStatus.Anomaly;
@@ -24,17 +24,17 @@ public class ApplyLeaveDto {
 	public void setLeaveType(LeaveType leaveType) {
 		this.leaveType = leaveType;
 	}
-	public LocalDate getStartDate() {
-		return startDate;
+	public LocalDate getLeaveStartDate() {
+		return leaveStartDate;
 	}
-	public void setStartDate(LocalDate startDate) {
-		this.startDate = startDate;
+	public void setLeaveStartDate(LocalDate leaveStartDate) {
+		this.leaveStartDate = leaveStartDate;
 	}
-	public LocalDate getEndDate() {
-		return endDate;
+	public LocalDate getLeaveEndDate() {
+		return leaveEndDate;
 	}
-	public void setEndDate(LocalDate endDate) {
-		this.endDate = endDate;
+	public void setLeaveEndDate(LocalDate leaveEndDate) {
+		this.leaveEndDate = leaveEndDate;
 	}
 	public Half getHalf1() {
 		return half1;

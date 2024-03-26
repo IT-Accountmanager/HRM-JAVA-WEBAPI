@@ -24,6 +24,7 @@ import com.hrm.payloads.BillableHoursDto;
 import com.hrm.payloads.ManagerAttendanceViewDto;
 import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.UserAttendanceDto;
+import com.hrm.payloads.managerAttendanceView;
 import com.hrm.services.IAttendanceService;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -103,34 +104,39 @@ public class AttendanceController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
-	@PostMapping("/addLeave/{employeeId}")
-	public ResponseEntity<String> addLeave(@RequestBody ApplyLeaveDto applyLeaveDto, @PathVariable String employeeId) {
-		String result = attendanceService.addLeave(applyLeaveDto, employeeId);
-		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
+//	@PostMapping("/addLeave/{employeeId}")
+//	public ResponseEntity<String> addLeave(@RequestBody ApplyLeaveDto applyLeaveDto, @PathVariable String employeeId) {
+//		String result = attendanceService.addLeave(applyLeaveDto, employeeId);
+//		return new ResponseEntity<>(result, HttpStatus.OK);
+//	}
 
 	// --------------------------GET APPLY LEAVE-------------------------
-	@GetMapping("/getleave/{employeeId}")
-	public ResponseEntity<ApplyLeaveDto> getLeave(@PathVariable String employeeId) {
-		ApplyLeaveDto attendance = this.attendanceService.getLeave(employeeId);
-		return new ResponseEntity<ApplyLeaveDto>(attendance, HttpStatus.OK);
-	}
+//	@GetMapping("/getleave/{employeeId}")
+//	public ResponseEntity<ApplyLeaveDto> getLeave(@PathVariable String employeeId) {
+//		ApplyLeaveDto attendance = this.attendanceService.getLeave(employeeId);
+//		return new ResponseEntity<ApplyLeaveDto>(attendance, HttpStatus.OK);
+//	}
 
 	// --------------------------GET BILLABLE HOURS-------------------------
 
-	@GetMapping("/billablehours/{employeeId}")
-	public ResponseEntity<BillableHoursDto> getBillableHours(@PathVariable String employeeId) {
-		BillableHoursDto attendance = this.attendanceService.getBillableHours(employeeId);
+	@GetMapping("/billablehours/{employeeId}/{date}")
+	public ResponseEntity<BillableHoursDto> getBillableHours(@PathVariable String employeeId, LocalDate date) {
+		BillableHoursDto attendance = this.attendanceService.getBillableHours(employeeId, date);
 		return new ResponseEntity<BillableHoursDto>(attendance, HttpStatus.OK);
 	}
 
 	// --------------------------GET REGULARISATION HOURS-------------------------
 
-	@GetMapping("/getregularizationhours/{employeeId}")
-	public ResponseEntity<RegularizationHoursDto> getRegularizationHours(@PathVariable String employeeId) {
-		RegularizationHoursDto attendance = this.attendanceService.getRegularizationHours(employeeId);
-		return new ResponseEntity<RegularizationHoursDto>(attendance, HttpStatus.OK);
+	@GetMapping("/getregularizationhours/{employeeId}/{date}")
+	public ResponseEntity<?> getRegularizationHours(@PathVariable String employeeId, @PathVariable LocalDate date) {
+	    RegularizationHoursDto attendance = this.attendanceService.getRegularizationHours(employeeId, date);
+	    if (attendance != null) {
+	        return ResponseEntity.ok().body(attendance);
+	    } else {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Regularization Hours Record not found for employee " + employeeId + " on date " + date);
+	    }
 	}
+
 
 	@PostMapping("/getEmployeeHoursBilling")
 	public String getEmployee(@RequestBody ObjectNode req) {
@@ -140,6 +146,17 @@ public class AttendanceController {
 		String attendance = this.attendanceService.getAttendanceAsJson(managerId, month);
 		return attendance;
 	}
+	
+	
+	// --------------------------FOR PUT MAPPING (APPROVEDHRSFOR BILLING AND REMARKS)-------------------------
+	
+	@PutMapping("/editRemarks/{employeeId}")
+	public ResponseEntity<String> editManagerAttendance(@RequestBody ManagerAttendanceViewDto managerAttendanceViewDto,
+	                                                     @PathVariable String employeeId) {
+	    ManagerAttendanceViewDto editManagerAttendance = this.attendanceService.editManagerAttendance(managerAttendanceViewDto, employeeId);
+	    return new ResponseEntity<String>(HttpStatus.OK);
+	}
+
 	
 //	@PostMapping("/managerattendance/{date}")
 //	public ResponseEntity<String>addManagerAttendance ( @RequestBody ManagerAttendanceViewDto managerAttendanceViewDto, @PathVariable("date") LocalDate date) {
