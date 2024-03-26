@@ -1,0 +1,1889 @@
+2024-03-23 19:00:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:00:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:00:32 DEBUG o.s.o.j.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler - Creating new EntityManager for shared EntityManager invocation
+2024-03-23 19:00:32 DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : a1_0
+2024-03-23 19:00:32 DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.hrm.models.Attendance(90226734558500))] with identifierForTableGroup [com.hrm.models.Attendance] for NavigablePath [com.hrm.models.Attendance] 
+2024-03-23 19:00:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : org.hibernate.query.sqm.tree.expression.SqmJpaCriteriaParameterWrapper@58600aaf
+2024-03-23 19:00:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(com.hrm.models.Attendance(90226734558500).date) 
+2024-03-23 19:00:32 DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [com.hrm.models.Attendance(90226734558500)]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).appliedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).approvedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).attendanceStatus]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).date]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).employeeId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).endDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactInTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactOutTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half1]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half2]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).inTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveType]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).month]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyAppliedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyApprovedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyLossOfPayDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyPresentDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).otherHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).outTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).productionHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).projectId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationRequestHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularizedHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).remarks]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).startDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).status]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).totalHours]
+ |  \-BasicFetch [com.hrm.models.Attendance(90226734558500).workHrs]
+
+2024-03-23 19:00:32 DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (a1 : com.hrm.models.Attendance(90226734558500)) {
+          primaryTableReference : attendance as a1_0
+        }
+      }
+    }
+
+2024-03-23 19:00:32 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2024-03-23 19:00:32 DEBUG org.hibernate.orm.results - Initializer list
+2024-03-23 19:00:32 DEBUG org.hibernate.orm.results -     com.hrm.models.Attendance(90226734558500) -> EntityResultInitializer(com.hrm.models.Attendance(90226734558500))@710045819 (SingleTableEntityPersister(com.hrm.models.Attendance))
+2024-03-23 19:00:32 DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.applied_hrs_for_billing,
+        a1_0.approved_hrs_for_billing,
+        a1_0.attendance_status,
+        a1_0.date,
+        a1_0.employee_id,
+        a1_0.end_date,
+        a1_0.exact_in_time,
+        a1_0.exact_out_time,
+        a1_0.half1,
+        a1_0.half2,
+        a1_0.in_time,
+        a1_0.leave_reason,
+        a1_0.leave_type,
+        a1_0.month,
+        a1_0.monthly_applied_hours_for_billing,
+        a1_0.monthly_approved_hours_for_billing,
+        a1_0.monthly_loss_of_pay_days,
+        a1_0.monthly_present_days,
+        a1_0.other_hours,
+        a1_0.out_time,
+        a1_0.production_hours,
+        a1_0.project_id,
+        a1_0.regularisation_reason,
+        a1_0.regularisation_request_hours,
+        a1_0.regularized_hours,
+        a1_0.remarks,
+        a1_0.start_date,
+        a1_0.status,
+        a1_0.total_hours,
+        a1_0.work_hrs 
+    from
+        attendance a1_0 
+    where
+        a1_0.date=?
+2024-03-23 19:00:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:00:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:01:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:01:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:01:32 DEBUG o.s.o.j.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler - Creating new EntityManager for shared EntityManager invocation
+2024-03-23 19:01:32 DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : a1_0
+2024-03-23 19:01:32 DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.hrm.models.Attendance(90226734558500))] with identifierForTableGroup [com.hrm.models.Attendance] for NavigablePath [com.hrm.models.Attendance] 
+2024-03-23 19:01:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : org.hibernate.query.sqm.tree.expression.SqmJpaCriteriaParameterWrapper@6c56e887
+2024-03-23 19:01:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(com.hrm.models.Attendance(90226734558500).date) 
+2024-03-23 19:01:32 DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [com.hrm.models.Attendance(90226734558500)]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).appliedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).approvedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).attendanceStatus]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).date]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).employeeId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).endDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactInTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactOutTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half1]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half2]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).inTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveType]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).month]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyAppliedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyApprovedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyLossOfPayDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyPresentDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).otherHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).outTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).productionHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).projectId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationRequestHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularizedHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).remarks]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).startDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).status]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).totalHours]
+ |  \-BasicFetch [com.hrm.models.Attendance(90226734558500).workHrs]
+
+2024-03-23 19:01:32 DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (a1 : com.hrm.models.Attendance(90226734558500)) {
+          primaryTableReference : attendance as a1_0
+        }
+      }
+    }
+
+2024-03-23 19:01:32 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2024-03-23 19:01:32 DEBUG org.hibernate.orm.results - Initializer list
+2024-03-23 19:01:32 DEBUG org.hibernate.orm.results -     com.hrm.models.Attendance(90226734558500) -> EntityResultInitializer(com.hrm.models.Attendance(90226734558500))@1847801854 (SingleTableEntityPersister(com.hrm.models.Attendance))
+2024-03-23 19:01:32 DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.applied_hrs_for_billing,
+        a1_0.approved_hrs_for_billing,
+        a1_0.attendance_status,
+        a1_0.date,
+        a1_0.employee_id,
+        a1_0.end_date,
+        a1_0.exact_in_time,
+        a1_0.exact_out_time,
+        a1_0.half1,
+        a1_0.half2,
+        a1_0.in_time,
+        a1_0.leave_reason,
+        a1_0.leave_type,
+        a1_0.month,
+        a1_0.monthly_applied_hours_for_billing,
+        a1_0.monthly_approved_hours_for_billing,
+        a1_0.monthly_loss_of_pay_days,
+        a1_0.monthly_present_days,
+        a1_0.other_hours,
+        a1_0.out_time,
+        a1_0.production_hours,
+        a1_0.project_id,
+        a1_0.regularisation_reason,
+        a1_0.regularisation_request_hours,
+        a1_0.regularized_hours,
+        a1_0.remarks,
+        a1_0.start_date,
+        a1_0.status,
+        a1_0.total_hours,
+        a1_0.work_hrs 
+    from
+        attendance a1_0 
+    where
+        a1_0.date=?
+2024-03-23 19:01:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:01:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:02:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:02:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:02:32 DEBUG o.s.o.j.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler - Creating new EntityManager for shared EntityManager invocation
+2024-03-23 19:02:32 DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : a1_0
+2024-03-23 19:02:32 DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.hrm.models.Attendance(90226734558500))] with identifierForTableGroup [com.hrm.models.Attendance] for NavigablePath [com.hrm.models.Attendance] 
+2024-03-23 19:02:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : org.hibernate.query.sqm.tree.expression.SqmJpaCriteriaParameterWrapper@58177859
+2024-03-23 19:02:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(com.hrm.models.Attendance(90226734558500).date) 
+2024-03-23 19:02:32 DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [com.hrm.models.Attendance(90226734558500)]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).appliedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).approvedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).attendanceStatus]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).date]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).employeeId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).endDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactInTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactOutTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half1]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half2]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).inTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveType]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).month]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyAppliedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyApprovedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyLossOfPayDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyPresentDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).otherHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).outTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).productionHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).projectId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationRequestHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularizedHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).remarks]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).startDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).status]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).totalHours]
+ |  \-BasicFetch [com.hrm.models.Attendance(90226734558500).workHrs]
+
+2024-03-23 19:02:32 DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (a1 : com.hrm.models.Attendance(90226734558500)) {
+          primaryTableReference : attendance as a1_0
+        }
+      }
+    }
+
+2024-03-23 19:02:32 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2024-03-23 19:02:32 DEBUG org.hibernate.orm.results - Initializer list
+2024-03-23 19:02:32 DEBUG org.hibernate.orm.results -     com.hrm.models.Attendance(90226734558500) -> EntityResultInitializer(com.hrm.models.Attendance(90226734558500))@1170815344 (SingleTableEntityPersister(com.hrm.models.Attendance))
+2024-03-23 19:02:32 DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.applied_hrs_for_billing,
+        a1_0.approved_hrs_for_billing,
+        a1_0.attendance_status,
+        a1_0.date,
+        a1_0.employee_id,
+        a1_0.end_date,
+        a1_0.exact_in_time,
+        a1_0.exact_out_time,
+        a1_0.half1,
+        a1_0.half2,
+        a1_0.in_time,
+        a1_0.leave_reason,
+        a1_0.leave_type,
+        a1_0.month,
+        a1_0.monthly_applied_hours_for_billing,
+        a1_0.monthly_approved_hours_for_billing,
+        a1_0.monthly_loss_of_pay_days,
+        a1_0.monthly_present_days,
+        a1_0.other_hours,
+        a1_0.out_time,
+        a1_0.production_hours,
+        a1_0.project_id,
+        a1_0.regularisation_reason,
+        a1_0.regularisation_request_hours,
+        a1_0.regularized_hours,
+        a1_0.remarks,
+        a1_0.start_date,
+        a1_0.status,
+        a1_0.total_hours,
+        a1_0.work_hrs 
+    from
+        attendance a1_0 
+    where
+        a1_0.date=?
+2024-03-23 19:02:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:02:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:03:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:03:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:03:32 DEBUG o.s.o.j.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler - Creating new EntityManager for shared EntityManager invocation
+2024-03-23 19:03:32 DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : a1_0
+2024-03-23 19:03:32 DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.hrm.models.Attendance(90226734558500))] with identifierForTableGroup [com.hrm.models.Attendance] for NavigablePath [com.hrm.models.Attendance] 
+2024-03-23 19:03:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : org.hibernate.query.sqm.tree.expression.SqmJpaCriteriaParameterWrapper@4eb4515
+2024-03-23 19:03:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(com.hrm.models.Attendance(90226734558500).date) 
+2024-03-23 19:03:32 DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [com.hrm.models.Attendance(90226734558500)]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).appliedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).approvedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).attendanceStatus]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).date]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).employeeId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).endDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactInTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactOutTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half1]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half2]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).inTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveType]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).month]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyAppliedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyApprovedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyLossOfPayDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyPresentDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).otherHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).outTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).productionHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).projectId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationRequestHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularizedHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).remarks]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).startDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).status]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).totalHours]
+ |  \-BasicFetch [com.hrm.models.Attendance(90226734558500).workHrs]
+
+2024-03-23 19:03:32 DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (a1 : com.hrm.models.Attendance(90226734558500)) {
+          primaryTableReference : attendance as a1_0
+        }
+      }
+    }
+
+2024-03-23 19:03:32 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2024-03-23 19:03:32 DEBUG org.hibernate.orm.results - Initializer list
+2024-03-23 19:03:32 DEBUG org.hibernate.orm.results -     com.hrm.models.Attendance(90226734558500) -> EntityResultInitializer(com.hrm.models.Attendance(90226734558500))@1886201516 (SingleTableEntityPersister(com.hrm.models.Attendance))
+2024-03-23 19:03:32 DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.applied_hrs_for_billing,
+        a1_0.approved_hrs_for_billing,
+        a1_0.attendance_status,
+        a1_0.date,
+        a1_0.employee_id,
+        a1_0.end_date,
+        a1_0.exact_in_time,
+        a1_0.exact_out_time,
+        a1_0.half1,
+        a1_0.half2,
+        a1_0.in_time,
+        a1_0.leave_reason,
+        a1_0.leave_type,
+        a1_0.month,
+        a1_0.monthly_applied_hours_for_billing,
+        a1_0.monthly_approved_hours_for_billing,
+        a1_0.monthly_loss_of_pay_days,
+        a1_0.monthly_present_days,
+        a1_0.other_hours,
+        a1_0.out_time,
+        a1_0.production_hours,
+        a1_0.project_id,
+        a1_0.regularisation_reason,
+        a1_0.regularisation_request_hours,
+        a1_0.regularized_hours,
+        a1_0.remarks,
+        a1_0.start_date,
+        a1_0.status,
+        a1_0.total_hours,
+        a1_0.work_hrs 
+    from
+        attendance a1_0 
+    where
+        a1_0.date=?
+2024-03-23 19:03:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:03:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:04:09 DEBUG o.s.web.servlet.DispatcherServlet - GET "/Summary/import/listOfEmployee", parameters={}
+2024-03-23 19:04:09 DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.hrm.controllers.SummaryController#getListOfEmployees(String)
+2024-03-23 19:04:09 DEBUG o.s.o.j.s.OpenEntityManagerInViewInterceptor - Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2024-03-23 19:04:09 DEBUG o.s.orm.jpa.JpaTransactionManager - Found thread-bound EntityManager [SessionImpl(1671484469<open>)] for JPA transaction
+2024-03-23 19:04:09 DEBUG o.s.orm.jpa.JpaTransactionManager - Creating new transaction with name [org.springframework.data.jpa.repository.support.SimpleJpaRepository.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2024-03-23 19:04:09 DEBUG o.s.jdbc.datasource.DataSourceUtils - Setting JDBC Connection [HikariProxyConnection@955109964 wrapping com.mysql.cj.jdbc.ConnectionImpl@5a205ee5] read-only
+2024-03-23 19:04:09 DEBUG o.h.e.t.internal.TransactionImpl - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
+2024-03-23 19:04:09 DEBUG o.h.e.t.internal.TransactionImpl - begin
+2024-03-23 19:04:09 DEBUG o.s.orm.jpa.JpaTransactionManager - Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@3397b43]
+2024-03-23 19:04:09 DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : e1_0
+2024-03-23 19:04:09 DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.hrm.models.Employee(90809945702000))] with identifierForTableGroup [com.hrm.models.Employee] for NavigablePath [com.hrm.models.Employee] 
+2024-03-23 19:04:09 DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [com.hrm.models.Employee(90809945702000)]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).appointmentLetter]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).assignTo]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).authorisedSignature]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).base64Data]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).bondBreakAmount]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).candidateId]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).categoryControl]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).contactNumber]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).ctc]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).currentCtc]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).dateOfJoining]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).dateOfReleasing]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).department]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).designation]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).emailId]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).employeeCategory]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).employeeId]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).employeeStatus]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).employeeType]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).imported]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).jobTitle]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).joinedCtc]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).lastWorkingDay]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).manager]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).managerFrom]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).managerTo]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).managerType]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).name]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).nextApprisalQuater]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).noticePeriod]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).numberOfWorkingDays]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).previouDepartment]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).previouDesignation]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).previouWorkFrom]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).previouWorkUpto]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).probationPeriod]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).relevantExperience]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).resignationDate]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).resignationStatus]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).serviceCommitment]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).sign]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).subDepartment]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).totalExperience]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).uanNumber]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).workExperience]
+ |  +-BasicFetch [com.hrm.models.Employee(90809945702000).workLocation]
+ |  \-BasicFetch [com.hrm.models.Employee(90809945702000).yearOfPassout]
+
+2024-03-23 19:04:09 DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (e1 : com.hrm.models.Employee(90809945702000)) {
+          primaryTableReference : employee as e1_0
+        }
+      }
+    }
+
+2024-03-23 19:04:09 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2024-03-23 19:04:09 DEBUG org.hibernate.orm.results - Initializer list
+2024-03-23 19:04:09 DEBUG org.hibernate.orm.results -     com.hrm.models.Employee(90809945702000) -> EntityResultInitializer(com.hrm.models.Employee(90809945702000))@1334176503 (SingleTableEntityPersister(com.hrm.models.Employee))
+2024-03-23 19:04:09 DEBUG org.hibernate.SQL - 
+    select
+        e1_0.employee_sn,
+        e1_0.appointment_letter,
+        e1_0.assign_to,
+        e1_0.authorised_signature,
+        e1_0.base64data,
+        e1_0.bond_break_amount,
+        e1_0.candidate_id,
+        e1_0.category_control,
+        e1_0.contact_number,
+        e1_0.ctc,
+        e1_0.current_ctc,
+        e1_0.date_of_joining,
+        e1_0.date_of_releasing,
+        e1_0.department,
+        e1_0.designation,
+        e1_0.email_id,
+        e1_0.employee_category,
+        e1_0.employee_id,
+        e1_0.employee_status,
+        e1_0.employee_type,
+        e1_0.imported,
+        e1_0.job_title,
+        e1_0.joined_ctc,
+        e1_0.last_working_day,
+        e1_0.manager,
+        e1_0.manager_from,
+        e1_0.manager_to,
+        e1_0.manager_type,
+        e1_0.name,
+        e1_0.next_apprisal_quater,
+        e1_0.notice_period,
+        e1_0.number_of_working_days,
+        e1_0.previou_department,
+        e1_0.previou_designation,
+        e1_0.previou_work_from,
+        e1_0.previou_work_upto,
+        e1_0.probation_period,
+        e1_0.relevant_experience,
+        e1_0.resignation_date,
+        e1_0.resignation_status,
+        e1_0.service_commitment,
+        e1_0.sign,
+        e1_0.sub_department,
+        e1_0.total_experience,
+        e1_0.uan_number,
+        e1_0.work_experience,
+        e1_0.work_location,
+        e1_0.year_of_passout 
+    from
+        employee e1_0
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [1]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (com.hrm.models.Employee(90809945702000)): 1
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [com.hrm.models.Employee(90809945702000)#1] : 310950525
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [200000]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [1]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [7] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [8] - [8847818836]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [9] - [670000.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [10] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [11] - [2022-05-21]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [12] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [13] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [14] - [3]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [15] - [it.accountmanager@envisionis-group.com]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [16] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [17] - [EIS00001]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [18] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [19] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [20] - [false]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [21] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [22] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [23] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [24] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [25] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [26] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [27] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [28] - [Priti  Pragyan  Barik]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [29] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [30] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [31] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [32] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [33] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [34] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [35] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [36] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [37] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [38] - [2024-03-14]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [39] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [40] - [2.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [41] - [[B@72ba2889]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [42] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [43] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [44] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [45] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [46] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [47] - [null]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : com.hrm.models.Employee(90809945702000)#1
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@19648f25
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [2]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (com.hrm.models.Employee(90809945702000)): 2
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [com.hrm.models.Employee(90809945702000)#2] : 1124889771
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [200000]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [4]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [7] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [8] - [6300244730]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [9] - [240000.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [10] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [11] - [2023-05-29]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [12] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [13] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [14] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [15] - [rcreddy2222@gmail.com]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [16] - [1]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [17] - [EIS00002]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [18] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [19] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [20] - [false]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [21] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [22] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [23] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [24] - [EIS00001]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [25] - [2024-03-18]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [26] - [2024-03-31]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [27] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [28] - [Ramachandra  Reddy Dhanireddy]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [29] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [30] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [31] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [32] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [33] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [34] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [35] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [36] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [37] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [38] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [39] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [40] - [2.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [41] - [[B@148075e5]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [42] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [43] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [44] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [45] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [46] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [47] - [null]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : com.hrm.models.Employee(90809945702000)#2
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@19648f25
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [3]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (com.hrm.models.Employee(90809945702000)): 3
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [com.hrm.models.Employee(90809945702000)#3] : 937294236
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [200000]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [5]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [7] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [8] - [8688037081]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [9] - [240000.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [10] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [11] - [2023-08-28]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [12] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [13] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [14] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [15] - [naresh.b@envisionis.in]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [16] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [17] - [EIS00003]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [18] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [19] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [20] - [false]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [21] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [22] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [23] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [24] - [EIS00001]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [25] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [26] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [27] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [28] - [Naresh  Bojja]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [29] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [30] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [31] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [32] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [33] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [34] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [35] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [36] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [37] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [38] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [39] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [40] - [2.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [41] - [[B@a7d45e5]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [42] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [43] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [44] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [45] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [46] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [47] - [null]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : com.hrm.models.Employee(90809945702000)#3
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@19648f25
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [5]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (com.hrm.models.Employee(90809945702000)): 5
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [com.hrm.models.Employee(90809945702000)#5] : 1703262695
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [200000]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [3]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [7] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [8] - [9014680238]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [9] - [240000.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [10] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [11] - [2023-08-28]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [12] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [13] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [14] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [15] - [naveen.d@envisionis.in]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [16] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [17] - [EIS00005]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [18] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [19] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [20] - [false]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [21] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [22] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [23] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [24] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [25] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [26] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [27] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [28] - [Naveen  Danapaneni]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [29] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [30] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [31] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [32] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [33] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [34] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [35] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [36] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [37] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [38] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [39] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [40] - [2.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [41] - [[B@5b79adf]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [42] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [43] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [44] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [45] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [46] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [47] - [null]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : com.hrm.models.Employee(90809945702000)#5
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@19648f25
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [7]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (com.hrm.models.Employee(90809945702000)): 7
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [com.hrm.models.Employee(90809945702000)#7] : 163991293
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [[B@51644be0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [200000]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [2]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [7] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [8] - [8970584143]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [9] - [240000.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [10] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [11] - [2023-08-28]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [12] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [13] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [14] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [15] - [akhil.t@envisionis.in]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [16] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [17] - [EIS00006]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [18] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [19] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [20] - [false]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [21] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [22] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [23] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [24] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [25] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [26] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [27] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [28] - [Anand  Kumar Desai]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [29] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [30] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [31] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [32] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [33] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [34] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [35] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [36] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [37] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [38] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [39] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [40] - [2.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [41] - [[B@19e69aaa]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [42] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [43] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [44] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [45] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [46] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [47] - [null]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : com.hrm.models.Employee(90809945702000)#7
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@19648f25
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [9]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (com.hrm.models.Employee(90809945702000)): 9
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [com.hrm.models.Employee(90809945702000)#9] : 549362219
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [[B@1bb48967]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [243424]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [9]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [7] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [8] - [6636277277]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [9] - [2525260.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [10] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [11] - [2024-03-31]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [12] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [13] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [14] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [15] - [akhilteli55@gmail.com]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [16] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [17] - [EIS00008]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [18] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [19] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [20] - [false]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [21] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [22] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [23] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [24] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [25] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [26] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [27] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [28] - [ravi  sharma]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [29] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [30] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [31] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [32] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [33] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [34] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [35] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [36] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [37] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [38] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [39] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [40] - [2.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [41] - [[B@687ceaba]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [42] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [43] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [44] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [45] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [46] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [47] - [null]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : com.hrm.models.Employee(90809945702000)#9
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@19648f25
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [10]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (com.hrm.models.Employee(90809945702000)): 10
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [com.hrm.models.Employee(90809945702000)#10] : 1164058325
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [[B@11d9bb90]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [200000]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [10]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [7] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [8] - [9390773842]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [9] - [280000.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [10] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [11] - [2022-12-19]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [12] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [13] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [14] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [15] - [sivamechboy@gmail.com]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [16] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [17] - [EIS00010]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [18] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [19] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [20] - [false]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [21] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [22] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [23] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [24] - [Priti  Pragyan  Barik]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [25] - [2024-03-21]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [26] - [2024-03-31]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [27] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [28] - [Siva   Nagaraju ]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [29] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [30] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [31] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [32] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [33] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [34] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [35] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [36] - [2]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [37] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [38] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [39] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [40] - [2.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [41] - [[B@2e19e77d]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [42] - [2]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [43] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [44] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [45] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [46] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [47] - [null]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : com.hrm.models.Employee(90809945702000)#10
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@19648f25
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [11]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (com.hrm.models.Employee(90809945702000)): 11
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [com.hrm.models.Employee(90809945702000)#11] : 566223166
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [12]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [7] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [8] - [9676140884]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [9] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [10] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [11] - [2021-05-10]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [12] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [13] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [14] - [2]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [15] - [yalla.vardhan@gmail.com]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [16] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [17] - [EIS00011]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [18] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [19] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [20] - [true]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [21] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [22] - [670000]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [23] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [24] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [25] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [26] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [27] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [28] - [Yalla Vijay Vardhan]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [29] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [30] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [31] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [32] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [33] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [34] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [35] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [36] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [37] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [38] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [39] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [40] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [41] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [42] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [43] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [44] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [45] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [46] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [47] - [null]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : com.hrm.models.Employee(90809945702000)#11
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@19648f25
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [12]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (com.hrm.models.Employee(90809945702000)): 12
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [com.hrm.models.Employee(90809945702000)#12] : 1954465642
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [13]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [7] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [8] - [8970984143]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [9] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [10] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [11] - [2023-08-29]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [12] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [13] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [14] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [15] - [akhilteli56@gmail.com]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [16] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [17] - [EIS00012]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [18] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [19] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [20] - [true]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [21] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [22] - [240000]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [23] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [24] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [25] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [26] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [27] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [28] - [Anand  Kumar ]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [29] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [30] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [31] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [32] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [33] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [34] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [35] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [36] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [37] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [38] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [39] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [40] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [41] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [42] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [43] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [44] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [45] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [46] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [47] - [null]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : com.hrm.models.Employee(90809945702000)#12
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@19648f25
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [13]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (com.hrm.models.Employee(90809945702000)): 13
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [com.hrm.models.Employee(90809945702000)#13] : 673707854
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [14]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [7] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [8] - [8970994143]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [9] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [10] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [11] - [2023-09-29]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [12] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [13] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [14] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [15] - [akhilteli57@gmail.com]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [16] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [17] - [EIS00013]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [18] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [19] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [20] - [true]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [21] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [22] - [240000]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [23] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [24] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [25] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [26] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [27] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [28] - [Anand ]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [29] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [30] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [31] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [32] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [33] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [34] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [35] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [36] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [37] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [38] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [39] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [40] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [41] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [42] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [43] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [44] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [45] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [46] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [47] - [null]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : com.hrm.models.Employee(90809945702000)#13
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@19648f25
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [14]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (com.hrm.models.Employee(90809945702000)): 14
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [com.hrm.models.Employee(90809945702000)#14] : 1231347512
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [15]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [7] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [8] - [8970194143]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [9] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [10] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [11] - [2023-09-30]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [12] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [13] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [14] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [15] - [akhilteli58@gmail.com]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [16] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [17] - [EIS00014]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [18] - [0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [19] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [20] - [true]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [21] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [22] - [240000]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [23] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [24] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [25] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [26] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [27] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [28] - [Ankit]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [29] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [30] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [31] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [32] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [33] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [34] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [35] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [36] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [37] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [38] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [39] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [40] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [41] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [42] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [43] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [44] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [45] - [0.0]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [46] - [null]
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results - Extracted JDBC value [47] - [null]
+2024-03-23 19:04:11 DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : com.hrm.models.Employee(90809945702000)#14
+2024-03-23 19:04:11 DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@19648f25
+2024-03-23 19:04:11 DEBUG o.s.orm.jpa.JpaTransactionManager - Initiating transaction commit
+2024-03-23 19:04:11 DEBUG o.s.orm.jpa.JpaTransactionManager - Committing JPA transaction on EntityManager [SessionImpl(1671484469<open>)]
+2024-03-23 19:04:11 DEBUG o.h.e.t.internal.TransactionImpl - committing
+2024-03-23 19:04:11 DEBUG o.s.jdbc.datasource.DataSourceUtils - Resetting read-only flag of JDBC Connection [HikariProxyConnection@955109964 wrapping com.mysql.cj.jdbc.ConnectionImpl@5a205ee5]
+2024-03-23 19:04:11 DEBUG o.s.orm.jpa.JpaTransactionManager - Not closing pre-bound JPA EntityManager after transaction
+2024-03-23 19:04:11 DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-03-23 19:04:11 DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[com.hrm.payloads.EmployeesNameDto@4c19bf73, com.hrm.payloads.EmployeesNameDto@74e36e9c, com.hrm.pay (truncated)...]
+2024-03-23 19:04:11 DEBUG o.s.o.j.s.OpenEntityManagerInViewInterceptor - Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2024-03-23 19:04:11 DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-03-23 19:04:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:04:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:04:32 DEBUG o.s.o.j.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler - Creating new EntityManager for shared EntityManager invocation
+2024-03-23 19:04:32 DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : a1_0
+2024-03-23 19:04:32 DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.hrm.models.Attendance(90226734558500))] with identifierForTableGroup [com.hrm.models.Attendance] for NavigablePath [com.hrm.models.Attendance] 
+2024-03-23 19:04:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : org.hibernate.query.sqm.tree.expression.SqmJpaCriteriaParameterWrapper@7c7a396e
+2024-03-23 19:04:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(com.hrm.models.Attendance(90226734558500).date) 
+2024-03-23 19:04:32 DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [com.hrm.models.Attendance(90226734558500)]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).appliedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).approvedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).attendanceStatus]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).date]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).employeeId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).endDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactInTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactOutTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half1]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half2]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).inTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveType]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).month]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyAppliedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyApprovedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyLossOfPayDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyPresentDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).otherHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).outTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).productionHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).projectId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationRequestHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularizedHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).remarks]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).startDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).status]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).totalHours]
+ |  \-BasicFetch [com.hrm.models.Attendance(90226734558500).workHrs]
+
+2024-03-23 19:04:32 DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (a1 : com.hrm.models.Attendance(90226734558500)) {
+          primaryTableReference : attendance as a1_0
+        }
+      }
+    }
+
+2024-03-23 19:04:32 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2024-03-23 19:04:32 DEBUG org.hibernate.orm.results - Initializer list
+2024-03-23 19:04:32 DEBUG org.hibernate.orm.results -     com.hrm.models.Attendance(90226734558500) -> EntityResultInitializer(com.hrm.models.Attendance(90226734558500))@2004309023 (SingleTableEntityPersister(com.hrm.models.Attendance))
+2024-03-23 19:04:32 DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.applied_hrs_for_billing,
+        a1_0.approved_hrs_for_billing,
+        a1_0.attendance_status,
+        a1_0.date,
+        a1_0.employee_id,
+        a1_0.end_date,
+        a1_0.exact_in_time,
+        a1_0.exact_out_time,
+        a1_0.half1,
+        a1_0.half2,
+        a1_0.in_time,
+        a1_0.leave_reason,
+        a1_0.leave_type,
+        a1_0.month,
+        a1_0.monthly_applied_hours_for_billing,
+        a1_0.monthly_approved_hours_for_billing,
+        a1_0.monthly_loss_of_pay_days,
+        a1_0.monthly_present_days,
+        a1_0.other_hours,
+        a1_0.out_time,
+        a1_0.production_hours,
+        a1_0.project_id,
+        a1_0.regularisation_reason,
+        a1_0.regularisation_request_hours,
+        a1_0.regularized_hours,
+        a1_0.remarks,
+        a1_0.start_date,
+        a1_0.status,
+        a1_0.total_hours,
+        a1_0.work_hrs 
+    from
+        attendance a1_0 
+    where
+        a1_0.date=?
+2024-03-23 19:04:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:04:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:05:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:05:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:05:32 DEBUG o.s.o.j.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler - Creating new EntityManager for shared EntityManager invocation
+2024-03-23 19:05:32 DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : a1_0
+2024-03-23 19:05:32 DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.hrm.models.Attendance(90226734558500))] with identifierForTableGroup [com.hrm.models.Attendance] for NavigablePath [com.hrm.models.Attendance] 
+2024-03-23 19:05:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : org.hibernate.query.sqm.tree.expression.SqmJpaCriteriaParameterWrapper@779e0b1b
+2024-03-23 19:05:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(com.hrm.models.Attendance(90226734558500).date) 
+2024-03-23 19:05:32 DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [com.hrm.models.Attendance(90226734558500)]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).appliedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).approvedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).attendanceStatus]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).date]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).employeeId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).endDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactInTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactOutTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half1]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half2]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).inTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveType]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).month]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyAppliedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyApprovedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyLossOfPayDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyPresentDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).otherHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).outTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).productionHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).projectId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationRequestHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularizedHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).remarks]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).startDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).status]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).totalHours]
+ |  \-BasicFetch [com.hrm.models.Attendance(90226734558500).workHrs]
+
+2024-03-23 19:05:32 DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (a1 : com.hrm.models.Attendance(90226734558500)) {
+          primaryTableReference : attendance as a1_0
+        }
+      }
+    }
+
+2024-03-23 19:05:32 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2024-03-23 19:05:32 DEBUG org.hibernate.orm.results - Initializer list
+2024-03-23 19:05:32 DEBUG org.hibernate.orm.results -     com.hrm.models.Attendance(90226734558500) -> EntityResultInitializer(com.hrm.models.Attendance(90226734558500))@457885707 (SingleTableEntityPersister(com.hrm.models.Attendance))
+2024-03-23 19:05:32 DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.applied_hrs_for_billing,
+        a1_0.approved_hrs_for_billing,
+        a1_0.attendance_status,
+        a1_0.date,
+        a1_0.employee_id,
+        a1_0.end_date,
+        a1_0.exact_in_time,
+        a1_0.exact_out_time,
+        a1_0.half1,
+        a1_0.half2,
+        a1_0.in_time,
+        a1_0.leave_reason,
+        a1_0.leave_type,
+        a1_0.month,
+        a1_0.monthly_applied_hours_for_billing,
+        a1_0.monthly_approved_hours_for_billing,
+        a1_0.monthly_loss_of_pay_days,
+        a1_0.monthly_present_days,
+        a1_0.other_hours,
+        a1_0.out_time,
+        a1_0.production_hours,
+        a1_0.project_id,
+        a1_0.regularisation_reason,
+        a1_0.regularisation_request_hours,
+        a1_0.regularized_hours,
+        a1_0.remarks,
+        a1_0.start_date,
+        a1_0.status,
+        a1_0.total_hours,
+        a1_0.work_hrs 
+    from
+        attendance a1_0 
+    where
+        a1_0.date=?
+2024-03-23 19:05:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:05:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:06:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:06:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:06:32 DEBUG o.s.o.j.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler - Creating new EntityManager for shared EntityManager invocation
+2024-03-23 19:06:32 DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : a1_0
+2024-03-23 19:06:32 DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.hrm.models.Attendance(90226734558500))] with identifierForTableGroup [com.hrm.models.Attendance] for NavigablePath [com.hrm.models.Attendance] 
+2024-03-23 19:06:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : org.hibernate.query.sqm.tree.expression.SqmJpaCriteriaParameterWrapper@4626a402
+2024-03-23 19:06:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(com.hrm.models.Attendance(90226734558500).date) 
+2024-03-23 19:06:32 DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [com.hrm.models.Attendance(90226734558500)]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).appliedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).approvedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).attendanceStatus]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).date]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).employeeId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).endDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactInTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactOutTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half1]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half2]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).inTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveType]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).month]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyAppliedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyApprovedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyLossOfPayDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyPresentDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).otherHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).outTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).productionHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).projectId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationRequestHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularizedHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).remarks]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).startDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).status]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).totalHours]
+ |  \-BasicFetch [com.hrm.models.Attendance(90226734558500).workHrs]
+
+2024-03-23 19:06:32 DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (a1 : com.hrm.models.Attendance(90226734558500)) {
+          primaryTableReference : attendance as a1_0
+        }
+      }
+    }
+
+2024-03-23 19:06:32 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2024-03-23 19:06:32 DEBUG org.hibernate.orm.results - Initializer list
+2024-03-23 19:06:32 DEBUG org.hibernate.orm.results -     com.hrm.models.Attendance(90226734558500) -> EntityResultInitializer(com.hrm.models.Attendance(90226734558500))@41923208 (SingleTableEntityPersister(com.hrm.models.Attendance))
+2024-03-23 19:06:32 DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.applied_hrs_for_billing,
+        a1_0.approved_hrs_for_billing,
+        a1_0.attendance_status,
+        a1_0.date,
+        a1_0.employee_id,
+        a1_0.end_date,
+        a1_0.exact_in_time,
+        a1_0.exact_out_time,
+        a1_0.half1,
+        a1_0.half2,
+        a1_0.in_time,
+        a1_0.leave_reason,
+        a1_0.leave_type,
+        a1_0.month,
+        a1_0.monthly_applied_hours_for_billing,
+        a1_0.monthly_approved_hours_for_billing,
+        a1_0.monthly_loss_of_pay_days,
+        a1_0.monthly_present_days,
+        a1_0.other_hours,
+        a1_0.out_time,
+        a1_0.production_hours,
+        a1_0.project_id,
+        a1_0.regularisation_reason,
+        a1_0.regularisation_request_hours,
+        a1_0.regularized_hours,
+        a1_0.remarks,
+        a1_0.start_date,
+        a1_0.status,
+        a1_0.total_hours,
+        a1_0.work_hrs 
+    from
+        attendance a1_0 
+    where
+        a1_0.date=?
+2024-03-23 19:06:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:06:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:07:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:07:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:07:32 DEBUG o.s.o.j.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler - Creating new EntityManager for shared EntityManager invocation
+2024-03-23 19:07:32 DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : a1_0
+2024-03-23 19:07:32 DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.hrm.models.Attendance(90226734558500))] with identifierForTableGroup [com.hrm.models.Attendance] for NavigablePath [com.hrm.models.Attendance] 
+2024-03-23 19:07:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : org.hibernate.query.sqm.tree.expression.SqmJpaCriteriaParameterWrapper@451096cd
+2024-03-23 19:07:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(com.hrm.models.Attendance(90226734558500).date) 
+2024-03-23 19:07:32 DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [com.hrm.models.Attendance(90226734558500)]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).appliedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).approvedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).attendanceStatus]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).date]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).employeeId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).endDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactInTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactOutTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half1]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half2]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).inTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveType]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).month]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyAppliedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyApprovedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyLossOfPayDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyPresentDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).otherHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).outTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).productionHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).projectId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationRequestHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularizedHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).remarks]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).startDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).status]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).totalHours]
+ |  \-BasicFetch [com.hrm.models.Attendance(90226734558500).workHrs]
+
+2024-03-23 19:07:32 DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (a1 : com.hrm.models.Attendance(90226734558500)) {
+          primaryTableReference : attendance as a1_0
+        }
+      }
+    }
+
+2024-03-23 19:07:32 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2024-03-23 19:07:32 DEBUG org.hibernate.orm.results - Initializer list
+2024-03-23 19:07:32 DEBUG org.hibernate.orm.results -     com.hrm.models.Attendance(90226734558500) -> EntityResultInitializer(com.hrm.models.Attendance(90226734558500))@1882552362 (SingleTableEntityPersister(com.hrm.models.Attendance))
+2024-03-23 19:07:32 DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.applied_hrs_for_billing,
+        a1_0.approved_hrs_for_billing,
+        a1_0.attendance_status,
+        a1_0.date,
+        a1_0.employee_id,
+        a1_0.end_date,
+        a1_0.exact_in_time,
+        a1_0.exact_out_time,
+        a1_0.half1,
+        a1_0.half2,
+        a1_0.in_time,
+        a1_0.leave_reason,
+        a1_0.leave_type,
+        a1_0.month,
+        a1_0.monthly_applied_hours_for_billing,
+        a1_0.monthly_approved_hours_for_billing,
+        a1_0.monthly_loss_of_pay_days,
+        a1_0.monthly_present_days,
+        a1_0.other_hours,
+        a1_0.out_time,
+        a1_0.production_hours,
+        a1_0.project_id,
+        a1_0.regularisation_reason,
+        a1_0.regularisation_request_hours,
+        a1_0.regularized_hours,
+        a1_0.remarks,
+        a1_0.start_date,
+        a1_0.status,
+        a1_0.total_hours,
+        a1_0.work_hrs 
+    from
+        attendance a1_0 
+    where
+        a1_0.date=?
+2024-03-23 19:07:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:07:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:08:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:08:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:08:32 DEBUG o.s.o.j.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler - Creating new EntityManager for shared EntityManager invocation
+2024-03-23 19:08:32 DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : a1_0
+2024-03-23 19:08:32 DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.hrm.models.Attendance(90226734558500))] with identifierForTableGroup [com.hrm.models.Attendance] for NavigablePath [com.hrm.models.Attendance] 
+2024-03-23 19:08:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : org.hibernate.query.sqm.tree.expression.SqmJpaCriteriaParameterWrapper@646e4576
+2024-03-23 19:08:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(com.hrm.models.Attendance(90226734558500).date) 
+2024-03-23 19:08:32 DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [com.hrm.models.Attendance(90226734558500)]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).appliedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).approvedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).attendanceStatus]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).date]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).employeeId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).endDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactInTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactOutTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half1]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half2]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).inTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveType]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).month]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyAppliedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyApprovedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyLossOfPayDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyPresentDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).otherHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).outTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).productionHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).projectId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationRequestHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularizedHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).remarks]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).startDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).status]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).totalHours]
+ |  \-BasicFetch [com.hrm.models.Attendance(90226734558500).workHrs]
+
+2024-03-23 19:08:32 DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (a1 : com.hrm.models.Attendance(90226734558500)) {
+          primaryTableReference : attendance as a1_0
+        }
+      }
+    }
+
+2024-03-23 19:08:32 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2024-03-23 19:08:32 DEBUG org.hibernate.orm.results - Initializer list
+2024-03-23 19:08:32 DEBUG org.hibernate.orm.results -     com.hrm.models.Attendance(90226734558500) -> EntityResultInitializer(com.hrm.models.Attendance(90226734558500))@1892155274 (SingleTableEntityPersister(com.hrm.models.Attendance))
+2024-03-23 19:08:32 DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.applied_hrs_for_billing,
+        a1_0.approved_hrs_for_billing,
+        a1_0.attendance_status,
+        a1_0.date,
+        a1_0.employee_id,
+        a1_0.end_date,
+        a1_0.exact_in_time,
+        a1_0.exact_out_time,
+        a1_0.half1,
+        a1_0.half2,
+        a1_0.in_time,
+        a1_0.leave_reason,
+        a1_0.leave_type,
+        a1_0.month,
+        a1_0.monthly_applied_hours_for_billing,
+        a1_0.monthly_approved_hours_for_billing,
+        a1_0.monthly_loss_of_pay_days,
+        a1_0.monthly_present_days,
+        a1_0.other_hours,
+        a1_0.out_time,
+        a1_0.production_hours,
+        a1_0.project_id,
+        a1_0.regularisation_reason,
+        a1_0.regularisation_request_hours,
+        a1_0.regularized_hours,
+        a1_0.remarks,
+        a1_0.start_date,
+        a1_0.status,
+        a1_0.total_hours,
+        a1_0.work_hrs 
+    from
+        attendance a1_0 
+    where
+        a1_0.date=?
+2024-03-23 19:08:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:08:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:09:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:09:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:09:32 DEBUG o.s.o.j.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler - Creating new EntityManager for shared EntityManager invocation
+2024-03-23 19:09:32 DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : a1_0
+2024-03-23 19:09:32 DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.hrm.models.Attendance(90226734558500))] with identifierForTableGroup [com.hrm.models.Attendance] for NavigablePath [com.hrm.models.Attendance] 
+2024-03-23 19:09:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : org.hibernate.query.sqm.tree.expression.SqmJpaCriteriaParameterWrapper@620db312
+2024-03-23 19:09:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(com.hrm.models.Attendance(90226734558500).date) 
+2024-03-23 19:09:32 DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [com.hrm.models.Attendance(90226734558500)]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).appliedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).approvedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).attendanceStatus]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).date]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).employeeId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).endDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactInTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactOutTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half1]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half2]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).inTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveType]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).month]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyAppliedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyApprovedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyLossOfPayDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyPresentDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).otherHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).outTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).productionHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).projectId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationRequestHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularizedHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).remarks]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).startDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).status]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).totalHours]
+ |  \-BasicFetch [com.hrm.models.Attendance(90226734558500).workHrs]
+
+2024-03-23 19:09:32 DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (a1 : com.hrm.models.Attendance(90226734558500)) {
+          primaryTableReference : attendance as a1_0
+        }
+      }
+    }
+
+2024-03-23 19:09:32 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2024-03-23 19:09:32 DEBUG org.hibernate.orm.results - Initializer list
+2024-03-23 19:09:32 DEBUG org.hibernate.orm.results -     com.hrm.models.Attendance(90226734558500) -> EntityResultInitializer(com.hrm.models.Attendance(90226734558500))@1927154025 (SingleTableEntityPersister(com.hrm.models.Attendance))
+2024-03-23 19:09:32 DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.applied_hrs_for_billing,
+        a1_0.approved_hrs_for_billing,
+        a1_0.attendance_status,
+        a1_0.date,
+        a1_0.employee_id,
+        a1_0.end_date,
+        a1_0.exact_in_time,
+        a1_0.exact_out_time,
+        a1_0.half1,
+        a1_0.half2,
+        a1_0.in_time,
+        a1_0.leave_reason,
+        a1_0.leave_type,
+        a1_0.month,
+        a1_0.monthly_applied_hours_for_billing,
+        a1_0.monthly_approved_hours_for_billing,
+        a1_0.monthly_loss_of_pay_days,
+        a1_0.monthly_present_days,
+        a1_0.other_hours,
+        a1_0.out_time,
+        a1_0.production_hours,
+        a1_0.project_id,
+        a1_0.regularisation_reason,
+        a1_0.regularisation_request_hours,
+        a1_0.regularized_hours,
+        a1_0.remarks,
+        a1_0.start_date,
+        a1_0.status,
+        a1_0.total_hours,
+        a1_0.work_hrs 
+    from
+        attendance a1_0 
+    where
+        a1_0.date=?
+2024-03-23 19:09:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:09:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:10:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:10:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:10:32 DEBUG o.s.o.j.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler - Creating new EntityManager for shared EntityManager invocation
+2024-03-23 19:10:32 DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : a1_0
+2024-03-23 19:10:32 DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.hrm.models.Attendance(90226734558500))] with identifierForTableGroup [com.hrm.models.Attendance] for NavigablePath [com.hrm.models.Attendance] 
+2024-03-23 19:10:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : org.hibernate.query.sqm.tree.expression.SqmJpaCriteriaParameterWrapper@6654b1fb
+2024-03-23 19:10:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(com.hrm.models.Attendance(90226734558500).date) 
+2024-03-23 19:10:32 DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [com.hrm.models.Attendance(90226734558500)]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).appliedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).approvedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).attendanceStatus]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).date]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).employeeId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).endDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactInTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactOutTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half1]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half2]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).inTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveType]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).month]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyAppliedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyApprovedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyLossOfPayDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyPresentDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).otherHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).outTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).productionHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).projectId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationRequestHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularizedHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).remarks]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).startDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).status]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).totalHours]
+ |  \-BasicFetch [com.hrm.models.Attendance(90226734558500).workHrs]
+
+2024-03-23 19:10:32 DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (a1 : com.hrm.models.Attendance(90226734558500)) {
+          primaryTableReference : attendance as a1_0
+        }
+      }
+    }
+
+2024-03-23 19:10:32 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2024-03-23 19:10:32 DEBUG org.hibernate.orm.results - Initializer list
+2024-03-23 19:10:32 DEBUG org.hibernate.orm.results -     com.hrm.models.Attendance(90226734558500) -> EntityResultInitializer(com.hrm.models.Attendance(90226734558500))@717147724 (SingleTableEntityPersister(com.hrm.models.Attendance))
+2024-03-23 19:10:32 DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.applied_hrs_for_billing,
+        a1_0.approved_hrs_for_billing,
+        a1_0.attendance_status,
+        a1_0.date,
+        a1_0.employee_id,
+        a1_0.end_date,
+        a1_0.exact_in_time,
+        a1_0.exact_out_time,
+        a1_0.half1,
+        a1_0.half2,
+        a1_0.in_time,
+        a1_0.leave_reason,
+        a1_0.leave_type,
+        a1_0.month,
+        a1_0.monthly_applied_hours_for_billing,
+        a1_0.monthly_approved_hours_for_billing,
+        a1_0.monthly_loss_of_pay_days,
+        a1_0.monthly_present_days,
+        a1_0.other_hours,
+        a1_0.out_time,
+        a1_0.production_hours,
+        a1_0.project_id,
+        a1_0.regularisation_reason,
+        a1_0.regularisation_request_hours,
+        a1_0.regularized_hours,
+        a1_0.remarks,
+        a1_0.start_date,
+        a1_0.status,
+        a1_0.total_hours,
+        a1_0.work_hrs 
+    from
+        attendance a1_0 
+    where
+        a1_0.date=?
+2024-03-23 19:10:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:10:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:11:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:11:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:11:32 DEBUG o.s.o.j.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler - Creating new EntityManager for shared EntityManager invocation
+2024-03-23 19:11:32 DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : a1_0
+2024-03-23 19:11:32 DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.hrm.models.Attendance(90226734558500))] with identifierForTableGroup [com.hrm.models.Attendance] for NavigablePath [com.hrm.models.Attendance] 
+2024-03-23 19:11:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : org.hibernate.query.sqm.tree.expression.SqmJpaCriteriaParameterWrapper@420f75f2
+2024-03-23 19:11:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(com.hrm.models.Attendance(90226734558500).date) 
+2024-03-23 19:11:32 DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [com.hrm.models.Attendance(90226734558500)]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).appliedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).approvedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).attendanceStatus]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).date]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).employeeId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).endDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactInTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactOutTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half1]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half2]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).inTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveType]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).month]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyAppliedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyApprovedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyLossOfPayDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyPresentDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).otherHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).outTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).productionHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).projectId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationRequestHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularizedHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).remarks]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).startDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).status]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).totalHours]
+ |  \-BasicFetch [com.hrm.models.Attendance(90226734558500).workHrs]
+
+2024-03-23 19:11:32 DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (a1 : com.hrm.models.Attendance(90226734558500)) {
+          primaryTableReference : attendance as a1_0
+        }
+      }
+    }
+
+2024-03-23 19:11:32 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2024-03-23 19:11:32 DEBUG org.hibernate.orm.results - Initializer list
+2024-03-23 19:11:32 DEBUG org.hibernate.orm.results -     com.hrm.models.Attendance(90226734558500) -> EntityResultInitializer(com.hrm.models.Attendance(90226734558500))@1596630392 (SingleTableEntityPersister(com.hrm.models.Attendance))
+2024-03-23 19:11:32 DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.applied_hrs_for_billing,
+        a1_0.approved_hrs_for_billing,
+        a1_0.attendance_status,
+        a1_0.date,
+        a1_0.employee_id,
+        a1_0.end_date,
+        a1_0.exact_in_time,
+        a1_0.exact_out_time,
+        a1_0.half1,
+        a1_0.half2,
+        a1_0.in_time,
+        a1_0.leave_reason,
+        a1_0.leave_type,
+        a1_0.month,
+        a1_0.monthly_applied_hours_for_billing,
+        a1_0.monthly_approved_hours_for_billing,
+        a1_0.monthly_loss_of_pay_days,
+        a1_0.monthly_present_days,
+        a1_0.other_hours,
+        a1_0.out_time,
+        a1_0.production_hours,
+        a1_0.project_id,
+        a1_0.regularisation_reason,
+        a1_0.regularisation_request_hours,
+        a1_0.regularized_hours,
+        a1_0.remarks,
+        a1_0.start_date,
+        a1_0.status,
+        a1_0.total_hours,
+        a1_0.work_hrs 
+    from
+        attendance a1_0 
+    where
+        a1_0.date=?
+2024-03-23 19:11:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:11:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:12:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:12:17 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
+2024-03-23 19:12:32 DEBUG o.s.o.j.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler - Creating new EntityManager for shared EntityManager invocation
+2024-03-23 19:12:32 DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : a1_0
+2024-03-23 19:12:32 DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.hrm.models.Attendance(90226734558500))] with identifierForTableGroup [com.hrm.models.Attendance] for NavigablePath [com.hrm.models.Attendance] 
+2024-03-23 19:12:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : org.hibernate.query.sqm.tree.expression.SqmJpaCriteriaParameterWrapper@1c0a62c9
+2024-03-23 19:12:32 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(com.hrm.models.Attendance(90226734558500).date) 
+2024-03-23 19:12:32 DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [com.hrm.models.Attendance(90226734558500)]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).appliedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).approvedHrsForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).attendanceStatus]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).date]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).employeeId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).endDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactInTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).exactOutTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half1]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).half2]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).inTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).leaveType]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).month]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyAppliedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyApprovedHoursForBilling]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyLossOfPayDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).monthlyPresentDays]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).otherHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).outTime]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).productionHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).projectId]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationReason]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularisationRequestHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).regularizedHours]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).remarks]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).startDate]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).status]
+ |  +-BasicFetch [com.hrm.models.Attendance(90226734558500).totalHours]
+ |  \-BasicFetch [com.hrm.models.Attendance(90226734558500).workHrs]
+
+2024-03-23 19:12:32 DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (a1 : com.hrm.models.Attendance(90226734558500)) {
+          primaryTableReference : attendance as a1_0
+        }
+      }
+    }
+
+2024-03-23 19:12:32 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2024-03-23 19:12:32 DEBUG org.hibernate.orm.results - Initializer list
+2024-03-23 19:12:32 DEBUG org.hibernate.orm.results -     com.hrm.models.Attendance(90226734558500) -> EntityResultInitializer(com.hrm.models.Attendance(90226734558500))@337645534 (SingleTableEntityPersister(com.hrm.models.Attendance))
+2024-03-23 19:12:32 DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.applied_hrs_for_billing,
+        a1_0.approved_hrs_for_billing,
+        a1_0.attendance_status,
+        a1_0.date,
+        a1_0.employee_id,
+        a1_0.end_date,
+        a1_0.exact_in_time,
+        a1_0.exact_out_time,
+        a1_0.half1,
+        a1_0.half2,
+        a1_0.in_time,
+        a1_0.leave_reason,
+        a1_0.leave_type,
+        a1_0.month,
+        a1_0.monthly_applied_hours_for_billing,
+        a1_0.monthly_approved_hours_for_billing,
+        a1_0.monthly_loss_of_pay_days,
+        a1_0.monthly_present_days,
+        a1_0.other_hours,
+        a1_0.out_time,
+        a1_0.production_hours,
+        a1_0.project_id,
+        a1_0.regularisation_reason,
+        a1_0.regularisation_request_hours,
+        a1_0.regularized_hours,
+        a1_0.remarks,
+        a1_0.start_date,
+        a1_0.status,
+        a1_0.total_hours,
+        a1_0.work_hrs 
+    from
+        attendance a1_0 
+    where
+        a1_0.date=?
+2024-03-23 19:12:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-03-23 19:12:47 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled (queueDepth=0).
