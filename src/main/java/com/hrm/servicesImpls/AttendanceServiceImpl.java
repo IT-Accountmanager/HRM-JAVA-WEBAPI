@@ -9,7 +9,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import com.hrm.exception.ServiceException;
 import com.hrm.helper.EnumCollection.AttendanceStatus;
+import com.hrm.helper.EnumCollection.Departments;
 import com.hrm.helper.Format;
 import com.hrm.helper.EnumCollection.Half;
 import com.hrm.helper.EnumCollection.LeaveType;
@@ -26,6 +30,7 @@ import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.AttendanceEmployeeDto;
 import com.hrm.payloads.BasicInfoDto;
 import com.hrm.payloads.BillableHoursDto;
+import com.hrm.payloads.ManagerAttendanceEditDto;
 import com.hrm.payloads.ManagerAttendanceViewDto;
 import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.UserAttendanceDto;
@@ -276,6 +281,8 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		Attendance attendance = attendanceRepository.findByEmployeeIdAndDate(employeeId, date);
 
 		if (attendance != null) {
+			
+			attendance.setDate(date);
 
 			attendance.setProductionHours(productionHours);
 			attendance.setOtherHours(otherHours);
@@ -320,47 +327,95 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	 * "Attendance record not found for employee " + employeeId; } }
 	 */
 
+//	@Override
+//	public String addRegularizationHours(RegularizationHoursDto regularizationHoursDto, String employeeId) {
+//	    LocalDate date = regularizationHoursDto.getDate();
+//	    LocalTime inTime = regularizationHoursDto.getInTime();
+//	    LocalTime outTime = regularizationHoursDto.getOutTime();
+//	    String regularisationReason = regularizationHoursDto.getRegularisationReason();
+//	    
+//	    // Calculate the duration between exactInTime and exactOutTime
+//	    Duration difference = Duration.between(inTime, outTime);
+//	    
+//	    // Define the threshold duration of 9 hours and 30 minutes
+//	    Duration threshold = Duration.ofHours(9).plusMinutes(30);
+//
+//	    Attendance attendance = attendanceRepository.findByEmployeeIdAndDate(employeeId, date);
+//
+//	    if (attendance != null) {
+//	        attendance.setDate(date);
+//	        attendance.setInTime(inTime);
+//	        attendance.setOutTime(outTime);
+//	        attendance.setRegularisationReason(regularisationReason);
+//	        
+//	        // Check if the attendance status is 'A' (Anomaly)
+//	        if (attendance.getAttendanceStatus() == 'A') {
+//	            // If Anomaly, add regularization hours to worked hours
+//	            attendance.setWorkHrs(attendance.getWorkHrs().plus(difference));
+//	        } else {
+//	            // If not Anomaly, proceed with regular regularization handling
+//	            // Check if the duration is less than the threshold
+//	            if (difference.compareTo(threshold) < 0) {
+//	                // If less, set RegularisationRequestHours to the difference from the threshold
+//	                Duration remainingTime = threshold.minus(difference);
+//	                
+//	                // Convert remainingTime to hours and minutes
+//	                long remainingHours = remainingTime.toHours();
+//	                long remainingMinutes = remainingTime.minusHours(remainingHours).toMinutes();
+//
+//	                // Set RegularisationRequestHours as a formatted string
+//	                attendance.setRegularisationRequestHours(String.format("%02d:%02d", remainingHours, remainingMinutes));
+//	            } else {
+//	                // If greater or equal, set RegularisationRequestHours to zero
+//	                attendance.setRegularisationRequestHours("00:00");
+//	            }
+//	        }
+//
+//	        attendanceRepository.save(attendance);
+//	        return "Regularization hours added for employee " + employeeId;
+//	    } else {
+//	        return "Attendance record not found for employee " + employeeId;
+//	    }
+//	}
+	
+	
+	
 	@Override
 	public String addRegularizationHours(RegularizationHoursDto regularizationHoursDto, String employeeId) {
-		LocalTime inTime = regularizationHoursDto.getInTime();
-		LocalTime outTime = regularizationHoursDto.getOutTime();
-		String regularisationReason = regularizationHoursDto.getRegularisationReason();
+	    LocalDate date = regularizationHoursDto.getDate();
+	    LocalTime inTime = regularizationHoursDto.getInTime();
+	    LocalTime outTime = regularizationHoursDto.getOutTime();
+	    String regularisationReason = regularizationHoursDto.getRegularisationReason();
+	    
+	    // Calculate the duration between inTime and outTime
+	    Duration difference = Duration.between(inTime, outTime);
 
-		// Calculate the duration between exactInTime and exactOutTime
-		Duration difference = Duration.between(inTime, outTime);
+	    // Retrieve the attendance record for the employee on the given date
+	    Attendance attendance = attendanceRepository.findByEmployeeIdAndDate(employeeId, date);
 
-		// Define the threshold duration of 9 hours and 30 minutes
-		Duration threshold = Duration.ofHours(9).plusMinutes(30);
+	    if (attendance != null) {
+	        attendance.setDate(date);
+	        attendance.setInTime(inTime);
+	        attendance.setOutTime(outTime);
+	        attendance.setRegularisationReason(regularisationReason);
+	        
+	        // Check if the attendance status is 'A' (Anomaly)
+	        if (attendance.getAttendanceStatus() == 'A') {
+	            // If Anomaly, set the worked hours to be equal to the regularization hours
+	            attendance.setWorkHrs(difference);
+	            // Set regularization request hours to zero
+	            attendance.setRegularisationRequestHours(Duration.ZERO);
+	        }
 
-		Attendance attendance = attendanceRepository.findByEmployeeId(employeeId);
-
-		if (attendance != null) {
-			attendance.setInTime(inTime);
-			attendance.setOutTime(outTime);
-			attendance.setRegularisationReason(regularisationReason);
-
-			// Check if the duration is less than the threshold
-			if (difference.compareTo(threshold) < 0) {
-				// If less, set RegularisationRequestHours to the difference from the threshold
-				Duration remainingTime = threshold.minus(difference);
-
-				// Convert remainingTime to hours and minutes
-				long remainingHours = remainingTime.toHours();
-				long remainingMinutes = remainingTime.minusHours(remainingHours).toMinutes();
-
-				// Set RegularisationRequestHours as a formatted string
-				attendance.setRegularisationRequestHours(String.format("%02d:%02d", remainingHours, remainingMinutes));
-			} else {
-				// If greater or equal, set RegularisationRequestHours to zero
-				attendance.setRegularisationRequestHours("00:00");
-			}
-
-			attendanceRepository.save(attendance);
-			return "Regularization hours added for employee " + employeeId;
-		} else {
-			return "Attendance record not found for employee " + employeeId;
-		}
+	        // Save the updated attendance record
+	        attendanceRepository.save(attendance);
+	        
+	        return "Regularization hours added for employee " + employeeId;
+	    } else {
+	        return "Attendance record not found for employee " + employeeId;
+	    }
 	}
+
 
 
 
@@ -473,22 +528,35 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		return null;
 	}
 
-	@Override
-	public ManagerAttendanceViewDto editManagerAttendance(ManagerAttendanceViewDto managerAttendanceViewDto,String employeeId) {
-		Attendance managerAttendance = this.attendanceRepository.findByEmployeeId(employeeId);
-		
-		
-		 ManagerAttendanceViewDto updatedDto = new ManagerAttendanceViewDto();
-		 
-		managerAttendance.setApprovedHrsForBilling(managerAttendanceViewDto.getApprovedHrsForBilling());
-		managerAttendance.setRemarks(managerAttendanceViewDto.getRemarks());
-		
-		this.attendanceRepository.save(managerAttendance);
-		
-		return updatedDto;
 
-	}
 	
+	@Override
+	public ManagerAttendanceEditDto editManagerAttendance(ManagerAttendanceEditDto managerAttendanceViewDto, String employeeId) {
+	    LocalDate date = managerAttendanceViewDto.getDate();
+	    
+	  
+	    Attendance managerAttendance = this.attendanceRepository.findByEmployeeIdAndDate(employeeId, date);
+	    
+	    if (managerAttendance != null) {
+	        
+	        managerAttendance.setApprovedHrsForBilling(managerAttendanceViewDto.getApprovedHrsForBilling());
+	        managerAttendance.setRemarks(managerAttendanceViewDto.getRemarks());
+	        
+	       
+	        this.attendanceRepository.save(managerAttendance);
+	        
+	        
+	        return managerAttendanceViewDto;
+	    } else {
+	        
+	        return null;
+	    }
+	}
+
+	
+
+	
+	@Override
 	public String getDuration(String employeeId) {
 		if (employeeId == null) {
 			return "Employee ID is null";
@@ -507,8 +575,6 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 		return Format.getFormattedWorkHours(duration);
 		
-		
-	
 		}
 
 	@Override
@@ -535,29 +601,80 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		return null;
 	}
 
-//
 //	@Override
-//	public void updateManagerAttendance(ManagerAttendanceViewDto managerAttendanceViewDto, LocalDate date) {
-//		
-//		
-//	}
-//
-//	@Override
-//	public String addManagerAttendance(ManagerAttendanceViewDto managerAttendanceViewDto, LocalDate date) {
-//		
-//		String projectId = managerAttendanceViewDto.getProjectId();
-//		String approvedHrsForBilling = managerAttendanceViewDto.getApprovedHrsForBilling();
-//		String remarks = managerAttendanceViewDto.getRemarks();
-//		
-//		Attendance attendance = attendanceRepository.findByDate(date);
-//		
-//		attendance.setProjectId(projectId);
-//		attendance.setApprovedHrsForBilling(approvedHrsForBilling);
-//		attendance.setRemarks(remarks);
-//		
-//		attendanceRepository.save(attendance);
+//	public List<Object[]> findAttendanceByManagerAndMonth(String managerId, String month) {
+//		// TODO Auto-generated method stub
 //		return null;
 //	}
+	
+	
+
+	  
 
 
-}
+	
+	@Override
+	public List<Object[]> findAttendanceByManagerAndMonth(String managerId, String month) {
+	    try {
+	        Month targetMonth = Month.valueOf(month.toUpperCase());
+
+	        List<Object[]> attendanceData = attendanceRepository.findAttendanceByManagerAndMonth(managerId, month);
+
+	        List<ManagerAttendanceViewDto> attendanceDtoList = new ArrayList<>();
+	        for (Object[] data : attendanceData) {
+	            ManagerAttendanceViewDto attendanceDto = new ManagerAttendanceViewDto();
+
+	            attendanceDto.setEmployeeId((String) data[0]);
+	            attendanceDto.setEmployeeName((String) data[1]);
+//	            attendanceDto.setDepartment((Departments) data[2]);
+//	            attendanceDto.setMonthlyAppliedHoursForBilling((String) data[3]);
+//	            attendanceDto.setPresentDays((String) data[4]);
+	            attendanceDto.setMonth(targetMonth);
+
+	            attendanceDtoList.add(attendanceDto);
+	        }
+
+	        return attendanceData;
+	    } catch (IllegalArgumentException ex) {
+	        logger.error("Invalid month provided: {}", month);
+	        return Collections.emptyList();
+	    } catch (Exception ex) {
+	        logger.error("An error occurred while fetching attendance data: {}", ex.getMessage(), ex);
+	        return Collections.emptyList();
+	    }
+	}
+
+	@Override
+	public ManagerAttendanceEditDto getManagerAttendance(String employeeId, LocalDate date) {
+		
+
+	 
+	    Attendance managerAttendance = attendanceRepository.findByEmployeeIdAndDate(employeeId, date);
+	    
+	    if (managerAttendance != null) {
+	        ManagerAttendanceEditDto managerAttendanceEditDto = new ManagerAttendanceEditDto();
+	        managerAttendanceEditDto.setApprovedHrsForBilling(managerAttendance.getApprovedHrsForBilling());
+	        managerAttendanceEditDto.setDate(managerAttendance.getDate());
+	        managerAttendanceEditDto.setRemarks(managerAttendance.getRemarks());
+	        
+	        return managerAttendanceEditDto;
+	    } else {
+	        
+	        ManagerAttendanceEditDto messageDto = new ManagerAttendanceEditDto();
+	        messageDto.setRemarks("No attendance record found for employee ID: " + employeeId + "on Date" + date);
+	        return messageDto;
+	    }
+	}
+	
+	
+
+
+
+	}
+
+
+
+
+
+
+	

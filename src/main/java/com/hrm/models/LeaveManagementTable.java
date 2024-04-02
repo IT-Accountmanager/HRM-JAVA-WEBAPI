@@ -28,6 +28,7 @@ public class LeaveManagementTable {
 	private Half half1;
 	private Half half2;
 	private String leaveReason;
+
 	
 	private double appliedDaysForLeave;
 	

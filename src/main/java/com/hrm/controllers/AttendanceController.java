@@ -1,6 +1,7 @@
 package com.hrm.controllers;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -21,10 +22,10 @@ import com.hrm.models.Attendance;
 import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.AttendanceEmployeeDto;
 import com.hrm.payloads.BillableHoursDto;
-import com.hrm.payloads.ManagerAttendanceViewDto;
+import com.hrm.payloads.ManagerAttendanceEditDto;
 import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.UserAttendanceDto;
-import com.hrm.payloads.managerAttendanceView;
+import com.hrm.payloads.ManagerAttendanceViewDto;
 import com.hrm.services.IAttendanceService;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -158,10 +159,10 @@ public class AttendanceController {
 	// --------------------------FOR PUT MAPPING (APPROVEDHRSFOR BILLING AND REMARKS)-------------------------
 	
 	@PutMapping("/editRemarks/{employeeId}")
-	public ResponseEntity<String> editManagerAttendance(@RequestBody ManagerAttendanceViewDto managerAttendanceViewDto,
+	public ResponseEntity<ManagerAttendanceEditDto> editManagerAttendance(@RequestBody ManagerAttendanceEditDto managerAttendanceViewDto,
 	                                                     @PathVariable String employeeId) {
-	    ManagerAttendanceViewDto editManagerAttendance = this.attendanceService.editManagerAttendance(managerAttendanceViewDto, employeeId);
-	    return new ResponseEntity<String>(HttpStatus.OK);
+	    ManagerAttendanceEditDto attendance = this.attendanceService.editManagerAttendance(managerAttendanceViewDto, employeeId);
+	    return new ResponseEntity<ManagerAttendanceEditDto>(attendance, HttpStatus.OK);
 	}
 
 	
@@ -171,6 +172,35 @@ public class AttendanceController {
 		String duration = this.attendanceService.getDuration(employeeId);
 		return duration;
 	}
+	
+	
+	
+	@GetMapping("/manager/{managerId}/{month}")
+	public ResponseEntity<?> getAttendanceByManagerAndMonth(
+	        @PathVariable String managerId,
+	        @PathVariable String month) {
+	    List<Object[]> attendanceDtoList = attendanceService.findAttendanceByManagerAndMonth(managerId, month);
+	    if (!attendanceDtoList.isEmpty()) {
+	        return new ResponseEntity<>(attendanceDtoList, HttpStatus.OK);
+	    } else {
+	        String message = "No attendance data found for the manager with ID " + managerId + " in the month of " + month;
+	        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+	    }
+	}
+	
+	
+	@GetMapping("/getmanagerAttendance/{employeeId}/{date}")
+	public ResponseEntity<ManagerAttendanceEditDto> getManagerAttendance(@PathVariable String employeeId, @PathVariable String date) {
+	    LocalDate parsedDate = LocalDate.parse(date);
+	    ManagerAttendanceEditDto managerAttendanceDto = attendanceService.getManagerAttendance(employeeId, parsedDate);
+	    return ResponseEntity.ok(managerAttendanceDto);
+	}
+
+
+
+
+
+
 
 //github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
 //	@PostMapping("/managerattendance/{date}")

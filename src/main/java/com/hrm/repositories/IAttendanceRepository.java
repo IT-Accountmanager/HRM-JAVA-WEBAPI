@@ -30,24 +30,36 @@ public interface IAttendanceRepository extends JpaRepository<Attendance, Integer
 //    GROUP BY employee_id
 //) a ON e.employee_id = a.employee_id
 //WHERE e.manager = 'EIS00001';
+	
+	
 
-	@Query(value = "SELECT e.employee_id, e.name, IFNULL(a.applied_hrs_for_billing, 0) AS applied_hrs_for_billing"
-			+ "FROM employee e" + "LEFT JOIN ("
-			+ "    SELECT employee_id, SUM(applied_hrs_for_billing) AS applied_hrs_for_billing"
-			+ "    FROM attendance a" + "    WHERE DATE_FORMAT(date, '%Y-%m') = :month" + "    GROUP BY employee_id"
-			+ ") a ON e.employee_id = a.employee_id" + "WHERE e.manager = :managerId", nativeQuery = true)
+	@Query(value = "SELECT e.employee_id, e.name, e.department, " +
+	        "IFNULL(a.applied_hrs_for_billing, 0) AS applied_hrs_for_billing, " +
+	        "IFNULL(a.present_days, 0) AS present_days " +
+	        "FROM employee e " +
+	        "LEFT JOIN ( " +
+	        "    SELECT employee_id, " +
+	        "           SUM(applied_hrs_for_billing) AS applied_hrs_for_billing, " +
+	        "           COUNT(*) AS present_days " +
+	        "    FROM attendance a " +
+	        "    WHERE DATE_FORMAT(date, '%Y-%m') = :month " +
+	        "    GROUP BY employee_id " +
+	        ") a ON e.employee_id = a.employee_id " +
+	        "WHERE e.manager = :managerId", nativeQuery = true)
+
+	
 	List<Object[]> findAttendanceByManagerAndMonth(@Param("managerId") String managerId, @Param("month") String month);
 
 	List<Attendance> findAllByDate(LocalDate date);
 	
-	/*
-	 * @Query(value
-	 * ="Select in_time from attendance where employee_id='EIS00001' and date = \"2024-02-29\";"
-	 * ) getInTimeByEmployeeId(String employeeId );
-	 */
+	
+//	  @Query(value
+//	  ="Select in_time from attendance where employee_id='EIS00001' and date = \"2024-02-29\";"
+//	  ) getInTimeByEmployeeId(String employeeId );
+//	 
 	LocalTime findInTimeByDateAndEmployeeId(LocalDate date , String employeeId);
 
-	LocalTime findOutTimeByDateAndEmployeeId(LocalDate date , String employeeId);
+//	LocalTime findOutTimeByDateAndEmployeeId(LocalDate date , String employeeId);
 
 	
 //	Attendance findByDate(LocalDate date);

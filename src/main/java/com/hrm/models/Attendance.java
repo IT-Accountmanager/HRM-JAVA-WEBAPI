@@ -54,12 +54,12 @@ public class Attendance {
 	private String totalHours;
 	private LocalTime exactInTime;
 	private LocalTime exactOutTime;
-	private String regularisationRequestHours;
+	private Duration regularisationRequestHours;
 	private String regularisationReason;
 	private Float monthlyPresentDays;
 	private Float monthlyLossOfPayDays;
-	private Duration monthlyAppliedHoursForBilling;
-	private Duration monthlyApprovedHoursForBilling;
+	private String monthlyAppliedHoursForBilling;
+	private String monthlyApprovedHoursForBilling;
 	private String remarks;
 
 	
@@ -121,21 +121,25 @@ public class Attendance {
 		this.monthlyLossOfPayDays = monthlyLossOfPayDays;
 	}
 
-	public Duration getMonthlyAppliedHoursForBilling() {
+	public String getMonthlyAppliedHoursForBilling() {
 		return monthlyAppliedHoursForBilling;
 	}
 
-	public void setMonthlyAppliedHoursForBilling(Duration monthlyAppliedHoursForBilling) {
+	public void setMonthlyAppliedHoursForBilling(String monthlyAppliedHoursForBilling) {
 		this.monthlyAppliedHoursForBilling = monthlyAppliedHoursForBilling;
 	}
 
-	public Duration getMonthlyApprovedHoursForBilling() {
+	
+
+	public String getMonthlyApprovedHoursForBilling() {
 		return monthlyApprovedHoursForBilling;
 	}
 
-	public void setMonthlyApprovedHoursForBilling(Duration monthlyApprovedHoursForBilling) {
+	public void setMonthlyApprovedHoursForBilling(String monthlyApprovedHoursForBilling) {
 		this.monthlyApprovedHoursForBilling = monthlyApprovedHoursForBilling;
 	}
+
+
 
 	// =======
 	private Half half1;
@@ -346,11 +350,13 @@ public class Attendance {
 		this.exactOutTime = exactOutTime;
 	}
 
-	public String getRegularisationRequestHours() {
+	
+
+	public Duration getRegularisationRequestHours() {
 		return regularisationRequestHours;
 	}
 
-	public void setRegularisationRequestHours(String regularisationRequestHours) {
+	public void setRegularisationRequestHours(Duration regularisationRequestHours) {
 		this.regularisationRequestHours = regularisationRequestHours;
 	}
 
