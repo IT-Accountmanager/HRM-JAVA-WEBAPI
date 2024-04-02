@@ -179,7 +179,7 @@ public class AttendanceController {
 	public ResponseEntity<?> getAttendanceByManagerAndMonth(
 	        @PathVariable String managerId,
 	        @PathVariable String month) {
-	    List<Object[]> attendanceDtoList = attendanceService.findAttendanceByManagerAndMonth(managerId, month);
+	    List<ManagerAttendanceViewDto> attendanceDtoList = attendanceService.findAttendanceByManagerAndMonth(managerId, month);
 	    if (!attendanceDtoList.isEmpty()) {
 	        return new ResponseEntity<>(attendanceDtoList, HttpStatus.OK);
 	    } else {

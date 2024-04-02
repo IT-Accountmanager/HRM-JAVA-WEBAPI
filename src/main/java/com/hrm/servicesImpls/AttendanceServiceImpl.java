@@ -614,7 +614,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 	
 	@Override
-	public List<Object[]> findAttendanceByManagerAndMonth(String managerId, String month) {
+	public List<ManagerAttendanceViewDto> findAttendanceByManagerAndMonth(String managerId, String month) {
 	    try {
 	        Month targetMonth = Month.valueOf(month.toUpperCase());
 
@@ -626,15 +626,15 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 	            attendanceDto.setEmployeeId((String) data[0]);
 	            attendanceDto.setEmployeeName((String) data[1]);
-//	            attendanceDto.setDepartment((Departments) data[2]);
-//	            attendanceDto.setMonthlyAppliedHoursForBilling((String) data[3]);
-//	            attendanceDto.setPresentDays((String) data[4]);
+//	          attendanceDto.setDepartment((Departments) data[2]);
+//	          attendanceDto.setMonthlyAppliedHoursForBilling((String) data[3]);
+//	          attendanceDto.setPresentDays((String) data[4]);
 	            attendanceDto.setMonth(targetMonth);
 
 	            attendanceDtoList.add(attendanceDto);
 	        }
 
-	        return attendanceData;
+	        return attendanceDtoList; // Return the list of DTOs, not the raw data
 	    } catch (IllegalArgumentException ex) {
 	        logger.error("Invalid month provided: {}", month);
 	        return Collections.emptyList();
@@ -643,6 +643,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	        return Collections.emptyList();
 	    }
 	}
+
 
 	@Override
 	public ManagerAttendanceEditDto getManagerAttendance(String employeeId, LocalDate date) {

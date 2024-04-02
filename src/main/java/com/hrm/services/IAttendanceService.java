@@ -9,6 +9,7 @@ import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.AttendanceEmployeeDto;
 import com.hrm.payloads.BillableHoursDto;
 import com.hrm.payloads.ManagerAttendanceEditDto;
+import com.hrm.payloads.ManagerAttendanceViewDto;
 import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.UserAttendanceDto;
 
@@ -53,7 +54,7 @@ public interface IAttendanceService {
 	
 	String getDuration(String employeeId);
 	
-	List<Object[]> findAttendanceByManagerAndMonth(String managerId, String month);
+	List<ManagerAttendanceViewDto> findAttendanceByManagerAndMonth(String managerId, String month);
 	
 	ManagerAttendanceEditDto getManagerAttendance(String employeeId, LocalDate date);
 
