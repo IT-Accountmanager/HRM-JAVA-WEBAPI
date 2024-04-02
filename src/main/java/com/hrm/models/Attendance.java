@@ -52,14 +52,20 @@ public class Attendance {
 	private String productionHours;
 	private String otherHours;
 	private String totalHours;
+
 	// private LocalTime exactInTime;
 	// private LocalTime exactOutTime;
 	private String regularisationRequestHours;
+
+	/*
+	 * private LocalTime exactInTime; private LocalTime exactOutTime; private
+	 * Duration regularisationRequestHours;
+	 */
 	private String regularisationReason;
 	private Float monthlyPresentDays;
 	private Float monthlyLossOfPayDays;
-	private Duration monthlyAppliedHoursForBilling;
-	private Duration monthlyApprovedHoursForBilling;
+	private String monthlyAppliedHoursForBilling;
+	private String monthlyApprovedHoursForBilling;
 	private String remarks;
 
 //	edited
@@ -116,19 +122,19 @@ public class Attendance {
 		this.monthlyLossOfPayDays = monthlyLossOfPayDays;
 	}
 
-	public Duration getMonthlyAppliedHoursForBilling() {
+	public String getMonthlyAppliedHoursForBilling() {
 		return monthlyAppliedHoursForBilling;
 	}
 
-	public void setMonthlyAppliedHoursForBilling(Duration monthlyAppliedHoursForBilling) {
+	public void setMonthlyAppliedHoursForBilling(String monthlyAppliedHoursForBilling) {
 		this.monthlyAppliedHoursForBilling = monthlyAppliedHoursForBilling;
 	}
 
-	public Duration getMonthlyApprovedHoursForBilling() {
+	public String getMonthlyApprovedHoursForBilling() {
 		return monthlyApprovedHoursForBilling;
 	}
 
-	public void setMonthlyApprovedHoursForBilling(Duration monthlyApprovedHoursForBilling) {
+	public void setMonthlyApprovedHoursForBilling(String monthlyApprovedHoursForBilling) {
 		this.monthlyApprovedHoursForBilling = monthlyApprovedHoursForBilling;
 	}
 
@@ -325,20 +331,20 @@ public class Attendance {
 		this.monthlyLossOfPayDays = monthlyLossOfPayDays;
 	}
 
-	public String getRegularisationRequestHours() {
-		return regularisationRequestHours;
-	}
-
-	public void setRegularisationRequestHours(String regularisationRequestHours) {
-		this.regularisationRequestHours = regularisationRequestHours;
-	}
-
 	public String getRegularisationReason() {
 		return regularisationReason;
 	}
 
 	public void setRegularisationReason(String regularisationReason) {
 		this.regularisationReason = regularisationReason;
+	}
+
+	public String getRegularisationRequestHours() {
+		return regularisationRequestHours;
+	}
+
+	public void setRegularisationRequestHours(String regularisationRequestHours) {
+		this.regularisationRequestHours = regularisationRequestHours;
 	}
 
 }

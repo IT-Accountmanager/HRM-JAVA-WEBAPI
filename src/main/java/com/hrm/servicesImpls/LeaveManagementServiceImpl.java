@@ -47,10 +47,10 @@ public class LeaveManagementServiceImpl implements LeaveManagementService{
 	    leaveManagementTable.setHalf2(half2);
 	    leaveManagementTable.setLeaveReason(leaveReason);
 
-	    // Fetch the month from start date
-	    Month startMonth = startDate.getMonth();
-	    // Fetch the month from end date
-	    Month endMonth = endDate.getMonth();
+//	    // Fetch the month from start date
+//	    Month startMonth = startDate.getMonth();
+//	    // Fetch the month from end date
+//	    Month endMonth = endDate.getMonth();
 
 	    // Calculate the number of days based on selected halves and start/end dates
 	    double appliedDaysForLeave = 0;
@@ -72,7 +72,7 @@ public class LeaveManagementServiceImpl implements LeaveManagementService{
 	    leaveManagementRepo.save(leaveManagementTable);
 
 	    return "Leave Added Successfully for employee Id " + employeeId + ". Number of days: " + appliedDaysForLeave +
-	            ". Start Month: " + startMonth + ". End Month: " + endMonth;
+	            ". Start Month: " ;
 	}
 
 

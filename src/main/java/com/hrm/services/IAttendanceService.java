@@ -8,7 +8,7 @@ import com.hrm.models.Attendance;
 import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.AttendanceEmployeeDto;
 import com.hrm.payloads.BillableHoursDto;
-import com.hrm.payloads.ManagerAttendanceViewDto;
+import com.hrm.payloads.ManagerAttendanceEditDto;
 import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.UserAttendanceDto;
 
@@ -19,8 +19,6 @@ public interface IAttendanceService {
 	String clockOut(String employeeId);
 
 	List<UserAttendanceDto> allAttendance(String employeeId);
-	
-	
 
 	AttendanceEmployeeDto getAttendance(String employeeId);
 
@@ -32,13 +30,12 @@ public interface IAttendanceService {
 
 	String addRegularizationHours(RegularizationHoursDto regularizationHoursDto, String employeeId);
 
-
 //	String addLeave(ApplyLeaveDto applyLeaveDto, String employeeId);
-	
+
 //	ApplyLeaveDto getLeave(String employeeId);
-	
+
 	RegularizationHoursDto getRegularizationHours(String employeeId, LocalDate date);
-	
+
 	BillableHoursDto getBillableHours(String employeeId, LocalDate date);
 
 	String addLeave(ApplyLeaveDto applyLeaveDto, String employeeId);
@@ -49,20 +46,16 @@ public interface IAttendanceService {
 
 	BillableHoursDto getBillableHours(String employeeId);
 
-
 	String getAttendanceAsJson(String managerId, String month);
 
-	
-	ManagerAttendanceViewDto editManagerAttendance(ManagerAttendanceViewDto managerAttendanceViewDto, String employeeId);
-	
-
+	ManagerAttendanceEditDto editManagerAttendance(ManagerAttendanceEditDto managerAttendanceEditDto,
+			String employeeId);
 
 	String getDuration(String employeeId);
 
+	List<Object[]> findAttendanceByManagerAndMonth(String managerId, String month);
 
-//	String addManagerAttendance(ManagerAttendanceViewDto managerAttendanceViewDto, LocalDate date);
-//	
-//	void updateManagerAttendance(ManagerAttendanceViewDto managerAttendanceViewDto, LocalDate date);
+	ManagerAttendanceEditDto getManagerAttendance(String employeeId, LocalDate date);
 
 //	ApplyLeaveDto addLeave(ApplyLeaveDto leaveDto);
 
