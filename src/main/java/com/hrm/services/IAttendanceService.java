@@ -57,6 +57,8 @@ public interface IAttendanceService {
 	List<ManagerAttendanceViewDto> findAttendanceByManagerAndMonth(String managerId, String month);
 	
 	ManagerAttendanceEditDto getManagerAttendance(String employeeId, LocalDate date);
+	
+//	List<Object[]> findAttendanceByManagerAndMonth(String managerId, String month);
 
 //	ApplyLeaveDto addLeave(ApplyLeaveDto leaveDto);
 
