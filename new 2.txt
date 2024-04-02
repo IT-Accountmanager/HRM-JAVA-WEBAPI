@@ -1,0 +1,16 @@
+
+address details tbl
+	per_add_id,
+	house_no
+	area,
+	landmark
+	city
+	pincode, 
+	state
+	country
+	address_type (t/p)
+	
+	
+	
+<= 9 hr S
+>= 10 hr P	

@@ -5,14 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hrm.models.AddressDetails;
-import com.hrm.repositories.AddressDetailsRepository;
+import com.hrm.repositories.IAddressDetailsRepository;
 import com.hrm.services.IAddressDetailsService;
 
 @Service
 public class AddressDetailsServiceImpl implements IAddressDetailsService {
 
 	@Autowired
-	AddressDetailsRepository addressDetailsRepo;
+	IAddressDetailsRepository addressDetailsRepo;
 
 	@Override
 	public String addAdd(AddressDetails addressDetails) {

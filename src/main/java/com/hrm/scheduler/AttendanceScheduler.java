@@ -63,13 +63,16 @@ public class AttendanceScheduler {
 		if (isClockInPresent && !isClockOutPresent) {
 			return 'A'; // Anomaly
 		} else if (isClockInPresent && isClockOutPresent) {
-			long timeDifference = 9 * 60; // Assuming the time difference is in minutes
-			if (calculateTimeDifference(inTime, outTime) <= timeDifference) {
+			long baseDuration = 6 * 60; // Assuming the time difference is in minutes
+			if (calculateTimeDifference(inTime, outTime) <= baseDuration) {
 				return 'S'; // Very short time between clock in and clock out
-			} else if (calculateTimeDifference(inTime, outTime) >= 10 * 60) {
+			} else // if (calculateTimeDifference(inTime, outTime) >= 6 * 60) {
+			{
 				return 'P';
 			}
-		} else if (!isClockInPresent && !isClockOutPresent) {
+		} else if (!isClockInPresent && !isClockOutPresent)
+
+		{
 			if (isHoliday()) {
 				return 'H'; // Holiday
 			} else if (isComboOff) {

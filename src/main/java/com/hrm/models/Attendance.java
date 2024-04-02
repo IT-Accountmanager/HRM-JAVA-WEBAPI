@@ -52,8 +52,8 @@ public class Attendance {
 	private String productionHours;
 	private String otherHours;
 	private String totalHours;
-	private LocalTime exactInTime;
-	private LocalTime exactOutTime;
+	// private LocalTime exactInTime;
+	// private LocalTime exactOutTime;
 	private String regularisationRequestHours;
 	private String regularisationReason;
 	private Float monthlyPresentDays;
@@ -62,14 +62,11 @@ public class Attendance {
 	private Duration monthlyApprovedHoursForBilling;
 	private String remarks;
 
-	
 //	edited
 
 //	private float appliedDaysForLeave;
 //	private float approvedDaysForLeave;
 //	private String leaveRemarks;
-	
-	
 
 //	public float getAppliedDaysForLeave() {
 //		return appliedDaysForLeave;
@@ -94,8 +91,6 @@ public class Attendance {
 //	public void setLeaveRemarks(String leaveRemarks) {
 //		this.leaveRemarks = leaveRemarks;
 //	}
-
-	
 
 	public String getRemarks() {
 		return remarks;
@@ -328,22 +323,6 @@ public class Attendance {
 
 	public void setMonthlyLossOfPayDays(Float monthlyLossOfPayDays) {
 		this.monthlyLossOfPayDays = monthlyLossOfPayDays;
-	}
-
-	public LocalTime getExactInTime() {
-		return exactInTime;
-	}
-
-	public void setExactInTime(LocalTime exactInTime) {
-		this.exactInTime = exactInTime;
-	}
-
-	public LocalTime getExactOutTime() {
-		return exactOutTime;
-	}
-
-	public void setExactOutTime(LocalTime exactOutTime) {
-		this.exactOutTime = exactOutTime;
 	}
 
 	public String getRegularisationRequestHours() {

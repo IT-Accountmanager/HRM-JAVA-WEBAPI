@@ -1,0 +1,29 @@
+ main.cb6779303678b7b0.js:129 ERROR 
+dt {headers: D, status: 500, statusText: 'OK', url: 'http://10.10.20.9:8080/hrm-web-api/attendance/clockIn/EIS00003', ok: false, …}
+error
+: 
+"{\"timestamp\":\"2024-03-14T10:40:01.761+00:00\",\"status\":500,\"error\":\"Internal Server Error\",\"path\":\"/hrm-web-api/attendance/clockIn/EIS00003\"}"
+headers
+: 
+D {normalizedNames: Map(0), lazyUpdate: null, lazyInit: ƒ}
+message
+: 
+"Http failure response for http://10.10.20.9:8080/hrm-web-api/attendance/clockIn/EIS00003: 500 OK"
+name
+: 
+"HttpErrorResponse"
+ok
+: 
+false
+status
+: 
+500
+statusText
+: 
+"OK"
+url
+: 
+"http://10.10.20.9:8080/hrm-web-api/attendance/clockIn/EIS00003"
+[[Prototype]]
+: 
+P

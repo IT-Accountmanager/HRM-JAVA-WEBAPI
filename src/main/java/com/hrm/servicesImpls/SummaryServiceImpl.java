@@ -1,11 +1,14 @@
 package com.hrm.servicesImpls;
 
+import java.sql.Date;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +18,16 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.hrm.helper.EnumCollection.CandidatesStatus;
+import com.hrm.helper.EnumCollection.CategoryControl;
+import com.hrm.helper.EnumCollection.CategoryControll;
+import com.hrm.helper.EnumCollection.Departments;
+import com.hrm.helper.EnumCollection.Designation;
+import com.hrm.helper.EnumCollection.EmployeeCategory;
+import com.hrm.helper.EnumCollection.EmployeeStatus;
 import com.hrm.models.BankDetails;
 import com.hrm.models.DocumentDetails;
 import com.hrm.models.Education;
@@ -72,151 +84,285 @@ public class SummaryServiceImpl implements ISummaryService {
 	@Value("${spring.mail.username}")
 	private String sender;
 
+	/*
+	 * @Override public List<SummaryDto> getAll() { List<Object[]> findAll =
+	 * this.employeeRepository.summaryData(); List<SummaryDto> summaryDtoList = new
+	 * ArrayList<>();
+	 * 
+	 * for (Object[] row : findAll) { if (row.length > 0 && row[0] instanceof
+	 * Employee) { Employee employee = (Employee) row[0]; SummaryDto summaryDto =
+	 * new SummaryDto();
+	 * 
+	 * if (employee.isImported()) { populateSummaryDtoForImportedEmployee(employee,
+	 * summaryDto); } else { populateSummaryDtoForNonImportedEmployee(employee,
+	 * summaryDto); }
+	 * 
+	 * summaryDtoList.add(summaryDto); } else {
+	 * 
+	 * System.err.println("Error: First element of row is not an Employee object.");
+	 * } } return summaryDtoList; }
+	 * 
+	 * private void populateSummaryDtoForImportedEmployee(Employee employee,
+	 * SummaryDto summaryDto) { long candidateId = employee.getCandidateId();
+	 * 
+	 * Personal personal = this.personalRepository.findByCandidateId(candidateId);
+	 * Education education =
+	 * this.educationRepository.findByCandidateId(candidateId); Onboarding
+	 * onboarding = this.onboardingRepository.findByCandidateId(candidateId);
+	 * 
+	 * summaryDto.setCandidateId(candidateId);
+	 * summaryDto.setEmployeeId(employee.getEmployeeId());
+	 * summaryDto.setName(employee.getName());
+	 * summaryDto.setEmployeeStatus(employee.getEmployeeStatus());
+	 * summaryDto.setEmployeeCategory(employee.getEmployeeCategory());
+	 * summaryDto.setContactNumber(employee.getContactNumber());
+	 * summaryDto.setEmailId(employee.getEmailId());
+	 * summaryDto.setDateOfJoining(employee.getDateOfJoining());
+	 * summaryDto.setDepartment(employee.getDepartment());
+	 * summaryDto.setSubDepartment(employee.getSubDepartment());
+	 * summaryDto.setAssignTo(employee.getAssignTo());
+	 * summaryDto.setDesignation(employee.getDesignation());
+	 * summaryDto.setCategoryControl(employee.getCategoryControl());
+	 * summaryDto.setTotalExperience(null);
+	 * summaryDto.setJoinedCtc(employee.getJoinedCtc());
+	 * summaryDto.setCurrentCtc(employee.getCurrentCtc());
+	 * summaryDto.setServiceCommitment(onboarding.getServiceCommitment());
+	 * summaryDto.setNumberOfWorkingDays(employee.getNumberOfWorkingDays());
+	 * summaryDto.setNextApprisalQuater(employee.getNextApprisalQuater());
+	 * summaryDto.setDateOfBirth(personal.getPersonalDetails().getDateOfBirth());
+	 * summaryDto.setBloodGroup(personal.getPersonalDetails().getBloodGroup());
+	 * summaryDto.setFatherName(personal.getPersonalDetails().getFathersName());
+	 * summaryDto.setEmergencyContact(null); summaryDto.setPermanentAddress(null);
+	 * summaryDto.setTemporaryAddress(null);
+	 * summaryDto.setAadharCardNumber(personal.getDocumentDetails().getAdharCardNo()
+	 * ); summaryDto.setPanCardNumber(personal.getDocumentDetails().getPanCardNo());
+	 * summaryDto.setUanNumber(employee.getUanNumber());
+	 * summaryDto.setBankAccountNumber(personal.getBankDetails().getAccountNo());
+	 * summaryDto.setQualification(education.getQualification());
+	 * summaryDto.setSpecialization(education.getStream());
+	 * summaryDto.setYearOfPassout(0); summaryDto.setResignationDate(null);
+	 * summaryDto.setActualLastWorkingDay(null); }
+	 * 
+	 * private void populateSummaryDtoForNonImportedEmployee(Employee employee,
+	 * SummaryDto summaryDto) { long candidateId = employee.getCandidateId();
+	 * 
+	 * Onboarding candidate =
+	 * this.onboardingRepository.findByCandidateId(candidateId); Personal details =
+	 * this.personalRepository.findByCandidateId(candidateId); List<Education>
+	 * educations = this.educationRepository.findAllByCandidateId(candidateId);
+	 * 
+	 * summaryDto.setCandidateId(candidateId);
+	 * summaryDto.setEmployeeId(employee.getEmployeeId());
+	 * summaryDto.setName(employee.getName());
+	 * summaryDto.setEmployeeStatus(employee.getEmployeeStatus());
+	 * summaryDto.setContactNumber(employee.getContactNumber());
+	 * summaryDto.setEmailId(employee.getEmailId());
+	 * summaryDto.setDateOfJoining(employee.getDateOfJoining());
+	 * summaryDto.setDepartment(employee.getDepartment());
+	 * summaryDto.setSubDepartment(employee.getSubDepartment()); //
+	 * summaryDto.setAssignTo(employee.getAssignTo()); if (employee.getDesignation()
+	 * != null) { summaryDto.setDesignation(employee.getDesignation()); } else { if
+	 * (candidate != null && candidate.getJobTitleDesignation() != null) {
+	 * summaryDto.setDesignation(candidate.getJobTitleDesignation()); } else {
+	 * summaryDto.setDesignation(candidate.getJobTitleDesignation()); } } //
+	 * summaryDto.setTotalExperience(); try {
+	 * summaryDto.setJoinedCtc(candidate.getCtc()); } catch (Exception e) {
+	 * System.out.println(e.getMessage()); } // summaryDto.setCurrentCtc();
+	 * 
+	 * try { summaryDto.setServiceCommitment(candidate.getServiceCommitment()); }
+	 * catch (Exception e) { // TODO: handle exception } //
+	 * summaryDto.setNumberOfWorkingDays(); // summaryDto.setNextApprisalQuater();
+	 * summaryDto.setDateOfBirth(details.getPersonalDetails().getDateOfBirth());
+	 * summaryDto.setBloodGroup(details.getPersonalDetails().getBloodGroup());
+	 * summaryDto.setFatherName(details.getPersonalDetails().getFathersName()); //
+	 * summaryDto.setEmergencyContact();
+	 * summaryDto.setPermanentAddress((details.getAddressDetails().getPermanentAdd()
+	 * .getHouseNo()) + ", " +
+	 * (details.getAddressDetails().getPermanentAdd().getArea()) + ", near " +
+	 * (details.getAddressDetails().getPermanentAdd().getLandmark()) + ", " +
+	 * (details.getAddressDetails().getPermanentAdd().getCity()) + ", " +
+	 * (details.getAddressDetails().getPermanentAdd().getState()) + ", " +
+	 * (details.getAddressDetails().getPermanentAdd().getPincode()));
+	 * summaryDto.setTemporaryAddress((details.getAddressDetails().getPresentAdd().
+	 * getHouseNo()) + ", " +
+	 * (details.getAddressDetails().getPresentAdd().getArea()) + ", near " +
+	 * (details.getAddressDetails().getPresentAdd().getLandmark()) + ", " +
+	 * (details.getAddressDetails().getPresentAdd().getCity()) + ", " +
+	 * (details.getAddressDetails().getPresentAdd().getState()) + ", " +
+	 * (details.getAddressDetails().getPresentAdd().getPincode()));
+	 * summaryDto.setAadharCardNumber(details.getDocumentDetails().getAdharCardNo())
+	 * ; summaryDto.setPanCardNumber(details.getDocumentDetails().getPanCardNo());
+	 * // summaryDto.setUanNumber();
+	 * summaryDto.setBankAccountNumber(details.getBankDetails().getAccountNo());
+	 * summaryDto.setQualification(educations.get(0).getQualification());
+	 * summaryDto.setSpecialization(educations.get(0).getStream());
+	 * summaryDto.setYearOfPassout(educations.get(0).getEndDate().getYear()); //
+	 * summaryDto.setResignationDate(); // summaryDto.setActualLastWorkingDay();
+	 * summaryDto.setEmployeeCategory(employee.getEmployeeCategory()); /*
+	 * summaryDto.setRelevantExperience(employee.getRelevantExperience());
+	 * summaryDto.setWorkLocation(employee.getWorkLocation());
+	 */
+//	}*/
+
 	@Override
-	public List<SummaryDto> getAll() {
+	public String getAll() {
+		List<Object[]> summaryData = this.employeeRepository.findSummaryData();
+		ObjectMapper objectMapper = new ObjectMapper();
+		/*
+		 * e.employee_id, e.name, e.employee_status, e.employee_category,
+		 * e.contact_number, e.email_id, e.date_of_joining, e.department,
+		 * e.sub_department, e.manager, e.designation, e.category_control,
+		 * e.total_experience, e.joined_ctc, e.current_ctc, e.service_commitment,
+		 * e.number_of_working_days, e.next_apprisal_quater, pd.date_of_birth,
+		 * pd.blood_group, pd.fathers_name, dd.adhar_card_no, dd.pan_card_no,
+		 * e.uan_number, bd.account_no, e.resignation_date, e.last_working_day
+		 */
+		ArrayNode summaryArray = objectMapper.createArrayNode();
 
-		// List<Employee> findAll =
-		// this.employeeRepository.findByEmployeeStatus(EmployeeStatus.Active);
+		try {
+			for (Object[] summary : summaryData) {
+				ObjectNode summaryNode = objectMapper.createObjectNode();
+				summaryNode.put("employee_id", (String) summary[0]);
+				summaryNode.put("name", (String) summary[1]);
+				summaryNode.put("employee_status", getEmployeeStatus(((Byte) summary[2]).intValue()).toString());
+				summaryNode.put("employee_category", getEmployeeCategory(((Byte) summary[2]).intValue()).toString());
+				summaryNode.put("contact_number", String.valueOf((Long) summary[4]));
+				summaryNode.put("email_id", (String) summary[5]);
+				summaryNode.put("date_of_joining", ((Date) summary[6]).toString());
+				if (summary[7] != null) {
+					String departmentName = mapDepartment((Byte) summary[7]);
+					summaryNode.put("department", departmentName);
+				}
 
-		List<Employee> findAll = this.employeeRepository.findAll();
-
-		List<SummaryDto> summaryDtoList = new ArrayList<>();
-
-		for (Employee employee : findAll) {
-
-			if (employee.isImported()) {
-				SummaryDto summaryDto = new SummaryDto();
-
-				long candidateId = employee.getCandidateId();
-
-				Personal personal = this.personalRepository.findByCandidateId(candidateId);
-				Education education = this.educationRepository.findByCandidateId(candidateId);
-				Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
-
-				summaryDto.setCandidateId(candidateId);
-				summaryDto.setEmployeeId(employee.getEmployeeId());
-				summaryDto.setName(employee.getName());
-				summaryDto.setEmployeeStatus(employee.getEmployeeStatus());
-				summaryDto.setEmployeeCategory(employee.getEmployeeCategory());
-				summaryDto.setContactNumber(employee.getContactNumber());
-				summaryDto.setEmailId(employee.getEmailId());
-				summaryDto.setDateOfJoining(employee.getDateOfJoining());
-				summaryDto.setDepartment(employee.getDepartment());
-				summaryDto.setSubDepartment(employee.getSubDepartment());
-				summaryDto.setAssignTo(employee.getAssignTo());
-				summaryDto.setDesignation(employee.getDesignation());
-				summaryDto.setCategoryControl(employee.getCategoryControl());
-				summaryDto.setTotalExperience(null);
-				summaryDto.setJoinedCtc(employee.getJoinedCtc());
-				summaryDto.setCurrentCtc(employee.getCurrentCtc());
-				summaryDto.setServiceCommitment(onboarding.getServiceCommitment());
-				summaryDto.setNumberOfWorkingDays(employee.getNumberOfWorkingDays());
-				summaryDto.setNextApprisalQuater(employee.getNextApprisalQuater());
-				summaryDto.setDateOfBirth(personal.getPersonalDetails().getDateOfBirth());
-				summaryDto.setBloodGroup(personal.getPersonalDetails().getBloodGroup());
-				summaryDto.setFatherName(personal.getPersonalDetails().getFathersName());
-				summaryDto.setEmergencyContact(null);
-				summaryDto.setPermanentAddress(null);
-				summaryDto.setTemporaryAddress(null);
-				summaryDto.setAadharCardNumber(personal.getDocumentDetails().getAdharCardNo());
-				summaryDto.setPanCardNumber(personal.getDocumentDetails().getPanCardNo());
-				summaryDto.setUanNumber(employee.getUanNumber());
-				summaryDto.setBankAccountNumber(personal.getBankDetails().getAccountNo());
-				summaryDto.setQualification(education.getQualification());
-				summaryDto.setSpecialization(education.getStream());
-				summaryDto.setYearOfPassout(0);
-				summaryDto.setResignationDate(null);
-				summaryDto.setActualLastWorkingDay(null);
-
-				summaryDtoList.add(summaryDto);
-
-			}
-
-			System.out.println("___________________________________________________________________________");
-
-			System.out.println("Employee Id : " + employee.getEmployeeId());
-			System.out.println("");
-
-			System.out.println("___________________________________________________________________________");
-
-			if (!employee.isImported()) {
-
-				System.out.println("______________________________________");
-				System.out.println("Candidate Id : " + employee.getCandidateId());
-				Onboarding candidate = this.onboardingRepository.findByCandidateId(employee.getCandidateId());
-				Personal details = this.personalRepository.findByCandidateId(employee.getCandidateId());
-				List<Education> educations = this.educationRepository.findAllByCandidateId(employee.getCandidateId());
-				SummaryDto summaryDto = new SummaryDto();
-
-				summaryDto.setCandidateId(employee.getCandidateId());
-				summaryDto.setEmployeeId(employee.getEmployeeId());
-				summaryDto.setName(employee.getName());
-				summaryDto.setEmployeeStatus(employee.getEmployeeStatus());
-				summaryDto.setContactNumber(employee.getContactNumber());
-				summaryDto.setEmailId(employee.getEmailId());
-				summaryDto.setDateOfJoining(employee.getDateOfJoining());
-				summaryDto.setDepartment(employee.getDepartment());
-				summaryDto.setSubDepartment(employee.getSubDepartment());
-				// summaryDto.setAssignTo(employee.getAssignTo());
-				if (employee.getDesignation() != null) {
-					summaryDto.setDesignation(employee.getDesignation());
-				} else {
-					if (candidate != null && candidate.getJobTitleDesignation() != null) {
-						summaryDto.setDesignation(candidate.getJobTitleDesignation());
-					} else {
-						summaryDto.setDesignation(candidate.getJobTitleDesignation());
+				if (summary[8] != null) {
+					String subDepartmentName = mapSubDepartment((Byte) summary[8]);
+					if (!subDepartmentName.equals(summaryNode.get("department").asText())) {
+						summaryNode.put("sub_department", subDepartmentName);
 					}
 				}
-				// summaryDto.setTotalExperience();
-				try {
-					summaryDto.setJoinedCtc(candidate.getCtc());
-				} catch (Exception e) {
-					System.out.println(e.getMessage());
+				if (summary[9] != null) {
+					summaryNode.put("manager", (String) summary[9]);
 				}
-				// summaryDto.setCurrentCtc();
+				if (summary[10] != null) {
+					Designation designation = Designation.values()[(Byte) summary[10]];
+					summaryNode.put("designation", designation.toString());
+				}
+				if (summary[11] != null) {
+					int categoryControlOrdinal = (Byte) summary[11];
+					CategoryControl[] values = CategoryControl.values();
+					if (categoryControlOrdinal >= 0 && categoryControlOrdinal < values.length) {
+						CategoryControl categoryControl = values[categoryControlOrdinal];
+						summaryNode.put("category_control", categoryControl.name());
+					}
+				}
+				if (summary[12] != null) {
+					summaryNode.put("total_experience", (String) summary[12]);
+				}
+				if (summary[13] != null) {
+					summaryNode.put("joined_ctc", ((Long) summary[13]).toString());
+				}
+				if (summary[14] != null) {
+					summaryNode.put("current_ctc", ((Long) summary[14]).toString());
+				}
+				if (summary[15] != null) {
+					summaryNode.put("service_commitment", ((Float) summary[15]).intValue());
+				}
+				if (summary[16] != null) {
+					summaryNode.put("number_of_working_days", (String) summary[16]);
+				}
+				if (summary[17] != null) {
+					summaryNode.put("next_apprisal_quater", (short) summary[17]);
+				}
+				summaryNode.put("date_of_birth", ((Date) summary[18]).toString());
+				summaryNode.put("blood_group", (Byte) summary[19]);
+				summaryNode.put("fathers_name", (String) summary[20]);
+				summaryNode.put("adhar_card_no", (String) summary[21]);
+				summaryNode.put("pan_card_no", (String) summary[22]);
+				summaryNode.put("uan_number", (String) summary[23]);
+				summaryNode.put("account_no", (String) summary[24]);
+				if (summary[25] != null) {
+					summaryNode.put("resignation_date", ((Date) summary[25]).toString());
+				}
+				summaryNode.put("last_working_day", (String) summary[26]);
+				summaryNode.put("qualification", (String) summary[27]);
+				summaryNode.put("end_date", ((Date) summary[28]).toString());
+				summaryNode.put("stream", (String) summary[29]);
+				summaryNode.put("candidate_id", ((Long) summary[30]).toString());
 
-				try {
-					summaryDto.setServiceCommitment(candidate.getServiceCommitment());
-				} catch (Exception e) {
-					// TODO: handle exception
-				} // summaryDto.setNumberOfWorkingDays();
-					// summaryDto.setNextApprisalQuater();
-				summaryDto.setDateOfBirth(details.getPersonalDetails().getDateOfBirth());
-				summaryDto.setBloodGroup(details.getPersonalDetails().getBloodGroup());
-				summaryDto.setFatherName(details.getPersonalDetails().getFathersName());
-				// summaryDto.setEmergencyContact();
-				summaryDto.setPermanentAddress((details.getAddressDetails().getPermanentAdd().getHouseNo()) + ", "
-						+ (details.getAddressDetails().getPermanentAdd().getArea()) + ", near "
-						+ (details.getAddressDetails().getPermanentAdd().getLandmark()) + ", "
-						+ (details.getAddressDetails().getPermanentAdd().getCity()) + ", "
-						+ (details.getAddressDetails().getPermanentAdd().getState()) + ", "
-						+ (details.getAddressDetails().getPermanentAdd().getPincode()));
-				summaryDto.setTemporaryAddress((details.getAddressDetails().getPresentAdd().getHouseNo()) + ", "
-						+ (details.getAddressDetails().getPresentAdd().getArea()) + ", near "
-						+ (details.getAddressDetails().getPresentAdd().getLandmark()) + ", "
-						+ (details.getAddressDetails().getPresentAdd().getCity()) + ", "
-						+ (details.getAddressDetails().getPresentAdd().getState()) + ", "
-						+ (details.getAddressDetails().getPresentAdd().getPincode()));
-				summaryDto.setAadharCardNumber(details.getDocumentDetails().getAdharCardNo());
-				summaryDto.setPanCardNumber(details.getDocumentDetails().getPanCardNo());
-				// summaryDto.setUanNumber();
-				summaryDto.setBankAccountNumber(details.getBankDetails().getAccountNo());
-				summaryDto.setQualification(educations.get(0).getQualification());
-				summaryDto.setSpecialization(educations.get(0).getStream());
-				summaryDto.setYearOfPassout(educations.get(0).getEndDate().getYear());
-				// summaryDto.setResignationDate();
-				// summaryDto.setActualLastWorkingDay();
-				summaryDto.setEmployeeCategory(employee.getEmployeeCategory());
-				/*
-				 * summaryDto.setRelevantExperience(employee.getRelevantExperience());
-				 * summaryDto.setWorkLocation(employee.getWorkLocation());
-				 */
-				summaryDtoList.add(summaryDto);
+				summaryArray.add(summaryNode);
+
 			}
-
+			String jsonData = objectMapper.writeValueAsString(summaryArray);
+			return jsonData;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
 
-		return summaryDtoList;
+	}
+
+	public EmployeeStatus getEmployeeStatus(int statusValue) {
+		return (statusValue == 0) ? EmployeeStatus.Active : EmployeeStatus.Inactive;
+	}
+
+	public EmployeeCategory getEmployeeCategory(int categoryValue) {
+		switch (categoryValue) {
+		case 0:
+			return EmployeeCategory.Working;
+		case 1:
+			return EmployeeCategory.WalkOut;
+		case 2:
+			return EmployeeCategory.Terminated;
+		case 3:
+			return EmployeeCategory.Absconded;
+		case 4:
+			return EmployeeCategory.NotReporting;
+		case 5:
+			return EmployeeCategory.Bench;
+		case 6:
+			return EmployeeCategory.LongLeave;
+		case 7:
+			return EmployeeCategory.Contractual;
+		case 8:
+			return EmployeeCategory.ProbationPeriod;
+		case 9:
+			return EmployeeCategory.TrainingPeriod;
+		case 10:
+			return EmployeeCategory.NoticePeriod;
+		default:
+			return null;
+		}
+	}
+
+	private String mapDepartment(byte value) {
+		for (Departments department : Departments.values()) {
+			for (Departments.Department subDepartment : department.getSubdepartments()) {
+				if (subDepartment.ordinal() == value) {
+					return department.name();
+				}
+			}
+		}
+		return null;
+	}
+
+	private String mapSubDepartment(byte value) {
+		for (Departments department : Departments.values()) {
+			for (Departments.Department subDepartment : department.getSubdepartments()) {
+				if (subDepartment.ordinal() == value) {
+					return subDepartment.name();
+				}
+			}
+		}
+		return null;
+	}
+
+	public static String getDesignation(int ordinal) {
+		Designation[] designations = Designation.values();
+		if (ordinal >= 0 && ordinal < designations.length) {
+			return designations[ordinal].toString();
+		} else {
+			return null;
+		}
 	}
 
 	@Override

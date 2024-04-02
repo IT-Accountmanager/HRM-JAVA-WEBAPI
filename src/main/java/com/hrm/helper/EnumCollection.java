@@ -142,21 +142,25 @@ public class EnumCollection {
 	public enum Half {
 		First_Half, Second_Half
 	}
-	
+
 	public enum CategoryControll {
-		User,Manager,Admin,SuperAdmin
+		User, Manager, Admin, SuperAdmin
 	}
-	
+
 	public enum Relationship {
-		Mother,Father,Sister,Brother,Wife,Husband
+		Mother, Father, Sister, Brother, Wife, Husband
 	}
 
 	public enum CategoryControl {
 		USER, MANAGER, ADMIN, SUPER_ADMIN
 	}
-	
+
 	public enum LeaveStatus {
-		REJECTED,APPROVED,PENDING
+		REJECTED, APPROVED, PENDING
+	}
+
+	public enum AddressType {
+		T, P
 	}
 
 }

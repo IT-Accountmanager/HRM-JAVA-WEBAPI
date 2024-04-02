@@ -49,11 +49,11 @@ public class SummaryController {
 	// --------------------VIEW ALL EMPLOYEE IN SUMMARY TABLE---------------
 
 	@GetMapping("/getAll")
-	public ResponseEntity<List<SummaryDto>> getAllSummary() {
+	public String getAllSummary() {
 
-		List<SummaryDto> allSummary = this.summaryService.getAll();
+		String allSummary = this.summaryService.getAll();
 
-		return new ResponseEntity<List<SummaryDto>>(allSummary, HttpStatus.OK);
+		return allSummary;
 	}
 
 	// ----------------------Import-------------------------------
@@ -233,6 +233,5 @@ public class SummaryController {
 	public ManagerType[] getManagerTypeList() {
 		return ManagerType.values();
 	}
-	
 
 }

@@ -20,7 +20,7 @@ import com.hrm.payloads.WorkInfoDto;
 
 public interface ISummaryService {
 
-	List<SummaryDto> getAll();
+	String getAll();
 
 	EmployeeViewDto getSummaryByCandidateId(long candidateId);
 
