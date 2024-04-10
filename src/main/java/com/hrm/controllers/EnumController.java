@@ -1,5 +1,7 @@
 package com.hrm.controllers;
 
+import java.time.Month;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,14 +74,28 @@ public class EnumController {
 	public Relationship[] getRelationship() {
 		return Relationship.values();
 	}
-	
+
 	@GetMapping("/half")
 	public Half[] getHalf() {
 		return Half.values();
 	}
-	
+
 	@GetMapping("/leavetype")
 	public LeaveType[] getLeaveType() {
 		return LeaveType.values();
+	}
+
+	@GetMapping("/months")
+	public Month[] getMonths() {
+		return Month.values();
+	}
+
+	@GetMapping("/years")
+	public int[] getYears() {
+		int[] years = new int[11]; 
+		for (int i = 0; i < years.length; i++) {
+			years[i] = 2020 + i;
+		}
+		return years;
 	}
 }

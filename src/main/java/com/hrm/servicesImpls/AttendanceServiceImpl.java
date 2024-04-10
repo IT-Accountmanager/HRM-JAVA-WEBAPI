@@ -631,9 +631,15 @@ public class AttendanceServiceImpl implements IAttendanceService {
 //	}
 
 	@Override
-	public List<Object[]> findAttendanceByManagerAndMonth(String managerId, String month) {
+	/*
+	 * <<<<<<< HEAD public List<Object[]> findAttendanceByManagerAndMonth(String
+	 * managerId, String month) { try { Month targetMonth =
+	 * Month.valueOf(month.toUpperCase()); =======
+	 */
+	public List<ManagerAttendanceViewDto> findAttendanceByManagerAndMonth(String managerId, String month) {
 		try {
 			Month targetMonth = Month.valueOf(month.toUpperCase());
+//>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
 
 			List<Object[]> attendanceData = attendanceRepository.findAttendanceByManagerAndMonth(managerId, month);
 
@@ -641,17 +647,33 @@ public class AttendanceServiceImpl implements IAttendanceService {
 			for (Object[] data : attendanceData) {
 				ManagerAttendanceViewDto attendanceDto = new ManagerAttendanceViewDto();
 
+				/*
+				 * <<<<<<< HEAD attendanceDto.setEmployeeId((String) data[0]);
+				 * attendanceDto.setEmployeeName((String) data[1]); //
+				 * attendanceDto.setDepartment((Departments) data[2]); //
+				 * attendanceDto.setMonthlyAppliedHoursForBilling((String) data[3]); //
+				 * attendanceDto.setPresentDays((String) data[4]);
+				 * attendanceDto.setMonth(targetMonth); =======
+				 */
 				attendanceDto.setEmployeeId((String) data[0]);
 				attendanceDto.setEmployeeName((String) data[1]);
-//	            attendanceDto.setDepartment((Departments) data[2]);
-//	            attendanceDto.setMonthlyAppliedHoursForBilling((String) data[3]);
-//	            attendanceDto.setPresentDays((String) data[4]);
+//	          attendanceDto.setDepartment((Departments) data[2]);
+//	          attendanceDto.setMonthlyAppliedHoursForBilling((String) data[3]);
+//	          attendanceDto.setPresentDays((String) data[4]);
 				attendanceDto.setMonth(targetMonth);
+//>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
 
 				attendanceDtoList.add(attendanceDto);
 			}
 
-			return attendanceData;
+			/*
+			 * <<<<<<< HEAD return attendanceData; } catch (IllegalArgumentException ex) {
+			 * logger.error("Invalid month provided: {}", month); return
+			 * Collections.emptyList(); } catch (Exception ex) {
+			 * logger.error("An error occurred while fetching attendance data: {}",
+			 * ex.getMessage(), ex); return Collections.emptyList(); } =======
+			 */
+			return attendanceDtoList;
 		} catch (IllegalArgumentException ex) {
 			logger.error("Invalid month provided: {}", month);
 			return Collections.emptyList();
@@ -659,6 +681,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 			logger.error("An error occurred while fetching attendance data: {}", ex.getMessage(), ex);
 			return Collections.emptyList();
 		}
+//>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
 	}
 
 	@Override

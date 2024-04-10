@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -40,6 +42,7 @@ import com.hrm.repositories.IAttendanceRepository;
 import com.hrm.repositories.IEmployeeRepository;
 import com.hrm.repositories.IOnboardingRepository;
 import com.hrm.repositories.IProfileRepository;
+import com.hrm.services.IAttendanceService;
 import com.hrm.services.IOnboardingService;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
@@ -67,6 +70,8 @@ public class OnboardingServiceImpl implements IOnboardingService {
 
 	@Autowired
 	IAttendanceRepository attendanceRepository;
+
+	private static final Logger logger = LoggerFactory.getLogger(OnboardingServiceImpl.class);
 
 	/*
 	 * @Override public String createOnboarding(Onboarding onboarding) { try {
@@ -502,60 +507,83 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	@Override
 	public UserLoginResponseDto authenticate(AuthenticateUserDto authenticateUserDto) {
 
-		UserLoginResponseDto userLoginResponseDto = new UserLoginResponseDto();
+		try {
+			logger.info("Start of authenticate");
 
-		String username = authenticateUserDto.getUsername();
-		String password = authenticateUserDto.getPassword();
+			UserLoginResponseDto userLoginResponseDto = new UserLoginResponseDto();
 
-		Onboarding user = null;
+			String username = authenticateUserDto.getUsername();
+			String password = authenticateUserDto.getPassword();
 
-		if (isValidEmail(username)) {
-			user = onboardingRepository.findByEmailIdOrContactNumber(username, 0L);
-		} else {
-			try {
-				long contactNumber = Long.parseLong(username);
-				user = onboardingRepository.findByEmailIdOrContactNumber("", contactNumber);
-			} catch (NumberFormatException e) {
-				userLoginResponseDto.setMessage(e.getMessage());
-				return userLoginResponseDto;
+			Onboarding user;
+
+			if (isValidEmail(username)) {
+				logger.debug("Authenticating for Email {}", username);
+				user = onboardingRepository.findByEmailId(username);
+				logger.debug("User {}", user.getEmailId());
+				logger.debug("Password", user.getPassword());
+
+			} else {
+				logger.debug("Authenticating for contact no {}", username);
+
+				try {
+					long contactNumber = Long.parseLong(username);
+					user = onboardingRepository.findByContactNumber(contactNumber);
+				} catch (NumberFormatException e) {
+					userLoginResponseDto.setMessage(e.getMessage());
+					return userLoginResponseDto;
+				}
 			}
-		}
 
-		if (user != null && user.getPassword().equals(password)) {
-			Employee employee = this.employeeRepository.findByCandidateId(user.getCandidateId());
+			if (user != null && user.getPassword().equals(password)) {
+				logger.debug("Found valid user {}", user.getCandidateId());
 
-			if (employee != null) {
-				userLoginResponseDto.setMessage("Authenticated!");
-				userLoginResponseDto.setCandidateId(user.getCandidateId());
+				Employee employee = this.employeeRepository.findByCandidateId(user.getCandidateId());
 
-				LocalDate today = LocalDate.now();
-				Attendance toDaysAttendance = this.attendanceRepository
-						.findByEmployeeIdAndDate(employee.getEmployeeId(), today);
+				logger.debug("Found valid employee {}", employee);
 
-				if (toDaysAttendance != null && isExisted(toDaysAttendance.getOutTime())) {
-					userLoginResponseDto.setDuration("00:00:00");
-				} else {
-					Duration duration = Duration.ZERO;
-					if (toDaysAttendance != null) {
-						duration = Duration.between(toDaysAttendance.getInTime(), LocalDateTime.now());
+				if (employee != null) {
+					userLoginResponseDto.setMessage("Authenticated!");
+					userLoginResponseDto.setCandidateId(user.getCandidateId());
+
+					LocalDate today = LocalDate.now();
+					Attendance toDaysAttendance = this.attendanceRepository
+							.findByEmployeeIdAndDate(employee.getEmployeeId(), today);
+
+					logger.debug("Todays Attendance {}", toDaysAttendance);
+
+					if (toDaysAttendance != null && isExisted(toDaysAttendance.getOutTime())) {
+						userLoginResponseDto.setDuration("00:00:00");
+					} else {
+						Duration duration = Duration.ZERO;
+						if (toDaysAttendance != null) {
+							duration = Duration.between(toDaysAttendance.getInTime(), LocalDateTime.now());
+						}
+						long hours = duration.toHours();
+						long min = duration.minusHours(hours).toMinutes();
+						long sec = duration.minusHours(hours).minusMinutes(min).getSeconds();
+
+						String formattedDuration = String.format("%02d:%02d:%02d", hours, min, sec);
+						userLoginResponseDto.setDuration(formattedDuration);
 					}
-					long hours = duration.toHours();
-					long min = duration.minusHours(hours).toMinutes();
-					long sec = duration.minusHours(hours).minusMinutes(min).getSeconds();
-
-					String formattedDuration = String.format("%02d:%02d:%02d", hours, min, sec);
-					userLoginResponseDto.setDuration(formattedDuration);
+				} else {
+					userLoginResponseDto.setMessage("Authenticated!");
+					userLoginResponseDto.setDuration("00:00:00");
+					userLoginResponseDto.setCandidateId(user.getCandidateId());
 				}
 			} else {
-				userLoginResponseDto.setMessage("Authenticated!");
+				userLoginResponseDto.setMessage("Not Authenticated!");
 				userLoginResponseDto.setDuration("00:00:00");
-				userLoginResponseDto.setCandidateId(user.getCandidateId());
 			}
-		} else {
-			userLoginResponseDto.setMessage("Not Authenticated!");
-			userLoginResponseDto.setDuration("00:00:00");
+			return userLoginResponseDto;
+
+		} catch (Exception e) {
+			e.getStackTrace();
+			logger.error("Error In Autheticate ()", e);
+
 		}
-		return userLoginResponseDto;
+
+		return null;
 	}
 
 	private boolean isExisted(LocalTime outTime) {

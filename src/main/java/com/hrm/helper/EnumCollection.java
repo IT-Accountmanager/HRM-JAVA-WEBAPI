@@ -163,4 +163,22 @@ public class EnumCollection {
 		T, P
 	}
 
+	public enum Year {
+		YEAR_2022(2022), YEAR_2023(2023), YEAR_2024(2024), YEAR_2025(2025), YEAR_2026(2026), YEAR_2027(2027),
+		YEAR_2028(2028), YEAR_2029(2029), YEAR_2030(2030);
+
+		private final int year;
+
+		Year(int year) {
+			this.year = year;
+		}
+
+		public int getYear() {
+			return year;
+		}
+	}
+
+	public enum Month {
+		JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER
+	}
 }

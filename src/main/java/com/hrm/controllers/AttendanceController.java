@@ -172,9 +172,24 @@ public class AttendanceController {
 	}
 
 	@GetMapping("/manager/{managerId}/{month}")
+//<<<<<<< HEAD
+	/*
+	 * public ResponseEntity<?> getAttendanceByManagerAndMonth(@PathVariable String
+	 * managerId,
+	 * 
+	 * @PathVariable String month) { List<Object[]> attendanceDtoList =
+	 * attendanceService.findAttendanceByManagerAndMonth(managerId, month); if
+	 * (!attendanceDtoList.isEmpty()) { return new
+	 * ResponseEntity<>(attendanceDtoList, HttpStatus.OK); } else { String message =
+	 * "No attendance data found for the manager with ID " + managerId +
+	 * " in the month of " + month; return new ResponseEntity<>(message,
+	 * HttpStatus.NOT_FOUND); }
+	 */
+//=======
 	public ResponseEntity<?> getAttendanceByManagerAndMonth(@PathVariable String managerId,
 			@PathVariable String month) {
-		List<Object[]> attendanceDtoList = attendanceService.findAttendanceByManagerAndMonth(managerId, month);
+		List<ManagerAttendanceViewDto> attendanceDtoList = attendanceService.findAttendanceByManagerAndMonth(managerId,
+				month);
 		if (!attendanceDtoList.isEmpty()) {
 			return new ResponseEntity<>(attendanceDtoList, HttpStatus.OK);
 		} else {
@@ -182,6 +197,7 @@ public class AttendanceController {
 					+ month;
 			return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
 		}
+//>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
 	}
 
 	@GetMapping("/getmanagerAttendance/{employeeId}/{date}")

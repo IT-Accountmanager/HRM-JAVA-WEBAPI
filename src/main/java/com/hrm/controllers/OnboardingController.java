@@ -1,6 +1,9 @@
 package com.hrm.controllers;
 
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +41,8 @@ public class OnboardingController {
 
 	@Autowired
 	IOnboardingService onboardingService;
+
+	public static final Logger logger = LoggerFactory.getLogger(OnboardingController.class);
 
 	/*
 	 * @PostMapping("/post") public ResponseEntity<String>
@@ -124,63 +129,30 @@ public class OnboardingController {
 		return new ResponseEntity<String>(result, HttpStatus.CREATED);
 	}
 
-	/*
-	 * @GetMapping("password/{candidateId}") public
-	 * ResponseEntity<AuthenticateUserDto> get(@PathVariable long candidateId) {
-	 * AuthenticateUserDto result = this.onboardingService.getPassword(candidateId);
-	 * return new ResponseEntity<AuthenticateUserDto>(result, HttpStatus.OK); }
-	 */
-
-//<<<<<<< HEAD
-	/*
-	 * @PostMapping("authenticate") public ResponseEntity<UserLoginResponseDto>
-	 * authenticate(@RequestBody AuthenticateUserDto authenticateUserDto) {
-	 * UserLoginResponseDto result = null;
-	 * 
-	 * if (authenticateUserDto != null) { result =
-	 * this.onboardingService.authenticate(authenticateUserDto);
-	 * 
-	 * if (result != null) { return new ResponseEntity<>(result,
-	 * HttpStatus.ACCEPTED); } else { return new
-	 * ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED); } } else
-	 * { return new ResponseEntity<>("Invalid input", HttpStatus.BAD_REQUEST); } }
-	 */
-
-//	  @PostMapping("authenticate") 
-//	  public ResponseEntity<UserLoginResponseDto>
-//	  authenticate(@RequestBody AuthenticateUserDto authenticateUserDto) { String
-//	  result = null;
-//	  
-//	  if (authenticateUserDto != null) { result =
-//	  this.onboardingService.authenticate(authenticateUserDto);
-//	  
-//	  if (result != null) { 
-//		  return new ResponseEntity<>(result,HttpStatus.ACCEPTED);
-//		  }
-//	  else { 
-//		  return new ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED);
-//		  } 
-//	  } 
-//	  else
-//	  { 
-//		  return new ResponseEntity<>("Invalid input", HttpStatus.BAD_REQUEST); }
-//	  }
-//	 
-//>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
-
 	@PostMapping("/authenticate")
 	public ResponseEntity<?> authenticate(@RequestBody AuthenticateUserDto authenticateUserDto) {
-		if (authenticateUserDto == null) {
-			return new ResponseEntity<>("Invalid input", HttpStatus.BAD_REQUEST);
-		}
+		try {
+			if (authenticateUserDto == null) {
+				logger.error("Invalid Input : AuthenticateUserDto is null");
+				return new ResponseEntity<>("Invalid input", HttpStatus.BAD_REQUEST);
+			}
 
-		UserLoginResponseDto result = onboardingService.authenticate(authenticateUserDto);
+			UserLoginResponseDto result = onboardingService.authenticate(authenticateUserDto);
 
-		if (result != null) {
-			return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
-		} else {
-			return new ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED);
+			if (result != null) {
+				logger.info("Candidate Authenticate Successfully : {}", result.getCandidateId());
+				return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+			} else {
+				logger.warn("Authentication failed for : {}", result);
+				logger.warn("Authentication failed for : {}", authenticateUserDto.getUsername());
+				return new ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED);
+			}
+		} catch (Exception e) {
+			logger.error("An error occurred during authentication: {}", e.getMessage(), e);
+
 		}
+		return null;
+
 	}
 
 	@GetMapping("employee/{employeeId}")

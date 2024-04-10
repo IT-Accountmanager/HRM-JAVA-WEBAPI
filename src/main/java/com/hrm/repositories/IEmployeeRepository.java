@@ -8,9 +8,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.hrm.helper.EnumCollection.Departments;
+import com.hrm.helper.EnumCollection.Departments.Department;
 import com.hrm.helper.EnumCollection.EmployeeStatus;
 import com.hrm.models.Employee;
 import com.hrm.models.Onboarding;
+import com.hrm.payloads.SubDepartmentAndName;
 
 @Repository
 public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
@@ -66,7 +68,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 	 * "INNER JOIN bank_details bd ON p.bank_det_id = bd.id", nativeQuery = true)
 	 */
 
-	@Query(value = "SELECT e.employee_id, e.name AS employee_name, e.employee_status, e.employee_category, e.contact_number, e.email_id, e.date_of_joining, e.department, e.sub_department, m.name AS manager_name, e.designation, e.category_control, e.total_experience, e.joined_ctc, e.current_ctc, e.service_commitment, e.number_of_working_days, e.next_apprisal_quater, pd.date_of_birth, pd.blood_group, pd.fathers_name, dd.adhar_card_no, dd.pan_card_no, e.uan_number, bd.account_no, e.resignation_date, e.last_working_day, ed.qualification, ed.end_date, ed.stream,e.candidate_id\r\n"
+	@Query(value = "SELECT e.employee_id, e.name AS employee_name, e.employee_status, e.employee_category, e.contact_number, e.email_id, e.date_of_joining, e.department, e.sub_department, m.name AS manager_name, e.designation, e.category_control, e.total_experience, e.joined_ctc, e.current_ctc, e.service_commitment, e.number_of_working_days, e.next_apprisal_quater, pd.date_of_birth, pd.blood_group, pd.fathers_name, dd.adhar_card_no, dd.pan_card_no, e.uan_number, bd.account_no, e.resignation_date, e.last_working_day, ed.qualification, ed.end_date, ed.stream,e.candidate_id, e.manager\r\n"
 			+ "FROM Employee e\r\n" + "INNER JOIN\r\n" + "    personal p ON e.candidate_id = p.candidate_id\r\n"
 			+ "INNER JOIN\r\n" + "    personal_details pd ON p.pdid = pd.pdid\r\n" + "INNER JOIN\r\n"
 			+ "    document_details dd ON p.doc_id = dd.doc_id\r\n" + "INNER JOIN\r\n"
@@ -77,5 +79,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 			+ "    education ed ON p.candidate_id = ed.candidate_id AND ed.end_date = max_edu.max_end_date LEFT JOIN\r\n"
 			+ "    Employee m ON e.manager = m.employee_id;", nativeQuery = true)
 	List<Object[]> findSummaryData();
+
+	Employee findSubDepartmentAndNameByEmployeeId(String employeeId);
 
 }

@@ -9,6 +9,7 @@ import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.AttendanceEmployeeDto;
 import com.hrm.payloads.BillableHoursDto;
 import com.hrm.payloads.ManagerAttendanceEditDto;
+import com.hrm.payloads.ManagerAttendanceViewDto;
 import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.UserAttendanceDto;
 
@@ -52,10 +53,21 @@ public interface IAttendanceService {
 			String employeeId);
 
 	String getDuration(String employeeId);
+	/*
+	 * <<<<<<< HEAD
+	 * 
+	 * List<Object[]> findAttendanceByManagerAndMonth(String managerId, String
+	 * month);
+	 * 
+	 * =======
+	 */
 
-	List<Object[]> findAttendanceByManagerAndMonth(String managerId, String month);
+	List<ManagerAttendanceViewDto> findAttendanceByManagerAndMonth(String managerId, String month);
 
+//>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
 	ManagerAttendanceEditDto getManagerAttendance(String employeeId, LocalDate date);
+
+//	List<Object[]> findAttendanceByManagerAndMonth(String managerId, String month);
 
 //	ApplyLeaveDto addLeave(ApplyLeaveDto leaveDto);
 

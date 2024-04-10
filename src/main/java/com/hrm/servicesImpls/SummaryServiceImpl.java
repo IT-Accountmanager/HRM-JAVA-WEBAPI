@@ -288,6 +288,7 @@ public class SummaryServiceImpl implements ISummaryService {
 				summaryNode.put("end_date", ((Date) summary[28]).toString());
 				summaryNode.put("stream", (String) summary[29]);
 				summaryNode.put("candidate_id", ((Long) summary[30]).toString());
+				summaryNode.put("Manager_id", (String) summary[31]);
 
 				summaryArray.add(summaryNode);
 
@@ -380,7 +381,7 @@ public class SummaryServiceImpl implements ISummaryService {
 			employeeDto.setDepartment(employee.getDepartment());
 			employeeDto.setEmployeeStatus(employee.getEmployeeStatus());
 			// employeeDto.setRelevantExperience(employee.getRelevantExperience());
-			// employeeDto.setAssignTo(employee.getAssignTo());
+			employeeDto.setManager(employee.getManager());
 
 			return employeeDto;
 		}

@@ -14,3 +14,10 @@ address details tbl
 	
 <= 9 hr S
 >= 10 hr P	
+
+
+
+1. only man id -> cur yr and month
+2. only man id -> cur yr present and month not present
+3. only man id -> cur yr not present and month present -> curr year and given month
+4. only man id, emp id -> cur yr not present and month present -> curr year and given month
