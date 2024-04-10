@@ -156,8 +156,10 @@ public class LeaveManagementServiceImpl implements LeaveManagementService {
 		if (month != null) {
 //			year = year.withMonth(month.getValue());
 			year = Year.now();
-
+		} else {
+			month = (LocalDate.now()).getMonth();
 		}
+
 //		int _year = year.getYear();
 //		int _month = year.getMonthValue();
 		int _year = year.getValue();

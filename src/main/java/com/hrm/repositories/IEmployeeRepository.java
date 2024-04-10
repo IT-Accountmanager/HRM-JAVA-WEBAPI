@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.hrm.helper.EnumCollection.Departments;
@@ -12,6 +13,7 @@ import com.hrm.helper.EnumCollection.Departments.Department;
 import com.hrm.helper.EnumCollection.EmployeeStatus;
 import com.hrm.models.Employee;
 import com.hrm.models.Onboarding;
+import com.hrm.payloads.DirectReportsDto;
 import com.hrm.payloads.SubDepartmentAndName;
 
 @Repository
@@ -81,5 +83,8 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 	List<Object[]> findSummaryData();
 
 	Employee findSubDepartmentAndNameByEmployeeId(String employeeId);
+
+	@Query(value = "SELECT e.name, e.sub_department, e.designation, e.manager_from, e.manager_to FROM employee e WHERE e.manager =:managerId", nativeQuery = true)
+	List<Object[]> findByManagerId(@Param("managerId") String managerId);
 
 }

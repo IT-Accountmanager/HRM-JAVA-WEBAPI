@@ -1,5 +1,7 @@
 package com.hrm.servicesImpls;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
+import com.hrm.helper.EnumCollection.Departments;
+import com.hrm.helper.EnumCollection.Departments.Department;
+import com.hrm.helper.EnumCollection.Designation;
 import com.hrm.models.Employee;
 import com.hrm.models.Work;
 import com.hrm.payloads.DirectReportsDto;
@@ -128,21 +133,45 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 
 	@Override
 	public List<DirectReportsDto> getDirectReports(String employeeId) {
-		return Optional.ofNullable(this.employeeRepository.findByEmployeeId(employeeId)).map(employee -> {
-			String manager = employee.getManager();
-			List<Employee> employeesUnderManager = this.employeeRepository.findAllByManager(manager);
 
-			return employeesUnderManager.stream().map(directReport -> {
-				DirectReportsDto directReportsDto = new DirectReportsDto();
-				directReportsDto.setName(directReport.getName());
-				directReportsDto.setDesignation(directReport.getDesignation());
-				directReportsDto.setSubDepartment(directReport.getSubDepartment());
-				directReportsDto.setTo(directReport.getManagerTo());
-				directReportsDto.setFrom(directReport.getManagerFrom());
+		List<DirectReportsDto> directReportsDto = new ArrayList<DirectReportsDto>();
 
-				return directReportsDto;
-			}).collect(Collectors.toList());
-		}).orElse(Collections.emptyList());
+		String managerId = employeeId;
+		List<Object[]> directReportsData = this.employeeRepository.findByManagerId(managerId);
+
+		for (Object[] data : directReportsData) {
+			DirectReportsDto directReport = new DirectReportsDto();
+			directReport.setName((String) data[0]);
+			Departments.Department department = mapByteToDepartment((Byte) data[1]);
+			directReport.setSubDepartment(department);
+
+			Designation designation = mapByteToDesignation((Byte) data[2]);
+			directReport.setDesignation(designation);
+			LocalDate fromDate = (data[3] != null) ? ((Date) data[3]).toLocalDate() : null;
+			LocalDate toDate = (data[4] != null) ? ((Date) data[4]).toLocalDate() : null;
+
+			directReport.setFrom(fromDate);
+			directReport.setTo(toDate);
+
+			directReportsDto.add(directReport);
+		}
+		return directReportsDto;
+
+//		return Optional.ofNullable(this.employeeRepository.findByEmployeeId(employeeId)).map(employee -> {
+//			String manager = employee.getManager();
+//			List<Employee> employeesUnderManager = this.employeeRepository.findAllByManager(manager);
+//
+//			return employeesUnderManager.stream().map(directReport -> {
+//				DirectReportsDto directReportsDto = new DirectReportsDto();
+//				directReportsDto.setName(directReport.getName());
+//				directReportsDto.setDesignation(directReport.getDesignation());
+//				directReportsDto.setSubDepartment(directReport.getSubDepartment());
+//				directReportsDto.setTo(directReport.getManagerTo());
+//				directReportsDto.setFrom(directReport.getManagerFrom());
+//
+//				return directReportsDto;
+//			}).collect(Collectors.toList());
+//		}).orElse(Collections.emptyList());
 	}
 
 	/*
@@ -159,6 +188,70 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 	 * return " Resignation Info of Employee Id : " + employeeId +
 	 * " is added Successfully !"; }
 	 */
+
+	private Departments.Department mapByteToDepartment(Byte departmentId) {
+
+		if (departmentId == null) {
+			return null;
+		}
+		int id = departmentId.intValue();
+		switch (id) {
+		case 0:
+			return Departments.Department.DIGITAL_FACTORY_SOLUTION;
+		case 1:
+			return Departments.Department.INDUSTRIAL_AUTOMATION_SOLUTION;
+		case 2:
+			return Departments.Department.ENGINEERING_DESIGN_SOLUTION;
+		case 3:
+			return Departments.Department.BUILDING_INFORMATION_MODELING;
+		case 4:
+			return Departments.Department.TALENT_ACQUISITION;
+		case 5:
+			return Departments.Department.HUMAN_RESOURCE;
+		case 6:
+			return Departments.Department.FINANCE;
+		case 7:
+			return Departments.Department.SALES;
+		case 8:
+			return Departments.Department.SYSTEM_ADMIN;
+		case 9:
+			return Departments.Department.INFORMATION_TECHNOLOGY;
+		case 10:
+			return Departments.Department.DIGITAL_MARKETING;
+		case 11:
+			return Departments.Department.DEVELOPMENT;
+		default:
+			throw new IllegalArgumentException("Invalid department ID: " + id);
+		}
+	}
+
+	private Designation mapByteToDesignation(Byte designationId) {
+		int id = designationId.intValue();
+		switch (id) {
+		case 0:
+			return Designation.JUNIOR_ENGINEER;
+		case 1:
+			return Designation.JUNIOR_EXECUTIVE;
+		case 2:
+			return Designation.ASSOCIATE_ENGINEER;
+		case 3:
+			return Designation.ASSOCIATE_EXECUTIVE;
+		case 4:
+			return Designation.SENIOR_ENGINEER;
+		case 5:
+			return Designation.SENIOR_EXECUTIVE;
+		case 6:
+			return Designation.TEAM_LEAD;
+		case 7:
+			return Designation.PROJECT_MANAGER;
+		case 8:
+			return Designation.PROGRAM_MANAGER;
+		case 9:
+			return Designation.CXO;
+		default:
+			throw new IllegalArgumentException("Invalid designation ID: " + id);
+		}
+	}
 
 	@Override
 	public String addUserResignationInfo(UResignationEditDto resignationDto, String employeeId) {
