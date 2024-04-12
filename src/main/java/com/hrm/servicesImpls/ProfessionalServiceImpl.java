@@ -117,8 +117,8 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 
 		List<ReportingManagerDto> reportingManagerDto = new ArrayList<ReportingManagerDto>();
 
-		List<Object[]> managerByEmployeeId = this.employeeRepository.findReportingManagerByEmployeeId(employeeId);
 
+		List<Object[]> managerByEmployeeId = this.employeeRepository.findReportingManagerByEmployeeId(employeeId);
 		for (Object[] objects : managerByEmployeeId) {
 			ReportingManagerDto reportingManager = new ReportingManagerDto();
 			reportingManager.setManager((String) objects[0]);
@@ -143,6 +143,35 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 
 		return reportingManagerDto;
 	}
+
+//	@Override
+//	public List<ReportingManagerDto> getReportingManager(String employeeId) {
+//	    Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
+//
+//	    List<ReportingManagerDto> result = new ArrayList<>();
+//
+//	    if (employee != null) {
+//	        ReportingManagerDto reportingManagerDto = new ReportingManagerDto();
+//	        
+//	        // Retrieve manager's details and set them in the DTO
+//	        Employee manager = this.employeeRepository.findByEmployeeId(employee.getManager());
+//	        if (manager != null) {
+//	            reportingManagerDto.setManager(manager.getName()); // Assuming getName() returns the manager's name
+//	        } else {
+//	            reportingManagerDto.setManager("Unknown Manager");
+//	        }
+//	        
+//	        reportingManagerDto.setManagerType(employee.getManagerType());
+//	        reportingManagerDto.setDepartment(employee.getDepartment());
+//	        reportingManagerDto.setDesignation(employee.getDesignation());
+//	        reportingManagerDto.setFrom(employee.getManagerFrom());
+//	        reportingManagerDto.setTo(employee.getManagerTo());
+//
+//	        result.add(reportingManagerDto);
+//	    }
+//
+//	    return result;
+//	}
 
 	@Override
 	public List<DirectReportsDto> getDirectReports(String employeeId) {

@@ -28,8 +28,6 @@ public class Attendance {
 	@SequenceGenerator(name = "attendance_id_seq", initialValue = 1, allocationSize = 1, sequenceName = "attendance_id_seq")
 	private int id;
 
-	// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
-
 	@Column(name = "employee_id")
 	private String employeeId;
 	private Month month;

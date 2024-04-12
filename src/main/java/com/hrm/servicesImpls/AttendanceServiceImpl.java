@@ -8,6 +8,7 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import com.hrm.exception.ServiceException;
 import com.hrm.helper.EnumCollection.AttendanceStatus;
 import com.hrm.helper.EnumCollection.Departments;
+import com.hrm.helper.EnumCollection.Departments.Department;
 import com.hrm.helper.Format;
 import com.hrm.helper.EnumCollection.Half;
 import com.hrm.helper.EnumCollection.LeaveType;
@@ -402,7 +404,9 @@ public class AttendanceServiceImpl implements IAttendanceService {
 				// If Anomaly, set the worked hours to be equal to the regularization hours
 				attendance.setWorkHrs(difference);
 				// Set regularization request hours to zero
+
 				attendance.setRegularisationRequestHours("0");
+				// attendance.setRegularisationRequestHours(Duration.ZERO);
 			}
 
 			// Save the updated attendance record
@@ -527,30 +531,6 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		}
 	}
 
-	/*
-	 * <<<<<<< HEAD
-	 * 
-	 * @Override public ManagerAttendanceViewDto
-	 * editManagerAttendance(ManagerAttendanceViewDto managerAttendanceViewDto,
-	 * String employeeId) { Attendance managerAttendance =
-	 * this.attendanceRepository.findByEmployeeId(employeeId);
-	 * 
-	 * ManagerAttendanceViewDto updatedDto = new ManagerAttendanceViewDto();
-	 * 
-	 * managerAttendance.setApprovedHrsForBilling(managerAttendanceViewDto.
-	 * getApprovedHrsForBilling());
-	 * managerAttendance.setRemarks(managerAttendanceViewDto.getRemarks());
-	 * 
-	 * this.attendanceRepository.save(managerAttendance);
-	 * 
-	 * return updatedDto; ======= >>>>>>> branch 'ramachandra' of
-	 * https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
-	 * 
-	 * <<<<<<< HEAD }
-	 * 
-	 * =======
-	 */
-
 	@Override
 	public ManagerAttendanceEditDto editManagerAttendance(ManagerAttendanceEditDto managerAttendanceViewDto,
 			String employeeId) {
@@ -639,7 +619,6 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	public List<ManagerAttendanceViewDto> findAttendanceByManagerAndMonth(String managerId, String month) {
 		try {
 			Month targetMonth = Month.valueOf(month.toUpperCase());
-//>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
 
 			List<Object[]> attendanceData = attendanceRepository.findAttendanceByManagerAndMonth(managerId, month);
 
@@ -647,6 +626,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 			for (Object[] data : attendanceData) {
 				ManagerAttendanceViewDto attendanceDto = new ManagerAttendanceViewDto();
 
+//<<<<<<< HEAD
 				/*
 				 * <<<<<<< HEAD attendanceDto.setEmployeeId((String) data[0]);
 				 * attendanceDto.setEmployeeName((String) data[1]); //
@@ -662,18 +642,36 @@ public class AttendanceServiceImpl implements IAttendanceService {
 //	          attendanceDto.setPresentDays((String) data[4]);
 				attendanceDto.setMonth(targetMonth);
 //>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
+//=======
+				attendanceDto.setEmployeeId((String) data[0]);
+				attendanceDto.setEmployeeName((String) data[1]);
+				Department department = mapByteToDepartment((Byte) data[2]);
+				attendanceDto.setDepartment(department);
+//>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
 
+//<<<<<<< HEAD
+				/*
+				 * attendanceDtoList.add(attendanceDto); }
+				 */
+
+//=======
+				attendanceDto.setApprovedHoursForBilling((double) data[3]);
+				attendanceDto.setPresentDays((Long) data[4]);
+				attendanceDto.setMonth(targetMonth);
+//>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
+
+//<<<<<<< HEAD
+				/*
+				 * <<<<<<< HEAD return attendanceData; } catch (IllegalArgumentException ex) {
+				 * logger.error("Invalid month provided: {}", month); return
+				 * Collections.emptyList(); } catch (Exception ex) {
+				 * logger.error("An error occurred while fetching attendance data: {}",
+				 * ex.getMessage(), ex); return Collections.emptyList(); } =======
+				 */
 				attendanceDtoList.add(attendanceDto);
 			}
-
-			/*
-			 * <<<<<<< HEAD return attendanceData; } catch (IllegalArgumentException ex) {
-			 * logger.error("Invalid month provided: {}", month); return
-			 * Collections.emptyList(); } catch (Exception ex) {
-			 * logger.error("An error occurred while fetching attendance data: {}",
-			 * ex.getMessage(), ex); return Collections.emptyList(); } =======
-			 */
 			return attendanceDtoList;
+
 		} catch (IllegalArgumentException ex) {
 			logger.error("Invalid month provided: {}", month);
 			return Collections.emptyList();
@@ -682,6 +680,46 @@ public class AttendanceServiceImpl implements IAttendanceService {
 			return Collections.emptyList();
 		}
 //>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
+//=======
+	}
+
+	private Department mapByteToDepartment(Byte departmentId) {
+
+		if (departmentId == null) {
+			return null;
+
+		}
+
+		int id = departmentId.intValue();
+		switch (id) {
+		case 0:
+			return Department.DIGITAL_FACTORY_SOLUTION;
+		case 1:
+			return Department.INDUSTRIAL_AUTOMATION_SOLUTION;
+		case 2:
+			return Department.ENGINEERING_DESIGN_SOLUTION;
+		case 3:
+			return Department.BUILDING_INFORMATION_MODELING;
+		case 4:
+			return Department.TALENT_ACQUISITION;
+		case 5:
+			return Department.HUMAN_RESOURCE;
+		case 6:
+			return Department.FINANCE;
+		case 7:
+			return Department.SALES;
+		case 8:
+			return Department.SYSTEM_ADMIN;
+		case 9:
+			return Department.INFORMATION_TECHNOLOGY;
+		case 10:
+			return Department.DIGITAL_MARKETING;
+		case 11:
+			return Department.DEVELOPMENT;
+		default:
+			throw new IllegalArgumentException("Invalid Department ID:" + id);
+		}
+
 	}
 
 	@Override
