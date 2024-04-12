@@ -184,6 +184,15 @@ public class LeaveManagementServiceImpl implements LeaveManagementService {
 			}
 
 		}
+		if (employeeId != null && !employeeId.isEmpty()) {
+			if (managerId != null && !managerId.isEmpty()) {
+				allLeaveDetails = this.leaveManagementRepo.findByManagerIdAndYearOrEmployeeIdAndYear(managerId,
+						employeeId, _year + "-" + _month);
+			} else {
+				allLeaveDetails = this.leaveManagementRepo.findByEmployeeIdAndYear(employeeId, _year + "-" + _month);
+			}
+
+		}
 
 		leaveDetailsDtoList = processLeaveDetails(allLeaveDetails, leaveDetailsDtoList);
 		return leaveDetailsDtoList;

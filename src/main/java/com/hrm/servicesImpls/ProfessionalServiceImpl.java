@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import org.modelmapper.ModelMapper;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 import com.hrm.helper.EnumCollection.Departments;
 import com.hrm.helper.EnumCollection.Departments.Department;
 import com.hrm.helper.EnumCollection.Designation;
+import com.hrm.helper.EnumCollection.ManagerType;
 import com.hrm.models.Employee;
 import com.hrm.models.Work;
 import com.hrm.payloads.DirectReportsDto;
@@ -112,23 +114,34 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 
 	@Override
 	public List<ReportingManagerDto> getReportingManager(String employeeId) {
-		Employee employee = this.employeeRepository.findByEmployeeId(employeeId);
 
-		List<ReportingManagerDto> result = new ArrayList<>();
+		List<ReportingManagerDto> reportingManagerDto = new ArrayList<ReportingManagerDto>();
 
-		if (employee != null) {
-			ReportingManagerDto reportingManagerDto = new ReportingManagerDto();
-			reportingManagerDto.setManager(employee.getManager());
-			reportingManagerDto.setManagerType(employee.getManagerType());
-			reportingManagerDto.setDepartment(employee.getDepartment());
-			reportingManagerDto.setDesignation(employee.getDesignation());
-			reportingManagerDto.setFrom(employee.getManagerFrom());
-			reportingManagerDto.setTo(employee.getManagerTo());
+		List<Object[]> managerByEmployeeId = this.employeeRepository.findReportingManagerByEmployeeId(employeeId);
 
-			result.add(reportingManagerDto);
+		for (Object[] objects : managerByEmployeeId) {
+			ReportingManagerDto reportingManager = new ReportingManagerDto();
+			reportingManager.setManager((String) objects[0]);
+
+			ManagerType managerType = mapByteToManagerType((Byte) objects[1]);
+			reportingManager.setManagerType(managerType);
+
+			Departments department = mapByteToDepartment((Byte) objects[2]);
+			reportingManager.setDepartment(department);
+
+			Designation designation = mapByteToDesignation((Byte) objects[3]);
+			reportingManager.setDesignation(designation);
+
+			LocalDate from = (objects[4] != null) ? ((Date) objects[4]).toLocalDate() : null;
+			reportingManager.setFrom(from);
+			LocalDate to = (objects[5] != null) ? ((Date) objects[5]).toLocalDate() : null;
+			reportingManager.setTo(to);
+
+			reportingManagerDto.add(reportingManager);
+
 		}
 
-		return result;
+		return reportingManagerDto;
 	}
 
 	@Override
@@ -142,7 +155,7 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 		for (Object[] data : directReportsData) {
 			DirectReportsDto directReport = new DirectReportsDto();
 			directReport.setName((String) data[0]);
-			Departments.Department department = mapByteToDepartment((Byte) data[1]);
+			Departments.Department department = mapByteToSubDepartment((Byte) data[1]);
 			directReport.setSubDepartment(department);
 
 			Designation designation = mapByteToDesignation((Byte) data[2]);
@@ -156,22 +169,6 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 			directReportsDto.add(directReport);
 		}
 		return directReportsDto;
-
-//		return Optional.ofNullable(this.employeeRepository.findByEmployeeId(employeeId)).map(employee -> {
-//			String manager = employee.getManager();
-//			List<Employee> employeesUnderManager = this.employeeRepository.findAllByManager(manager);
-//
-//			return employeesUnderManager.stream().map(directReport -> {
-//				DirectReportsDto directReportsDto = new DirectReportsDto();
-//				directReportsDto.setName(directReport.getName());
-//				directReportsDto.setDesignation(directReport.getDesignation());
-//				directReportsDto.setSubDepartment(directReport.getSubDepartment());
-//				directReportsDto.setTo(directReport.getManagerTo());
-//				directReportsDto.setFrom(directReport.getManagerFrom());
-//
-//				return directReportsDto;
-//			}).collect(Collectors.toList());
-//		}).orElse(Collections.emptyList());
 	}
 
 	/*
@@ -189,7 +186,7 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 	 * " is added Successfully !"; }
 	 */
 
-	private Departments.Department mapByteToDepartment(Byte departmentId) {
+	private Departments.Department mapByteToSubDepartment(Byte departmentId) {
 
 		if (departmentId == null) {
 			return null;
@@ -221,7 +218,41 @@ public class ProfessionalServiceImpl implements IProfessionalService {
 		case 11:
 			return Departments.Department.DEVELOPMENT;
 		default:
+			throw new IllegalArgumentException("Invalid sub-department ID: " + id);
+		}
+	}
+
+	private Departments mapByteToDepartment(Byte departmentId) {
+
+		if (departmentId == null) {
+			return null;
+		}
+		int id = departmentId.intValue();
+		switch (id) {
+		case 0:
+			return Departments.MECHANICAL_ENGINEERING_SERVICES;
+		case 1:
+			return Departments.OPERATIONAL_DEPARTMENT;
+		case 2:
+			return Departments.RESEARCH_AND_DEVELOPMENT;
+		default:
 			throw new IllegalArgumentException("Invalid department ID: " + id);
+		}
+	}
+
+	private ManagerType mapByteToManagerType(Byte managerType) {
+
+		if (managerType == null) {
+			return null;
+		}
+		int id = managerType.intValue();
+		switch (id) {
+		case 0:
+			return ManagerType.PRIMARY;
+		case 1:
+			return ManagerType.SECONDARY;
+		default:
+			throw new IllegalArgumentException("Invalid manager type ID: " + id);
 		}
 	}
 

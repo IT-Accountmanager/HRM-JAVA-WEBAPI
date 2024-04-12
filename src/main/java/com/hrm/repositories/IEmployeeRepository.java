@@ -87,4 +87,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 	@Query(value = "SELECT e.name, e.sub_department, e.designation, e.manager_from, e.manager_to FROM employee e WHERE e.manager =:managerId", nativeQuery = true)
 	List<Object[]> findByManagerId(@Param("managerId") String managerId);
 
+	@Query(value = "SELECT m.name AS manager_name, e.manager_type, e.department, e.designation, e.manager_from, e.manager_to FROM employee e JOIN employee m ON e.manager = m.employee_id WHERE e.employee_id = :employeeId", nativeQuery = true)
+	List<Object[]> findReportingManagerByEmployeeId(String employeeId);
+
 }
