@@ -62,6 +62,7 @@ public class Attendance {
 	private String monthlyApprovedHoursForBilling;
 	private String remarks;
 
+
 	
 //	edited
 
@@ -121,6 +122,11 @@ public class Attendance {
 		this.monthlyLossOfPayDays = monthlyLossOfPayDays;
 	}
 
+
+
+	
+
+
 	public String getMonthlyAppliedHoursForBilling() {
 		return monthlyAppliedHoursForBilling;
 	}
@@ -128,8 +134,6 @@ public class Attendance {
 	public void setMonthlyAppliedHoursForBilling(String monthlyAppliedHoursForBilling) {
 		this.monthlyAppliedHoursForBilling = monthlyAppliedHoursForBilling;
 	}
-
-	
 
 	public String getMonthlyApprovedHoursForBilling() {
 		return monthlyApprovedHoursForBilling;

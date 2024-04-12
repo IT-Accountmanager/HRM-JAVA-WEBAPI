@@ -3,14 +3,18 @@ package com.hrm.payloads;
 import java.time.Month;
 
 import com.hrm.helper.EnumCollection.Departments;
+import com.hrm.helper.EnumCollection.Departments.Department;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 public class ManagerAttendanceViewDto {
 	private Month month;
 	private String employeeId;
 	private String employeeName;
-	private Departments department;
-	private String presentDays;
-	private String monthlyAppliedHoursForBilling;
+	private Department department;
+	private Long presentDays;
+	private double approvedHoursForBilling;
 	
 	public Month getMonth() {
 		return month;
@@ -35,29 +39,44 @@ public class ManagerAttendanceViewDto {
 	public void setEmployeeName(String employeeName) {
 		this.employeeName = employeeName;
 	}
-	public Departments getDepartment() {
+	
+
+	public Department getDepartment() {
 		return department;
 	}
 
-	public void setDepartment(Departments department) {
+	public void setDepartment(Department department) {
 		this.department = department;
 	}
 
-	public String getPresentDays() {
+	public Long getPresentDays() {
 		return presentDays;
 	}
 
-	public void setPresentDays(String presentDays) {
+	public void setPresentDays(Long presentDays) {
 		this.presentDays = presentDays;
 	}
 
-	public String getMonthlyAppliedHoursForBilling() {
-		return monthlyAppliedHoursForBilling;
+	public double getApprovedHoursForBilling() {
+		return approvedHoursForBilling;
 	}
 
-	public void setMonthlyAppliedHoursForBilling(String monthlyAppliedHoursForBilling) {
-		this.monthlyAppliedHoursForBilling = monthlyAppliedHoursForBilling;
+	public void setApprovedHoursForBilling(double approvedHoursForBilling) {
+		this.approvedHoursForBilling = approvedHoursForBilling;
 	}
+
+	
+
+//	public String getMonthlyApprovedHoursForBilling() {
+//		return monthlyApprovedHoursForBilling;
+//	}
+//
+//	public void setMonthlyApprovedHoursForBilling(String monthlyApprovedHoursForBilling) {
+//		this.monthlyApprovedHoursForBilling = monthlyApprovedHoursForBilling;
+//	}
+	
+	
+
 
 
 

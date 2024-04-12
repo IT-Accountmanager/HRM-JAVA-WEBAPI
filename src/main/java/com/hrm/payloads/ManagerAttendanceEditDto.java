@@ -19,6 +19,8 @@ public class ManagerAttendanceEditDto {
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
+
+	
 	public String getApprovedHrsForBilling() {
 		return approvedHrsForBilling;
 	}

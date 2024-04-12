@@ -8,6 +8,7 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import com.hrm.exception.ServiceException;
 import com.hrm.helper.EnumCollection.AttendanceStatus;
 import com.hrm.helper.EnumCollection.Departments;
+import com.hrm.helper.EnumCollection.Departments.Department;
 import com.hrm.helper.Format;
 import com.hrm.helper.EnumCollection.Half;
 import com.hrm.helper.EnumCollection.LeaveType;
@@ -137,51 +139,51 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 	@Override
 	public List<UserAttendanceDto> allAttendance(String employeeId) {
-	    try {
-	        List<Attendance> allByEmployeeId = attendanceRepository.findAllByEmployeeId(employeeId);
+		try {
+			List<Attendance> allByEmployeeId = attendanceRepository.findAllByEmployeeId(employeeId);
 
-	        if (allByEmployeeId.isEmpty()) {
-	            return Collections.emptyList();
-	        }
+			if (allByEmployeeId.isEmpty()) {
+				return Collections.emptyList();
+			}
 
-	        List<UserAttendanceDto> attendanceDtoList = new ArrayList<>();
+			List<UserAttendanceDto> attendanceDtoList = new ArrayList<>();
 
-	        for (Attendance attendance : allByEmployeeId) {
-	            UserAttendanceDto attendanceDto = new UserAttendanceDto();
+			for (Attendance attendance : allByEmployeeId) {
+				UserAttendanceDto attendanceDto = new UserAttendanceDto();
 
-	            attendanceDto.setEmployeeId(employeeId);
-	            attendanceDto.setMonth(getMonthName(attendance.getMonth()));
-	            attendanceDto.setDate(Format.getFormattedDate(attendance.getDate()));
-	            attendanceDto.setInTime(Format.getFormattedTime(attendance.getInTime()));
-	            attendanceDto.setOutTime(Format.getFormattedTime(attendance.getOutTime()));
-	            attendanceDto.setRemarks(attendance.getRemarks());
+				attendanceDto.setEmployeeId(employeeId);
+				attendanceDto.setMonth(getMonthName(attendance.getMonth()));
+				attendanceDto.setDate(Format.getFormattedDate(attendance.getDate()));
+				attendanceDto.setInTime(Format.getFormattedTime(attendance.getInTime()));
+				attendanceDto.setOutTime(Format.getFormattedTime(attendance.getOutTime()));
+				attendanceDto.setRemarks(attendance.getRemarks());
 
-	            if (attendance.getInTime() != null && attendance.getOutTime() != null) {
-	                attendanceDto.setWorkHrs(Format.getFormattedWorkHours(Duration.between(attendance.getInTime(), attendance.getOutTime())));
-	            } else {
-	                attendanceDto.setWorkHrs(Format.getFormattedWorkHours(Duration.ZERO));
-	            }
+				if (attendance.getInTime() != null && attendance.getOutTime() != null) {
+					attendanceDto.setWorkHrs(Format
+							.getFormattedWorkHours(Duration.between(attendance.getInTime(), attendance.getOutTime())));
+				} else {
+					attendanceDto.setWorkHrs(Format.getFormattedWorkHours(Duration.ZERO));
+				}
 
-	            attendanceDto.setAttendanceStatus(attendance.getAttendanceStatus());
-	            attendanceDto.setProjectId(attendance.getProjectId());
-	            attendanceDto.setAppliedHrsForBilling(String.valueOf(attendance.getAppliedHrsForBilling()));
-	            attendanceDto.setApprovedHrsForBilling(String.valueOf(attendance.getApprovedHrsForBilling()));
+				attendanceDto.setAttendanceStatus(attendance.getAttendanceStatus());
+				attendanceDto.setProjectId(attendance.getProjectId());
+				attendanceDto.setAppliedHrsForBilling(String.valueOf(attendance.getAppliedHrsForBilling()));
+				attendanceDto.setApprovedHrsForBilling(String.valueOf(attendance.getApprovedHrsForBilling()));
 
-	            attendanceDtoList.add(attendanceDto);
-	        }
+				attendanceDtoList.add(attendanceDto);
+			}
 
-	        return attendanceDtoList;
-	    } catch (Exception e) {
-	        // Log the error
-	        logger.error("Error retrieving attendance for employeeId: {}", employeeId, e);
-	        throw new ServiceException("Error retrieving attendance for employeeId: " + employeeId, e);
-	    }
+			return attendanceDtoList;
+		} catch (Exception e) {
+			// Log the error
+			logger.error("Error retrieving attendance for employeeId: {}", employeeId, e);
+			throw new ServiceException("Error retrieving attendance for employeeId: " + employeeId, e);
+		}
 	}
 
 	private String getMonthName(Month month) {
-	    return (month != null) ? month.name() : "Month Not Set";
+		return (month != null) ? month.name() : "Month Not Set";
 	}
-
 
 	@Override
 	public AttendanceEmployeeDto getAttendance(String employeeId) {
@@ -281,7 +283,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		Attendance attendance = attendanceRepository.findByEmployeeIdAndDate(employeeId, date);
 
 		if (attendance != null) {
-			
+
 			attendance.setDate(date);
 
 			attendance.setProductionHours(productionHours);
@@ -377,48 +379,42 @@ public class AttendanceServiceImpl implements IAttendanceService {
 //	        return "Attendance record not found for employee " + employeeId;
 //	    }
 //	}
-	
-	
-	
+
 	@Override
 	public String addRegularizationHours(RegularizationHoursDto regularizationHoursDto, String employeeId) {
-	    LocalDate date = regularizationHoursDto.getDate();
-	    LocalTime inTime = regularizationHoursDto.getInTime();
-	    LocalTime outTime = regularizationHoursDto.getOutTime();
-	    String regularisationReason = regularizationHoursDto.getRegularisationReason();
-	    
-	    // Calculate the duration between inTime and outTime
-	    Duration difference = Duration.between(inTime, outTime);
+		LocalDate date = regularizationHoursDto.getDate();
+		LocalTime inTime = regularizationHoursDto.getInTime();
+		LocalTime outTime = regularizationHoursDto.getOutTime();
+		String regularisationReason = regularizationHoursDto.getRegularisationReason();
 
-	    // Retrieve the attendance record for the employee on the given date
-	    Attendance attendance = attendanceRepository.findByEmployeeIdAndDate(employeeId, date);
+		// Calculate the duration between inTime and outTime
+		Duration difference = Duration.between(inTime, outTime);
 
-	    if (attendance != null) {
-	        attendance.setDate(date);
-	        attendance.setInTime(inTime);
-	        attendance.setOutTime(outTime);
-	        attendance.setRegularisationReason(regularisationReason);
-	        
-	        // Check if the attendance status is 'A' (Anomaly)
-	        if (attendance.getAttendanceStatus() == 'A') {
-	            // If Anomaly, set the worked hours to be equal to the regularization hours
-	            attendance.setWorkHrs(difference);
-	            // Set regularization request hours to zero
-	            attendance.setRegularisationRequestHours(Duration.ZERO);
-	        }
+		// Retrieve the attendance record for the employee on the given date
+		Attendance attendance = attendanceRepository.findByEmployeeIdAndDate(employeeId, date);
 
-	        // Save the updated attendance record
-	        attendanceRepository.save(attendance);
-	        
-	        return "Regularization hours added for employee " + employeeId;
-	    } else {
-	        return "Attendance record not found for employee " + employeeId;
-	    }
+		if (attendance != null) {
+			attendance.setDate(date);
+			attendance.setInTime(inTime);
+			attendance.setOutTime(outTime);
+			attendance.setRegularisationReason(regularisationReason);
+
+			// Check if the attendance status is 'A' (Anomaly)
+			if (attendance.getAttendanceStatus() == 'A') {
+				// If Anomaly, set the worked hours to be equal to the regularization hours
+				attendance.setWorkHrs(difference);
+				// Set regularization request hours to zero
+				attendance.setRegularisationRequestHours(Duration.ZERO);
+			}
+
+			// Save the updated attendance record
+			attendanceRepository.save(attendance);
+
+			return "Regularization hours added for employee " + employeeId;
+		} else {
+			return "Attendance record not found for employee " + employeeId;
+		}
 	}
-
-
-
-
 
 //	@Override
 //	public String addLeave(ApplyLeaveDto applyLeaveDto, String employeeId) {
@@ -458,9 +454,6 @@ public class AttendanceServiceImpl implements IAttendanceService {
 //	    return "Leave Added Successfully for employee Id " + employeeId + ". Number of days: " + numberOfDays +
 //	            ". Start Month: " + startMonth + ". End Month: " + endMonth;
 //	}
-	
-
-
 
 //	@Override
 //	public ApplyLeaveDto getLeave(String employeeId) {
@@ -483,7 +476,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 //	}
 
 	@Override
-	public BillableHoursDto getBillableHours(String employeeId,LocalDate date) {
+	public BillableHoursDto getBillableHours(String employeeId, LocalDate date) {
 		Attendance billableHours = attendanceRepository.findByEmployeeId(employeeId);
 
 		if (billableHours != null) {
@@ -503,24 +496,23 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 	@Override
 	public RegularizationHoursDto getRegularizationHours(String employeeId, LocalDate date) {
-	    Attendance regularizationHours = attendanceRepository.findByEmployeeIdAndDate(employeeId, date);
+		Attendance regularizationHours = attendanceRepository.findByEmployeeIdAndDate(employeeId, date);
 
-	    if (regularizationHours != null) {
-	        RegularizationHoursDto regularizationHoursDto = new RegularizationHoursDto();
+		if (regularizationHours != null) {
+			RegularizationHoursDto regularizationHoursDto = new RegularizationHoursDto();
 
-	        regularizationHoursDto.setInTime(regularizationHours.getInTime());
-	        regularizationHoursDto.setOutTime(regularizationHours.getOutTime());
-	        regularizationHoursDto.setRegularisationReason(regularizationHours.getRegularisationReason());
-	        regularizationHoursDto.setRegularisationRequestHours(regularizationHours.getRegularisationRequestHours());
+			regularizationHoursDto.setInTime(regularizationHours.getInTime());
+			regularizationHoursDto.setOutTime(regularizationHours.getOutTime());
+			regularizationHoursDto.setRegularisationReason(regularizationHours.getRegularisationReason());
+			regularizationHoursDto.setRegularisationRequestHours(regularizationHours.getRegularisationRequestHours());
 
-	        return regularizationHoursDto;
-	    } 
-	    
-	    else {
-	         return null;
-	    }
+			return regularizationHoursDto;
+		}
+
+		else {
+			return null;
+		}
 	}
-
 
 	@Override
 	public String getAttendanceAsJson(String managerId, String month) {
@@ -528,34 +520,27 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		return null;
 	}
 
-
-	
 	@Override
-	public ManagerAttendanceEditDto editManagerAttendance(ManagerAttendanceEditDto managerAttendanceViewDto, String employeeId) {
-	    LocalDate date = managerAttendanceViewDto.getDate();
-	    
-	  
-	    Attendance managerAttendance = this.attendanceRepository.findByEmployeeIdAndDate(employeeId, date);
-	    
-	    if (managerAttendance != null) {
-	        
-	        managerAttendance.setApprovedHrsForBilling(managerAttendanceViewDto.getApprovedHrsForBilling());
-	        managerAttendance.setRemarks(managerAttendanceViewDto.getRemarks());
-	        
-	       
-	        this.attendanceRepository.save(managerAttendance);
-	        
-	        
-	        return managerAttendanceViewDto;
-	    } else {
-	        
-	        return null;
-	    }
+	public ManagerAttendanceEditDto editManagerAttendance(ManagerAttendanceEditDto managerAttendanceViewDto,
+			String employeeId) {
+		LocalDate date = managerAttendanceViewDto.getDate();
+
+		Attendance managerAttendance = this.attendanceRepository.findByEmployeeIdAndDate(employeeId, date);
+
+		if (managerAttendance != null) {
+
+			managerAttendance.setApprovedHrsForBilling(managerAttendanceViewDto.getApprovedHrsForBilling());
+			managerAttendance.setRemarks(managerAttendanceViewDto.getRemarks());
+
+			this.attendanceRepository.save(managerAttendance);
+
+			return managerAttendanceViewDto;
+		} else {
+
+			return null;
+		}
 	}
 
-	
-
-	
 	@Override
 	public String getDuration(String employeeId) {
 		if (employeeId == null) {
@@ -574,8 +559,8 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		Duration duration = Duration.between(inTime, currentTime);
 
 		return Format.getFormattedWorkHours(duration);
-		
-		}
+
+	}
 
 	@Override
 	public String addLeave(ApplyLeaveDto applyLeaveDto, String employeeId) {
@@ -606,76 +591,97 @@ public class AttendanceServiceImpl implements IAttendanceService {
 //		// TODO Auto-generated method stub
 //		return null;
 //	}
-	
-	
 
-	  
-
-
-	
 	@Override
 	public List<ManagerAttendanceViewDto> findAttendanceByManagerAndMonth(String managerId, String month) {
-	    try {
-	        Month targetMonth = Month.valueOf(month.toUpperCase());
+		try {
+			Month targetMonth = Month.valueOf(month.toUpperCase());
 
-	        List<Object[]> attendanceData = attendanceRepository.findAttendanceByManagerAndMonth(managerId, month);
+			List<Object[]> attendanceData = attendanceRepository.findAttendanceByManagerAndMonth(managerId, month);
 
-	        List<ManagerAttendanceViewDto> attendanceDtoList = new ArrayList<>();
-	        for (Object[] data : attendanceData) {
-	            ManagerAttendanceViewDto attendanceDto = new ManagerAttendanceViewDto();
+			List<ManagerAttendanceViewDto> attendanceDtoList = new ArrayList<>();
+			for (Object[] data : attendanceData) {
+				ManagerAttendanceViewDto attendanceDto = new ManagerAttendanceViewDto();
 
-	            attendanceDto.setEmployeeId((String) data[0]);
-	            attendanceDto.setEmployeeName((String) data[1]);
-//	          attendanceDto.setDepartment((Departments) data[2]);
-//	          attendanceDto.setMonthlyAppliedHoursForBilling((String) data[3]);
-//	          attendanceDto.setPresentDays((String) data[4]);
-	            attendanceDto.setMonth(targetMonth);
+				attendanceDto.setEmployeeId((String) data[0]);
+				attendanceDto.setEmployeeName((String) data[1]);
+				Department department = mapByteToDepartment((Byte) data[2]);
+				attendanceDto.setDepartment(department);
 
-	            attendanceDtoList.add(attendanceDto);
-	        }
+				attendanceDto.setApprovedHoursForBilling((double) data[3]);
+				attendanceDto.setPresentDays((Long) data[4]);
+				attendanceDto.setMonth(targetMonth);
 
-	        return attendanceDtoList; // Return the list of DTOs, not the raw data
-	    } catch (IllegalArgumentException ex) {
-	        logger.error("Invalid month provided: {}", month);
-	        return Collections.emptyList();
-	    } catch (Exception ex) {
-	        logger.error("An error occurred while fetching attendance data: {}", ex.getMessage(), ex);
-	        return Collections.emptyList();
-	    }
+				attendanceDtoList.add(attendanceDto);
+			}
+
+			return attendanceDtoList;
+		} catch (IllegalArgumentException ex) {
+			logger.error("Invalid month provided: {}", month);
+			return Collections.emptyList();
+		} catch (Exception ex) {
+			logger.error("An error occurred while fetching attendance data: {}", ex.getMessage(), ex);
+			return Collections.emptyList();
+		}
 	}
 
+	private Department mapByteToDepartment(Byte departmentId) {
+
+		if (departmentId == null) {
+			return null;
+
+		}
+
+		int id = departmentId.intValue();
+		switch (id) {
+		case 0:
+			return Department.DIGITAL_FACTORY_SOLUTION;
+		case 1:
+			return Department.INDUSTRIAL_AUTOMATION_SOLUTION;
+		case 2:
+			return Department.ENGINEERING_DESIGN_SOLUTION;
+		case 3:
+			return Department.BUILDING_INFORMATION_MODELING;
+		case 4:
+			return Department.TALENT_ACQUISITION;
+		case 5:
+			return Department.HUMAN_RESOURCE;
+		case 6:
+			return Department.FINANCE;
+		case 7:
+			return Department.SALES;
+		case 8:
+			return Department.SYSTEM_ADMIN;
+		case 9:
+			return Department.INFORMATION_TECHNOLOGY;
+		case 10:
+			return Department.DIGITAL_MARKETING;
+		case 11:
+			return Department.DEVELOPMENT;
+		default:
+			throw new IllegalArgumentException("Invalid Department ID:" + id);
+		}
+
+	}
 
 	@Override
 	public ManagerAttendanceEditDto getManagerAttendance(String employeeId, LocalDate date) {
-		
 
-	 
-	    Attendance managerAttendance = attendanceRepository.findByEmployeeIdAndDate(employeeId, date);
-	    
-	    if (managerAttendance != null) {
-	        ManagerAttendanceEditDto managerAttendanceEditDto = new ManagerAttendanceEditDto();
-	        managerAttendanceEditDto.setApprovedHrsForBilling(managerAttendance.getApprovedHrsForBilling());
-	        managerAttendanceEditDto.setDate(managerAttendance.getDate());
-	        managerAttendanceEditDto.setRemarks(managerAttendance.getRemarks());
-	        
-	        return managerAttendanceEditDto;
-	    } else {
-	        
-	        ManagerAttendanceEditDto messageDto = new ManagerAttendanceEditDto();
-	        messageDto.setRemarks("No attendance record found for employee ID: " + employeeId + "on Date" + date);
-	        return messageDto;
-	    }
-	}
-	
-	
+		Attendance managerAttendance = attendanceRepository.findByEmployeeIdAndDate(employeeId, date);
 
+		if (managerAttendance != null) {
+			ManagerAttendanceEditDto managerAttendanceEditDto = new ManagerAttendanceEditDto();
+			managerAttendanceEditDto.setApprovedHrsForBilling(managerAttendance.getApprovedHrsForBilling());
+			managerAttendanceEditDto.setDate(managerAttendance.getDate());
+			managerAttendanceEditDto.setRemarks(managerAttendance.getRemarks());
 
+			return managerAttendanceEditDto;
+		} else {
 
+			ManagerAttendanceEditDto messageDto = new ManagerAttendanceEditDto();
+			messageDto.setRemarks("No attendance record found for employee ID: " + employeeId + "on Date" + date);
+			return messageDto;
+		}
 	}
 
-
-
-
-
-
-	
+}
