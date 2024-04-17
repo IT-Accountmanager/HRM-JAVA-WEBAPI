@@ -3,6 +3,11 @@ package com.hrm.servicesImpls;
 import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.List;
+import java.util.Optional;
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,12 +33,14 @@ public class WorkServiceImpl implements IWorkService {
 	@Autowired
 	private IOnboardingRepository onboardingRepository;
 
+	private static final Logger logger = LoggerFactory.getLogger(WorkServiceImpl.class);
+
 	@Override
 	public String createWorkForExperiencedCandidate(Work work, long candidateId) {
 
 		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
 
-		if (onboarding.getExperience().equals("Experienced")) {
+		if (onboarding != null && 'E' == onboarding.getExperience()) {
 			try {
 				work.setCandidateId(candidateId);
 				work.setWorkSubmissionStatus(DetailsSubmissionStatus.Submitted);
@@ -70,18 +77,33 @@ public class WorkServiceImpl implements IWorkService {
 
 	@Override
 	public String createWorkForFresherCandidate(long candidateId) {
-		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
-		Work work = new Work();
-		if (onboarding.getExperience().equals("Fresher")) {
-			work.setCandidateId(candidateId);
-			work.setWorkSubmissionStatus(DetailsSubmissionStatus.Submitted);
-			work.setHrExecutiveApprovalStatus(ApprovalStatus.Pending);
+		try {
+			logger.info("In try block Of createWorkForFresherCandidate() : {}", candidateId);
 
-			this.workRepo.save(work);
-			return "Work created successfully for fresher candidate with ID " + candidateId;
+			Work existingWork = this.workRepo.findByCandidateId(candidateId);
+			if (existingWork != null) {
+				logger.info("Work already exists for fresher candidate with ID : {}", candidateId);
+				return "Work already exists for fresher candidate with ID " + candidateId;
+			}
 
+			Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
+			Work work = new Work();
+			if (onboarding != null && 'F' == onboarding.getExperience()) {
+				work.setCandidateId(candidateId);
+				work.setWorkSubmissionStatus(DetailsSubmissionStatus.Submitted);
+				work.setHrExecutiveApprovalStatus(ApprovalStatus.Pending);
+
+				this.workRepo.save(work);
+				logger.info("Work created successfully for fresher candidate with ID : {}", candidateId);
+				return "Work created successfully for fresher candidate with ID " + candidateId;
+			}
+			logger.info("Work are not created for fresher candidate with ID : {}", candidateId);
+			return "Work are not created for fresher candidate with ID " + candidateId;
+		} catch (Exception e) {
+			logger.error("Error occurred while creating work for fresher candidate with ID " + candidateId, e);
+			return "An error occurred while creating work for fresher candidate with ID " + candidateId
+					+ ". Please check the logs for more details.";
 		}
-		return "Work are not created for fresher candidate with ID " + candidateId;
 
 	}
 
@@ -173,7 +195,5 @@ public class WorkServiceImpl implements IWorkService {
 
 		return new WorkStatusResponse(DetailsSubmissionStatus.Pending);
 	}
-
-
 
 }

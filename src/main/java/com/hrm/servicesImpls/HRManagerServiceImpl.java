@@ -1597,6 +1597,48 @@ public class HRManagerServiceImpl implements IHRManagerService {
 	 * }
 	 */
 //__________________CREATE____________________
+	/*
+	 * @Override public String createAppointmentLetter(CreateAppointmentLetterDto
+	 * appointmentLetterDto, long candidateId) { Boolean existed =
+	 * this.employeeRepository.existsByCandidateId(candidateId);
+	 * 
+	 * if (existed) { return "Employee Already Exists with Candidate ID: " +
+	 * candidateId; }
+	 * 
+	 * Employee employee = new Employee(); employee.setCandidateId(candidateId);
+	 * 
+	 * List<Employee> employees = this.employeeRepository.findAll(); if
+	 * (!employees.isEmpty()) { long maxEmployeeSn = Long.MIN_VALUE; for (Employee
+	 * emp : employees) { long currentEmployeeSn = emp.getEmployeeSn(); if
+	 * (currentEmployeeSn > maxEmployeeSn) { maxEmployeeSn = currentEmployeeSn; } }
+	 * 
+	 * employee.setEmployeeId(String.format("EIS%05d", maxEmployeeSn + 1));
+	 * employee.setName(appointmentLetterDto.getName());
+	 * employee.setDesignation(appointmentLetterDto.getDesignation());
+	 * employee.setWorkLocation(appointmentLetterDto.getWorkLocation());
+	 * employee.setDateOfJoining(appointmentLetterDto.getDateOfJoining());
+	 * employee.setCtc(appointmentLetterDto.getCtc());
+	 * employee.setServiceCommitment(appointmentLetterDto.getBondPeriod());
+	 * employee.setBondBreakAmount(appointmentLetterDto.getBondBreakAmount());
+	 * employee.setEmailId(appointmentLetterDto.getEmailId());
+	 * employee.setContactNumber(appointmentLetterDto.getContactNumber());
+	 * employee.setJobTitle(appointmentLetterDto.getJobTitle());
+	 * employee.setAuthorisedSignature(appointmentLetterDto.getAuthorisedSignature()
+	 * ); employee.setSign(appointmentLetterDto.getSign());
+	 * employee.setEmployeeStatus(EmployeeStatus.Active);
+	 * 
+	 * Onboarding onboarding =
+	 * this.onboardingRepository.findByCandidateId(candidateId); if (onboarding !=
+	 * null) { onboarding.setCandidatesStatus(CandidatesStatus.Approved);
+	 * this.onboardingRepository.save(onboarding); }
+	 * 
+	 * this.employeeRepository.save(employee);
+	 * 
+	 * return "Appointment Letter Created"; }
+	 * 
+	 * return "No Employees Found"; }
+	 */
+
 	@Override
 	public String createAppointmentLetter(CreateAppointmentLetterDto appointmentLetterDto, long candidateId) {
 		Boolean existed = this.employeeRepository.existsByCandidateId(candidateId);
@@ -1608,43 +1650,51 @@ public class HRManagerServiceImpl implements IHRManagerService {
 		Employee employee = new Employee();
 		employee.setCandidateId(candidateId);
 
+		// Retrieve all employees
 		List<Employee> employees = this.employeeRepository.findAll();
+
+		// Check if there are existing employees
 		if (!employees.isEmpty()) {
-			long maxEmployeeSn = Long.MIN_VALUE;
-			for (Employee emp : employees) {
-				long currentEmployeeSn = emp.getEmployeeSn();
-				if (currentEmployeeSn > maxEmployeeSn) {
-					maxEmployeeSn = currentEmployeeSn;
-				}
-			}
+			// If there are existing employees, find the maximum employeeSn
+			long maxEmployeeSn = employees.stream().mapToLong(Employee::getEmployeeSn).max().orElse(0); // If no max
+																										// found,
+																										// default to 0
 
-			employee.setEmployeeId(String.format("EIS%05d", maxEmployeeSn + 1));
-			employee.setName(appointmentLetterDto.getName());
-			employee.setDesignation(appointmentLetterDto.getDesignation());
-			employee.setWorkLocation(appointmentLetterDto.getWorkLocation());
-			employee.setDateOfJoining(appointmentLetterDto.getDateOfJoining());
-			employee.setCtc(appointmentLetterDto.getCtc());
-			employee.setServiceCommitment(appointmentLetterDto.getBondPeriod());
-			employee.setBondBreakAmount(appointmentLetterDto.getBondBreakAmount());
-			employee.setEmailId(appointmentLetterDto.getEmailId());
-			employee.setContactNumber(appointmentLetterDto.getContactNumber());
-			employee.setJobTitle(appointmentLetterDto.getJobTitle());
-			employee.setAuthorisedSignature(appointmentLetterDto.getAuthorisedSignature());
-			employee.setSign(appointmentLetterDto.getSign());
-			employee.setEmployeeStatus(EmployeeStatus.Active);
+			// Increment the max employeeSn to get the next value
+			maxEmployeeSn++;
 
-			Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
-			if (onboarding != null) {
-				onboarding.setCandidatesStatus(CandidatesStatus.Approved);
-				this.onboardingRepository.save(onboarding);
-			}
-
-			this.employeeRepository.save(employee);
-
-			return "Appointment Letter Created";
+			employee.setEmployeeId(String.format("EIS%05d", maxEmployeeSn));
+		} else {
+			// If no existing employees, start with employeeSn 1
+			employee.setEmployeeId("EIS00001");
 		}
 
-		return "No Employees Found";
+		// Set other employee details
+		employee.setName(appointmentLetterDto.getName());
+		employee.setDesignation(appointmentLetterDto.getDesignation());
+		employee.setWorkLocation(appointmentLetterDto.getWorkLocation());
+		employee.setDateOfJoining(appointmentLetterDto.getDateOfJoining());
+		employee.setCtc(appointmentLetterDto.getCtc());
+		employee.setServiceCommitment(appointmentLetterDto.getBondPeriod());
+		employee.setBondBreakAmount(appointmentLetterDto.getBondBreakAmount());
+		employee.setEmailId(appointmentLetterDto.getEmailId());
+		employee.setContactNumber(appointmentLetterDto.getContactNumber());
+		employee.setJobTitle(appointmentLetterDto.getJobTitle());
+		employee.setAuthorisedSignature(appointmentLetterDto.getAuthorisedSignature());
+		employee.setSign(appointmentLetterDto.getSign());
+		employee.setEmployeeStatus(EmployeeStatus.Active);
+
+		// Update onboarding status
+		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
+		if (onboarding != null) {
+			onboarding.setCandidatesStatus(CandidatesStatus.Approved);
+			this.onboardingRepository.save(onboarding);
+		}
+
+		// Save the new employee
+		this.employeeRepository.save(employee);
+
+		return "Appointment Letter Created";
 	}
 
 	@Override

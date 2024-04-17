@@ -618,6 +618,7 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	@Override
 	public boolean setFresherOrExperienced(ExperiencedDto experiencedDto, long candidateId) {
 		try {
+			logger.info("Start of setFresherOrExperienced");
 			Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
 
 			if (onboarding != null) {
@@ -634,7 +635,6 @@ public class OnboardingServiceImpl implements IOnboardingService {
 			e.printStackTrace();
 			return false;
 		}
-
 	}
 
 	@Override

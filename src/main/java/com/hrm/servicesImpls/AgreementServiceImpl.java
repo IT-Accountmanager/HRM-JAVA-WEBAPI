@@ -1,5 +1,6 @@
 package com.hrm.servicesImpls;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Base64;
@@ -288,6 +289,67 @@ public class AgreementServiceImpl implements IAgreementService {
 		return preAgreementInfo;
 	}
 
+	/*
+	 * CURRENT_DATE() AS agreement_date,
+	 * p.candidate_id,pd.first_name,pd.middle_name, pd.last_name
+	 * ,pd.fathers_name,DATEDIFF(CURRENT_DATE(), pd.date_of_birth) / 365 AS
+	 * age,o.service_commitment,o.service_break_amount, " + "per.* ,pre.*,
+	 * CURRENT_DATE() AS tenure_from, DATE_ADD(CURRENT_DATE(), INTERVAL
+	 * (o.service_commitment * 365) DAY) AS tenure_to
+	 */
+	/*
+	 * @Override public AgreementDto getPreAgreementInfo(long candidateId) {
+	 * 
+	 * Object[] preAgreementDetails =
+	 * this.agreementRepository.preAgreementDetails(candidateId);
+	 * 
+	 * AgreementDto preAgreementInfo = new AgreementDto();
+	 * preAgreementInfo.setAgreementDate(((Date)
+	 * preAgreementDetails[0]).toLocalDate());
+	 * preAgreementInfo.setFirstName((String) preAgreementDetails[2]);
+	 * preAgreementInfo.setAge((int) preAgreementDetails[6]);
+	 * 
+	 * if (personal != null && personal.getPersonalDetails() != null) {
+	 * preAgreementInfo
+	 * .setAge(Period.between(personal.getPersonalDetails().getDateOfBirth(),
+	 * LocalDate.now()).getYears());
+	 * preAgreementInfo.setEmployeeFathersName(personal.getPersonalDetails().
+	 * getFathersName()); }
+	 * 
+	 * if (personal != null && personal.getAddressDetails() != null &&
+	 * personal.getAddressDetails().getPresentAdd() != null) {
+	 * preAgreementInfo.setPresentAddress((personal.getAddressDetails().
+	 * getPresentAdd().getHouseNo()) + ", " +
+	 * (personal.getAddressDetails().getPresentAdd().getArea()) + ", near " +
+	 * (personal.getAddressDetails().getPresentAdd().getLandmark()) + ", " +
+	 * (personal.getAddressDetails().getPresentAdd().getCity()) + ", " +
+	 * (personal.getAddressDetails().getPresentAdd().getState()) + ", " +
+	 * (personal.getAddressDetails().getPresentAdd().getPincode())); }
+	 * 
+	 * if (personal != null && personal.getAddressDetails() != null &&
+	 * personal.getAddressDetails().getPermanentAdd() != null) {
+	 * preAgreementInfo.setPermanentAddress((personal.getAddressDetails().
+	 * getPermanentAdd().getHouseNo()) + ", " +
+	 * (personal.getAddressDetails().getPermanentAdd().getArea()) + ", near " +
+	 * (personal.getAddressDetails().getPermanentAdd().getLandmark()) + ", " +
+	 * (personal.getAddressDetails().getPermanentAdd().getCity()) + ", " +
+	 * (personal.getAddressDetails().getPermanentAdd().getState()) + ", " +
+	 * (personal.getAddressDetails().getPermanentAdd().getPincode())); }
+	 * 
+	 * preAgreementInfo.setServiceCommitment(onboarding.getServiceCommitment());
+	 * preAgreementInfo.setTenureFrom(LocalDate.now());
+	 * 
+	 * float serviceCommitment = onboarding.getServiceCommitment();
+	 * 
+	 * if (serviceCommitment != 0.0f) { int months = (int) serviceCommitment * 12;
+	 * preAgreementInfo.setTenureTo(LocalDate.now().plusMonths(months)); }
+	 * 
+	 * preAgreementInfo.setServiceBreakAmount(onboarding.getServiceBreakAmount());
+	 * preAgreementInfo.setCustodyOf("HR");
+	 * 
+	 * return preAgreementInfo; }
+	 */
+	@Override
 	public String editAgreement(AgreementEditDto agreementDto, long candidateId) {
 		Agreement agreement = agreementRepository.findByCandidateId(candidateId);
 

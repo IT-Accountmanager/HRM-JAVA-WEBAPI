@@ -50,7 +50,7 @@ public class Onboarding {
 
 	@Column(name = "ctc")
 	private long ctc;
-	private String experience;
+	private char experience;
 
 	private CandidatesStatus candidatesStatus;
 
@@ -175,6 +175,14 @@ public class Onboarding {
 		this.ctc = ctc;
 	}
 
+	public char getExperience() {
+		return experience;
+	}
+
+	public void setExperience(char experience) {
+		this.experience = experience;
+	}
+
 	public CandidatesStatus getCandidatesStatus() {
 		return candidatesStatus;
 	}
@@ -189,14 +197,6 @@ public class Onboarding {
 
 	public void setHrExecutiveSubmission(HrSubmission hrExecutiveSubmission) {
 		this.hrExecutiveSubmission = hrExecutiveSubmission;
-	}
-
-	public String getExperience() {
-		return experience;
-	}
-
-	public void setExperience(String experience) {
-		this.experience = experience;
 	}
 
 	public HrSubmission getHrManagerSubmission() {

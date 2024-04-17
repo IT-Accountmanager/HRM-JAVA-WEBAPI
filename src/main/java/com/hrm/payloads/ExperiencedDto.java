@@ -1,13 +1,13 @@
 package com.hrm.payloads;
 
 public class ExperiencedDto {
-	private String experience;
+	private char experience;
 
-	public String getExperience() {
+	public char getExperience() {
 		return experience;
 	}
 
-	public void setExperience(String experience) {
+	public void setExperience(char experience) {
 		this.experience = experience;
 	}
 
