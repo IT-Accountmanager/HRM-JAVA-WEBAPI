@@ -7,8 +7,7 @@ import java.time.LocalDate;
 public class ManagerAttendanceEditDto {
 	
 	private LocalDate date;
-	
-	private String approvedHrsForBilling;
+	private double approvedHrsForBilling;
 	private String remarks;
 //	private String monthlyApprovedHoursForBilling;
 	
@@ -21,10 +20,13 @@ public class ManagerAttendanceEditDto {
 	}
 
 	
-	public String getApprovedHrsForBilling() {
+
+	
+	
+	public double getApprovedHrsForBilling() {
 		return approvedHrsForBilling;
 	}
-	public void setApprovedHrsForBilling(String approvedHrsForBilling) {
+	public void setApprovedHrsForBilling(double approvedHrsForBilling) {
 		this.approvedHrsForBilling = approvedHrsForBilling;
 	}
 	public String getRemarks() {

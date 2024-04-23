@@ -3,6 +3,7 @@ package com.hrm.repositories;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -44,6 +45,12 @@ public interface LeaveManagementRepo extends JpaRepository<LeaveManagementTable,
 	 * monthInput);
 	 */
 
+	@Query(value = "SELECT lmt.*, emp.name, emp.manager, emp.department, emp.designation, pd.profile_photo "
+			+ "FROM leave_management_table lmt " + "LEFT JOIN employee emp ON emp.employee_id = lmt.employee_id "
+			+ "LEFT JOIN personal_details pd ON emp.email_id = pd.personal_mail_id "
+			+ "WHERE lmt.id = :id", nativeQuery = true)
+	List<Object[]> findLeaveDetailsById(@Param("id") Integer id);
+
 	@Query("SELECT l FROM LeaveManagementTable l WHERE l.managerId = :managerId AND DATE_FORMAT(l.leaveStartDate, '%Y-%c') = :monthInput")
 	List<LeaveManagementTable> findByManagerIdAndYear(@Param("managerId") String managerId,
 			@Param("monthInput") String monthInput);
@@ -56,5 +63,8 @@ public interface LeaveManagementRepo extends JpaRepository<LeaveManagementTable,
 	List<LeaveManagementTable> findByManagerIdAndYearOrEmployeeIdAndYear(@Param("managerId") String managerId,
 
 			@Param("employeeId") String employeeId, @Param("monthInput") String monthInput);
+
+//	 @Query("SELECT e.designation, e.department FROM Employee e WHERE e.employeeId = :employeeId")
+//	    Object[] findDesignationAndDepartmentByEmployeeId(@Param("employeeId") Long employeeId);
 
 }

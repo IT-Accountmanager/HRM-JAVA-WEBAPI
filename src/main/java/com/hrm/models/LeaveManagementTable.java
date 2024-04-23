@@ -31,6 +31,11 @@ public class LeaveManagementTable {
 	private String remarks;
 	private double appliedDaysForLeave;
 	private double approvedDaysForLeave;
+	
+
+	
+
+
 
 	public double getAppliedDaysForLeave() {
 		return appliedDaysForLeave;
@@ -155,6 +160,10 @@ public class LeaveManagementTable {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+
+
+
+	
 	
 
 }

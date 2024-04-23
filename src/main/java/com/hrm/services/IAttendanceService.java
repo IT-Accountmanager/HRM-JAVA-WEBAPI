@@ -11,6 +11,7 @@ import com.hrm.payloads.BillableHoursDto;
 import com.hrm.payloads.ManagerAttendanceEditDto;
 import com.hrm.payloads.ManagerAttendanceViewDto;
 import com.hrm.payloads.RegularizationHoursDto;
+import com.hrm.payloads.RegularizationManagerEditDto;
 import com.hrm.payloads.UserAttendanceDto;
 
 public interface IAttendanceService {
@@ -63,10 +64,15 @@ public interface IAttendanceService {
 	 */
 
 	List<ManagerAttendanceViewDto> findAttendanceByManagerAndMonth(String managerId, String month);
+	
+//	List<ManagerAttendanceViewDto> findAttendanceByManager(String managerId);
 
 //>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
 	ManagerAttendanceEditDto getManagerAttendance(String employeeId, LocalDate date);
+	
+	RegularizationManagerEditDto editregularization(RegularizationManagerEditDto regularizationManagerEditDto, String employeeId);
 
+	RegularizationManagerEditDto editregularizationreject(RegularizationManagerEditDto regularizationManagerEditDto, String employeeId);
 //	List<Object[]> findAttendanceByManagerAndMonth(String managerId, String month);
 
 //	ApplyLeaveDto addLeave(ApplyLeaveDto leaveDto);

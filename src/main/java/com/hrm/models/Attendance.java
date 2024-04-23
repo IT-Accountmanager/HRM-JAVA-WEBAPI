@@ -40,20 +40,20 @@ public class Attendance {
 	private LeaveType leaveType;
 	private String projectId;
 	@Column(name = "applied_hrs_for_billing")
-	private String appliedHrsForBilling;
-	private String approvedHrsForBilling;
+	private double appliedHrsForBilling;
+	private double approvedHrsForBilling;
 	private Float regularizedHours;
 	private ApprovalStatus status;
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private String leaveReason;
-	private String productionHours;
-	private String otherHours;
-	private String totalHours;
+	private double productionHours;
+	private double otherHours;
+	private double totalHours;
 
 	// private LocalTime exactInTime;
 	// private LocalTime exactOutTime;
-	private String regularisationRequestHours;
+	private Duration regularisationRequestHours;
 
 	/*
 	 * private LocalTime exactInTime; private LocalTime exactOutTime; private
@@ -197,13 +197,7 @@ public class Attendance {
 		this.outTime = outTime;
 	}
 
-	public Duration getWorkHrs() {
-		return workHrs;
-	}
 
-	public void setWorkHrs(Duration workHrs) {
-		this.workHrs = workHrs;
-	}
 
 	public String getProjectId() {
 		return projectId;
@@ -213,19 +207,18 @@ public class Attendance {
 		this.projectId = projectId;
 	}
 
-	public String getAppliedHrsForBilling() {
-		return appliedHrsForBilling;
-	}
 
-	public void setAppliedHrsForBilling(String appliedHrsForBilling) {
-		this.appliedHrsForBilling = appliedHrsForBilling;
-	}
+	
 
-	public String getApprovedHrsForBilling() {
+
+
+	
+
+	public double getApprovedHrsForBilling() {
 		return approvedHrsForBilling;
 	}
 
-	public void setApprovedHrsForBilling(String approvedHrsForBilling) {
+	public void setApprovedHrsForBilling(double approvedHrsForBilling) {
 		this.approvedHrsForBilling = approvedHrsForBilling;
 	}
 
@@ -293,28 +286,45 @@ public class Attendance {
 		this.leaveType = leaveType;
 	}
 
-	public String getProductionHours() {
+
+
+
+	
+
+	public double getAppliedHrsForBilling() {
+		return appliedHrsForBilling;
+	}
+
+	public void setAppliedHrsForBilling(double appliedHrsForBilling) {
+		this.appliedHrsForBilling = appliedHrsForBilling;
+	}
+
+	public double getProductionHours() {
 		return productionHours;
 	}
 
-	public void setProductionHours(String productionHours) {
+	public void setProductionHours(double productionHours) {
 		this.productionHours = productionHours;
 	}
 
-	public String getOtherHours() {
+	public double getOtherHours() {
 		return otherHours;
 	}
 
-	public void setOtherHours(String otherHours) {
+	public void setOtherHours(double otherHours) {
 		this.otherHours = otherHours;
 	}
 
-	public String getTotalHours() {
+	public double getTotalHours() {
 		return totalHours;
 	}
 
-	public void setTotalHours(String totalHours) {
+	public void setTotalHours(double totalHours) {
 		this.totalHours = totalHours;
+	}
+
+	public void setApprovedHrsForBilling(int approvedHrsForBilling) {
+		this.approvedHrsForBilling = approvedHrsForBilling;
 	}
 
 	public void setRegularizedHours(Float regularizedHours) {
@@ -337,12 +347,22 @@ public class Attendance {
 		this.regularisationReason = regularisationReason;
 	}
 
-	public String getRegularisationRequestHours() {
+	public Duration getWorkHrs() {
+		return workHrs;
+	}
+
+	public void setWorkHrs(Duration workHrs) {
+		this.workHrs = workHrs;
+	}
+
+	public Duration getRegularisationRequestHours() {
 		return regularisationRequestHours;
 	}
 
-	public void setRegularisationRequestHours(String regularisationRequestHours) {
+	public void setRegularisationRequestHours(Duration regularisationRequestHours) {
 		this.regularisationRequestHours = regularisationRequestHours;
 	}
+
+	
 
 }

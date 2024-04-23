@@ -6,9 +6,9 @@ import java.util.List;
 public class BillableHoursDto {
 // private List<LocalDate> listOfDate;
 private LocalDate date;
-private String productionHours;
-private String otherHours;
-private String appliedHrsForBilling;
+private double productionHours;
+private double otherHours;
+private double appliedHrsForBilling;
 
 // public List<LocalDate> getListOfDate() {
 // return listOfDate;
@@ -26,27 +26,27 @@ public void setDate(LocalDate date) {
 this.date = date;
 }
 
-public String getProductionHours() {
+public double getProductionHours() {
 	return productionHours;
 }
 
-public void setProductionHours(String productionHours) {
+public void setProductionHours(double productionHours) {
 	this.productionHours = productionHours;
 }
 
-public String getOtherHours() {
+public double getOtherHours() {
 	return otherHours;
 }
 
-public void setOtherHours(String otherHours) {
+public void setOtherHours(double otherHours) {
 	this.otherHours = otherHours;
 }
 
-public String getAppliedHrsForBilling() {
+public double getAppliedHrsForBilling() {
 	return appliedHrsForBilling;
 }
 
-public void setAppliedHrsForBilling(String appliedHrsForBilling) {
+public void setAppliedHrsForBilling(double appliedHrsForBilling) {
 	this.appliedHrsForBilling = appliedHrsForBilling;
 }
 

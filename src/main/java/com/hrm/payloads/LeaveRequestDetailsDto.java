@@ -3,48 +3,66 @@ package com.hrm.payloads;
 import java.time.LocalDate;
 
 import com.hrm.helper.EnumCollection.Departments;
+import com.hrm.helper.EnumCollection.Departments.Department;
 import com.hrm.helper.EnumCollection.Designation;
 import com.hrm.helper.EnumCollection.Half;
 import com.hrm.helper.EnumCollection.LeaveType;
 
 public class LeaveRequestDetailsDto {
 
-	private Byte[] profilePicture;
-	private String name;
-	private Departments.Department subDepartment;
+	private byte[] profilePicture;
+	private Departments department;
 	private Designation designation;
 	private LeaveType leaveType;
-	private float balence;
+	private float balance;
 	private LocalDate startDate;
 	private LocalDate endDate;
-	private int totalDays;
-	private Half firsHalf;
+	private double appliedDaysForLeave;
+	private String manager;
+	private String name;
+	
+	
+	public String getManager() {
+		return manager;
+	}
+
+	public void setManager(String manager) {
+		this.manager = manager;
+	}
+
+	public double getAppliedDaysForLeave() {
+		return appliedDaysForLeave;
+	}
+
+	public void setAppliedDaysForLeave(double appliedDaysForLeave) {
+		this.appliedDaysForLeave = appliedDaysForLeave;
+	}
+
+	public void setBalance(float balance) {
+		this.balance = balance;
+	}
+
+	private Half firstHalf;
 	private Half secondHalf;
 	private String reason;
-	private String manager;
+	
 
-	public Byte[] getProfilePicture() {
+	
+
+	public byte[] getProfilePicture() {
 		return profilePicture;
 	}
 
-	public void setProfilePicture(Byte[] profilePicture) {
+	public void setProfilePicture(byte[] profilePicture) {
 		this.profilePicture = profilePicture;
 	}
 
-	public String getName() {
-		return name;
+	public Departments getDepartment() {
+		return department;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Departments.Department getSubDepartment() {
-		return subDepartment;
-	}
-
-	public void setSubDepartment(Departments.Department subDepartment) {
-		this.subDepartment = subDepartment;
+	public void setDepartment(Departments department) {
+		this.department = department;
 	}
 
 	public Designation getDesignation() {
@@ -63,12 +81,12 @@ public class LeaveRequestDetailsDto {
 		this.leaveType = leaveType;
 	}
 
-	public float getBalence() {
-		return balence;
+	public float getBalance() {
+		return balance;
 	}
 
-	public void setBalence(float balence) {
-		this.balence = balence;
+	public void setBalence(float balance) {
+		this.balance = balance;
 	}
 
 	public LocalDate getStartDate() {
@@ -87,20 +105,12 @@ public class LeaveRequestDetailsDto {
 		this.endDate = endDate;
 	}
 
-	public int getTotalDays() {
-		return totalDays;
+	public Half getFirstHalf() {
+		return firstHalf;
 	}
 
-	public void setTotalDays(int totalDays) {
-		this.totalDays = totalDays;
-	}
-
-	public Half getFirsHalf() {
-		return firsHalf;
-	}
-
-	public void setFirsHalf(Half firsHalf) {
-		this.firsHalf = firsHalf;
+	public void setFirstHalf(Half firstHalf) {
+		this.firstHalf = firstHalf;
 	}
 
 	public Half getSecondHalf() {
@@ -119,12 +129,12 @@ public class LeaveRequestDetailsDto {
 		this.reason = reason;
 	}
 
-	public String getManager() {
-		return manager;
+	public String getName() {
+		return name;
 	}
 
-	public void setManager(String manager) {
-		this.manager = manager;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

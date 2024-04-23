@@ -67,6 +67,10 @@ public class ManagerAttendanceViewDto {
 
 	
 
+
+
+	
+
 //	public String getMonthlyApprovedHoursForBilling() {
 //		return monthlyApprovedHoursForBilling;
 //	}

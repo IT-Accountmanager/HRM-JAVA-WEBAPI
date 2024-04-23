@@ -283,7 +283,9 @@ public class SummaryServiceImpl implements ISummaryService {
 				if (summary[25] != null) {
 					summaryNode.put("resignation_date", ((Date) summary[25]).toString());
 				}
-				summaryNode.put("last_working_day", (String) summary[26]);
+				if (summary[26] != null) {
+					summaryNode.put("last_working_day", ((Date) summary[26]).toString());
+				}
 				summaryNode.put("qualification", (String) summary[27]);
 				summaryNode.put("end_date", ((Date) summary[28]).toString());
 				summaryNode.put("stream", (String) summary[29]);
