@@ -50,7 +50,7 @@ public class Onboarding {
 
 	@Column(name = "ctc")
 	private long ctc;
-	private char experience;
+	private Character experience;
 
 	private CandidatesStatus candidatesStatus;
 
@@ -175,11 +175,11 @@ public class Onboarding {
 		this.ctc = ctc;
 	}
 
-	public char getExperience() {
+	public Character getExperience() {
 		return experience;
 	}
 
-	public void setExperience(char experience) {
+	public void setExperience(Character experience) {
 		this.experience = experience;
 	}
 

@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.internal.bytebuddy.asm.Advice.Return;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -21,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
 import com.hrm.helper.EnumCollection.CandidatesStatus;
 import com.hrm.helper.EnumCollection.CategoryControl;
 import com.hrm.helper.EnumCollection.CategoryControll;
@@ -83,6 +87,8 @@ public class SummaryServiceImpl implements ISummaryService {
 	JavaMailSender javaMailSender;
 	@Value("${spring.mail.username}")
 	private String sender;
+
+	private static final Logger logger = LoggerFactory.getLogger(SummaryServiceImpl.class);
 
 	/*
 	 * @Override public List<SummaryDto> getAll() { List<Object[]> findAll =
@@ -274,7 +280,7 @@ public class SummaryServiceImpl implements ISummaryService {
 					summaryNode.put("next_apprisal_quater", (short) summary[17]);
 				}
 				summaryNode.put("date_of_birth", ((Date) summary[18]).toString());
-				summaryNode.put("blood_group", (Byte) summary[19]);
+				summaryNode.put("blood_group", getBloodGroup(((Byte) summary[19]).intValue()).toString());
 				summaryNode.put("fathers_name", (String) summary[20]);
 				summaryNode.put("adhar_card_no", (String) summary[21]);
 				summaryNode.put("pan_card_no", (String) summary[22]);
@@ -283,27 +289,60 @@ public class SummaryServiceImpl implements ISummaryService {
 				if (summary[25] != null) {
 					summaryNode.put("resignation_date", ((Date) summary[25]).toString());
 				}
-				summaryNode.put("last_working_day", (String) summary[26]);
+				if (summary[26] != null) {
+					summaryNode.put("last_working_day", ((Date) summary[26]).toString());
+				}
 				summaryNode.put("qualification", (String) summary[27]);
 				summaryNode.put("end_date", ((Date) summary[28]).toString());
 				summaryNode.put("stream", (String) summary[29]);
 				summaryNode.put("candidate_id", ((Long) summary[30]).toString());
 				summaryNode.put("Manager_id", (String) summary[31]);
+				summaryNode.put("number_of_working_days", (String) summary[32]);
 
 				summaryArray.add(summaryNode);
 
 			}
 			String jsonData = objectMapper.writeValueAsString(summaryArray);
+			logger.info("Retrieved summary data successfully.");
+
 			return jsonData;
 		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+
+			logger.error("An error occurred while fetching summary data. Reason: {}", e.getMessage(), e);
+			return "An error occurred while fetching summary data :" + e.getMessage();
 		}
 
 	}
 
 	public EmployeeStatus getEmployeeStatus(int statusValue) {
 		return (statusValue == 0) ? EmployeeStatus.Active : EmployeeStatus.Inactive;
+	}
+
+	public enum BloodGroup {
+		A_POSITIVE, A_NEGATIVE, B_POSITIVE, B_NEGATIVE, AB_POSITIVE, AB_NEGATIVE, O_POSITIVE, O_NEGATIVE
+	}
+
+	public com.hrm.helper.EnumCollection.BloodGroup getBloodGroup(int statusValue) {
+		switch (statusValue) {
+		case 0:
+			return com.hrm.helper.EnumCollection.BloodGroup.A_POSITIVE;
+		case 1:
+			return com.hrm.helper.EnumCollection.BloodGroup.A_NEGATIVE;
+		case 2:
+			return com.hrm.helper.EnumCollection.BloodGroup.B_POSITIVE;
+		case 3:
+			return com.hrm.helper.EnumCollection.BloodGroup.B_NEGATIVE;
+		case 4:
+			return com.hrm.helper.EnumCollection.BloodGroup.AB_POSITIVE;
+		case 5:
+			return com.hrm.helper.EnumCollection.BloodGroup.AB_NEGATIVE;
+		case 6:
+			return com.hrm.helper.EnumCollection.BloodGroup.O_POSITIVE;
+		case 7:
+			return com.hrm.helper.EnumCollection.BloodGroup.O_NEGATIVE;
+		default:
+			return null;
+		}
 	}
 
 	public EmployeeCategory getEmployeeCategory(int categoryValue) {
@@ -492,11 +531,12 @@ public class SummaryServiceImpl implements ISummaryService {
 				employee.setTotalExperience(null);
 				employee.setJoinedCtc(singleEmployee.getJoinedCtc());
 				employee.setCurrentCtc(singleEmployee.getCurrentCtc());
-				employee.setServiceCommitment(0);
-				employee.setNumberOfWorkingDays(null);
+				employee.setServiceCommitment(singleEmployee.getServiceCommitment());
+				employee.setNumberOfWorkingDays(singleEmployee.getNumberOfWorkingDays());
 				employee.setNextApprisalQuater(singleEmployee.getNextApprisalQuater());
 				employee.setUanNumber(singleEmployee.getUanNumber());
 				employee.setImported(true);
+				employee.setLastWorkingDay(singleEmployee.getLastWorkingDay());
 				this.employeeRepository.save(employee);
 
 				// Send mail to fill personal details with link

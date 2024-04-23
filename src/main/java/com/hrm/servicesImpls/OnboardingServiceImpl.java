@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -90,53 +91,61 @@ public class OnboardingServiceImpl implements IOnboardingService {
 	@Override
 	public Onboarding createOnboarding(Onboarding onboardingRequest) {
 
-		List<Onboarding> findAll = this.onboardingRepository.findAll();
-
-		long maxCandidateId = 0;
-		for (Onboarding candidate : findAll) {
-			long currentCandidateId = candidate.getCandidateId();
-			if (currentCandidateId > maxCandidateId) {
-				maxCandidateId = currentCandidateId;
-			}
-		}
-		maxCandidateId++;
-
 		Onboarding onboarding = new Onboarding();
-		onboarding.setJobTitleDesignation(onboardingRequest.getJobTitleDesignation());
-		onboarding.setCandidateId(maxCandidateId);
-		onboarding.setCandidateName(onboardingRequest.getCandidateName());
-		onboarding.setContactNumber(onboardingRequest.getContactNumber());
-		onboarding.setEmailId(onboardingRequest.getEmailId());
-		onboarding.setServiceCommitment(onboardingRequest.getServiceCommitment());
-		onboarding.setServiceBreakAmount(onboardingRequest.getServiceBreakAmount());
-		onboarding.setCtc(onboardingRequest.getCtc());
-		onboarding.setCandidatesStatus(CandidatesStatus.Pending);
-		onboarding.setHrExecutiveSubmission(HrSubmission.Pending);
-		onboarding.setHrManagerSubmission(HrSubmission.Pending);
-		onboarding.setDateOfJoining(LocalDate.parse(onboardingRequest.getFormattedDateOfJoining(),
-				DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-		onboarding.setWorkLocation(onboardingRequest.getWorkLocation());
 
-		// Profile profile = new Profile();
-		/*
-		 * profile.setOnboarding(onboarding); onboarding.setProfile(profile);
-		 */
+		try {
+			List<Onboarding> findAll = this.onboardingRepository.findAll();
+
+			long maxCandidateId = 0;
+			for (Onboarding candidate : findAll) {
+				long currentCandidateId = candidate.getCandidateId();
+				if (currentCandidateId > maxCandidateId) {
+					maxCandidateId = currentCandidateId;
+				}
+			}
+			maxCandidateId++;
+
+			onboarding.setJobTitleDesignation(onboardingRequest.getJobTitleDesignation());
+			onboarding.setCandidateId(maxCandidateId);
+			onboarding.setCandidateName(onboardingRequest.getCandidateName());
+			onboarding.setContactNumber(onboardingRequest.getContactNumber());
+			onboarding.setEmailId(onboardingRequest.getEmailId());
+			onboarding.setServiceCommitment(onboardingRequest.getServiceCommitment());
+			onboarding.setServiceBreakAmount(onboardingRequest.getServiceBreakAmount());
+			onboarding.setCtc(onboardingRequest.getCtc());
+			onboarding.setCandidatesStatus(CandidatesStatus.Pending);
+			onboarding.setHrExecutiveSubmission(HrSubmission.Pending);
+			onboarding.setHrManagerSubmission(HrSubmission.Pending);
+			onboarding.setDateOfJoining(LocalDate.parse(onboardingRequest.getFormattedDateOfJoining(),
+					DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+			onboarding.setWorkLocation(onboardingRequest.getWorkLocation());
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			logger.error("Failed to add Onboarding. Reason : {}", e.getMessage(), e);
+		}
 
 		return onboardingRepository.save(onboarding);
 	}
 
 	@Override
 	public List<OnboardingDto> getAllOnboarding() {
-		List<Onboarding> allOnboarding = this.onboardingRepository.findAll();
-
 		List<OnboardingDto> onboardingDtos = new ArrayList<OnboardingDto>();
 
-		for (Onboarding onboarding : allOnboarding) {
-			OnboardingDto map = this.modelMapper.map(onboarding, OnboardingDto.class);
-			onboardingDtos.add(map);
-		}
+		try {
+			List<Onboarding> allOnboarding = this.onboardingRepository.findAll();
 
+			for (Onboarding onboarding : allOnboarding) {
+				OnboardingDto map = this.modelMapper.map(onboarding, OnboardingDto.class);
+				onboardingDtos.add(map);
+			}
+
+		} catch (Exception e) {
+			logger.error("An error occurred while fetching onboarding data. Reason : {}", e.getMessage(), e);
+			e.printStackTrace();
+		}
 		return onboardingDtos;
+
 	}
 
 	@Override
