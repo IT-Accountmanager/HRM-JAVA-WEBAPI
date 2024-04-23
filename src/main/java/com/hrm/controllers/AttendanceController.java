@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.hrm.models.Attendance;
 import com.hrm.payloads.ApplyLeaveDto;
@@ -23,6 +24,7 @@ import com.hrm.payloads.AttendanceEmployeeDto;
 import com.hrm.payloads.BillableHoursDto;
 import com.hrm.payloads.ManagerAttendanceEditDto;
 import com.hrm.payloads.RegularizationHoursDto;
+import com.hrm.payloads.RegularizationManagerEditDto;
 import com.hrm.payloads.UserAttendanceDto;
 import com.hrm.payloads.ManagerAttendanceViewDto;
 import com.hrm.services.IAttendanceService;
@@ -172,33 +174,22 @@ public class AttendanceController {
 	}
 
 	@GetMapping("/manager/{managerId}/{month}")
-//<<<<<<< HEAD
-	/*
-	 * public ResponseEntity<?> getAttendanceByManagerAndMonth(@PathVariable String
-	 * managerId,
-	 * 
-	 * @PathVariable String month) { List<Object[]> attendanceDtoList =
-	 * attendanceService.findAttendanceByManagerAndMonth(managerId, month); if
-	 * (!attendanceDtoList.isEmpty()) { return new
-	 * ResponseEntity<>(attendanceDtoList, HttpStatus.OK); } else { String message =
-	 * "No attendance data found for the manager with ID " + managerId +
-	 * " in the month of " + month; return new ResponseEntity<>(message,
-	 * HttpStatus.NOT_FOUND); }
-	 */
-//=======
-	public ResponseEntity<?> getAttendanceByManagerAndMonth(@PathVariable String managerId,
-			@PathVariable String month) {
-		List<ManagerAttendanceViewDto> attendanceDtoList = attendanceService.findAttendanceByManagerAndMonth(managerId,
-				month);
-		if (!attendanceDtoList.isEmpty()) {
-			return new ResponseEntity<>(attendanceDtoList, HttpStatus.OK);
-		} else {
-			String message = "No attendance data found for the manager with ID " + managerId + " in the month of "
-					+ month;
-			return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
-		}
-//>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
-	}
+
+	 public ResponseEntity<?> getAttendanceByManagerAndMonth(
+	            @PathVariable String managerId,
+	            @PathVariable(required = false) String month) {
+	        try {
+	            List<ManagerAttendanceViewDto> attendanceDtoList = attendanceService.findAttendanceByManagerAndMonth(managerId, month);
+	            return ResponseEntity.ok().body(attendanceDtoList);
+	        } catch (Exception e) {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                    .body("An error occurred while processing attendance data");
+	        }
+	    }
+
+
+	
+
 
 	@GetMapping("/getmanagerAttendance/{employeeId}/{date}")
 	public ResponseEntity<ManagerAttendanceEditDto> getManagerAttendance(@PathVariable String employeeId,
@@ -207,6 +198,27 @@ public class AttendanceController {
 		ManagerAttendanceEditDto managerAttendanceDto = attendanceService.getManagerAttendance(employeeId, parsedDate);
 		return ResponseEntity.ok(managerAttendanceDto);
 	}
+	
+	
+	
+	
+//	------------------------PUT MAPPING FOR ACCEPTING OF REGULARIZATION----------------------
+	@PutMapping("/editregularization/{employeeId}")
+	public ResponseEntity<RegularizationManagerEditDto>editregularization(@RequestBody RegularizationManagerEditDto regularizationManagerEditDto, @PathVariable String employeeId) {
+		RegularizationManagerEditDto attendance = this.attendanceService.editregularization(regularizationManagerEditDto, employeeId);
+		return new ResponseEntity<RegularizationManagerEditDto>(attendance, HttpStatus.OK);
+	}
+	
+	
+//	------------------------PUT MAPPING FOR REJECTION OF REGULARIZATION----------------------
+	@PutMapping("/editregularizationreject/{employeeId}")
+	public ResponseEntity<RegularizationManagerEditDto> editregularizationreject (@RequestBody RegularizationManagerEditDto regularizationManagerEditDto, @PathVariable String employeeId) {
+		RegularizationManagerEditDto attendance = this.attendanceService.editregularizationreject(regularizationManagerEditDto, employeeId);
+		return new ResponseEntity<RegularizationManagerEditDto>(attendance, HttpStatus.OK);
+	}
+	
+
+
 
 //github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
 //	@PostMapping("/managerattendance/{date}")

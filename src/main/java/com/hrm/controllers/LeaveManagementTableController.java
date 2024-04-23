@@ -71,4 +71,14 @@ public class LeaveManagementTableController {
 
 	}
 
+	@GetMapping("leavedetails/{id}")
+	public ResponseEntity<List<LeaveRequestDetailsDto>> getLeaveDetails(@PathVariable("id") int id) {
+		List<LeaveRequestDetailsDto> leaveDetailsDto = leaveManagementService.getLeaveDetails(id);
+
+		if (leaveDetailsDto != null) {
+			return ResponseEntity.ok(leaveDetailsDto);
+		} else {
+			return ResponseEntity.noContent().build();
+		}
+	}
 }
