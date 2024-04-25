@@ -1,37 +1,34 @@
 package com.hrm.payloads;
 
-
-
 import java.time.LocalDate;
 
 public class ManagerAttendanceEditDto {
-	
+
 	private LocalDate date;
-	private double approvedHrsForBilling;
+	private int approvedHrsForBilling;
 	private String remarks;
 //	private String monthlyApprovedHoursForBilling;
-	
 
 	public LocalDate getDate() {
 		return date;
 	}
+
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
-	
-
-	
-	
-	public double getApprovedHrsForBilling() {
+	public int getApprovedHrsForBilling() {
 		return approvedHrsForBilling;
 	}
-	public void setApprovedHrsForBilling(double approvedHrsForBilling) {
+
+	public void setApprovedHrsForBilling(int approvedHrsForBilling) {
 		this.approvedHrsForBilling = approvedHrsForBilling;
 	}
+
 	public String getRemarks() {
 		return remarks;
 	}
+
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}

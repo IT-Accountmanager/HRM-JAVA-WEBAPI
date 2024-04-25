@@ -53,7 +53,6 @@ public interface IAttendanceRepository extends JpaRepository<Attendance, Integer
 	 * "WHERE e.manager = :managerId", nativeQuery = true)
 	 */
 
-	
 //Kartik	
 //	@Query(value = "SELECT e.employee_id, e.name, e.department, "
 //			+ "IFNULL(a.applied_hrs_for_billing, 0) AS applied_hrs_for_billing, "
@@ -80,74 +79,60 @@ public interface IAttendanceRepository extends JpaRepository<Attendance, Integer
 //Ramchandra
 	@Query(value = "SELECT e.employee_id, e.name, e.department, \n"
 			+ "	        IFNULL(a.approved_hrs_for_billing, 0) AS approved_hrs_for_billing, \n"
-			+ "	        IFNULL(a.present_days, 0) AS present_days \n"
-			+ "	        FROM employee e \n"
-			+ "	        LEFT JOIN ( \n"
-			+ "	            SELECT employee_id, \n"
+			+ "	        IFNULL(a.present_days, 0) AS present_days \n" + "	        FROM employee e \n"
+			+ "	        LEFT JOIN ( \n" + "	            SELECT employee_id, \n"
 			+ "	                   SUM(approved_hrs_for_billing) AS approved_hrs_for_billing, \n"
-			+ "	                   COUNT(*) AS present_days \n"
-			+ "	            FROM attendance a \n"
-			+ "	            WHERE DATE_FORMAT(date, '%Y-%m') = :month"
-			+ "	            GROUP BY employee_id \n"
+			+ "	                   COUNT(*) AS present_days \n" + "	            FROM attendance a \n"
+			+ "	            WHERE DATE_FORMAT(date, '%Y-%m') = :month" + "	            GROUP BY employee_id \n"
 			+ "	        ) a ON e.employee_id = a.employee_id \n"
 			+ "	        WHERE e.manager = :managerId", nativeQuery = true)
-	
+
 	List<Object[]> findAttendanceByManagerAndMonth(@Param("managerId") String managerId, @Param("month") String month);
-	
-	
-	
+
 	@Query(value = "SELECT e.employee_id, e.name, e.department, \n"
 			+ "	        IFNULL(a.approved_hrs_for_billing, 0) AS approved_hrs_for_billing, \n"
-			+ "	        IFNULL(a.present_days, 0) AS present_days \n"
-			+ "	        FROM employee e \n"
-			+ "	        LEFT JOIN ( \n"
-			+ "	            SELECT employee_id, \n"
+			+ "	        IFNULL(a.present_days, 0) AS present_days \n" + "	        FROM employee e \n"
+			+ "	        LEFT JOIN ( \n" + "	            SELECT employee_id, \n"
 			+ "	                   SUM(approved_hrs_for_billing) AS approved_hrs_for_billing, \n"
-			+ "	                   COUNT(*) AS present_days \n"
-			+ "	            GROUP BY employee_id \n"
+			+ "	                   COUNT(*) AS present_days \n" + "	            GROUP BY employee_id \n"
 			+ "	        ) a ON e.employee_id = a.employee_id \n"
 			+ "	        WHERE e.manager = :managerId", nativeQuery = true)
-	
+
 	List<Object[]> findAttendanceByManager(@Param("managerId") String managerId);
-	
-//	@Query(value = "SELECT e.employee_id, e.name, e.department, \n"
-//			+ "	        IFNULL(a.approved_hrs_for_billing, 0) AS approved_hrs_for_billing, \n"
-//			+ "	        IFNULL(a.present_days, 0) AS present_days \n"
-//			+ "	        FROM employee e \n"
-//			+ "	        LEFT JOIN ( \n"
-//			+ "	            SELECT employee_id, \n"
-//			+ "	                   SUM(approved_hrs_for_billing) AS approved_hrs_for_billing, \n"
-//			+ "	                   COUNT(*) AS present_days \n"
-//			+ "	            FROM attendance a \n"
-//			+ "	            WHERE DATE_FORMAT(date, '%Y-%m') = '2024-04'\n"
-//			+ "	            GROUP BY employee_id \n"
-//			+ "	        ) a ON e.employee_id = a.employee_id \n"
-//			+ "	        WHERE e.manager = 'EIS00001';", nativeQuery = true)
 
+	 List<Attendance> findAllByDate(LocalDate date);
 
-	
+//	@Query(value = "SELECT a.id , e.employee_id, e.name, e.sub_department, MONTH(a.date) AS attendance_month, "
+//			+ "SUM(CASE WHEN MONTH(a.date) = :month THEN 1 ELSE 0 END) AS present_days, "
+//			+ "SUM(a.approved_hrs_for_billing) AS total_approved_hours " + "FROM attendance a "
+//			+ "LEFT JOIN employee e ON a.employee_id = e.employee_id "
+//			+ "WHERE e.manager = :managerId AND YEAR(a.date) = :year AND MONTH(a.date) = :month "
+//			+ "GROUP BY a.id , e.employee_id, e.name, e.sub_department, MONTH(a.date)", nativeQuery = true)
 
-	
-
-	List<Attendance> findAllByDate(LocalDate date);
-
-	/*
-	 * @Query(value
-	 * ="Select in_time from attendance where employee_id='EIS00001' and date = \"2024-02-29\";"
-	 * ) getInTimeByEmployeeId(String employeeId );
-	 */
-	// LocalTime findInTimeByDateAndEmployeeId(LocalDate date, String employeeId);
-
-//	  @Query(value
-//	  ="Select in_time from attendance where employee_id='EIS00001' and date = \"2024-02-29\";"
-//	  ) getInTimeByEmployeeId(String employeeId );
-//	 
-	LocalTime findInTimeByDateAndEmployeeId(LocalDate date, String employeeId);
-
-	LocalTime findOutTimeByDateAndEmployeeId(LocalDate date, String employeeId);
-
-//	LocalTime findOutTimeByDateAndEmployeeId(LocalDate date , String employeeId);
-
-//	Attendance findByDate(LocalDate date);
+	@Query(value = "SELECT \r\n"
+			+ "    e.employee_id,\r\n"
+			+ "    e.name,\r\n"
+			+ "    e.sub_department,\r\n"
+			+ "    MONTH(a.date) AS attendance_month,\r\n"
+			+ "    SUM(CASE WHEN MONTH(a.date) = 3 THEN 1 ELSE 0 END) AS present_days,\r\n"
+			+ "    SUM(a.approved_hrs_for_billing) AS total_approved_hours\r\n"
+			+ "FROM \r\n"
+			+ "    Attendance a\r\n"
+			+ "LEFT JOIN \r\n"
+			+ "    employee e ON a.employee_id = e.employee_id\r\n"
+			+ "WHERE \r\n"
+			+ "    e.manager = :managerId\r\n"
+			+ "     AND YEAR(a.date) = :year  \r\n"
+			+ "    AND MONTH(a.date) = :month   \r\n"
+			+ "GROUP BY \r\n"
+			+ "    e.employee_id,\r\n"
+			+ "    e.name,\r\n"
+			+ "    e.sub_department,\r\n"
+			+ "    MONTH(a.date);\r\n"
+			+ "", nativeQuery = true)
+	List<Object[]> findByManagerIdAndMonth(@Param("managerId") String managerId
+			, @Param("year") int year,
+			@Param("month") int month
+	);
 
 }

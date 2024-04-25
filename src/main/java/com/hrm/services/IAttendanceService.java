@@ -7,7 +7,9 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.hrm.models.Attendance;
 import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.AttendanceEmployeeDto;
+import com.hrm.payloads.AttendanceRequestDto;
 import com.hrm.payloads.BillableHoursDto;
+import com.hrm.payloads.ManagerAttendanceDetailsDto;
 import com.hrm.payloads.ManagerAttendanceEditDto;
 import com.hrm.payloads.ManagerAttendanceViewDto;
 import com.hrm.payloads.RegularizationHoursDto;
@@ -74,6 +76,8 @@ public interface IAttendanceService {
 
 	RegularizationManagerEditDto editregularizationreject(RegularizationManagerEditDto regularizationManagerEditDto, String employeeId);
 //	List<Object[]> findAttendanceByManagerAndMonth(String managerId, String month);
+
+	List<ManagerAttendanceDetailsDto> getAttendance(AttendanceRequestDto attendanceRequestDto);
 
 //	ApplyLeaveDto addLeave(ApplyLeaveDto leaveDto);
 

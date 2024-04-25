@@ -2,16 +2,13 @@ package com.hrm.models;
 
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hrm.helper.EnumCollection.ApprovalStatus;
-import com.hrm.helper.EnumCollection.AttendanceStatus;
 import com.hrm.helper.EnumCollection.Half;
 import com.hrm.helper.EnumCollection.LeaveType;
-import com.hrm.payloads.AttendanceEmployeeDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,17 +36,21 @@ public class Attendance {
 	private char attendanceStatus;
 	private LeaveType leaveType;
 	private String projectId;
-	@Column(name = "applied_hrs_for_billing")
-	private double appliedHrsForBilling;
-	private double approvedHrsForBilling;
+	@Column(nullable = true, name = "applied_hrs_for_billing")
+	private Integer appliedHrsForBilling;
+	@Column(nullable = true, name = "approved_hrs_for_billing")
+	private Integer approvedHrsForBilling;
 	private Float regularizedHours;
 	private ApprovalStatus status;
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private String leaveReason;
-	private double productionHours;
-	private double otherHours;
-	private double totalHours;
+	@Column(nullable = true)
+	private Integer productionHours;
+	@Column(nullable = true)
+	private Integer otherHours;
+	@Column(nullable = true)
+	private Integer totalHours;
 
 	// private LocalTime exactInTime;
 	// private LocalTime exactOutTime;
@@ -197,29 +198,12 @@ public class Attendance {
 		this.outTime = outTime;
 	}
 
-
-
 	public String getProjectId() {
 		return projectId;
 	}
 
 	public void setProjectId(String projectId) {
 		this.projectId = projectId;
-	}
-
-
-	
-
-
-
-	
-
-	public double getApprovedHrsForBilling() {
-		return approvedHrsForBilling;
-	}
-
-	public void setApprovedHrsForBilling(double approvedHrsForBilling) {
-		this.approvedHrsForBilling = approvedHrsForBilling;
 	}
 
 	public float getRegularizedHours() {
@@ -286,47 +270,6 @@ public class Attendance {
 		this.leaveType = leaveType;
 	}
 
-
-
-
-	
-
-	public double getAppliedHrsForBilling() {
-		return appliedHrsForBilling;
-	}
-
-	public void setAppliedHrsForBilling(double appliedHrsForBilling) {
-		this.appliedHrsForBilling = appliedHrsForBilling;
-	}
-
-	public double getProductionHours() {
-		return productionHours;
-	}
-
-	public void setProductionHours(double productionHours) {
-		this.productionHours = productionHours;
-	}
-
-	public double getOtherHours() {
-		return otherHours;
-	}
-
-	public void setOtherHours(double otherHours) {
-		this.otherHours = otherHours;
-	}
-
-	public double getTotalHours() {
-		return totalHours;
-	}
-
-	public void setTotalHours(double totalHours) {
-		this.totalHours = totalHours;
-	}
-
-	public void setApprovedHrsForBilling(int approvedHrsForBilling) {
-		this.approvedHrsForBilling = approvedHrsForBilling;
-	}
-
 	public void setRegularizedHours(Float regularizedHours) {
 		this.regularizedHours = regularizedHours;
 	}
@@ -363,6 +306,46 @@ public class Attendance {
 		this.regularisationRequestHours = regularisationRequestHours;
 	}
 
-	
+	public Integer getAppliedHrsForBilling() {
+		return appliedHrsForBilling != null ? appliedHrsForBilling : 0; // Return a default value if
+																		// appliedHrsForBilling is null
+	}
+
+	public void setAppliedHrsForBilling(int appliedHrsForBilling) {
+		this.appliedHrsForBilling = appliedHrsForBilling;
+	}
+
+	public Integer getApprovedHrsForBilling() {
+		return approvedHrsForBilling != null ? approvedHrsForBilling : 0; // Return a default value if
+																			// appliedHrsForBilling is null
+	}
+
+	public void setApprovedHrsForBilling(int approvedHrsForBilling) {
+		this.approvedHrsForBilling = approvedHrsForBilling;
+	}
+
+	public int getProductionHours() {
+		return productionHours;
+	}
+
+	public void setProductionHours(int productionHours) {
+		this.productionHours = productionHours;
+	}
+
+	public int getOtherHours() {
+		return otherHours;
+	}
+
+	public void setOtherHours(int otherHours) {
+		this.otherHours = otherHours;
+	}
+
+	public int getTotalHours() {
+		return totalHours;
+	}
+
+	public void setTotalHours(int totalHours) {
+		this.totalHours = totalHours;
+	}
 
 }

@@ -225,18 +225,26 @@ public class LeaveManagementServiceImpl implements LeaveManagementService {
 	}
 
 	public static LocalDate convertToLocalDate(Object dateToConvert) {
-		if (dateToConvert!= null) {
-		return ((java.sql.Date)dateToConvert).toLocalDate();
+		if (dateToConvert != null) {
+			return ((java.sql.Date) dateToConvert).toLocalDate();
 		}
 		return null;
 	}
 
+	/*
+	 * SELECT DISTINCT pd.profile_photo, emp.name, emp.department, emp.designation,
+	 * lmt.leave_type, lmt.leave_start_date, lmt.leave_end_date,
+	 * lmt.applied_days_for_leave, lmt.leave_reason, m.name AS manager_name FROM
+	 * leave_management_table lmt INNER JOIN employee emp ON emp.employee_id =
+	 * lmt.employee_id INNER JOIN personal_details pd ON emp.email_id =
+	 * pd.personal_mail_id LEFT JOIN employee m ON emp.manager = m.employee_id WHERE
+	 * lmt.id = 8
+	 */
 	@Override
 	public List<LeaveRequestDetailsDto> getLeaveDetails(Integer id) {
-		
+
 		List<LeaveRequestDetailsDto> listLeaveRequestDetailsDto = new ArrayList<>();
-		
-		
+
 		try {
 			List<Object[]> listLeaveDetailsOptional = leaveManagementRepo.findLeaveDetailsById(id);
 
@@ -244,43 +252,43 @@ public class LeaveManagementServiceImpl implements LeaveManagementService {
 
 				logger.info("leaveDetailsOptional :: " + leaveDetailsOptional);
 
-
-
 				LeaveRequestDetailsDto leaveRequestDetailsDto = new LeaveRequestDetailsDto();
 
-				leaveRequestDetailsDto.setAppliedDaysForLeave((double) leaveDetailsOptional[1]);
+				leaveRequestDetailsDto.setProfilePicture((byte[]) leaveDetailsOptional[0]);
 
-				LocalDate localDate = convertToLocalDate( leaveDetailsOptional[7]);
-				leaveRequestDetailsDto.setEndDate(localDate);
+				leaveRequestDetailsDto.setName((String) leaveDetailsOptional[1]);
 
+				Department department = mapByteToDepartment((leaveDetailsOptional)[2]);
+				leaveRequestDetailsDto.setDepartment(department);
 
-				Half half1 = mapByteToHalf((leaveDetailsOptional)[5]);
-				leaveRequestDetailsDto.setFirstHalf(half1);
-
-				Half half2 = mapByteToHalf((leaveDetailsOptional)[6]);
-				leaveRequestDetailsDto.setSecondHalf(half2);
-
-				LeaveType leavetype = mapByteToLeaveType((leaveDetailsOptional)[10]);
-				leaveRequestDetailsDto.setLeaveType(leavetype);
-
-				LocalDate localDate1 = convertToLocalDate( leaveDetailsOptional[9]);
-				leaveRequestDetailsDto.setStartDate(localDate1);
-				leaveRequestDetailsDto.setReason((String) leaveDetailsOptional[8]);
-
-				
-				leaveRequestDetailsDto.setName((String) leaveDetailsOptional[15]);
-				leaveRequestDetailsDto.setManager((String) leaveDetailsOptional[16]);
-
-//                Department department = mapByteToDepartment((leaveDetailsOptional)[17]);
-//                leaveRequestDetailsDto.setDepartment(department);
-
-				
-                
-				Designation designation = mapByteToDesignation((leaveDetailsOptional)[18]);
+				Designation designation = mapByteToDesignation((leaveDetailsOptional)[3]);
 				leaveRequestDetailsDto.setDesignation(designation);
 
+				LeaveType leavetype = mapByteToLeaveType((leaveDetailsOptional)[4]);
+				leaveRequestDetailsDto.setLeaveType(leavetype);
 
-				leaveRequestDetailsDto.setProfilePicture((byte[]) leaveDetailsOptional[19]);
+				LocalDate localDate1 = convertToLocalDate(leaveDetailsOptional[5]);
+				leaveRequestDetailsDto.setStartDate(localDate1);
+
+				LocalDate localDate = convertToLocalDate(leaveDetailsOptional[6]);
+				leaveRequestDetailsDto.setEndDate(localDate);
+
+				leaveRequestDetailsDto.setAppliedDaysForLeave((double) leaveDetailsOptional[7]);
+
+				leaveRequestDetailsDto.setReason((String) leaveDetailsOptional[8]);
+
+				leaveRequestDetailsDto.setManager((String) leaveDetailsOptional[9]);
+
+//
+//				Half half1 = mapByteToHalf((leaveDetailsOptional)[5]);
+//				leaveRequestDetailsDto.setFirstHalf(half1);
+//
+//				Half half2 = mapByteToHalf((leaveDetailsOptional)[6]);
+//				leaveRequestDetailsDto.setSecondHalf(half2);
+
+//				leaveRequestDetailsDto.setManager((String) leaveDetailsOptional[16]);
+
+//                
 
 				logger.info("leaveDetails :: " + leaveRequestDetailsDto);
 
@@ -328,44 +336,44 @@ public class LeaveManagementServiceImpl implements LeaveManagementService {
 
 	}
 
-//	private Departments.Department mapByteToDepartment(Object leaveDetails) {
-//		
-//		if (leaveDetails == null) {
-//			return null;
-//		}
-//		
-//		int id = ((Byte) leaveDetails).intValue();
-//		switch (id) {
-//		case 0:
-//			return Department.DIGITAL_FACTORY_SOLUTION;
-//		case 1:
-//			return Department.INDUSTRIAL_AUTOMATION_SOLUTION;
-//		case 2:
-//			return Department.ENGINEERING_DESIGN_SOLUTION;
-//		case 3:
-//			return Department.BUILDING_INFORMATION_MODELING;
-//		case 4:
-//			return Department.TALENT_ACQUISITION;
-//		case 5:
-//			return Department.HUMAN_RESOURCE;
-//		case 6:
-//			return Department.FINANCE;
-//		case 7:
-//			return Department.SALES;
-//		case 8:
-//			return Department.SYSTEM_ADMIN;
-//		case 9:
-//			return Department.INFORMATION_TECHNOLOGY;
-//		case 10:
-//			return Department.DIGITAL_MARKETING;
-//		case 11:
-//			return Department.DEVELOPMENT;
-//		default:
-//			throw new IllegalArgumentException("Invalid Department ID:" + id);
-//			
-//		}
-//	
-//	}
+	private Departments.Department mapByteToDepartment(Object leaveDetails) {
+
+		if (leaveDetails == null) {
+			return null;
+		}
+
+		int id = ((Byte) leaveDetails).intValue();
+		switch (id) {
+		case 0:
+			return Department.DIGITAL_FACTORY_SOLUTION;
+		case 1:
+			return Department.INDUSTRIAL_AUTOMATION_SOLUTION;
+		case 2:
+			return Department.ENGINEERING_DESIGN_SOLUTION;
+		case 3:
+			return Department.BUILDING_INFORMATION_MODELING;
+		case 4:
+			return Department.TALENT_ACQUISITION;
+		case 5:
+			return Department.HUMAN_RESOURCE;
+		case 6:
+			return Department.FINANCE;
+		case 7:
+			return Department.SALES;
+		case 8:
+			return Department.SYSTEM_ADMIN;
+		case 9:
+			return Department.INFORMATION_TECHNOLOGY;
+		case 10:
+			return Department.DIGITAL_MARKETING;
+		case 11:
+			return Department.DEVELOPMENT;
+		default:
+			throw new IllegalArgumentException("Invalid Department ID:" + id);
+
+		}
+
+	}
 
 	private LeaveType mapByteToLeaveType(Object leaveDetails) {
 

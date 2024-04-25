@@ -1,20 +1,22 @@
 package com.hrm.payloads;
 
-import com.hrm.helper.EnumCollection.AttendanceStatus;
+import java.time.LocalTime;
+import java.time.Month;
+import java.time.Duration;
 
 public class UserAttendanceDto {
 
 	private String employeeId;
-	private String month;
+	private Month month;
 	private String date;
-	private String inTime;
-	private String outTime;
-	private String workHrs;
+	private LocalTime inTime;
+	private LocalTime outTime;
+	private Duration workHrs;
 	private char attendanceStatus;
 	private String manager;
 	private String projectId;
-	private String appliedHrsForBilling;
-	private String approvedHrsForBilling;
+	private int appliedHrsForBilling;
+	private int approvedHrsForBilling;
 	private String remarks;
 
 	public String getEmployeeId() {
@@ -25,11 +27,11 @@ public class UserAttendanceDto {
 		this.employeeId = employeeId;
 	}
 
-	public String getMonth() {
+	public Month getMonth() {
 		return month;
 	}
 
-	public void setMonth(String month) {
+	public void setMonth(Month month) {
 		this.month = month;
 	}
 
@@ -41,27 +43,27 @@ public class UserAttendanceDto {
 		this.date = date;
 	}
 
-	public String getInTime() {
+	public LocalTime getInTime() {
 		return inTime;
 	}
 
-	public void setInTime(String inTime) {
+	public void setInTime(LocalTime inTime) {
 		this.inTime = inTime;
 	}
 
-	public String getOutTime() {
+	public LocalTime getOutTime() {
 		return outTime;
 	}
 
-	public void setOutTime(String outTime) {
+	public void setOutTime(LocalTime outTime) {
 		this.outTime = outTime;
 	}
 
-	public String getWorkHrs() {
+	public Duration getWorkHrs() {
 		return workHrs;
 	}
 
-	public void setWorkHrs(String workHrs) {
+	public void setWorkHrs(Duration workHrs) {
 		this.workHrs = workHrs;
 	}
 
@@ -89,19 +91,19 @@ public class UserAttendanceDto {
 		this.projectId = projectId;
 	}
 
-	public String getAppliedHrsForBilling() {
+	public int getAppliedHrsForBilling() {
 		return appliedHrsForBilling;
 	}
 
-	public void setAppliedHrsForBilling(String appliedHrsForBilling) {
+	public void setAppliedHrsForBilling(int appliedHrsForBilling) {
 		this.appliedHrsForBilling = appliedHrsForBilling;
 	}
 
-	public String getApprovedHrsForBilling() {
+	public int getApprovedHrsForBilling() {
 		return approvedHrsForBilling;
 	}
 
-	public void setApprovedHrsForBilling(String approvedHrsForBilling) {
+	public void setApprovedHrsForBilling(int approvedHrsForBilling) {
 		this.approvedHrsForBilling = approvedHrsForBilling;
 	}
 

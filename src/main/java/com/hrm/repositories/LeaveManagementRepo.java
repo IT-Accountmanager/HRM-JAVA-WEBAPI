@@ -45,10 +45,11 @@ public interface LeaveManagementRepo extends JpaRepository<LeaveManagementTable,
 	 * monthInput);
 	 */
 
-	@Query(value = "SELECT lmt.*, emp.name, emp.manager, emp.department, emp.designation, pd.profile_photo "
-			+ "FROM leave_management_table lmt " + "LEFT JOIN employee emp ON emp.employee_id = lmt.employee_id "
-			+ "LEFT JOIN personal_details pd ON emp.email_id = pd.personal_mail_id "
-			+ "WHERE lmt.id = :id", nativeQuery = true)
+	@Query(value = "SELECT DISTINCT pd.profile_photo,  emp.name, emp.department, emp.designation, lmt.leave_type, lmt.leave_start_date, lmt.leave_end_date, lmt.applied_days_for_leave, lmt.leave_reason, m.name AS manager_name  "
+			+ "			FROM leave_management_table lmt INNER JOIN employee emp ON emp.employee_id = lmt.employee_id  "
+			+ "			INNER JOIN personal_details pd ON emp.email_id = pd.personal_mail_id  "
+			+ "            LEFT JOIN employee m ON emp.manager = m.employee_id "
+			+ "			WHERE lmt.id = :id", nativeQuery = true)
 	List<Object[]> findLeaveDetailsById(@Param("id") Integer id);
 
 	@Query("SELECT l FROM LeaveManagementTable l WHERE l.managerId = :managerId AND DATE_FORMAT(l.leaveStartDate, '%Y-%c') = :monthInput")

@@ -11,7 +11,7 @@ import com.hrm.helper.EnumCollection.LeaveType;
 public class LeaveRequestDetailsDto {
 
 	private byte[] profilePicture;
-	private Departments department;
+	private Departments.Department department;
 	private Designation designation;
 	private LeaveType leaveType;
 	private float balance;
@@ -20,8 +20,7 @@ public class LeaveRequestDetailsDto {
 	private double appliedDaysForLeave;
 	private String manager;
 	private String name;
-	
-	
+
 	public String getManager() {
 		return manager;
 	}
@@ -45,9 +44,6 @@ public class LeaveRequestDetailsDto {
 	private Half firstHalf;
 	private Half secondHalf;
 	private String reason;
-	
-
-	
 
 	public byte[] getProfilePicture() {
 		return profilePicture;
@@ -57,11 +53,11 @@ public class LeaveRequestDetailsDto {
 		this.profilePicture = profilePicture;
 	}
 
-	public Departments getDepartment() {
+	public Departments.Department getDepartment() {
 		return department;
 	}
 
-	public void setDepartment(Departments department) {
+	public void setDepartment(Departments.Department department) {
 		this.department = department;
 	}
 

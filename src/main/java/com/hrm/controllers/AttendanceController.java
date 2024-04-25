@@ -21,12 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hrm.models.Attendance;
 import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.AttendanceEmployeeDto;
+import com.hrm.payloads.AttendanceRequestDto;
 import com.hrm.payloads.BillableHoursDto;
+import com.hrm.payloads.LeaveDetailsRequestDto;
+import com.hrm.payloads.ManagerAttendanceDetailsDto;
 import com.hrm.payloads.ManagerAttendanceEditDto;
 import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.RegularizationManagerEditDto;
 import com.hrm.payloads.UserAttendanceDto;
 import com.hrm.payloads.ManagerAttendanceViewDto;
+import com.hrm.payloads.ManagerLeaveDetailsDto;
 import com.hrm.services.IAttendanceService;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -82,6 +86,13 @@ public class AttendanceController {
 			logger.error("Error retrieving attendance for employeeId: {}", employeeId, e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	@PostMapping("/allattendance")
+	public ResponseEntity<List<ManagerAttendanceDetailsDto>> getAttendance(
+			@RequestBody AttendanceRequestDto attendanceRequestDto) {
+		List<ManagerAttendanceDetailsDto> result = this.attendanceService.getAttendance(attendanceRequestDto);
+		return new ResponseEntity<List<ManagerAttendanceDetailsDto>>(result, HttpStatus.OK);
 	}
 
 	// --------------------------POST BILLABLE HOURS-------------------------
@@ -149,6 +160,7 @@ public class AttendanceController {
 
 	@PostMapping("/getEmployeeHoursBilling")
 	public String getEmployee(@RequestBody ObjectNode req) {
+		logger.info("Start of get Employee : " + req);
 
 		String managerId = req.get("employeeId").asText();
 		String month = req.get("month").asText();
@@ -175,21 +187,17 @@ public class AttendanceController {
 
 	@GetMapping("/manager/{managerId}/{month}")
 
-	 public ResponseEntity<?> getAttendanceByManagerAndMonth(
-	            @PathVariable String managerId,
-	            @PathVariable(required = false) String month) {
-	        try {
-	            List<ManagerAttendanceViewDto> attendanceDtoList = attendanceService.findAttendanceByManagerAndMonth(managerId, month);
-	            return ResponseEntity.ok().body(attendanceDtoList);
-	        } catch (Exception e) {
-	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-	                    .body("An error occurred while processing attendance data");
-	        }
-	    }
-
-
-	
-
+	public ResponseEntity<?> getAttendanceByManagerAndMonth(@PathVariable String managerId,
+			@PathVariable(required = false) String month) {
+		try {
+			List<ManagerAttendanceViewDto> attendanceDtoList = attendanceService
+					.findAttendanceByManagerAndMonth(managerId, month);
+			return ResponseEntity.ok().body(attendanceDtoList);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("An error occurred while processing attendance data");
+		}
+	}
 
 	@GetMapping("/getmanagerAttendance/{employeeId}/{date}")
 	public ResponseEntity<ManagerAttendanceEditDto> getManagerAttendance(@PathVariable String employeeId,
@@ -198,27 +206,24 @@ public class AttendanceController {
 		ManagerAttendanceEditDto managerAttendanceDto = attendanceService.getManagerAttendance(employeeId, parsedDate);
 		return ResponseEntity.ok(managerAttendanceDto);
 	}
-	
-	
-	
-	
+
 //	------------------------PUT MAPPING FOR ACCEPTING OF REGULARIZATION----------------------
 	@PutMapping("/editregularization/{employeeId}")
-	public ResponseEntity<RegularizationManagerEditDto>editregularization(@RequestBody RegularizationManagerEditDto regularizationManagerEditDto, @PathVariable String employeeId) {
-		RegularizationManagerEditDto attendance = this.attendanceService.editregularization(regularizationManagerEditDto, employeeId);
+	public ResponseEntity<RegularizationManagerEditDto> editregularization(
+			@RequestBody RegularizationManagerEditDto regularizationManagerEditDto, @PathVariable String employeeId) {
+		RegularizationManagerEditDto attendance = this.attendanceService
+				.editregularization(regularizationManagerEditDto, employeeId);
 		return new ResponseEntity<RegularizationManagerEditDto>(attendance, HttpStatus.OK);
 	}
-	
-	
+
 //	------------------------PUT MAPPING FOR REJECTION OF REGULARIZATION----------------------
 	@PutMapping("/editregularizationreject/{employeeId}")
-	public ResponseEntity<RegularizationManagerEditDto> editregularizationreject (@RequestBody RegularizationManagerEditDto regularizationManagerEditDto, @PathVariable String employeeId) {
-		RegularizationManagerEditDto attendance = this.attendanceService.editregularizationreject(regularizationManagerEditDto, employeeId);
+	public ResponseEntity<RegularizationManagerEditDto> editregularizationreject(
+			@RequestBody RegularizationManagerEditDto regularizationManagerEditDto, @PathVariable String employeeId) {
+		RegularizationManagerEditDto attendance = this.attendanceService
+				.editregularizationreject(regularizationManagerEditDto, employeeId);
 		return new ResponseEntity<RegularizationManagerEditDto>(attendance, HttpStatus.OK);
 	}
-	
-
-
 
 //github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
 //	@PostMapping("/managerattendance/{date}")
