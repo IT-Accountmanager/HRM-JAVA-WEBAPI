@@ -92,7 +92,7 @@ public class AttendanceScheduler {
 	}
 
 	private boolean isHoliday() {
-		LocalDate currentDate = LocalDate.now();
+		String currentDate = (LocalDate.now()).toString();
 		boolean isHoliday = holidayRepository.existsByDate(currentDate);
 		return isHoliday;
 	}

@@ -2,6 +2,7 @@ package com.hrm.services;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.hrm.models.Attendance;
@@ -22,7 +23,7 @@ public interface IAttendanceService {
 
 	String clockOut(String employeeId);
 
-	List<UserAttendanceDto> allAttendance(String employeeId);
+	Set<UserAttendanceDto> allAttendance(String employeeId);
 
 	AttendanceEmployeeDto getAttendance(String employeeId);
 
@@ -66,15 +67,17 @@ public interface IAttendanceService {
 	 */
 
 	List<ManagerAttendanceViewDto> findAttendanceByManagerAndMonth(String managerId, String month);
-	
+
 //	List<ManagerAttendanceViewDto> findAttendanceByManager(String managerId);
 
 //>>>>>>> branch 'ramachandra' of https://github.com/IT-Accountmanager/HRM-JAVA-WEBAPI.git
 	ManagerAttendanceEditDto getManagerAttendance(String employeeId, LocalDate date);
-	
-	RegularizationManagerEditDto editregularization(RegularizationManagerEditDto regularizationManagerEditDto, String employeeId);
 
-	RegularizationManagerEditDto editregularizationreject(RegularizationManagerEditDto regularizationManagerEditDto, String employeeId);
+	RegularizationManagerEditDto editregularization(RegularizationManagerEditDto regularizationManagerEditDto,
+			String employeeId);
+
+	RegularizationManagerEditDto editregularizationreject(RegularizationManagerEditDto regularizationManagerEditDto,
+			String employeeId);
 //	List<Object[]> findAttendanceByManagerAndMonth(String managerId, String month);
 
 	List<ManagerAttendanceDetailsDto> getAttendance(AttendanceRequestDto attendanceRequestDto);

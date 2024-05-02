@@ -1,8 +1,9 @@
 package com.hrm.controllers;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,25 +17,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.hrm.models.Attendance;
-import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.AttendanceEmployeeDto;
 import com.hrm.payloads.AttendanceRequestDto;
 import com.hrm.payloads.BillableHoursDto;
-import com.hrm.payloads.LeaveDetailsRequestDto;
 import com.hrm.payloads.ManagerAttendanceDetailsDto;
 import com.hrm.payloads.ManagerAttendanceEditDto;
 import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.RegularizationManagerEditDto;
 import com.hrm.payloads.UserAttendanceDto;
 import com.hrm.payloads.ManagerAttendanceViewDto;
-import com.hrm.payloads.ManagerLeaveDetailsDto;
 import com.hrm.services.IAttendanceService;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /*@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
@@ -77,9 +71,9 @@ public class AttendanceController {
 
 	// -------------------GET ALL ATTENDANCE BY EMPLOYEE ID-------------------
 	@GetMapping("/allattendance/{employeeId}")
-	public ResponseEntity<List<UserAttendanceDto>> getAllAttendanceByEmployeeId(@PathVariable String employeeId) {
+	public ResponseEntity<Set<UserAttendanceDto>> getAllAttendanceByEmployeeId(@PathVariable String employeeId) {
 		try {
-			List<UserAttendanceDto> allAttendance = attendanceService.allAttendance(employeeId);
+			Set<UserAttendanceDto> allAttendance = attendanceService.allAttendance(employeeId);
 			return new ResponseEntity<>(allAttendance, HttpStatus.OK);
 		} catch (Exception e) {
 			// Log the error

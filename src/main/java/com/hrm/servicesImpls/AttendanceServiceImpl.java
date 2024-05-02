@@ -1,6 +1,7 @@
 package com.hrm.servicesImpls;
 
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,8 +14,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,14 +89,21 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	 * }
 	 */
 
+	public static HashMap<LocalDate, Integer> getAllDates(LocalDate startDate, LocalDate endDate) {
+		HashMap<LocalDate, Integer> datesMap = new HashMap<>();
+		LocalDate currentDate = startDate;
+		while (!currentDate.isAfter(endDate)) {
+			datesMap.put(currentDate, 0); // Dummy value, you can put any value here
+			currentDate = currentDate.plusDays(1);
+		}
+		return datesMap;
+	}
+
 	@Override
 	public String clockIn(String employeeId) {
 		try {
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-			String formattedTime = LocalTime.now().format(formatter);
-			LocalDate currentDate = LocalDate.now();
 
-			LocalTime parsedTime = LocalTime.parse(formattedTime, formatter);
+			LocalDate currentDate = LocalDate.now();
 
 			Attendance existingAttendance = this.attendanceRepository.findByEmployeeIdAndDate(employeeId, currentDate);
 			if (existingAttendance != null) {
@@ -106,8 +117,6 @@ public class AttendanceServiceImpl implements IAttendanceService {
 				attendance.setMonth(LocalDateTime.now().getMonth());
 				attendance.setDate(currentDate);
 				attendance.setInTime(LocalTime.now());
-				// attendance.setInTime(parsedTime);
-				// attendance.setAttendanceStatus(AttendanceStatus.Present);
 
 				this.attendanceRepository.save(attendance);
 
@@ -144,46 +153,147 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	}
 
 	@Override
-	public List<UserAttendanceDto> allAttendance(String employeeId) {
+	public Set<UserAttendanceDto> allAttendance(String employeeId) {
+
+		Set<UserAttendanceDto> attendanceAllData = new HashSet<>(); // have to return
+		Set<UserAttendanceDto> attendanceData = new HashSet<>(); // data from db by empId
+		Set<UserAttendanceDto> attendanceDateSet = new HashSet<>(); // all dates data
+		Set<UserAttendanceDto> fullMonthAttendance = new HashSet<>(); // all dates data
 		try {
-			List<Attendance> allByEmployeeId = attendanceRepository.findAllByEmployeeId(employeeId);
+			List<Attendance> allAttendanceList = attendanceRepository.findAllByEmployeeId(employeeId);
+			logger.debug("allAttendanceList :", allAttendanceList);
 
-			if (allByEmployeeId.isEmpty()) {
-				return Collections.emptyList();
+			if (allAttendanceList.isEmpty()) {
+				return Collections.emptySet();
 			}
 
-			List<UserAttendanceDto> attendanceDtoList = new ArrayList<>();
+			HashMap<String, String> holidayList = new HashMap<>();
+			holidayList.put("2024-04-21", "Holi");
 
-			for (Attendance attendance : allByEmployeeId) {
-				UserAttendanceDto attendanceDto = new UserAttendanceDto();
+			LocalDate startDate = LocalDate.now().withDayOfMonth(1); // Start of the current month
+			LocalDate endDate = startDate.plusMonths(1).minusDays(1); // End of the current month
 
-				attendanceDto.setEmployeeId(employeeId);
-				attendanceDto.setMonth(attendance.getMonth());
-				attendanceDto.setDate(Format.getFormattedDate(attendance.getDate()));
-				attendanceDto.setInTime(attendance.getInTime());
-				attendanceDto.setOutTime(attendance.getOutTime());
-				attendanceDto.setRemarks(attendance.getRemarks());
+			HashMap<LocalDate, Integer> datesMap = getAllDates(startDate, endDate);
 
-				if (attendance.getInTime() != null && attendance.getOutTime() != null) {
-					attendanceDto.setWorkHrs((Duration.between(attendance.getInTime(), attendance.getOutTime())));
+			System.out.println("All dates within the current month:");
+			for (LocalDate currentDate : datesMap.keySet()) {
+				System.out.println(currentDate);
+//				boolean currentDatePresent = allAttendanceList.stream().map(Attendance::getDate)
+//						.anyMatch(date -> date.equals(currentDate));
+				Optional<Attendance> currentDateMatched = allAttendanceList.stream()
+						.filter(clasz -> clasz.getDate().equals(currentDate)).findFirst();
+
+				if (currentDateMatched.isPresent()) {
+					// fullMonthAttendance.add(currentDateMatched.get());
+
+					Attendance matchedAttendance = currentDateMatched.get();
+					UserAttendanceDto attendanceDto = new UserAttendanceDto();
+					attendanceDto.setDate(matchedAttendance.getDate().toString());
+					attendanceDto.setEmployeeId(matchedAttendance.getEmployeeId());
+					attendanceDto.setMonth(matchedAttendance.getMonth());
+					attendanceDto.setInTime(matchedAttendance.getInTime());
+					fullMonthAttendance.add(attendanceDto);
 				} else {
-					attendanceDto.setWorkHrs((Duration.ZERO));
+
+					UserAttendanceDto attendance = new UserAttendanceDto();
+					attendance.setDate(currentDate.toString());
+					attendance.setEmployeeId(employeeId);
+
+					DayOfWeek dayOfWeek = currentDate.getDayOfWeek();
+					if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
+						attendance.setAttendanceStatus('w');
+						System.out.println("Current date falls on a weekend (Saturday or Sunday)");
+					} else {
+						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+						String formattedDate = currentDate.format(formatter);
+
+						String holiday = holidayList.getOrDefault(formattedDate, "");
+
+						if (!holiday.isEmpty()) {
+							attendance.setAttendanceStatus('h');
+						}
+						System.out.println("Current date falls on a weekday");
+					}
+
+					fullMonthAttendance.add(attendance);
 				}
 
-				attendanceDto.setAttendanceStatus(attendance.getAttendanceStatus());
-				attendanceDto.setProjectId(attendance.getProjectId());
-				Integer appliedHrsForBilling = attendance.getAppliedHrsForBilling();
-				if (appliedHrsForBilling != null) {
-					attendanceDto.setAppliedHrsForBilling(appliedHrsForBilling);
-				}
-				attendanceDto.setApprovedHrsForBilling(attendance.getApprovedHrsForBilling());
-
-				attendanceDtoList.add(attendanceDto);
 			}
 
-			return attendanceDtoList;
+//			for (Attendance attendance : allByEmployeeId) {
+//
+//				UserAttendanceDto attendanceDto = new UserAttendanceDto();
+//
+//				attendanceDto.setEmployeeId(employeeId);
+//				attendanceDto.setMonth(attendance.getMonth());
+//				attendanceDto.setDate(Format.getFormattedDate(attendance.getDate()));
+//				attendanceDto.setInTime(attendance.getInTime());
+//				attendanceDto.setOutTime(attendance.getOutTime());
+//				attendanceDto.setRemarks(attendance.getRemarks());
+//
+//				if (attendance.getInTime() != null && attendance.getOutTime() != null) {
+//					attendanceDto.setWorkHrs((Duration.between(attendance.getInTime(), attendance.getOutTime())));
+//				} else {
+//					attendanceDto.setWorkHrs((Duration.ZERO));
+//				}
+//
+//				attendanceDto.setAttendanceStatus(attendance.getAttendanceStatus());
+//				attendanceDto.setProjectId(attendance.getProjectId());
+//				Integer appliedHrsForBilling = attendance.getAppliedHrsForBilling();
+//				if (appliedHrsForBilling != null) {
+//					attendanceDto.setAppliedHrsForBilling(appliedHrsForBilling);
+//				}
+//				attendanceDto.setApprovedHrsForBilling(attendance.getApprovedHrsForBilling());
+//
+//				attendanceData.add(attendanceDto);
+//			}
+//			// __________________________________________________________
+//
+//			int currentYear = LocalDate.now().getYear();
+//			Month month = LocalDate.now().getMonth();
+//			LocalDate firstDayOfMonth = LocalDate.of(currentYear, month, 1);
+//			LocalDate lastDayOfMonth = LocalDate.of(currentYear, month, month.length(LocalDate.now().isLeapYear()));
+//
+//			for (LocalDate date = firstDayOfMonth; !date.isAfter(lastDayOfMonth); date = date.plusDays(1)) {
+//				UserAttendanceDto attendanceDto = new UserAttendanceDto();
+//				attendanceDto.setDate(date.toString());
+//				if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
+//					attendanceDto.setEmployeeId(employeeId);
+//					attendanceDto.setAttendanceStatus('W');
+//				}
+//				attendanceDateSet.add(attendanceDto);
+//			}
+//
+//			for (UserAttendanceDto dateData : attendanceDateSet) {
+//
+//				String date = dateData.getDate();
+//				boolean isDatePresent = attendanceData.stream()
+//						.anyMatch(attendanceDto -> attendanceDto.getDate().equals(date));
+//
+//				if (isDatePresent) {
+//
+//					UserAttendanceDto foundRecord = attendanceData.stream().filter(x -> x.getDate().equals(date))
+//							.findFirst().orElse(null);
+//					if (foundRecord != null) {
+//						attendanceAllData.add(foundRecord);
+//					}
+//
+//				} else {
+//
+////					 dateData = new UserAttendanceDto();
+////						dateData.setEmployeeId(employeeId);
+//
+////					 
+//					attendanceAllData.add(dateData);
+//				}
+//			}
+
+			// __________________________________________________________
+
+			return fullMonthAttendance;
+
 		} catch (Exception e) {
-			// Log the error
+
 			logger.error("Error retrieving attendance for employeeId: {}", employeeId, e);
 			throw new ServiceException("Error retrieving attendance for employeeId: " + employeeId, e);
 		}
@@ -890,17 +1000,30 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		try {
 			if (allAttendanceDetails != null) {
 				for (Object[] attendanceDetails : allAttendanceDetails) {
-					Employee subDepartmentAndName = this.employeeRepository
-							.findSubDepartmentAndNameByEmployeeId((String) attendanceDetails[1]);
+//					Employee subDepartmentAndName = this.employeeRepository
+//							.findSubDepartmentAndNameByEmployeeId( attendanceDetails.);
 
 					ManagerAttendanceDetailsDto dto = new ManagerAttendanceDetailsDto();
 					// dto.setId(attendanceDetails.getId());
 					dto.setEmployeeId((String) attendanceDetails[0]);
 					dto.setEmployeeName((String) attendanceDetails[1]);
-					dto.setDepartment(subDepartmentAndName.getSubDepartment());
-					dto.setMonth((Month) attendanceDetails[3]);
-					dto.setApprovedHrsForBilling((int) attendanceDetails[4]);
-					// dto.setPresentDays(0);
+					if (attendanceDetails[2] != null) {
+						dto.setDepartment(Departments.Department.values()[(byte) attendanceDetails[2]]);
+					}
+
+					dto.setMonth(Month.of((int) attendanceDetails[3]));
+					dto.setPresentDays(((Long) attendanceDetails[4]).intValue());
+					// dto.setApprovedHrsForBilling(((BigDecimal) attendanceDetails[5]).intValue());
+
+					if (attendanceDetails[5] != null) {
+						if (attendanceDetails[5] instanceof BigDecimal) {
+							dto.setApprovedHrsForBilling(((BigDecimal) attendanceDetails[5]).intValue());
+						} else if (attendanceDetails[5] instanceof Double) {
+							dto.setApprovedHrsForBilling(((Double) attendanceDetails[5]).intValue());
+						}
+					} else {
+						dto.setApprovedHrsForBilling(0);
+					}
 
 					managerAttendanceDetailsDtoList.add(dto);
 				}

@@ -9,7 +9,9 @@ import com.hrm.models.Holiday;
 
 @Repository
 public interface IHolidayRepository extends JpaRepository<Holiday, Integer> {
-	boolean existsByDate(LocalDate date);
+	boolean existsByDate(String date);
+
+	Holiday findByHolidayNameAndDate(String holidayName, String date);
 
 	// boolean isHoliday(LocalDate currentDate);
 
