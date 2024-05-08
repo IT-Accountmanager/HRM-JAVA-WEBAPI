@@ -65,6 +65,23 @@ public interface LeaveManagementRepo extends JpaRepository<LeaveManagementTable,
 
 			@Param("employeeId") String employeeId, @Param("monthInput") String monthInput);
 
+	@Query(value = "SELECT  "
+			+ "  l.employee_id,  "
+			+ "  l.leave_start_date,  "
+			+ "  l.leave_end_date  "
+			+ "FROM  "
+			+ "  leave_management_table l  "
+			+ "WHERE  "
+			+ "  employee_id = :employee_id  "
+			+ "  and ( "
+			+ "    month(l.leave_start_date) = :month  "
+			+ "    and year(l.leave_start_date)= :year  "
+			+ "    OR month(l.leave_end_date) = :month  "
+			+ "    and year(l.leave_end_date)= :year "
+			+ "  ); "
+			+ "", nativeQuery = true)
+	List<Object[]> findLeaves(@Param("employee_id") String employeeId,@Param("month") Integer month, Integer year);
+
 //	 @Query("SELECT e.designation, e.department FROM Employee e WHERE e.employeeId = :employeeId")
 //	    Object[] findDesignationAndDepartmentByEmployeeId(@Param("employeeId") Long employeeId);
 

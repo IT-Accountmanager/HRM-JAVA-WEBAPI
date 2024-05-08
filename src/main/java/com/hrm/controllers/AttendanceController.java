@@ -1,6 +1,7 @@
 package com.hrm.controllers;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.Set;
 
@@ -74,6 +75,22 @@ public class AttendanceController {
 	public ResponseEntity<Set<UserAttendanceDto>> getAllAttendanceByEmployeeId(@PathVariable String employeeId) {
 		try {
 			Set<UserAttendanceDto> allAttendance = attendanceService.allAttendance(employeeId);
+			return new ResponseEntity<>(allAttendance, HttpStatus.OK);
+		} catch (Exception e) {
+			// Log the error
+			logger.error("Error retrieving attendance for employeeId: {}", employeeId, e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PostMapping("/userAllAttendance")
+	public ResponseEntity<Set<UserAttendanceDto>> getAllAttendance(@RequestBody ObjectNode req) {
+		String employeeId = req.get("employeeId").asText();
+		Integer month = req.get("month").asInt();
+		Integer year = req.get("year").asInt();
+//		int a = req.get("a").asInt();
+		try {
+			Set<UserAttendanceDto> allAttendance = attendanceService.allAttendance(employeeId, month, year);
 			return new ResponseEntity<>(allAttendance, HttpStatus.OK);
 		} catch (Exception e) {
 			// Log the error

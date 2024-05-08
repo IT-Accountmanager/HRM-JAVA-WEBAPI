@@ -9,7 +9,7 @@ public class RegularizationHoursDto {
 	private LocalDate date;
 	private LocalTime inTime;
 	private LocalTime outTime;
-	private Duration regularisationRequestHours;
+	private long regularisationRequestHours;
 	private String regularisationReason;
 
 	public LocalDate getDate() {
@@ -36,13 +36,11 @@ public class RegularizationHoursDto {
 		this.outTime = outTime;
 	}
 
-	
-
-	public Duration getRegularisationRequestHours() {
+	public long getRegularisationRequestHours() {
 		return regularisationRequestHours;
 	}
 
-	public void setRegularisationRequestHours(Duration regularisationRequestHours) {
+	public void setRegularisationRequestHours(long regularisationRequestHours) {
 		this.regularisationRequestHours = regularisationRequestHours;
 	}
 
@@ -53,6 +51,5 @@ public class RegularizationHoursDto {
 	public void setRegularisationReason(String regularisationReason) {
 		this.regularisationReason = regularisationReason;
 	}
-
 
 }

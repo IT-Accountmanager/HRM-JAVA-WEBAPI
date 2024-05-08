@@ -82,6 +82,8 @@ public interface IAttendanceService {
 
 	List<ManagerAttendanceDetailsDto> getAttendance(AttendanceRequestDto attendanceRequestDto);
 
+	Set<UserAttendanceDto> allAttendance(String employeeId, Integer month, Integer year);
+
 //	ApplyLeaveDto addLeave(ApplyLeaveDto leaveDto);
 
 //	float gettotalHoursFromBillableHoursDto(String employeeId);

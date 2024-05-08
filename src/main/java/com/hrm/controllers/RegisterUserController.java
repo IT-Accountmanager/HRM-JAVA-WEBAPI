@@ -1,5 +1,7 @@
 package com.hrm.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,8 @@ public class RegisterUserController {
 	@Autowired
 	IRegisterUserService userServ;
 
+	private static final Logger logger = LoggerFactory.getLogger(RegisterUserController.class);
+
 	@PostMapping("/Register")
 	public ResponseEntity<String> registerUser(@RequestBody RegisterUserEntity user) {
 		String result = this.userServ.registerUser(user);
@@ -34,11 +38,20 @@ public class RegisterUserController {
 		boolean isAuthenticated = userServ.authenticateUser(request);
 
 		if (isAuthenticated) {
+			logger.info("Is Authenticated : {}", isAuthenticated);
 			return new ResponseEntity<String>("Authenticated", HttpStatus.OK);
 		} else {
+			logger.info("Is Authenticated : {}", isAuthenticated);
 			return new ResponseEntity<String>(" Not Authenticated", HttpStatus.BAD_REQUEST);
 
 		}
+	}
+	
+	
+	@PostMapping("/get")
+	public RegisterUserEntity get(@RequestBody RegisterUserEntity request) {
+		RegisterUserEntity result =this.userServ.get(request);
+		return result;
 	}
 
 	/*

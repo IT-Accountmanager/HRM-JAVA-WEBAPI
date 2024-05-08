@@ -8,4 +8,6 @@ public interface IRegisterUserService {
 	
 	public boolean authenticateUser(RegisterUserEntity user);
 
+	RegisterUserEntity get(RegisterUserEntity request);
+
 }

@@ -44,8 +44,6 @@ public class Employee {
 	private long contactNumber;
 	private String emailId;
 	private LocalDate dateOfJoining;
-	
-	
 	private Departments department;
 	private Departments.Department subDepartment;
 	private String assignTo;

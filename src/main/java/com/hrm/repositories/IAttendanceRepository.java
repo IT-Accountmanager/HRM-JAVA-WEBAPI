@@ -100,7 +100,7 @@ public interface IAttendanceRepository extends JpaRepository<Attendance, Integer
 
 	List<Object[]> findAttendanceByManager(@Param("managerId") String managerId);
 
-	 List<Attendance> findAllByDate(LocalDate date);
+	List<Attendance> findAllByDate(LocalDate date);
 
 //	@Query(value = "SELECT a.id , e.employee_id, e.name, e.sub_department, MONTH(a.date) AS attendance_month, "
 //			+ "SUM(CASE WHEN MONTH(a.date) = :month THEN 1 ELSE 0 END) AS present_days, "
@@ -109,30 +109,42 @@ public interface IAttendanceRepository extends JpaRepository<Attendance, Integer
 //			+ "WHERE e.manager = :managerId AND YEAR(a.date) = :year AND MONTH(a.date) = :month "
 //			+ "GROUP BY a.id , e.employee_id, e.name, e.sub_department, MONTH(a.date)", nativeQuery = true)
 
-	@Query(value = "SELECT  "
-			+ "    e.employee_id, "
-			+ "    e.name, "
-			+ "    e.sub_department, "
-			+ "    MONTH(a.date) AS attendance_month, "
+	@Query(value = "SELECT  " + "    e.employee_id,  e.name,  e.sub_department, "
+			+ "    MONTH(a.date) AS attendance_month, " 
 			+ "    COUNT(*) AS present_days, "
-			+ "    SUM(a.approved_hrs_for_billing) AS total_approved_hours "
-			+ "FROM  "
+			+ "    SUM(a.approved_hrs_for_billing) AS total_approved_hours " 
+			+ "FROM  " 
 			+ "    Attendance a "
-			+ "LEFT JOIN  "
-			+ "    employee e ON a.employee_id = e.employee_id "
-			+ "WHERE  "
-			+ "    e.manager = :managerId "
-			+ "     AND YEAR(a.date) = :year   "
+			+ "LEFT JOIN  " 
+			+ "    employee e ON a.employee_id = e.employee_id " + "WHERE  "
+			+ "    e.manager = :managerId " 
+			+ "     AND YEAR(a.date) = :year   " 
 			+ "    AND MONTH(a.date) = :month    "
-			+ "GROUP BY  "
-			+ "    e.employee_id, "
-			+ "    e.name, "
-			+ "    e.sub_department, "
+			+ "GROUP BY  " 
+			+ "    e.employee_id, " 
+			+ "    e.name, " 
+			+ "    e.sub_department, " 
 			+ "    MONTH(a.date); "
 			+ "", nativeQuery = true)
-	List<Object[]> findByManagerIdAndMonth(@Param("managerId") String managerId
-			, @Param("year") int year,
-			@Param("month") int month
-	);
+	List<Object[]> findByManagerIdAndMonth(@Param("managerId") String managerId, @Param("year") int year,
+			@Param("month") int month);
+
+	@Query(value = "select a.employee_id, a.month , a.date , a.in_time , a.out_time , a.work_hrs , a.attendance_status , m.name AS manager , a.project_id , a.applied_hrs_for_billing , a.approved_hrs_for_billing , a.remarks  "
+			+ "from attendance a  "
+			+ "join employee e  "
+			+ "on a.employee_id = e.employee_id  "
+			+ "left join employee m  "
+			+ "on e.manager = m.employee_id "
+			+ "where a.employee_id = :employeeId  "
+			+ "AND MONTH(a.date) = :month "
+			+ "AND YEAR(a.date) = :year ; ",nativeQuery = true)
+	List<Object[]> findAllAttendance(@Param("employeeId") String employeeId, @Param("month") Integer month, @Param ("year") Integer year);
+
+	
+	@Query(value = " SELECT m.name "
+		+ "FROM employee e "
+		+ "JOIN employee m ON e.manager = m.employee_id "
+		+ "WHERE e.employee_id = :employee_id ;" ,nativeQuery = true)
+	Object[] findManager(@Param("employee_id") String  employeeId);
 
 }

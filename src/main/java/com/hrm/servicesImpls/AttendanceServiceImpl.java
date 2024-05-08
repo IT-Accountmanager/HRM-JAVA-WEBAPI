@@ -1,6 +1,8 @@
 package com.hrm.servicesImpls;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.sql.Time;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -12,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,7 +22,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
+
+import org.aspectj.weaver.ast.Instanceof;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +40,7 @@ import com.hrm.helper.EnumCollection.Half;
 import com.hrm.helper.EnumCollection.LeaveType;
 import com.hrm.models.Attendance;
 import com.hrm.models.Employee;
+import com.hrm.models.Holiday;
 import com.hrm.models.LeaveManagementTable;
 import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.AttendanceEmployeeDto;
@@ -48,6 +56,8 @@ import com.hrm.payloads.RegularizationManagerEditDto;
 import com.hrm.payloads.UserAttendanceDto;
 import com.hrm.repositories.IAttendanceRepository;
 import com.hrm.repositories.IEmployeeRepository;
+import com.hrm.repositories.IHolidayRepository;
+import com.hrm.repositories.LeaveManagementRepo;
 import com.hrm.services.IAttendanceService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -64,6 +74,12 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 	@Autowired
 	IEmployeeRepository employeeRepository;
+
+	@Autowired
+	IHolidayRepository holidayRepository;
+
+	@Autowired
+	LeaveManagementRepo leaveManagementRepo;
 
 	private static final Logger logger = LoggerFactory.getLogger(AttendanceServiceImpl.class);
 
@@ -131,34 +147,49 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 	@Override
 	public String clockOut(String employeeId) {
-		LocalDate date = LocalDate.now();
-		Attendance attendance = this.attendanceRepository.findByEmployeeIdAndDate(employeeId, date);
-		LocalTime outTime = LocalTime.now();
 
-		// Format the out time to HH:MM format
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-		String formattedOutTime = outTime.format(formatter);
+		try {
+			LocalDate date = LocalDate.now();
+			Attendance attendance = this.attendanceRepository.findByEmployeeIdAndDate(employeeId, date);
+			LocalTime outTime = LocalTime.now();
 
-		attendance.setOutTime(outTime);
-		Duration workDuration = Duration.between(attendance.getInTime(), outTime);
+			// Format the out time to HH:MM format
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+			String formattedOutTime = outTime.format(formatter);
 
-		long nanoseconds = workDuration.toNanos();
-		double hours = nanoseconds / (double) Duration.ofHours(1).toNanos();
+			attendance.setOutTime(outTime);
+//		Duration workDuration = Duration.between(attendance.getInTime(), outTime);
+//
+//		long nanoseconds = workDuration.toNanos();
+//		double hours = nanoseconds / (double) Duration.ofHours(1).toNanos();
 
-		attendance.setWorkHrs(Duration.ofHours((long) hours));
+			Duration workDuration = Duration.between(attendance.getInTime(), outTime);
+			long workHours = workDuration.toMinutes();
+			attendance.setWorkHrs(workHours);
 
-		this.attendanceRepository.save(attendance);
+			this.attendanceRepository.save(attendance);
+			logger.info("Successfully checked out Employee ID {} at {}", employeeId, formattedOutTime);
+			return "Check Out of Employee Id " + employeeId + " at " + formattedOutTime;
+		} catch (Exception e) {
+			logger.error("Error occurred during clock out for employee ID {}", employeeId, e);
+			// Return a message indicating failure
+			return "Error occurred during clock out. Please check logs for details.";
+		}
 
-		return "Check Out of Employee Id " + employeeId + " at " + formattedOutTime;
 	}
 
 	@Override
 	public Set<UserAttendanceDto> allAttendance(String employeeId) {
 
-		Set<UserAttendanceDto> attendanceAllData = new HashSet<>(); // have to return
-		Set<UserAttendanceDto> attendanceData = new HashSet<>(); // data from db by empId
-		Set<UserAttendanceDto> attendanceDateSet = new HashSet<>(); // all dates data
-		Set<UserAttendanceDto> fullMonthAttendance = new HashSet<>(); // all dates data
+		logger.debug("In All Attendance Method");
+
+		Set<UserAttendanceDto> fullMonthAttendance = new TreeSet<>((a, b) -> {
+			LocalDate dateA = LocalDate.parse(a.getDate());
+			LocalDate dateB = LocalDate.parse(b.getDate());
+			return dateA.compareTo(dateB);
+
+		});
+		// all dates data
 		try {
 			List<Attendance> allAttendanceList = attendanceRepository.findAllByEmployeeId(employeeId);
 			logger.debug("allAttendanceList :", allAttendanceList);
@@ -167,15 +198,24 @@ public class AttendanceServiceImpl implements IAttendanceService {
 				return Collections.emptySet();
 			}
 
-			HashMap<String, String> holidayList = new HashMap<>();
-			holidayList.put("2024-04-21", "Holi");
+			// Created for Holiday
+
+			List<Object[]> holidayObjects = this.holidayRepository.getAllHolidays();
+
+			Map<String, String> holidayMap = holidayObjects.stream()
+					.collect(Collectors.toMap(arr -> (String) arr[0], arr -> (String) arr[1]));
+
+//			Map<String, String> holidayMap = this.holidayRepository.getAllHolidays().stream()
+//					.collect(Collectors.toMap(Holiday::getDate, Holiday::getHolidayName));
+
+			HashMap<String, String> holidayList = new HashMap<>(holidayMap);
 
 			LocalDate startDate = LocalDate.now().withDayOfMonth(1); // Start of the current month
 			LocalDate endDate = startDate.plusMonths(1).minusDays(1); // End of the current month
 
 			HashMap<LocalDate, Integer> datesMap = getAllDates(startDate, endDate);
 
-			System.out.println("All dates within the current month:");
+			System.out.println("All dates within the current month:" + datesMap);
 			for (LocalDate currentDate : datesMap.keySet()) {
 				System.out.println(currentDate);
 //				boolean currentDatePresent = allAttendanceList.stream().map(Attendance::getDate)
@@ -190,13 +230,14 @@ public class AttendanceServiceImpl implements IAttendanceService {
 					UserAttendanceDto attendanceDto = new UserAttendanceDto();
 					attendanceDto.setDate(matchedAttendance.getDate().toString());
 					attendanceDto.setEmployeeId(matchedAttendance.getEmployeeId());
-					attendanceDto.setMonth(matchedAttendance.getMonth());
+					attendanceDto.setMonth(matchedAttendance.getMonth().toString());
 					attendanceDto.setInTime(matchedAttendance.getInTime());
 					fullMonthAttendance.add(attendanceDto);
 				} else {
 
 					UserAttendanceDto attendance = new UserAttendanceDto();
 					attendance.setDate(currentDate.toString());
+					attendance.setMonth(currentDate.getMonth().toString());
 					attendance.setEmployeeId(employeeId);
 
 					DayOfWeek dayOfWeek = currentDate.getDayOfWeek();
@@ -211,9 +252,10 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 						if (!holiday.isEmpty()) {
 							attendance.setAttendanceStatus('h');
+							logger.debug(" Current date falls on a Holiday  :{} ", holiday);
 						}
-						System.out.println("Current date falls on a weekday");
 					}
+					System.out.println("Current date falls on a weekday");
 
 					fullMonthAttendance.add(attendance);
 				}
@@ -290,6 +332,250 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 			// __________________________________________________________
 
+			return fullMonthAttendance;
+
+		} catch (Exception e) {
+
+			logger.error("Error retrieving attendance for employeeId: {}", employeeId, e);
+			throw new ServiceException("Error retrieving attendance for employeeId: " + employeeId, e);
+		}
+	}
+
+	@Override
+	public Set<UserAttendanceDto> allAttendance(String employeeId, Integer month, Integer year) {
+		logger.debug("In Side All Attendance Method");
+		Object[] manager = this.attendanceRepository.findManager(employeeId);
+
+		LocalDate startDate = LocalDate.now().withDayOfMonth(1); // Start of the current month
+		LocalDate endDate = startDate.plusMonths(1).minusDays(1); // End of the current month
+
+		List<Object[]> holidayObjects = this.holidayRepository.getAllHolidays();
+		Set<UserAttendanceDto> fullMonthAttendance = new TreeSet<>((a, b) -> {
+			LocalDate dateA = LocalDate.parse(a.getDate());
+			LocalDate dateB = LocalDate.parse(b.getDate());
+			return dateA.compareTo(dateB);
+
+		});
+		try {
+			logger.debug("In Side Try Block and Employee Id : {} ", employeeId);
+
+			List<Object[]> allAttendanceList;
+			List<Object[]> allLeaves;
+
+			if (month != 0 && year != 0) {
+				startDate = LocalDate.of(year, month, 1); // Start of the current month
+				endDate = startDate.plusMonths(1).minusDays(1); // End of the current month
+				System.out.println("*************1.Year = " + year + "\n" + "Month = " + month + "***************");
+				logger.info("1.Employee Id. : {}", employeeId);
+
+				allLeaves = leaveManagementRepo.findLeaves(employeeId, month, year);
+				if (allLeaves.isEmpty()) {
+					logger.info("No Leaves found for employee Id : {} for {} month {} year", employeeId, month, year);
+					// return Collections.emptySet();
+				}
+				allAttendanceList = attendanceRepository.findAllAttendance(employeeId, month, year);
+				if (allAttendanceList.isEmpty()) {
+					logger.info("No records found for employee Id : {} for {} month {} year", employeeId, month, year);
+					// return Collections.emptySet();
+				}
+				logger.info("Records found for employee Id : {} for {} month {} year", employeeId, month, year);
+			} else if (month != 0) {
+				year = LocalDate.now().getYear();
+				startDate = LocalDate.of(year, month, 1);
+				endDate = startDate.plusMonths(1).minusDays(1);
+				System.out.println("*************2.Year = " + year + "\n" + "Month = " + month + "***************");
+				logger.info("2.Employee Id. : {}", employeeId);
+
+				allLeaves = leaveManagementRepo.findLeaves(employeeId, month, year);
+				if (allLeaves.isEmpty()) {
+					logger.info("No Leaves found for employee Id : {} for {} month {} year", employeeId, month, year);
+					// return Collections.emptySet();
+				}
+				allAttendanceList = attendanceRepository.findAllAttendance(employeeId, month, year);
+				if (allAttendanceList.isEmpty()) {
+					logger.info("No records found for employee Id : {} for {} month {} year", employeeId, month, year);
+					// return Collections.emptySet();
+				}
+				logger.info("Records found for employee Id : {} for {} month {} year", employeeId, month, year);
+			} else {
+				year = LocalDate.now().getYear();
+				month = LocalDate.now().getMonthValue();
+				startDate = LocalDate.of(year, month, 1);
+				endDate = startDate.plusMonths(1).minusDays(1);
+
+				System.out.println("*************3.Year = " + year.getClass().getSimpleName() + "\n" + "Month = "
+						+ month.getClass().getSimpleName() + "***************");
+				logger.info("3.Employee Id. : {}", employeeId);
+				allLeaves = leaveManagementRepo.findLeaves(employeeId, month, year);
+				if (allLeaves.isEmpty()) {
+					logger.info("No Leaves found for employee Id : {} for {} month {} year", employeeId, month, year);
+					// return Collections.emptySet();
+				}
+				allAttendanceList = attendanceRepository.findAllAttendance(employeeId, month, year);
+				if (allAttendanceList.isEmpty()) {
+					logger.info("No records found for employee Id : {} for {} month {} year", employeeId, month, year);
+					// return Collections.emptySet();
+				}
+				logger.info("Records found for employee Id : {} for {} month {} year", employeeId, month, year);
+			}
+
+			Map<String, String> holidayMap = holidayObjects.stream()
+					.collect(Collectors.toMap(arr -> (String) arr[0], arr -> (String) arr[1]));
+			HashMap<String, String> holidayList = new HashMap<>(holidayMap);
+
+			Map<String, String> leaveMap = allLeaves.stream()
+					.collect(Collectors.toMap(arr -> ((Date) arr[1]).toString(), arr -> ((Date) arr[2]).toString()));
+			HashMap<String, String> leaveDatesList = new HashMap<>(leaveMap);
+
+			HashMap<LocalDate, Integer> datesMap = getAllDates(startDate, endDate);
+
+			logger.debug("Start Date: {}", startDate);
+			logger.debug("End Date: {}", endDate);
+			for (LocalDate currentDate : datesMap.keySet()) {
+				logger.debug("Processing attendance for date: {}", currentDate);
+
+				System.out.println(currentDate);
+
+				Optional<Object[]> currentDateMatched = allAttendanceList.stream().filter(clasz -> {
+					Object[] clazz = (Object[]) clasz;
+					logger.debug("Data type of Current Date: {}", currentDate.getClass().getSimpleName());
+					logger.debug("Data type of clazz[2]: {}", clazz[2].getClass().getSimpleName());
+					logger.debug("Current Date: {}, clazz[2]: {}", currentDate, clazz[2]);
+
+					LocalDate attendanceDate = ((Date) clazz[2]).toLocalDate();
+					return attendanceDate.equals(currentDate);
+				}).findFirst();
+
+				if (currentDateMatched.isPresent()) {
+					logger.debug("Attendance found for date: {}", currentDate);
+
+					Object[] matchedAttendance = currentDateMatched.get();
+
+					UserAttendanceDto attendanceDto = new UserAttendanceDto();
+					// select a.employee_id, a.month , a.date , a.in_time , a.out_time , a.work_hrs
+					// , a.attendance_status , m.name AS manager , a.project_id ,
+					// a.applied_hrs_for_billing , a.approved_hrs_for_billing , a.remarks
+
+					try {
+						attendanceDto.setEmployeeId(matchedAttendance[0].toString());
+					} catch (Exception e) {
+						logger.error("Error setting employeeId: {}", e.getMessage());
+					}
+					try {
+						attendanceDto.setMonth(Month.of(Integer.parseInt(matchedAttendance[1].toString()) + 1).name());
+					} catch (Exception e) {
+						logger.error("Error setting month: {}", e.getMessage());
+					}
+					try {
+						attendanceDto.setDate((((Date) matchedAttendance[2]).toLocalDate()).toString());
+					} catch (Exception e) {
+						logger.error("Error setting date: {}", e.getMessage());
+					}
+					try {
+						attendanceDto.setInTime(((Time) matchedAttendance[3]).toLocalTime());
+					} catch (Exception e) {
+						logger.error("Error setting inTime: {}", e.getMessage());
+					}
+
+					if (matchedAttendance[4] instanceof Time && matchedAttendance[4] != null) {
+						Time outTime = (Time) matchedAttendance[4];
+						attendanceDto.setOutTime(outTime.toLocalTime());
+					}
+
+					try {
+//						BigDecimal workHrsBigDecimal = (BigDecimal) matchedAttendance[5];
+//						long seconds = workHrsBigDecimal.longValue();
+//						Duration workHrs = Duration.ofSeconds(seconds);
+						attendanceDto.setWorkHrs((Long) matchedAttendance[5]);
+
+						// attendanceDto.setWorkHrs((Duration) matchedAttendance[5]);
+					} catch (Exception e) {
+						logger.error("Error setting workHrs: {}", e.getMessage());
+					}
+					try {
+						attendanceDto.setAttendanceStatus((char) matchedAttendance[6]);
+					} catch (Exception e) {
+						logger.error("Error setting Attendance Status: {}", e.getMessage());
+					}
+					try {
+						if (matchedAttendance[7].toString() != null) {
+							attendanceDto.setManager(matchedAttendance[7].toString());
+							// manager = matchedAttendance[7].toString();
+						}
+
+					} catch (Exception e) {
+						logger.error("Error setting manager: matchedAttendance[7] is null");
+					}
+					try {
+						if (matchedAttendance[8] != null) {
+							attendanceDto.setProjectId(matchedAttendance[8].toString());
+						}
+					} catch (Exception e) {
+						logger.error("Error setting projectId: {}", e.getMessage());
+					}
+
+					try {
+						if (matchedAttendance[9] != null) {
+							attendanceDto.setAppliedHrsForBilling((int) matchedAttendance[9]);
+						}
+					} catch (Exception e) {
+						logger.error("Error setting appliedHrsForBilling: {}", e.getMessage());
+					}
+					try {
+						if (matchedAttendance[10] != null) {
+							attendanceDto.setApprovedHrsForBilling((int) matchedAttendance[10]);
+						}
+					} catch (Exception e) {
+						logger.error("Error setting approvedHrsForBilling: {}", e.getMessage());
+					}
+					try {
+						if (matchedAttendance[11] != null) {
+							attendanceDto.setRemarks(matchedAttendance[11].toString());
+						}
+					} catch (Exception e) {
+						logger.error("Error setting remarks: {}", e.getMessage());
+					}
+
+					fullMonthAttendance.add(attendanceDto);
+				} else {
+					logger.debug("Attendance not found for date: {}", currentDate);
+
+					UserAttendanceDto attendance = new UserAttendanceDto();
+					attendance.setDate(currentDate.toString());
+					attendance.setMonth(currentDate.getMonth().toString());
+					attendance.setEmployeeId(employeeId);
+					attendance.setManager((manager[0]).toString());
+
+					DayOfWeek dayOfWeek = currentDate.getDayOfWeek();
+					if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
+						attendance.setAttendanceStatus('w');
+						System.out.println("Current date falls on a weekend (Saturday or Sunday)");
+					} else {
+						logger.debug(" Inside Else block to set Attendance Status   ");
+
+						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+						String formattedDate = currentDate.format(formatter);
+
+						String holiday = holidayList.getOrDefault(formattedDate, "");
+
+						String leave = leaveDatesList.getOrDefault(formattedDate, "");
+						// here i want to check currentDate is present in leaveDatesList or not
+
+						if (!holiday.isEmpty()) {
+							logger.debug(" Current date falls on a Holiday  :{} ", holiday);
+							attendance.setAttendanceStatus('h');
+						} else if (!leave.isEmpty()) {
+							logger.debug(" Current date falls on a Leave  :{} ", holiday);
+							attendance.setAttendanceStatus('l');
+						}
+
+					}
+					System.out.println("Current date falls on a weekday");
+
+					fullMonthAttendance.add(attendance);
+				}
+
+			}
 			return fullMonthAttendance;
 
 		} catch (Exception e) {
@@ -504,7 +790,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		LocalTime inTime = regularizationHoursDto.getInTime();
 		LocalTime outTime = regularizationHoursDto.getOutTime();
 		String regularisationReason = regularizationHoursDto.getRegularisationReason();
-		Duration regularisationRequestHours = regularizationHoursDto.getRegularisationRequestHours();
+		long regularisationRequestHours = regularizationHoursDto.getRegularisationRequestHours();
 
 //	    Duration regularisationRequestHours = Duration.ofHours(regularizationHoursDto.getHours())
 //                .plusMinutes(regularizationHoursDto.getMinutes());
@@ -912,7 +1198,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 			regularizationEdit.setInTime(LocalTime.MIN);
 			regularizationEdit.setOutTime(LocalTime.MIN);
-			regularizationEdit.setWorkHrs(Duration.ZERO);
+			regularizationEdit.setWorkHrs(0L);
 
 			regularizationEdit.setDate(regularizationManagerEditDto.getDate());
 			regularizationEdit.setRegularisationReason(regularizationManagerEditDto.getRegularisationReason());

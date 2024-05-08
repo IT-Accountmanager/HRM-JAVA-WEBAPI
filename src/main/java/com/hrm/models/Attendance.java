@@ -32,7 +32,7 @@ public class Attendance {
 	private LocalDate date;
 	private LocalTime inTime;
 	private LocalTime outTime;
-	private Duration workHrs;
+	private Long workHrs;
 	private char attendanceStatus;
 	private LeaveType leaveType;
 	private String projectId;
@@ -54,7 +54,7 @@ public class Attendance {
 
 	// private LocalTime exactInTime;
 	// private LocalTime exactOutTime;
-	private Duration regularisationRequestHours;
+	private Long regularisationRequestHours;
 
 	/*
 	 * private LocalTime exactInTime; private LocalTime exactOutTime; private
@@ -290,19 +290,11 @@ public class Attendance {
 		this.regularisationReason = regularisationReason;
 	}
 
-	public Duration getWorkHrs() {
-		return workHrs;
-	}
-
-	public void setWorkHrs(Duration workHrs) {
-		this.workHrs = workHrs;
-	}
-
-	public Duration getRegularisationRequestHours() {
+	public Long getRegularisationRequestHours() {
 		return regularisationRequestHours;
 	}
 
-	public void setRegularisationRequestHours(Duration regularisationRequestHours) {
+	public void setRegularisationRequestHours(Long regularisationRequestHours) {
 		this.regularisationRequestHours = regularisationRequestHours;
 	}
 
@@ -346,6 +338,14 @@ public class Attendance {
 
 	public void setTotalHours(int totalHours) {
 		this.totalHours = totalHours;
+	}
+
+	public Long getWorkHrs() {
+		return workHrs;
+	}
+
+	public void setWorkHrs(Long workHrs) {
+		this.workHrs = workHrs;
 	}
 
 }

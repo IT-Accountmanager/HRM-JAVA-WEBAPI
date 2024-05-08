@@ -7,11 +7,11 @@ import java.time.Duration;
 public class UserAttendanceDto {
 
 	private String employeeId;
-	private Month month;
+	private String month;
 	private String date;
 	private LocalTime inTime;
 	private LocalTime outTime;
-	private Duration workHrs;
+	private Long workHrs;
 	private char attendanceStatus;
 	private String manager;
 	private String projectId;
@@ -27,11 +27,11 @@ public class UserAttendanceDto {
 		this.employeeId = employeeId;
 	}
 
-	public Month getMonth() {
+	public String getMonth() {
 		return month;
 	}
 
-	public void setMonth(Month month) {
+	public void setMonth(String month) {
 		this.month = month;
 	}
 
@@ -59,11 +59,11 @@ public class UserAttendanceDto {
 		this.outTime = outTime;
 	}
 
-	public Duration getWorkHrs() {
+	public Long getWorkHrs() {
 		return workHrs;
 	}
 
-	public void setWorkHrs(Duration workHrs) {
+	public void setWorkHrs(Long workHrs) {
 		this.workHrs = workHrs;
 	}
 
