@@ -34,24 +34,20 @@ public class RegisterUserServiceImpl implements IRegisterUserService {
 	}
 
 	@Override
-	public boolean authenticateUser(RegisterUserEntity user) {
+	public RegisterUserEntity authenticateUser(RegisterUserEntity user) {
 		logger.info("Inside Authenticate User method");
 
-		boolean user1 = false;
 		try {
 			logger.debug("Email Id : {}, Password : {}", user.getEmailId(), user.getPassword());
 
-			Object data = userRepo.findByEmailIdAndPassword(user.getEmailId(), user.getPassword());
-			if (data != null)
-				user1 = true;
-			logger.info("User : {}", user1);
+			RegisterUserEntity result = userRepo.findByEmailIdAndPassword(user.getEmailId(), user.getPassword());
+			return result;
 
 		} catch (Exception e) {
 			logger.error("Error in Authenticating user : {}", e);
-
 		}
 
-		return user1;
+		return null;
 	}
 
 	@Override

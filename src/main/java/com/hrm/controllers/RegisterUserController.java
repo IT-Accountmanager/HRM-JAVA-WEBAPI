@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hrm.models.RegisterUserEntity;
+import com.hrm.payloads.AuthenticationResponse;
+import com.hrm.repositories.IRegisterUserRepository;
 import com.hrm.services.IRegisterUserService;
 
 @CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
@@ -22,6 +24,8 @@ import com.hrm.services.IRegisterUserService;
 @RequestMapping(value = "/RegisterUser")
 
 public class RegisterUserController {
+	@Autowired
+	IRegisterUserRepository registerUserRepository;
 	@Autowired
 	IRegisterUserService userServ;
 
@@ -34,23 +38,26 @@ public class RegisterUserController {
 	}
 
 	@PostMapping("/Authenticate")
-	public ResponseEntity<String> authenticateUser(@RequestBody RegisterUserEntity request) {
-		boolean isAuthenticated = userServ.authenticateUser(request);
-
+	public ResponseEntity<AuthenticationResponse> authenticateUser(@RequestBody RegisterUserEntity request) {
+		RegisterUserEntity user = userServ.authenticateUser(request);
+		String username = "";
+		boolean isAuthenticated = user != null;
 		if (isAuthenticated) {
 			logger.info("Is Authenticated : {}", isAuthenticated);
-			return new ResponseEntity<String>("Authenticated", HttpStatus.OK);
+			username = user.getUserName();
+			AuthenticationResponse response = new AuthenticationResponse(username, "Authenticated");
+			return new ResponseEntity<AuthenticationResponse>(response, HttpStatus.OK);
 		} else {
 			logger.info("Is Authenticated : {}", isAuthenticated);
-			return new ResponseEntity<String>(" Not Authenticated", HttpStatus.BAD_REQUEST);
+			AuthenticationResponse response = new AuthenticationResponse(username, "Not Authenticated");
+			return new ResponseEntity<AuthenticationResponse>(response, HttpStatus.BAD_REQUEST);
 
 		}
 	}
-	
-	
+
 	@PostMapping("/get")
 	public RegisterUserEntity get(@RequestBody RegisterUserEntity request) {
-		RegisterUserEntity result =this.userServ.get(request);
+		RegisterUserEntity result = this.userServ.get(request);
 		return result;
 	}
 

@@ -45,6 +45,7 @@ import com.hrm.models.LeaveManagementTable;
 import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.AttendanceEmployeeDto;
 import com.hrm.payloads.AttendanceRequestDto;
+import com.hrm.payloads.AttendanceSummaryDto;
 import com.hrm.payloads.BasicInfoDto;
 import com.hrm.payloads.BillableHoursDto;
 import com.hrm.payloads.ManagerAttendanceDetailsDto;
@@ -587,6 +588,13 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 	private String getMonthName(Month month) {
 		return (month != null) ? month.name() : "Month Not Set";
+	}
+
+	@Override
+	public AttendanceSummaryDto getSummary(Integer month, Integer year) {
+		
+		List<Object[]> summary = this.attendanceRepository.getSummary(month,year);
+		return null;
 	}
 
 	@Override

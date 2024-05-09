@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hrm.models.Attendance;
 import com.hrm.payloads.AttendanceEmployeeDto;
 import com.hrm.payloads.AttendanceRequestDto;
+import com.hrm.payloads.AttendanceSummaryDto;
 import com.hrm.payloads.BillableHoursDto;
 import com.hrm.payloads.ManagerAttendanceDetailsDto;
 import com.hrm.payloads.ManagerAttendanceEditDto;
@@ -95,6 +96,19 @@ public class AttendanceController {
 		} catch (Exception e) {
 			// Log the error
 			logger.error("Error retrieving attendance for employeeId: {}", employeeId, e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PostMapping("/a")
+	public ResponseEntity<AttendanceSummaryDto> getSummary(@RequestBody ObjectNode request) {
+		Integer month = request.get("month").asInt();
+		Integer year = request.get("year").asInt();
+		try {
+			AttendanceSummaryDto result = this.attendanceService.getSummary(month, year);
+			return new ResponseEntity<AttendanceSummaryDto>(result, HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error("Error retrieving attendance for Month : {} Year : {}", month, year, e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

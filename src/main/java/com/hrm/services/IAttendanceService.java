@@ -9,6 +9,7 @@ import com.hrm.models.Attendance;
 import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.AttendanceEmployeeDto;
 import com.hrm.payloads.AttendanceRequestDto;
+import com.hrm.payloads.AttendanceSummaryDto;
 import com.hrm.payloads.BillableHoursDto;
 import com.hrm.payloads.ManagerAttendanceDetailsDto;
 import com.hrm.payloads.ManagerAttendanceEditDto;
@@ -83,6 +84,8 @@ public interface IAttendanceService {
 	List<ManagerAttendanceDetailsDto> getAttendance(AttendanceRequestDto attendanceRequestDto);
 
 	Set<UserAttendanceDto> allAttendance(String employeeId, Integer month, Integer year);
+
+	AttendanceSummaryDto getSummary(Integer month, Integer year);
 
 //	ApplyLeaveDto addLeave(ApplyLeaveDto leaveDto);
 

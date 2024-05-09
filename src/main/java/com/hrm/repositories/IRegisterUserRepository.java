@@ -12,6 +12,8 @@ public interface IRegisterUserRepository extends JpaRepository<RegisterUserEntit
 
 	RegisterUserEntity findByEmailIdAndPassword(String emailId, String password);
 
+	String findUserNameByEmailIdAndPassword(String emailId, String password);
+
 //	@Query("SELECT u FROM RegisterUser u WHERE u.emailId = ?1 AND u.password =?2")
 //	RegisterUserEntity findByEmailIdAndPassword(String emailId, String password);
 
