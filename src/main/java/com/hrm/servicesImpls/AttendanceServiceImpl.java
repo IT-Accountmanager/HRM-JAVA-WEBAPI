@@ -25,8 +25,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
-
 import org.aspectj.weaver.ast.Instanceof;
+import org.modelmapper.internal.bytebuddy.build.Plugin.Engine.Summary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,9 +60,7 @@ import com.hrm.repositories.IEmployeeRepository;
 import com.hrm.repositories.IHolidayRepository;
 import com.hrm.repositories.LeaveManagementRepo;
 import com.hrm.services.IAttendanceService;
-
 import jakarta.persistence.EntityNotFoundException;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -591,10 +589,73 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	}
 
 	@Override
-	public AttendanceSummaryDto getSummary(Integer month, Integer year) {
-		
-		List<Object[]> summary = this.attendanceRepository.getSummary(month,year);
-		return null;
+	public List<AttendanceSummaryDto> getSummary(Integer month, Integer year) {
+		logger.info("Inside Summary Service Implementation");
+		List<AttendanceSummaryDto> attendanceSummaryList = new ArrayList<AttendanceSummaryDto>();
+		try {
+			final Integer[] _month = { month };
+			final Integer[] _year = { year };
+
+			if (month == null && year == null) {
+				_month[0] = LocalDate.now().getMonthValue();
+				_year[0] = LocalDate.now().getYear();
+			} else if (month == null) {
+				_month[0] = LocalDate.now().getMonthValue();
+			} else if (year == null) {
+				_year[0] = LocalDate.now().getYear();
+			}
+
+			List<Object[]> summary = this.attendanceRepository.getSummary(_month[0], _year[0]);
+
+			attendanceSummaryList = summary.stream().map(summaryObject -> {
+				Integer monthValue = _month[0];
+				Integer yearValue = _year[0];
+				AttendanceSummaryDto summaryDto = new AttendanceSummaryDto();
+				summaryDto.setEmployeeId(summaryObject[0].toString());
+				summaryDto.setEmployeeName(summaryObject[1].toString());
+				summaryDto.setMonth(monthValue);
+				summaryDto.setManager(summaryObject[2].toString());
+				summaryDto.setWorkingDays(calculateWorkingDays(monthValue, yearValue));
+				summaryDto.setPresentDays(((Long) summaryObject[3]).intValue());
+				summaryDto.setLeaves((Double) summaryObject[4]);
+				summaryDto.setTotalDays((Integer) summaryObject[5]);
+				summaryDto.setLop(calculateLop(summaryDto.getWorkingDays(), summaryDto.getPresentDays()));
+				Object obj = summaryObject[6];
+				if (obj instanceof Integer) {
+					summaryDto.setApprovedBillableHours(((Integer) obj).longValue());
+				} else if (obj instanceof Long) {
+					summaryDto.setApprovedBillableHours((Long) obj);
+				}
+				return summaryDto;
+			}).collect(Collectors.toList());
+
+		} catch (Exception e) {
+			logger.error("Error retrieving summary attendance  : {}", e);
+			throw new ServiceException("Error retrieving summary attendance : " + e);
+
+		}
+
+		return attendanceSummaryList;
+	}
+
+	private Integer calculateLop(Integer workingDays, Integer presentDays) {
+		return workingDays - presentDays;
+	}
+
+	private Integer calculateWorkingDays(Integer monthValue, Integer _year) {
+
+		LocalDate startDay = LocalDate.of(_year, monthValue, 1);
+		int daysInMonth = startDay.getMonth().length(startDay.isLeapYear());
+
+		int workingDays = 0;
+		for (int i = 1; i <= daysInMonth; i++) {
+			LocalDate currentDate = LocalDate.of(_year, monthValue, i);
+			DayOfWeek dayOfWeek = currentDate.getDayOfWeek();
+			if (dayOfWeek != dayOfWeek.SATURDAY && dayOfWeek != dayOfWeek.SUNDAY) {
+				workingDays++;
+			}
+		}
+		return workingDays;
 	}
 
 	@Override

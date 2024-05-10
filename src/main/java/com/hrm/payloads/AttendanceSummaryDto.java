@@ -3,12 +3,12 @@ package com.hrm.payloads;
 public class AttendanceSummaryDto {
 
 	private String employeeId;
-	private Long employeeName;
+	private String employeeName;
 	private Integer month;
 	private String manager;
 	private Integer workingDays;
 	private Integer PresentDays;
-	private Integer leaves;
+	private Double leaves;
 	private Integer totalDays;
 	private Integer lop;
 	private Long approvedBillableHours;
@@ -21,11 +21,11 @@ public class AttendanceSummaryDto {
 		this.employeeId = employeeId;
 	}
 
-	public Long getEmployeeName() {
+	public String getEmployeeName() {
 		return employeeName;
 	}
 
-	public void setEmployeeName(Long employeeName) {
+	public void setEmployeeName(String employeeName) {
 		this.employeeName = employeeName;
 	}
 
@@ -61,11 +61,11 @@ public class AttendanceSummaryDto {
 		PresentDays = presentDays;
 	}
 
-	public Integer getLeaves() {
+	public Double getLeaves() {
 		return leaves;
 	}
 
-	public void setLeaves(Integer leaves) {
+	public void setLeaves(Double leaves) {
 		this.leaves = leaves;
 	}
 

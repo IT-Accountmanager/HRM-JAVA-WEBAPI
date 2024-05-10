@@ -100,13 +100,13 @@ public class AttendanceController {
 		}
 	}
 
-	@PostMapping("/a")
-	public ResponseEntity<AttendanceSummaryDto> getSummary(@RequestBody ObjectNode request) {
+	@PostMapping("/Summary")
+	public ResponseEntity<List<AttendanceSummaryDto>> getSummary(@RequestBody ObjectNode request) {
 		Integer month = request.get("month").asInt();
 		Integer year = request.get("year").asInt();
 		try {
-			AttendanceSummaryDto result = this.attendanceService.getSummary(month, year);
-			return new ResponseEntity<AttendanceSummaryDto>(result, HttpStatus.OK);
+			List<AttendanceSummaryDto> result = this.attendanceService.getSummary(month, year);
+			return new ResponseEntity<List<AttendanceSummaryDto>>(result, HttpStatus.OK);
 		} catch (Exception e) {
 			logger.error("Error retrieving attendance for Month : {} Year : {}", month, year, e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
