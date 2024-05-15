@@ -12,6 +12,9 @@ public class UserAttendanceDto {
 	private LocalTime inTime;
 	private LocalTime outTime;
 	private Long workHrs;
+	private LocalTime requestedInTime;
+	private LocalTime requestedOutTime;
+	private Long requestedWorkHrs;
 	private char attendanceStatus;
 	private String manager;
 	private String projectId;
@@ -65,6 +68,30 @@ public class UserAttendanceDto {
 
 	public void setWorkHrs(Long workHrs) {
 		this.workHrs = workHrs;
+	}
+
+	public LocalTime getRequestedInTime() {
+		return requestedInTime;
+	}
+
+	public void setRequestedInTime(LocalTime requestedInTime) {
+		this.requestedInTime = requestedInTime;
+	}
+
+	public LocalTime getRequestedOutTime() {
+		return requestedOutTime;
+	}
+
+	public void setRequestedOutTime(LocalTime requestedOutTime) {
+		this.requestedOutTime = requestedOutTime;
+	}
+
+	public Long getRequestedWorkHrs() {
+		return requestedWorkHrs;
+	}
+
+	public void setRequestedWorkHrs(Long requestedWorkHrs) {
+		this.requestedWorkHrs = requestedWorkHrs;
 	}
 
 	public char getAttendanceStatus() {

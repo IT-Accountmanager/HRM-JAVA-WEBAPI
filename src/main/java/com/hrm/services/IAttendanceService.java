@@ -17,6 +17,7 @@ import com.hrm.payloads.ManagerAttendanceViewDto;
 import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.RegularizationManagerEditDto;
 import com.hrm.payloads.UserAttendanceDto;
+import com.hrm.payloads.UserAttendanceSummaryDto;
 
 public interface IAttendanceService {
 
@@ -86,6 +87,8 @@ public interface IAttendanceService {
 	Set<UserAttendanceDto> allAttendance(String employeeId, Integer month, Integer year);
 
 	List<AttendanceSummaryDto> getSummary(Integer month, Integer year);
+
+//	List<UserAttendanceSummaryDto> getSummary(String employeeId, Integer year);
 
 //	ApplyLeaveDto addLeave(ApplyLeaveDto leaveDto);
 

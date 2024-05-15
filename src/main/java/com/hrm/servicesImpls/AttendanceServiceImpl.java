@@ -3,6 +3,7 @@ package com.hrm.servicesImpls;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
+import java.text.DateFormatSymbols;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -55,6 +56,7 @@ import com.hrm.payloads.ManagerLeaveDetailsDto;
 import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.RegularizationManagerEditDto;
 import com.hrm.payloads.UserAttendanceDto;
+import com.hrm.payloads.UserAttendanceSummaryDto;
 import com.hrm.repositories.IAttendanceRepository;
 import com.hrm.repositories.IEmployeeRepository;
 import com.hrm.repositories.IHolidayRepository;
@@ -534,6 +536,27 @@ public class AttendanceServiceImpl implements IAttendanceService {
 					} catch (Exception e) {
 						logger.error("Error setting remarks: {}", e.getMessage());
 					}
+					try {
+						if (matchedAttendance[12] != null) {
+							attendanceDto.setRequestedInTime(((Time) matchedAttendance[12]).toLocalTime());
+						}
+					} catch (Exception e) {
+						logger.error("Error setting requested in time: {}", e.getMessage());
+					}
+					try {
+						if (matchedAttendance[13] != null) {
+							attendanceDto.setRequestedOutTime(((Time) matchedAttendance[13]).toLocalTime());
+						}
+					} catch (Exception e) {
+						logger.error("Error setting requested out time: {}", e.getMessage());
+					}
+					try {
+						if (matchedAttendance[14] != null) {
+							attendanceDto.setRequestedWorkHrs((Long) matchedAttendance[14]);
+						}
+					} catch (Exception e) {
+						logger.error("Error setting requested work hours: {}", e.getMessage());
+					}
 
 					fullMonthAttendance.add(attendanceDto);
 				} else {
@@ -543,8 +566,9 @@ public class AttendanceServiceImpl implements IAttendanceService {
 					attendance.setDate(currentDate.toString());
 					attendance.setMonth(currentDate.getMonth().toString());
 					attendance.setEmployeeId(employeeId);
-					attendance.setManager((manager[0]).toString());
-
+					if (manager != null && manager.length > 0) {
+						attendance.setManager(manager[0].toString());
+					}
 					DayOfWeek dayOfWeek = currentDate.getDayOfWeek();
 					if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
 						attendance.setAttendanceStatus('w');
@@ -636,6 +660,39 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		}
 
 		return attendanceSummaryList;
+	}
+
+	/*
+	 * @Override public List<UserAttendanceSummaryDto> getSummary(String employeeId,
+	 * Integer year) {
+	 * logger.info("Inside of User attendance Summary Implimentation");
+	 * 
+	 * List<UserAttendanceSummaryDto> result = new
+	 * ArrayList<UserAttendanceSummaryDto>();
+	 * 
+	 * try {
+	 * 
+	 * final Integer[] _year = { year };
+	 * 
+	 * if (year == null) { _year[0] = LocalDate.now().getYear(); }
+	 * 
+	 * List<Object[]> existingAttendance =
+	 * this.attendanceRepository.getSummary(employeeId, year);
+	 * 
+	 * for (int month = 1; month <= 12; month++) { Integer yearValue = _year[0];
+	 * UserAttendanceSummaryDto summaryDto = new UserAttendanceSummaryDto();
+	 * summaryDto.setMonth(getMonthName(month));
+	 * summaryDto.setWorkingDays(calculateWorkingDays(month, yearValue)); }
+	 * 
+	 * } catch (Exception e) { logger.
+	 * error("Error retriving Attendance Summary of employee Id : {} for year : {} . Reason : {}"
+	 * , employeeId, year, e); throw new
+	 * ServiceException("Error retriving Attendance Summary of employee Id : " +
+	 * employeeId + "for year : " + year + " . Reason : " + e); } return result; }
+	 */
+
+	private String getMonthName(int month) {
+		return new DateFormatSymbols().getMonths()[month - 1];
 	}
 
 	private Integer calculateLop(Integer workingDays, Integer presentDays) {
@@ -856,10 +913,10 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	@Override
 	public String addRegularizationHours(RegularizationHoursDto regularizationHoursDto, String employeeId) {
 		LocalDate date = regularizationHoursDto.getDate();
-		LocalTime inTime = regularizationHoursDto.getInTime();
-		LocalTime outTime = regularizationHoursDto.getOutTime();
+		LocalTime inTime = regularizationHoursDto.getRequestedInTime();
+		LocalTime outTime = regularizationHoursDto.getRequestedOutTime();
 		String regularisationReason = regularizationHoursDto.getRegularisationReason();
-		long regularisationRequestHours = regularizationHoursDto.getRegularisationRequestHours();
+		long regularisationRequestHours = regularizationHoursDto.getRequestedWorkHrs();
 
 //	    Duration regularisationRequestHours = Duration.ofHours(regularizationHoursDto.getHours())
 //                .plusMinutes(regularizationHoursDto.getMinutes());
@@ -869,10 +926,10 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 		if (attendance != null) {
 			attendance.setDate(date);
-			attendance.setInTime(inTime);
-			attendance.setOutTime(outTime);
+			attendance.setRequestedInTime(inTime);
+			attendance.setRequestedOutTime(outTime);
 			attendance.setRegularisationReason(regularisationReason);
-			attendance.setRegularisationRequestHours(regularisationRequestHours);
+			attendance.setRequestedWorkHrs(regularisationRequestHours);
 
 			// Check if the attendance status is 'A' (Anomaly)
 			if (attendance.getAttendanceStatus() == 'A') {
@@ -974,11 +1031,11 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		if (regularizationHours != null) {
 			RegularizationHoursDto regularizationHoursDto = new RegularizationHoursDto();
 
-			regularizationHoursDto.setInTime(regularizationHours.getInTime());
-			regularizationHoursDto.setOutTime(regularizationHours.getOutTime());
+			regularizationHoursDto.setRequestedInTime(regularizationHours.getRequestedInTime());
+			regularizationHoursDto.setRequestedOutTime(regularizationHours.getOutTime());
 			regularizationHoursDto.setDate(regularizationHours.getDate());
 			regularizationHoursDto.setRegularisationReason(regularizationHours.getRegularisationReason());
-			regularizationHoursDto.setRegularisationRequestHours(regularizationHours.getRegularisationRequestHours());
+			regularizationHoursDto.setRequestedWorkHrs(regularizationHours.getRegularisationRequestHours());
 
 			return regularizationHoursDto;
 		}

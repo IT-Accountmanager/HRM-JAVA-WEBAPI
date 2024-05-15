@@ -4,12 +4,12 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +29,10 @@ import com.hrm.payloads.ManagerAttendanceEditDto;
 import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.RegularizationManagerEditDto;
 import com.hrm.payloads.UserAttendanceDto;
+import com.hrm.payloads.UserAttendanceSummaryDto;
 import com.hrm.payloads.ManagerAttendanceViewDto;
 import com.hrm.services.IAttendanceService;
+import com.hrm.utils.ErrorResponse;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /*@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
@@ -112,6 +114,30 @@ public class AttendanceController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+	/*
+	 * @PostMapping("/userSummary") public ResponseEntity<?>
+	 * getUserAttendanceSummary(@RequestBody ObjectNode request) { String employeeId
+	 * = request.get("employeeId").asText(); Integer year =
+	 * request.get("year").asInt();
+	 * 
+	 * if (employeeId == null || employeeId.isEmpty()) {
+	 * logger.error("Employee ID is missing or empty"); String errorMessage =
+	 * "EmployeeId is missing or empty"; ErrorResponse errorResponse = new
+	 * ErrorResponse(errorMessage, HttpStatus.BAD_REQUEST.value()); return new
+	 * ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST); }
+	 * 
+	 * try { List<UserAttendanceSummaryDto> result =
+	 * this.attendanceService.getSummary(employeeId, year); logger.
+	 * info("Attendance Summary retrieved successfully for employeeId: {} in year: {}"
+	 * , employeeId, year); return ResponseEntity.ok(result); } catch (Exception e)
+	 * { logger.
+	 * error("Error retrieving Attendance Summary of : {} , for : {}. Error : {} ",
+	 * employeeId, year, e.getMessage()); return new
+	 * ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); }
+	 * 
+	 * }
+	 */
 
 	@PostMapping("/allattendance")
 	public ResponseEntity<List<ManagerAttendanceDetailsDto>> getAttendance(

@@ -1,15 +1,14 @@
 package com.hrm.payloads;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class RegularizationHoursDto {
 
 	private LocalDate date;
-	private LocalTime inTime;
-	private LocalTime outTime;
-	private long regularisationRequestHours;
+	private LocalTime requestedInTime;
+	private LocalTime requestedOutTime;
+	private Long requestedWorkHrs;
 	private String regularisationReason;
 
 	public LocalDate getDate() {
@@ -20,28 +19,28 @@ public class RegularizationHoursDto {
 		this.date = date;
 	}
 
-	public LocalTime getInTime() {
-		return inTime;
+	public LocalTime getRequestedInTime() {
+		return requestedInTime;
 	}
 
-	public void setInTime(LocalTime inTime) {
-		this.inTime = inTime;
+	public void setRequestedInTime(LocalTime requestedInTime) {
+		this.requestedInTime = requestedInTime;
 	}
 
-	public LocalTime getOutTime() {
-		return outTime;
+	public LocalTime getRequestedOutTime() {
+		return requestedOutTime;
 	}
 
-	public void setOutTime(LocalTime outTime) {
-		this.outTime = outTime;
+	public void setRequestedOutTime(LocalTime requestedOutTime) {
+		this.requestedOutTime = requestedOutTime;
 	}
 
-	public long getRegularisationRequestHours() {
-		return regularisationRequestHours;
+	public Long getRequestedWorkHrs() {
+		return requestedWorkHrs;
 	}
 
-	public void setRegularisationRequestHours(long regularisationRequestHours) {
-		this.regularisationRequestHours = regularisationRequestHours;
+	public void setRequestedWorkHrs(Long requestedWorkHrs) {
+		this.requestedWorkHrs = requestedWorkHrs;
 	}
 
 	public String getRegularisationReason() {

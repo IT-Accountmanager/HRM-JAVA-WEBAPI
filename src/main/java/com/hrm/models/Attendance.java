@@ -33,6 +33,9 @@ public class Attendance {
 	private LocalTime inTime;
 	private LocalTime outTime;
 	private Long workHrs;
+	private LocalTime requestedInTime;
+	private LocalTime requestedOutTime;
+	private Long requestedWorkHrs;
 	private char attendanceStatus;
 	private LeaveType leaveType;
 	private String projectId;
@@ -66,6 +69,7 @@ public class Attendance {
 	private String monthlyAppliedHoursForBilling;
 	private String monthlyApprovedHoursForBilling;
 	private String remarks;
+	private String billableAttendanceStatus;
 
 //	edited
 
@@ -196,6 +200,30 @@ public class Attendance {
 
 	public void setOutTime(LocalTime outTime) {
 		this.outTime = outTime;
+	}
+
+	public LocalTime getRequestedInTime() {
+		return requestedInTime;
+	}
+
+	public void setRequestedInTime(LocalTime requestedInTime) {
+		this.requestedInTime = requestedInTime;
+	}
+
+	public LocalTime getRequestedOutTime() {
+		return requestedOutTime;
+	}
+
+	public void setRequestedOutTime(LocalTime requestedOutTime) {
+		this.requestedOutTime = requestedOutTime;
+	}
+
+	public Long getRequestedWorkHrs() {
+		return requestedWorkHrs;
+	}
+
+	public void setRequestedWorkHrs(Long requestedWorkHrs) {
+		this.requestedWorkHrs = requestedWorkHrs;
 	}
 
 	public String getProjectId() {
@@ -346,6 +374,14 @@ public class Attendance {
 
 	public void setWorkHrs(Long workHrs) {
 		this.workHrs = workHrs;
+	}
+
+	public String getBillableAttendanceStatus() {
+		return billableAttendanceStatus;
+	}
+
+	public void setBillableAttendanceStatus(String billableAttendanceStatus) {
+		this.billableAttendanceStatus = billableAttendanceStatus;
 	}
 
 }
