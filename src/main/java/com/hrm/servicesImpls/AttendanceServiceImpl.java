@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.Year;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -662,34 +663,81 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		return attendanceSummaryList;
 	}
 
-	/*
-	 * @Override public List<UserAttendanceSummaryDto> getSummary(String employeeId,
-	 * Integer year) {
-	 * logger.info("Inside of User attendance Summary Implimentation");
-	 * 
-	 * List<UserAttendanceSummaryDto> result = new
-	 * ArrayList<UserAttendanceSummaryDto>();
-	 * 
-	 * try {
-	 * 
-	 * final Integer[] _year = { year };
-	 * 
-	 * if (year == null) { _year[0] = LocalDate.now().getYear(); }
-	 * 
-	 * List<Object[]> existingAttendance =
-	 * this.attendanceRepository.getSummary(employeeId, year);
-	 * 
-	 * for (int month = 1; month <= 12; month++) { Integer yearValue = _year[0];
-	 * UserAttendanceSummaryDto summaryDto = new UserAttendanceSummaryDto();
-	 * summaryDto.setMonth(getMonthName(month));
-	 * summaryDto.setWorkingDays(calculateWorkingDays(month, yearValue)); }
-	 * 
-	 * } catch (Exception e) { logger.
-	 * error("Error retriving Attendance Summary of employee Id : {} for year : {} . Reason : {}"
-	 * , employeeId, year, e); throw new
-	 * ServiceException("Error retriving Attendance Summary of employee Id : " +
-	 * employeeId + "for year : " + year + " . Reason : " + e); } return result; }
-	 */
+	@Override
+	public List<UserAttendanceSummaryDto> getSummary(String employeeId, Integer year) {
+		logger.info("Inside of User attendance Summary Implimentation");
+
+		List<UserAttendanceSummaryDto> result = new ArrayList<UserAttendanceSummaryDto>();
+
+		try {
+
+			final Integer[] _year = { year };
+
+			if (year == null) {
+				_year[0] = LocalDate.now().getYear();
+			}
+
+			// List<Object[]> existingAttendance =
+			// this.attendanceRepository.getSummary(employeeId, year);
+
+			for (int month = 1; month <= 12; month++) {
+				Integer yearValue = _year[0];
+				UserAttendanceSummaryDto summaryDto = new UserAttendanceSummaryDto();
+				summaryDto.setMonth(getMonthName(month));
+				summaryDto.setWorkingDays(calculateWorkingDays(month, yearValue));
+				summaryDto.setPresentDays(calculatePresentDays(month, yearValue));
+				summaryDto.setLeaves(calculateLeaves(month, yearValue));
+				summaryDto.setTotalDays(calculateTotalDays(month, yearValue));
+				summaryDto.setLop(null);
+				summaryDto.setApprovedBillableHours(calculateTotalApprovedBillableHours(month, yearValue));
+				result.add(summaryDto);
+			}
+
+		} catch (Exception e) {
+			logger.error("Error retriving Attendance Summary of employee Id : {} for year : {} . Reason : {}",
+					employeeId, year, e);
+			throw new ServiceException("Error retriving Attendance Summary of employee Id : " + employeeId
+					+ "for year : " + year + " . Reason : " + e);
+		}
+		return result;
+	}
+
+	private Long calculateTotalApprovedBillableHours(int month, Integer yearValue) {
+		logger.debug("Calculating Approved Billable Hours for month {} and year {}", month, yearValue);
+		Long billingHours = this.attendanceRepository.calculateTotalApprovedBillableHours(month, yearValue);
+		logger.debug("Approved Billable Hours calculated : {}", billingHours);
+		return billingHours;
+	}
+
+	public Integer calculateTotalDays(int month, Integer yearValue) {
+		if (yearValue == null || yearValue < 0) {
+			throw new IllegalArgumentException("Invalid year value");
+		}
+
+		if (month < 1 || month > 12) {
+			throw new IllegalArgumentException("Invalid month value");
+		}
+
+		YearMonth yearMonth = YearMonth.of(yearValue, month);
+
+		int totalDays = yearMonth.lengthOfMonth();
+
+		return totalDays;
+	}
+
+	private Double calculateLeaves(int month, Integer yearValue) {
+		logger.debug("Calculating leavess for month {} and year {}", month, yearValue);
+		Double leaves = this.attendanceRepository.calculateLeaves(month, yearValue);
+		logger.debug("Leaves calculated : {}", leaves);
+		return leaves;
+	}
+
+	private Integer calculatePresentDays(int month, Integer yearValue) {
+		logger.debug("Calculating present days for month {} and year {}", month, yearValue);
+		Integer pres = this.attendanceRepository.calculatePresentDays(month, yearValue);
+		logger.debug("Present days calculated : {}", pres);
+		return pres;
+	}
 
 	private String getMonthName(int month) {
 		return new DateFormatSymbols().getMonths()[month - 1];

@@ -88,7 +88,7 @@ public interface IAttendanceService {
 
 	List<AttendanceSummaryDto> getSummary(Integer month, Integer year);
 
-//	List<UserAttendanceSummaryDto> getSummary(String employeeId, Integer year);
+	List<UserAttendanceSummaryDto> getSummary(String employeeId, Integer year);
 
 //	ApplyLeaveDto addLeave(ApplyLeaveDto leaveDto);
 

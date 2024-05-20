@@ -3,11 +3,11 @@ package com.hrm.repositories;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-
+import org.hibernate.query.NativeQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Value;
 import com.hrm.models.Attendance;
 import org.springframework.data.repository.query.Param;
 
@@ -147,6 +147,30 @@ public interface IAttendanceRepository extends JpaRepository<Attendance, Integer
 			+ "  ) AS sub ON main.employee_id = sub.employee_id  " + "LIMIT  " + "  0, 1000; " + "", nativeQuery = true)
 	List<Object[]> getSummary(@Param("month") Integer month, @Param("year") Integer year);
 
-	//List<Object[]> getSummary(String employeeId, Integer year);
+	@Query(value = "SELECT COUNT(*) AS present_days "
+	        + "FROM attendance a "
+	        + "WHERE a.attendance_status = 'P'  "
+	        + "AND MONTH(a.date) = :month "
+	        + "AND YEAR(a.date) = :year "
+	        + "", nativeQuery = true)
+	Integer calculatePresentDays(@Param("month") int month, @Param("year") Integer year);
+	
+	@Query(value = "SELECT SUM(l.approved_days_for_leave) AS leaves  "
+			+ "FROM leave_management_table l  "
+			+ "WHERE  "
+			+ "    (MONTH(l.leave_end_date) = :month AND YEAR(l.leave_end_date) = :year)  "
+			+ "    OR  "
+			+ "    (MONTH(l.leave_start_date) = :month AND YEAR(l.leave_start_date) = :year) "
+	        + "", nativeQuery = true)
+	Double calculateLeaves(@Param("month") int month, @Param("year") Integer year);
+	
+@Query(value = "SELECT sum(a.approved_hrs_for_billing) AS total_billing_hours "
+		+ "FROM attendance a  "
+		+ "WHERE month(a.date) = :month "
+		+ "and year(a.date) = :year " ,nativeQuery = true)
+	Long calculateTotalApprovedBillableHours(@Param("month") int month,@Param("year") Integer year);
+
+
+	// List<Object[]> getSummary(String employeeId, Integer year);
 
 }
