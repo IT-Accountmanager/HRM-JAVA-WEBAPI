@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 import java.util.Set;
+
+import org.bouncycastle.asn1.ocsp.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException.BadRequest;
+
 import com.hrm.models.Attendance;
 import com.hrm.payloads.AttendanceEmployeeDto;
 import com.hrm.payloads.AttendanceRequestDto;
@@ -26,6 +30,7 @@ import com.hrm.payloads.AttendanceSummaryDto;
 import com.hrm.payloads.BillableHoursDto;
 import com.hrm.payloads.ManagerAttendanceDetailsDto;
 import com.hrm.payloads.ManagerAttendanceEditDto;
+import com.hrm.payloads.ManagerAttendanceSummaryDto;
 import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.RegularizationManagerEditDto;
 import com.hrm.payloads.UserAttendanceDto;
@@ -102,6 +107,7 @@ public class AttendanceController {
 		}
 	}
 
+	// Admin Summary
 	@PostMapping("/Summary")
 	public ResponseEntity<List<AttendanceSummaryDto>> getSummary(@RequestBody ObjectNode request) {
 		Integer month = request.get("month").asInt();
@@ -137,6 +143,31 @@ public class AttendanceController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
+	}
+
+	// Manager Summary
+	@PostMapping("/managerSummary")
+	public ResponseEntity<?> getManagerAttendanceSummary(@RequestBody ObjectNode request) {
+		String managerId = request.get("managerId").asText();
+		Integer year = request.get("year").asInt();
+
+		if (managerId == null || managerId.isEmpty()) {
+			logger.error("Manager Id is missing or empty.");
+			String errorMessage = "Manager Id is missing or empty.";
+			ErrorResponse errorResponse = new ErrorResponse(errorMessage, HttpStatus.BAD_REQUEST.value());
+			return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+		}
+
+		try {
+			List<ManagerAttendanceSummaryDto> result = this.attendanceService.getManagerSummary(managerId, year);
+			logger.info("Manager Attendance Summary retrieved successfully for manager Id: {} in year: {}", managerId,
+					year);
+			return ResponseEntity.ok(result);
+		} catch (Exception e) {
+			logger.error("Error retriving Manager Attendance Summary of : {} , for : {} . Error : {}", managerId, year,
+					e.getMessage());
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@PostMapping("/allattendance")

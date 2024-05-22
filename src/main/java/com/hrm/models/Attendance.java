@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
+import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hrm.helper.EnumCollection.ApprovalStatus;
@@ -331,7 +332,9 @@ public class Attendance {
 																		// appliedHrsForBilling is null
 	}
 
-	public void setAppliedHrsForBilling(int appliedHrsForBilling) {
+	public void setAppliedHrsForBilling(Integer appliedHrsForBilling) {
+		Optional.ofNullable(appliedHrsForBilling).filter(hrs -> hrs >= 0 && hrs <= 8)
+				.orElseThrow(() -> new IllegalArgumentException("Applied hours for billing must be between 0 and 8"));
 		this.appliedHrsForBilling = appliedHrsForBilling;
 	}
 
@@ -340,7 +343,9 @@ public class Attendance {
 																			// appliedHrsForBilling is null
 	}
 
-	public void setApprovedHrsForBilling(int approvedHrsForBilling) {
+	public void setApprovedHrsForBilling(Integer approvedHrsForBilling) {
+		Optional.ofNullable(approvedHrsForBilling).filter(hrs -> hrs >= 0 && hrs <= 8)
+				.orElseThrow(() -> new IllegalArgumentException("Approved hours for billing must be between 0 and 8"));
 		this.approvedHrsForBilling = approvedHrsForBilling;
 	}
 

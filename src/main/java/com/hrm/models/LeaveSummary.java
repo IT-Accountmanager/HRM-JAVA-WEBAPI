@@ -18,8 +18,6 @@ public class LeaveSummary {
 	private float openingBalance;
 	private float appliedLeaves;
 	private float carryForward;
-	private float totalBalence;
-
 	private float totalBalance;
 
 	public int getId() {
@@ -76,14 +74,6 @@ public class LeaveSummary {
 
 	public void setTotalBalance(float totalBalance) {
 		this.totalBalance = totalBalance;
-	}
-
-	public float getTotalBalence() {
-		return totalBalence;
-	}
-
-	public void setTotalBalence(float totalBalence) {
-		this.totalBalence = totalBalence;
 	}
 
 }

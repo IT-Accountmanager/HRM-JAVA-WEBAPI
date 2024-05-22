@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.FileUtils;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -33,6 +35,7 @@ import com.hrm.models.Education;
 import com.hrm.models.Employee;
 import com.hrm.models.Family;
 import com.hrm.models.HRManager;
+import com.hrm.models.LeaveSummary;
 import com.hrm.models.Onboarding;
 import com.hrm.models.Personal;
 import com.hrm.models.Work;
@@ -53,6 +56,7 @@ import com.hrm.repositories.IEducationRepository;
 import com.hrm.repositories.IEmployeeRepository;
 import com.hrm.repositories.IFamilyRepository;
 import com.hrm.repositories.IHRManagerRepository;
+import com.hrm.repositories.ILeaveSummaryRepository;
 import com.hrm.repositories.IOnboardingRepository;
 import com.hrm.repositories.IPersonalRepository;
 import com.hrm.repositories.IWorkRepository;
@@ -90,9 +94,13 @@ public class HRManagerServiceImpl implements IHRManagerService {
 	@Autowired
 	private IBackgroundVerificationRepository backgroundVerificationRepository;
 	@Autowired
+	private ILeaveSummaryRepository leaveSummaryRepository;
+	@Autowired
 	JavaMailSender javaMailSender;
 	@Value("${spring.mail.username}")
 	private String sender;
+
+	private static final Logger logger = LoggerFactory.getLogger(HRManagerServiceImpl.class);
 
 	@Override
 	public boolean postCandidatesInHrManager(CandidatesStatus status) {
@@ -1641,60 +1649,84 @@ public class HRManagerServiceImpl implements IHRManagerService {
 
 	@Override
 	public String createAppointmentLetter(CreateAppointmentLetterDto appointmentLetterDto, long candidateId) {
-		Boolean existed = this.employeeRepository.existsByCandidateId(candidateId);
+		logger.info("Creating appointment letter for candidate ID: {}", candidateId);
 
-		if (existed) {
-			return "Employee Already Exists with Candidate ID: " + candidateId;
+		try {
+			Boolean existed = this.employeeRepository.existsByCandidateId(candidateId);
+
+			if (existed) {
+				logger.warn("Employee already exists with candidate ID: {}", candidateId);
+				return "Employee Already Exists with Candidate ID: " + candidateId;
+			}
+
+			Employee employee = new Employee();
+			employee.setCandidateId(candidateId);
+
+			List<Employee> employees = this.employeeRepository.findAll();
+
+			if (!employees.isEmpty()) {
+				long maxEmployeeSn = employees.stream().mapToLong(Employee::getEmployeeSn).max().orElse(0);
+				maxEmployeeSn++;
+
+				employee.setEmployeeId(String.format("EIS%05d", maxEmployeeSn));
+			} else {
+				employee.setEmployeeId("EIS00001");
+			}
+
+			employee.setName(appointmentLetterDto.getName());
+			employee.setDesignation(appointmentLetterDto.getDesignation());
+			employee.setWorkLocation(appointmentLetterDto.getWorkLocation());
+			employee.setDateOfJoining(appointmentLetterDto.getDateOfJoining());
+			employee.setCtc(appointmentLetterDto.getCtc());
+			employee.setServiceCommitment(appointmentLetterDto.getBondPeriod());
+			employee.setBondBreakAmount(appointmentLetterDto.getBondBreakAmount());
+			employee.setEmailId(appointmentLetterDto.getEmailId());
+			employee.setContactNumber(appointmentLetterDto.getContactNumber());
+			employee.setJobTitle(appointmentLetterDto.getJobTitle());
+			employee.setAuthorisedSignature(appointmentLetterDto.getAuthorisedSignature());
+			employee.setSign(appointmentLetterDto.getSign());
+			employee.setEmployeeStatus(EmployeeStatus.Active);
+
+			try {
+				Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
+				if (onboarding != null) {
+					onboarding.setCandidatesStatus(CandidatesStatus.Approved);
+					this.onboardingRepository.save(onboarding);
+					logger.info("Onboarding status updated for candidate ID: {}", candidateId);
+				} else {
+					logger.warn("Onboarding not found for candidate ID: {}", candidateId);
+				}
+			} catch (Exception e) {
+				logger.error("Error updating onboarding status for candidate ID: {}", candidateId, e);
+				return "Error updating onboarding status for candidate ID: " + candidateId;
+			}
+
+			this.employeeRepository.save(employee);
+
+			List<String> employeeList = this.employeeRepository.getAllEmployeeList();
+			logger.info("All employees fetched from employee table");
+			List<String> leaveEmployeeList = this.leaveSummaryRepository.getAllEmployeeList();
+			logger.info("All employees fetched from Leave Summary table");
+			List<String> employeesNotInLeaves = employeeList.stream().filter(emp -> !leaveEmployeeList.contains(emp))
+					.collect(Collectors.toList());
+
+			employeesNotInLeaves.forEach(e -> {
+				try {
+					LeaveSummary leaveSummary = new LeaveSummary();
+					leaveSummary.setEmployeeId(e);
+					this.leaveSummaryRepository.save(leaveSummary);
+					logger.info("LeaveSummary created for employee ID: {}", e);
+				} catch (Exception ex) {
+					logger.error("Error creating LeaveSummary for employee ID: {}", e, ex);
+				}
+			});
+
+			logger.info("Appointment Letter Created");
+			return "Appointment Letter Created";
+		} catch (Exception e) {
+			logger.error("Error creating appointment letter for candidate ID: {}", candidateId, e);
+			return "Error creating appointment letter for candidate ID: " + candidateId;
 		}
-
-		Employee employee = new Employee();
-		employee.setCandidateId(candidateId);
-
-		// Retrieve all employees
-		List<Employee> employees = this.employeeRepository.findAll();
-
-		// Check if there are existing employees
-		if (!employees.isEmpty()) {
-			// If there are existing employees, find the maximum employeeSn
-			long maxEmployeeSn = employees.stream().mapToLong(Employee::getEmployeeSn).max().orElse(0); // If no max
-																										// found,
-																										// default to 0
-
-			// Increment the max employeeSn to get the next value
-			maxEmployeeSn++;
-
-			employee.setEmployeeId(String.format("EIS%05d", maxEmployeeSn));
-		} else {
-			// If no existing employees, start with employeeSn 1
-			employee.setEmployeeId("EIS00001");
-		}
-
-		// Set other employee details
-		employee.setName(appointmentLetterDto.getName());
-		employee.setDesignation(appointmentLetterDto.getDesignation());
-		employee.setWorkLocation(appointmentLetterDto.getWorkLocation());
-		employee.setDateOfJoining(appointmentLetterDto.getDateOfJoining());
-		employee.setCtc(appointmentLetterDto.getCtc());
-		employee.setServiceCommitment(appointmentLetterDto.getBondPeriod());
-		employee.setBondBreakAmount(appointmentLetterDto.getBondBreakAmount());
-		employee.setEmailId(appointmentLetterDto.getEmailId());
-		employee.setContactNumber(appointmentLetterDto.getContactNumber());
-		employee.setJobTitle(appointmentLetterDto.getJobTitle());
-		employee.setAuthorisedSignature(appointmentLetterDto.getAuthorisedSignature());
-		employee.setSign(appointmentLetterDto.getSign());
-		employee.setEmployeeStatus(EmployeeStatus.Active);
-
-		// Update onboarding status
-		Onboarding onboarding = this.onboardingRepository.findByCandidateId(candidateId);
-		if (onboarding != null) {
-			onboarding.setCandidatesStatus(CandidatesStatus.Approved);
-			this.onboardingRepository.save(onboarding);
-		}
-
-		// Save the new employee
-		this.employeeRepository.save(employee);
-
-		return "Appointment Letter Created";
 	}
 
 	@Override

@@ -150,26 +150,28 @@ public interface IAttendanceRepository extends JpaRepository<Attendance, Integer
 	@Query(value = "SELECT COUNT(*) AS present_days "
 	        + "FROM attendance a "
 	        + "WHERE a.attendance_status = 'P'  "
-	        + "AND MONTH(a.date) = :month "
-	        + "AND YEAR(a.date) = :year "
-	        + "", nativeQuery = true)
+			+ "AND MONTH(a.date) = :month " + "AND YEAR(a.date) = :year " + "", nativeQuery = true)
 	Integer calculatePresentDays(@Param("month") int month, @Param("year") Integer year);
-	
-	@Query(value = "SELECT SUM(l.approved_days_for_leave) AS leaves  "
-			+ "FROM leave_management_table l  "
-			+ "WHERE  "
-			+ "    (MONTH(l.leave_end_date) = :month AND YEAR(l.leave_end_date) = :year)  "
-			+ "    OR  "
-			+ "    (MONTH(l.leave_start_date) = :month AND YEAR(l.leave_start_date) = :year) "
-	        + "", nativeQuery = true)
-	Double calculateLeaves(@Param("month") int month, @Param("year") Integer year);
-	
-@Query(value = "SELECT sum(a.approved_hrs_for_billing) AS total_billing_hours "
-		+ "FROM attendance a  "
-		+ "WHERE month(a.date) = :month "
-		+ "and year(a.date) = :year " ,nativeQuery = true)
-	Long calculateTotalApprovedBillableHours(@Param("month") int month,@Param("year") Integer year);
 
+	@Query(value = "SELECT SUM(l.approved_days_for_leave) AS leaves  " + "FROM leave_management_table l  " + "WHERE  "
+			+ "    (MONTH(l.leave_end_date) = :month AND YEAR(l.leave_end_date) = :year)  " + "    OR  "
+			+ "    (MONTH(l.leave_start_date) = :month AND YEAR(l.leave_start_date) = :year) " + "", nativeQuery = true)
+	Double calculateLeaves(@Param("month") int month, @Param("year") Integer year);
+
+	@Query(value = "SELECT sum(a.approved_hrs_for_billing) AS total_billing_hours " + "FROM attendance a  "
+			+ "WHERE month(a.date) = :month " + "and year(a.date) = :year ", nativeQuery = true)
+	Long calculateTotalApprovedBillableHours(@Param("month") int month, @Param("year") Integer year);
+
+	
+	@Query(value = "SELECT SUM(CASE WHEN a.attendance_status = 'P' THEN 1 ELSE 0 END) AS presentDays, "
+			+ "       SUM(CASE WHEN a.attendance_status = 'L' THEN 1 ELSE 0 END) AS leaves, "
+			+ "	   SUM(a.approved_hrs_for_billing) AS billable_hours "
+			+ "FROM employee e "
+			+ "LEFT JOIN attendance a  "
+			+ "ON e.employee_id = a.employee_id  "
+			+ "WHERE a.attendance_status IN ('P', 'L') AND e.manager = :managerId AND year(a.date) = :year  AND MONTH(a.date) = :month "
+			+ "", nativeQuery = true)
+	List<Object[]> getManagerAttendanceSummary(@Param("managerId") String managerId,@Param("year") Integer year,@Param("month") int month);
 
 	// List<Object[]> getSummary(String employeeId, Integer year);
 

@@ -52,6 +52,7 @@ import com.hrm.payloads.BasicInfoDto;
 import com.hrm.payloads.BillableHoursDto;
 import com.hrm.payloads.ManagerAttendanceDetailsDto;
 import com.hrm.payloads.ManagerAttendanceEditDto;
+import com.hrm.payloads.ManagerAttendanceSummaryDto;
 import com.hrm.payloads.ManagerAttendanceViewDto;
 import com.hrm.payloads.ManagerLeaveDetailsDto;
 import com.hrm.payloads.RegularizationHoursDto;
@@ -700,6 +701,65 @@ public class AttendanceServiceImpl implements IAttendanceService {
 					+ "for year : " + year + " . Reason : " + e);
 		}
 		return result;
+	}
+
+	@Override
+	public List<ManagerAttendanceSummaryDto> getManagerSummary(String managerId, Integer year) {
+
+		logger.info("Inside of Manager attendance Summary Implimentation");
+
+		List<ManagerAttendanceSummaryDto> result = new ArrayList<ManagerAttendanceSummaryDto>();
+
+		try {
+			final Integer[] _year = { year };
+
+			if (year == null) {
+				_year[0] = LocalDate.now().getYear();
+			}
+
+			for (int month = 1; month <= 12; month++) {
+				Integer yearValue = _year[0];
+
+				List<Object[]> managerAttendanceSummary = this.attendanceRepository
+						.getManagerAttendanceSummary(managerId, year, month);
+
+				ManagerAttendanceSummaryDto summaryDto = new ManagerAttendanceSummaryDto();
+				summaryDto.setMonth(getMonthName(month));
+				summaryDto.setNoOfTeamMember(calulateTeamMembers(managerId));
+				summaryDto.setWorkingDays(
+						summaryDto.getNoOfTeamMember().intValue() * calculateWorkingDays(month, yearValue));
+				summaryDto
+						.setTotalDays(summaryDto.getNoOfTeamMember().intValue() * calculateTotalDays(month, yearValue));
+				//
+
+				for (Object[] managerAttendance : managerAttendanceSummary) {
+					summaryDto.setPresentDays(
+							managerAttendance[0] != null ? ((BigDecimal) managerAttendance[0]).intValue() : 0);
+					summaryDto.setLeaves(
+							managerAttendance[1] != null ? ((BigDecimal) managerAttendance[1]).doubleValue() : 0);
+					// summaryDto.setLop(null);
+					summaryDto.setApprovedBillableHours(
+							managerAttendance[2] != null ? ((BigDecimal) managerAttendance[2]).longValue() : 0);
+					// managerAttendance[2]).longValue());
+
+				}
+
+				result.add(summaryDto);
+			}
+
+		} catch (Exception e) {
+			logger.error("Error retriving Manager Attendance Summary of Manager Id : {} for year : {} . Reason : {}",
+					managerId, year, e);
+			throw new ServiceException("Error retriving Manager Attendance Summary of Manager Id : " + managerId
+					+ "for year : " + year + " . Reason : " + e);
+		}
+
+		return result;
+	}
+
+	private Long calulateTeamMembers(String managerId) {
+		Long calculateTeamMembers = this.employeeRepository.calculateTeamMembers(managerId);
+		return calculateTeamMembers;
 	}
 
 	private Long calculateTotalApprovedBillableHours(int month, Integer yearValue) {

@@ -2,6 +2,7 @@ package com.hrm.repositories;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -70,16 +71,16 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 	 * "INNER JOIN bank_details bd ON p.bank_det_id = bd.id", nativeQuery = true)
 	 */
 
-	@Query(value = "SELECT e.employee_id, e.name AS employee_name, e.employee_status, e.employee_category, e.contact_number, e.email_id, e.date_of_joining, e.department, e.sub_department, m.name AS manager_name, e.designation, e.category_control, e.total_experience, e.joined_ctc, e.current_ctc, e.service_commitment, e.number_of_working_days, e.next_apprisal_quater, pd.date_of_birth, pd.blood_group, pd.fathers_name, dd.adhar_card_no, dd.pan_card_no, e.uan_number, bd.account_no, e.resignation_date, e.last_working_day, ed.qualification, ed.end_date, ed.stream,e.candidate_id, e.manager,e.number_of_working_days\r\n"
-			+ "FROM Employee e\r\n" + "INNER JOIN\r\n" + "    personal p ON e.candidate_id = p.candidate_id\r\n"
-			+ "INNER JOIN\r\n" + "    personal_details pd ON p.pdid = pd.pdid\r\n" + "INNER JOIN\r\n"
-			+ "    document_details dd ON p.doc_id = dd.doc_id\r\n" + "INNER JOIN\r\n"
-			+ "    bank_details bd ON p.bank_det_id = bd.id\r\n" + "INNER JOIN\r\n" + "    (SELECT\r\n"
-			+ "         candidate_id,\r\n" + "         MAX(end_date) AS max_end_date\r\n" + "     FROM\r\n"
-			+ "         education\r\n" + "     GROUP BY\r\n" + "         candidate_id\r\n"
-			+ "    ) max_edu ON p.candidate_id = max_edu.candidate_id\r\n" + "INNER JOIN\r\n"
-			+ "    education ed ON p.candidate_id = ed.candidate_id AND ed.end_date = max_edu.max_end_date LEFT JOIN\r\n"
-			+ "    Employee m ON e.manager = m.employee_id;", nativeQuery = true)
+	@Query(value = "SELECT e.employee_id, e.name AS employee_name, e.employee_status, e.employee_category, e.contact_number, e.email_id, e.date_of_joining, e.department, e.sub_department, m.name AS manager_name, e.designation, e.category_control, e.total_experience, e.joined_ctc, e.current_ctc, e.service_commitment, e.number_of_working_days, e.next_apprisal_quater, pd.date_of_birth, pd.blood_group, pd.fathers_name, dd.adhar_card_no, dd.pan_card_no, e.uan_number, bd.account_no, e.resignation_date, e.last_working_day, ed.qualification, ed.end_date, ed.stream,e.candidate_id, e.manager,e.number_of_working_days "
+			+ "FROM Employee e " + "INNER JOIN " + "    personal p ON e.candidate_id = p.candidate_id " + "INNER JOIN "
+			+ "    personal_details pd ON p.pdid = pd.pdid " + "INNER JOIN "
+			+ "    document_details dd ON p.doc_id = dd.doc_id " + "INNER JOIN "
+			+ "    bank_details bd ON p.bank_det_id = bd.id " + "INNER JOIN " + "    (SELECT "
+			+ "         candidate_id, " + "         MAX(end_date) AS max_end_date " + "     FROM "
+			+ "         education " + "     GROUP BY " + "         candidate_id "
+			+ "    ) max_edu ON p.candidate_id = max_edu.candidate_id " + "INNER JOIN "
+			+ "    education ed ON p.candidate_id = ed.candidate_id AND ed.end_date = max_edu.max_end_date LEFT JOIN "
+			+ "    Employee m ON e.manager = m.employee_id", nativeQuery = true)
 	List<Object[]> findSummaryData();
 
 	Employee findSubDepartmentAndNameByEmployeeId(String employeeId);
@@ -89,5 +90,14 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 
 	@Query(value = "SELECT m.name AS manager_name, e.manager_type, e.department, e.designation, e.manager_from, e.manager_to FROM employee e JOIN employee m ON e.manager = m.employee_id WHERE e.employee_id = :employeeId", nativeQuery = true)
 	List<Object[]> findReportingManagerByEmployeeId(String employeeId);
+
+	@Query(value = "SELECT COUNT(DISTINCT e.employee_id) " + "FROM employee e " + "WHERE e.manager = :managerId "
+			+ "GROUP BY e.manager", nativeQuery = true)
+	Long calculateTeamMembers(@Param("managerId") String managerId);
+
+	
+	@Query(value = "SELECT e.employee_id " 
+	               + "FROM employee e ", nativeQuery = true)
+	List<String> getAllEmployeeList();
 
 }

@@ -213,16 +213,13 @@ public class HRManagerController {
 	public String releaseAppointmentLetter(@PathVariable long candidateId,
 			@RequestBody CreateAppointmentLetterDto appointmentLetterDto, Model model) {
 
-		// Assuming HRManagerService returns a model object with necessary data
 		ReleaseAppointmentLetterDto result = this.hRManagerService.releaseAppointmentLetter(candidateId,
 				appointmentLetterDto);
 		System.out.println(result.getEmployeeId());
 
-		// Add the model object to be used in the template
 		model.addAttribute("appointmentLetter", result);
 
-		// Return the view name corresponding to your HTML template (without the
-		// extension)
+		
 		return "appointment_letter";
 	}
 
