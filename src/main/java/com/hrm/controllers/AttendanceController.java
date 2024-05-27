@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 
+import com.hrm.exception.ResourceNotFoundException;
 import com.hrm.models.Attendance;
 import com.hrm.payloads.AttendanceEmployeeDto;
 import com.hrm.payloads.AttendanceRequestDto;
@@ -101,7 +102,6 @@ public class AttendanceController {
 			Set<UserAttendanceDto> allAttendance = attendanceService.allAttendance(employeeId, month, year);
 			return new ResponseEntity<>(allAttendance, HttpStatus.OK);
 		} catch (Exception e) {
-			// Log the error
 			logger.error("Error retrieving attendance for employeeId: {}", employeeId, e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -179,10 +179,18 @@ public class AttendanceController {
 
 	// --------------------------POST BILLABLE HOURS-------------------------
 	@PostMapping("/billableHours/{employeeId}")
-	public ResponseEntity<String> addBillableHours(@RequestBody BillableHoursDto billableHoursDto,
+	public ResponseEntity<?> addBillableHours(@RequestBody BillableHoursDto billableHoursDto,
 			@PathVariable String employeeId) {
-		String result = this.attendanceService.addBillableHours(billableHoursDto, employeeId);
-		return new ResponseEntity<String>(result, HttpStatus.OK);
+		try {
+			String result = this.attendanceService.addBillableHours(billableHoursDto, employeeId);
+			logger.info("Billable hours added successfully for employee with ID: {}", employeeId);
+			return new ResponseEntity<String>(result, HttpStatus.OK);
+		} catch (ResourceNotFoundException e) {
+			// throw e;
+			// return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+			logger.error("ResourceNotFoundException occurred: {}", e.getMessage());
+			throw new ResourceNotFoundException("Employee Not Found By Employee Id : " + employeeId);
+		}
 	}
 
 	// --------------------------POST REGULARIZED HOURS-------------------------

@@ -7,7 +7,7 @@ public class AttendanceSummaryDto {
 	private Integer month;
 	private String manager;
 	private Integer workingDays;
-	private Integer PresentDays;
+	private Integer presentDays;
 	private Double leaves;
 	private Integer totalDays;
 	private Integer lop;
@@ -54,11 +54,11 @@ public class AttendanceSummaryDto {
 	}
 
 	public Integer getPresentDays() {
-		return PresentDays;
+		return presentDays;
 	}
 
 	public void setPresentDays(Integer presentDays) {
-		PresentDays = presentDays;
+		this.presentDays = presentDays;
 	}
 
 	public Double getLeaves() {

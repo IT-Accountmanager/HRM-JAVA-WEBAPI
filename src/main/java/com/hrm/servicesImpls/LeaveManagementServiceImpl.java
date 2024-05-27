@@ -1,21 +1,19 @@
 package com.hrm.servicesImpls;
 
+import java.sql.Date;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
-import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.hrm.exception.ServiceException;
 import com.hrm.helper.EnumCollection.Departments;
 import com.hrm.helper.EnumCollection.Departments.Department;
@@ -24,16 +22,14 @@ import com.hrm.helper.EnumCollection.Half;
 import com.hrm.helper.EnumCollection.LeaveType;
 import com.hrm.models.Employee;
 import com.hrm.models.LeaveManagementTable;
-import com.hrm.models.PersonalDetails;
+import com.hrm.models.LeaveSummary;
 import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.LeaveDetailsRequestDto;
 import com.hrm.payloads.LeaveRequestDetailsDto;
 import com.hrm.payloads.ManagerLeaveDetailsDto;
 import com.hrm.payloads.ManagerLeaveEditDto;
-import com.hrm.payloads.RegularizationHoursDto;
-import com.hrm.payloads.SubDepartmentAndName;
 import com.hrm.repositories.IEmployeeRepository;
-import com.hrm.repositories.IPersonalDetailsRepository;
+import com.hrm.repositories.ILeaveSummaryRepository;
 import com.hrm.repositories.LeaveManagementRepo;
 import com.hrm.services.LeaveManagementService;
 
@@ -45,6 +41,9 @@ public class LeaveManagementServiceImpl implements LeaveManagementService {
 
 	@Autowired
 	IEmployeeRepository employeeRepository;
+
+	@Autowired
+	ILeaveSummaryRepository leaveSummaryRepository;
 
 	private static final Logger logger = LoggerFactory.getLogger(LeaveManagementServiceImpl.class);
 
@@ -208,19 +207,56 @@ public class LeaveManagementServiceImpl implements LeaveManagementService {
 
 	@Override
 	public String editLeaveRequest(int id, ManagerLeaveEditDto managerLeaveEditDto) {
+
+		logger.info("Editing Leave Request of Id : {}", id);
+		Double approvableDays = managerLeaveEditDto.getApprovedDaysForLeave();
 		Optional<LeaveManagementTable> leaveDetails = this.leaveManagementRepo.findById(id);
 
 		if (leaveDetails.isPresent()) {
 			LeaveManagementTable leaveReq = leaveDetails.get();
+			LocalDate leaveStartDate = leaveReq.getLeaveStartDate();
+			LocalDate leaveEndDate = leaveReq.getLeaveEndDate();
 
-			leaveReq.setApprovedDaysForLeave(managerLeaveEditDto.getApprovedDaysForLeave());
-			leaveReq.setRemarks(managerLeaveEditDto.getRemarks());
+//			for (LocalDate date = leaveStartDate; !date.isAfter(leaveEndDate); date = date.plusDays(1)) {
+//				if (date.getDayOfWeek() == DayOfWeek.SUNDAY) {
+//					approvableDays = approvableDays - 1;
+//				}
 
-			this.leaveManagementRepo.save(leaveReq);
+			long numberOfSundays = leaveStartDate.datesUntil(leaveEndDate.plusDays(1))
+					.filter(date_ -> date_.getDayOfWeek() == DayOfWeek.SUNDAY).count();
+			approvableDays -= numberOfSundays;
 
-			return "Successfully saved";
+			if (leaveReq.getAppliedDaysForLeave() > approvableDays) {
+				try {
+					leaveReq.setApprovedDaysForLeave(approvableDays);
+					leaveReq.setRemarks(managerLeaveEditDto.getRemarks());
+
+					this.leaveManagementRepo.save(leaveReq);
+					String employeeId = leaveDetails.get().getEmployeeId();
+					approveLeave(employeeId, approvableDays);
+
+					return "Successfully saved";
+				} catch (Exception e) {
+					logger.error("Error occurred while editing leave request ", e);
+					return "Error occurred while editing leave request";
+				}
+			} else {
+				return "Approved Days should be less than Applied days!";
+			}
+		}
+		return "Leave request with ID " + id + " not found";
+	}
+
+	private void approveLeave(String employeeId, Double approvedDays) {
+		LeaveSummary leaveSummary = this.leaveSummaryRepository.findByEmployeeId(employeeId);
+
+		if (leaveSummary != null) {
+			float totalBalance = leaveSummary.getTotalBalance() - approvedDays.floatValue();
+			leaveSummary.setTotalBalance(totalBalance);
+
+			this.leaveSummaryRepository.save(leaveSummary);
 		} else {
-			return "Leave request with ID " + id + " not found";
+			logger.warn("Leave summary not found for employee with ID: {}", employeeId);
 		}
 	}
 
@@ -240,67 +276,72 @@ public class LeaveManagementServiceImpl implements LeaveManagementService {
 	 * pd.personal_mail_id LEFT JOIN employee m ON emp.manager = m.employee_id WHERE
 	 * lmt.id = 8
 	 */
-	@Override
-	public List<LeaveRequestDetailsDto> getLeaveDetails(Integer id) {
 
-		List<LeaveRequestDetailsDto> listLeaveRequestDetailsDto = new ArrayList<>();
-
-		try {
-			List<Object[]> listLeaveDetailsOptional = leaveManagementRepo.findLeaveDetailsById(id);
-
-			for (Object[] leaveDetailsOptional : listLeaveDetailsOptional) {
-
-				logger.info("leaveDetailsOptional :: " + leaveDetailsOptional);
-
-				LeaveRequestDetailsDto leaveRequestDetailsDto = new LeaveRequestDetailsDto();
-
-				leaveRequestDetailsDto.setProfilePicture((byte[]) leaveDetailsOptional[0]);
-
-				leaveRequestDetailsDto.setName((String) leaveDetailsOptional[1]);
-
-				Department department = mapByteToDepartment((leaveDetailsOptional)[2]);
-				leaveRequestDetailsDto.setDepartment(department);
-
-				Designation designation = mapByteToDesignation((leaveDetailsOptional)[3]);
-				leaveRequestDetailsDto.setDesignation(designation);
-
-				LeaveType leavetype = mapByteToLeaveType((leaveDetailsOptional)[4]);
-				leaveRequestDetailsDto.setLeaveType(leavetype);
-
-				LocalDate localDate1 = convertToLocalDate(leaveDetailsOptional[5]);
-				leaveRequestDetailsDto.setStartDate(localDate1);
-
-				LocalDate localDate = convertToLocalDate(leaveDetailsOptional[6]);
-				leaveRequestDetailsDto.setEndDate(localDate);
-
-				leaveRequestDetailsDto.setAppliedDaysForLeave((double) leaveDetailsOptional[7]);
-
-				leaveRequestDetailsDto.setReason((String) leaveDetailsOptional[8]);
-
-				leaveRequestDetailsDto.setManager((String) leaveDetailsOptional[9]);
-
+//	@Override
+//	public LeaveRequestDetailsDto getLeaveDetails(Integer id) {
 //
-//				Half half1 = mapByteToHalf((leaveDetailsOptional)[5]);
-//				leaveRequestDetailsDto.setFirstHalf(half1);
+//		logger.info("Inside get leave Details Method with id : {} ", id);
+//		LeaveRequestDetailsDto leaveRequestDetailsDto = new LeaveRequestDetailsDto();
 //
-//				Half half2 = mapByteToHalf((leaveDetailsOptional)[6]);
-//				leaveRequestDetailsDto.setSecondHalf(half2);
-
-//				leaveRequestDetailsDto.setManager((String) leaveDetailsOptional[16]);
-
-//                
-
-				logger.info("leaveDetails :: " + leaveRequestDetailsDto);
-
-				listLeaveRequestDetailsDto.add(leaveRequestDetailsDto);
-			}
-
-		} catch (Exception e) {
-			logger.error("An error occurred while fetching leave details for ID: {}", id, e);
-			throw new ServiceException("Error fetching leave details for ID: " + id, e);
-		}
-		return listLeaveRequestDetailsDto;
-	}
+//		try {
+//			Object[] leaveDetailsOptional = leaveManagementRepo.findLeaveDetailsById(id);
+//
+//			logger.info("leaveDetailsOptional[5] : {}", leaveDetailsOptional[5]);
+//			logger.info("leaveDetailsOptional :: " + leaveDetailsOptional);
+//			logger.info("leaveDetailsOptional[5] : {}", leaveDetailsOptional[5]);
+//
+//			// leaveRequestDetailsDto.setProfilePicture((byte[]) leaveDetailsOptional[9]);
+//
+//			try {
+//				logger.debug("leaveDetailsOptional[5] : {}", leaveDetailsOptional[5]);
+//				leaveRequestDetailsDto.setName((String) leaveDetailsOptional[5]);
+//			} catch (Exception e) {
+//				logger.error(e.getMessage());
+//				e.printStackTrace();
+//			}
+//
+//			Department department = mapByteToDepartment((leaveDetailsOptional)[7]);
+//			leaveRequestDetailsDto.setDepartment(department);
+//
+//			Designation designation = mapByteToDesignation((leaveDetailsOptional)[8]);
+//			leaveRequestDetailsDto.setDesignation(designation);
+//
+//			logger.debug("Leave Type = {}", mapByteToLeaveType((leaveDetailsOptional)[0]));
+//
+//			LeaveType leavetype = mapByteToLeaveType((leaveDetailsOptional)[0]);
+//			leaveRequestDetailsDto.setLeaveType(leavetype);
+//
+//			LocalDate localDate1 = convertToLocalDate(leaveDetailsOptional[1]);
+//			leaveRequestDetailsDto.setStartDate(localDate1);
+//
+//			LocalDate localDate = convertToLocalDate(leaveDetailsOptional[2]);
+//			leaveRequestDetailsDto.setEndDate(localDate);
+//
+//			leaveRequestDetailsDto.setAppliedDaysForLeave((double) leaveDetailsOptional[3]);
+//
+//			leaveRequestDetailsDto.setReason((String) leaveDetailsOptional[4]);
+//
+//			leaveRequestDetailsDto.setManager((String) leaveDetailsOptional[6]);
+//
+////
+////				Half half1 = mapByteToHalf((leaveDetailsOptional)[5]);
+////				leaveRequestDetailsDto.setFirstHalf(half1);
+////
+////				Half half2 = mapByteToHalf((leaveDetailsOptional)[6]);
+////				leaveRequestDetailsDto.setSecondHalf(half2);
+//
+////				leaveRequestDetailsDto.setManager((String) leaveDetailsOptional[16]);
+//
+////                
+//
+//			logger.info("leaveDetails :: " + leaveRequestDetailsDto);
+//
+//		} catch (Exception e) {
+//			logger.error("An error occurred while fetching leave details for ID: {}", id, e);
+//			throw new ServiceException("Error fetching leave details for ID: " + id, e);
+//		}
+//		return leaveRequestDetailsDto;
+//	}
 
 	private Designation mapByteToDesignation(Object leaveDetails) {
 
@@ -411,5 +452,66 @@ public class LeaveManagementServiceImpl implements LeaveManagementService {
 			throw new IllegalArgumentException("Invalid Half ID:" + id);
 		}
 
+	}
+
+	@Override
+	public LeaveRequestDetailsDto getLeaveDetails(Integer id) {
+		logger.info("Inside get leave Details Method with id : {} ", id);
+		try {
+			List<Object[]> result = leaveManagementRepo.findLeaveDetailsById(id);
+
+			// logger.debug("Query result: {}", Arrays.toString(result));
+
+//			for (Object[] row : result) {
+//				logger.debug("Object in result array: {} of type {}", row, row.getClass().getName());
+//				for (Object obj : row) {
+//					String elementType = obj.getClass().getName();
+//					logger.debug("Element : {} ; Element type : {}", obj, elementType);
+//				}
+//			}
+
+//			if (result == null || result.length == 0) {
+//				throw new LeaveDetailsNotFoundException("No leave details found for ID: " + id);
+//			}
+
+			// Correctly cast each element from the result array
+
+			Object[] objects = result.get(0);
+
+			LeaveType leaveType = LeaveType.values()[(Byte) objects[0]];
+			LocalDate leaveStartDate = ((Date) objects[1]).toLocalDate();
+			LocalDate leaveEndDate = ((Date) objects[2]).toLocalDate();
+			Double appliedDaysForLeave = (Double) objects[3];
+			String leaveReason = (String) objects[4];
+			String employeeName = (String) objects[5];
+			String managerName = (String) objects[6];
+			Department department = mapByteToDepartment(objects[7]);
+			Designation designation = mapByteToDesignation(objects[8]);
+			byte[] profilePhoto = (byte[]) objects[9];
+
+			LeaveRequestDetailsDto dto = new LeaveRequestDetailsDto();
+			dto.setLeaveType(leaveType);
+			dto.setStartDate(leaveStartDate);
+			dto.setEndDate(leaveEndDate);
+			dto.setAppliedDaysForLeave(appliedDaysForLeave);
+			dto.setReason(leaveReason);
+			dto.setName(employeeName);
+			dto.setManager(managerName);
+			dto.setDepartment(department);
+			dto.setDesignation(designation);
+			dto.setProfilePicture(profilePhoto);
+
+			return dto;
+
+		} catch (ArrayIndexOutOfBoundsException e) {
+			logger.error("ArrayIndexOutOfBoundsException while fetching leave details for ID: {}", id, e);
+			throw new ServiceException("An error occurred while fetching leave details for ID: " + id, e);
+		} catch (ClassCastException e) {
+			logger.error("ClassCastException while fetching leave details for ID: {}", id, e);
+			throw new ServiceException("Type casting error while fetching leave details for ID: " + id, e);
+		} catch (Exception e) {
+			logger.error("Exception while fetching leave details for ID: {}", id, e);
+			throw new ServiceException("An error occurred while fetching leave details for ID: " + id, e);
+		}
 	}
 }

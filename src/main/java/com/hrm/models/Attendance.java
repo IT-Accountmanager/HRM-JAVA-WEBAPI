@@ -333,7 +333,7 @@ public class Attendance {
 	}
 
 	public void setAppliedHrsForBilling(Integer appliedHrsForBilling) {
-		Optional.ofNullable(appliedHrsForBilling).filter(hrs -> hrs >= 0 && hrs <= 8)
+		Optional.ofNullable(appliedHrsForBilling).filter(min -> min >= 0 && min <= 480)
 				.orElseThrow(() -> new IllegalArgumentException("Applied hours for billing must be between 0 and 8"));
 		this.appliedHrsForBilling = appliedHrsForBilling;
 	}
@@ -344,7 +344,7 @@ public class Attendance {
 	}
 
 	public void setApprovedHrsForBilling(Integer approvedHrsForBilling) {
-		Optional.ofNullable(approvedHrsForBilling).filter(hrs -> hrs >= 0 && hrs <= 8)
+		Optional.ofNullable(approvedHrsForBilling).filter(min -> min >= 0 && min <= 480)
 				.orElseThrow(() -> new IllegalArgumentException("Approved hours for billing must be between 0 and 8"));
 		this.approvedHrsForBilling = approvedHrsForBilling;
 	}

@@ -15,6 +15,6 @@ public interface LeaveManagementService {
 
 	String editLeaveRequest(int id, ManagerLeaveEditDto managerLeaveEditDto);
 
-	List<LeaveRequestDetailsDto> getLeaveDetails(Integer Id);
+	LeaveRequestDetailsDto getLeaveDetails(Integer Id);
 
 }

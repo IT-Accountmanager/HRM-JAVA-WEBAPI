@@ -20,6 +20,7 @@ public class UserAttendanceDto {
 	private String projectId;
 	private int appliedHrsForBilling;
 	private int approvedHrsForBilling;
+	private Double billableDays;
 	private String remarks;
 
 	public String getEmployeeId() {
@@ -132,6 +133,14 @@ public class UserAttendanceDto {
 
 	public void setApprovedHrsForBilling(int approvedHrsForBilling) {
 		this.approvedHrsForBilling = approvedHrsForBilling;
+	}
+
+	public Double getBillableDays() {
+		return billableDays;
+	}
+
+	public void setBillableDays(Double billableDays) {
+		this.billableDays = billableDays;
 	}
 
 	public String getRemarks() {

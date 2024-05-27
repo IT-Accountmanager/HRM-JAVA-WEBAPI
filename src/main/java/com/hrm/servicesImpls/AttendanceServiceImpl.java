@@ -33,6 +33,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.hrm.exception.ResourceNotFoundException;
 import com.hrm.exception.ServiceException;
 import com.hrm.helper.EnumCollection.AttendanceStatus;
 import com.hrm.helper.EnumCollection.Departments;
@@ -559,6 +561,15 @@ public class AttendanceServiceImpl implements IAttendanceService {
 					} catch (Exception e) {
 						logger.error("Error setting requested work hours: {}", e.getMessage());
 					}
+					try {
+						if (matchedAttendance[10] != null && matchedAttendance[9] != null) {
+							int attendance10 = (Integer) matchedAttendance[10];
+							int attendance9 = (Integer) matchedAttendance[9];
+							attendanceDto.setBillableDays((double) (attendance10 % attendance9));
+						}
+					} catch (NullPointerException | ClassCastException | ArithmeticException e) {
+						logger.error("Error setting Billable Days: {}", e.getMessage());
+					}
 
 					fullMonthAttendance.add(attendanceDto);
 				} else {
@@ -616,19 +627,26 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 	@Override
 	public List<AttendanceSummaryDto> getSummary(Integer month, Integer year) {
-		logger.info("Inside Summary Service Implementation");
+		logger.info("Inside Summary Service Implementation for \n" + "month : {} \n" + "year : {}", month, year);
 		List<AttendanceSummaryDto> attendanceSummaryList = new ArrayList<AttendanceSummaryDto>();
 		try {
 			final Integer[] _month = { month };
 			final Integer[] _year = { year };
 
-			if (month == null && year == null) {
+			if ((month == null || month == 0) && (year == null || year == 0)) {
 				_month[0] = LocalDate.now().getMonthValue();
 				_year[0] = LocalDate.now().getYear();
-			} else if (month == null) {
+				logger.info("Both month and year are null or 0. Setting month to " + _month[0] + " and year to "
+						+ _year[0]);
+
+			} else if (month == null || month == 0) {
 				_month[0] = LocalDate.now().getMonthValue();
-			} else if (year == null) {
+				logger.info("Month is null or 0. Setting month to " + _month[0]);
+
+			} else if (year == null || year == 0) {
 				_year[0] = LocalDate.now().getYear();
+				logger.info("Year is null or 0. Setting year to " + _year[0]);
+
 			}
 
 			List<Object[]> summary = this.attendanceRepository.getSummary(_month[0], _year[0]);
@@ -913,6 +931,8 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
 	@Override
 	public String addBillableHours(BillableHoursDto billableHoursDto, String employeeId) {
+
+		logger.info("Inside addBillableHours() in serviceImpl with employee id :" + employeeId);
 		LocalDate date = billableHoursDto.getDate();
 		int productionHours = billableHoursDto.getProductionHours();
 		int otherHours = billableHoursDto.getOtherHours();
@@ -931,7 +951,13 @@ public class AttendanceServiceImpl implements IAttendanceService {
 			attendanceRepository.save(attendance);
 			return "Billable hours added for employee " + employeeId + " on " + date;
 		} else {
-			return "Attendance not existed for employee " + employeeId + " on " + date;
+			try {
+				throw new RuntimeException("Attendance not found for employee " + employeeId + " on " + date);
+			} catch (RuntimeException ex) {
+				throw new ResourceNotFoundException("Attendance not found for employee " + employeeId + " on " + date,
+						ex);
+			} // throw new ResourceNotFoundException("Attendance not found for employee " +
+				// employeeId + " on " + date);
 		}
 	}
 
