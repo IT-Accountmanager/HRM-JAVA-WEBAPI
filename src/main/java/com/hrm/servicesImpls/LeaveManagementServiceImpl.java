@@ -1,5 +1,6 @@
 package com.hrm.servicesImpls;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
@@ -24,6 +25,7 @@ import com.hrm.helper.EnumCollection.Half;
 import com.hrm.helper.EnumCollection.LeaveType;
 import com.hrm.models.Employee;
 import com.hrm.models.LeaveManagementTable;
+import com.hrm.models.LeaveSummary;
 import com.hrm.models.PersonalDetails;
 import com.hrm.payloads.ApplyLeaveDto;
 import com.hrm.payloads.LeaveDetailsRequestDto;
@@ -33,6 +35,7 @@ import com.hrm.payloads.ManagerLeaveEditDto;
 import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.SubDepartmentAndName;
 import com.hrm.repositories.IEmployeeRepository;
+import com.hrm.repositories.ILeaveSummaryRepository;
 import com.hrm.repositories.IPersonalDetailsRepository;
 import com.hrm.repositories.LeaveManagementRepo;
 import com.hrm.services.LeaveManagementService;
@@ -45,6 +48,9 @@ public class LeaveManagementServiceImpl implements LeaveManagementService {
 
 	@Autowired
 	IEmployeeRepository employeeRepository;
+
+	@Autowired
+	ILeaveSummaryRepository leaveSummaryRepository;
 
 	private static final Logger logger = LoggerFactory.getLogger(LeaveManagementServiceImpl.class);
 
@@ -208,19 +214,56 @@ public class LeaveManagementServiceImpl implements LeaveManagementService {
 
 	@Override
 	public String editLeaveRequest(int id, ManagerLeaveEditDto managerLeaveEditDto) {
+
+		logger.info("Editing Leave Request of Id : {}", id);
+		Double approvableDays = managerLeaveEditDto.getApprovedDaysForLeave();
 		Optional<LeaveManagementTable> leaveDetails = this.leaveManagementRepo.findById(id);
 
 		if (leaveDetails.isPresent()) {
 			LeaveManagementTable leaveReq = leaveDetails.get();
+			LocalDate leaveStartDate = leaveReq.getLeaveStartDate();
+			LocalDate leaveEndDate = leaveReq.getLeaveEndDate();
 
-			leaveReq.setApprovedDaysForLeave(managerLeaveEditDto.getApprovedDaysForLeave());
-			leaveReq.setRemarks(managerLeaveEditDto.getRemarks());
+//			for (LocalDate date = leaveStartDate; !date.isAfter(leaveEndDate); date = date.plusDays(1)) {
+//				if (date.getDayOfWeek() == DayOfWeek.SUNDAY) {
+//					approvableDays = approvableDays - 1;
+//				}
 
-			this.leaveManagementRepo.save(leaveReq);
+			long numberOfSundays = leaveStartDate.datesUntil(leaveEndDate.plusDays(1))
+					.filter(date_ -> date_.getDayOfWeek() == DayOfWeek.SUNDAY).count();
+			approvableDays -= numberOfSundays;
 
-			return "Successfully saved";
+			if (leaveReq.getAppliedDaysForLeave() > approvableDays) {
+				try {
+					leaveReq.setApprovedDaysForLeave(approvableDays);
+					leaveReq.setRemarks(managerLeaveEditDto.getRemarks());
+
+					this.leaveManagementRepo.save(leaveReq);
+					String employeeId = leaveDetails.get().getEmployeeId();
+					approveLeave(employeeId, approvableDays);
+
+					return "Successfully saved";
+				} catch (Exception e) {
+					logger.error("Error occurred while editing leave request ", e);
+					return "Error occurred while editing leave request";
+				}
+			} else {
+				return "Approved Days should be less than Applied days!";
+			}
+		}
+		return "Leave request with ID " + id + " not found";
+	}
+
+	private void approveLeave(String employeeId, Double approvedDays) {
+		LeaveSummary leaveSummary = this.leaveSummaryRepository.findByEmployeeId(employeeId);
+
+		if (leaveSummary != null) {
+			float totalBalance = leaveSummary.getTotalBalance() - approvedDays.floatValue();
+			leaveSummary.setTotalBalance(totalBalance);
+
+			this.leaveSummaryRepository.save(leaveSummary);
 		} else {
-			return "Leave request with ID " + id + " not found";
+			logger.warn("Leave summary not found for employee with ID: {}", employeeId);
 		}
 	}
 

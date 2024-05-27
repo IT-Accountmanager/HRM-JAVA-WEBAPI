@@ -11,9 +11,9 @@ import com.hrm.models.LeaveSummary;
 @Service
 public interface ILeaveSummaryRepository extends JpaRepository<LeaveSummary, Integer> {
 
-	@Query(value = "SELECT l.employee_id "
-			+ " FROM leave_summary l"
-			+ "" , nativeQuery = true)
+	@Query(value = "SELECT l.employee_id " + " FROM leave_summary l" + "", nativeQuery = true)
 	List<String> getAllEmployeeList();
+
+	LeaveSummary findByEmployeeId(String employeeId);
 
 }
