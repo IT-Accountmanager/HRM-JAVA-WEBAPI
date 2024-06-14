@@ -3,10 +3,13 @@ package com.hrm.servicesImpls;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,12 +26,14 @@ import com.hrm.models.HRExecutive;
 import com.hrm.models.Onboarding;
 import com.hrm.models.Personal;
 import com.hrm.models.Work;
+import com.hrm.models.WorkBook;
 import com.hrm.payloads.HrExecutiveAgreementApprovalDto;
 import com.hrm.payloads.HrExecutiveBgvSubmissionDto;
 import com.hrm.payloads.HrExecutiveEducationApprovalDto;
 import com.hrm.payloads.HrExecutiveFamilyApprovalDto;
 import com.hrm.payloads.HrExecutivePersonalApprovalDto;
 import com.hrm.payloads.HrExecutiveWorkApprovalDto;
+import com.hrm.payloads.HrExecutiveWorkBookApproval;
 import com.hrm.repositories.IAgreementRepository;
 import com.hrm.repositories.IBackgroundVerificationRepository;
 import com.hrm.repositories.IEducationRepository;
@@ -36,6 +41,7 @@ import com.hrm.repositories.IFamilyRepository;
 import com.hrm.repositories.IHRExecutiveRepository;
 import com.hrm.repositories.IOnboardingRepository;
 import com.hrm.repositories.IPersonalRepository;
+import com.hrm.repositories.IWorkBookRepository;
 import com.hrm.repositories.IWorkRepository;
 import com.hrm.services.IHRExecutiveService;
 
@@ -61,6 +67,10 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 	private IBackgroundVerificationRepository backgroundVerificationRepository;
 	@Autowired
 	private ModelMapper modelMapper;
+	@Autowired
+	private IWorkBookRepository workBookRepository;
+
+	private static final Logger logger = LoggerFactory.getLogger(HRExecutiveServiceImpl.class);
 
 	@Override
 	public String createExecutive(HRExecutive hrExecutive) {
@@ -477,6 +487,47 @@ public class HRExecutiveServiceImpl implements IHRExecutiveService {
 		}
 		HrExecutiveAgreementApprovalDto map = this.modelMapper.map(agreement, HrExecutiveAgreementApprovalDto.class);
 		return map;
+	}
+
+	@Override
+	public String workBookApproval(HrExecutiveWorkBookApproval approval) {
+		logger.info("Hr-Executive Setting Work-Book approval of candidate Id : {}", approval.getCandidateId());
+		try {
+
+			Optional<WorkBook> optional = Optional
+					.ofNullable(this.workBookRepository.findByCandidateId(approval.getCandidateId()));
+			optional.ifPresentOrElse(workBook -> {
+				BeanUtils.copyProperties(approval, workBook);
+				this.workBookRepository.save(workBook);
+				logger.info("Hr-Executive Set Work-Book approval of candidate Id : {} As : {}",
+						approval.getCandidateId(), workBook.getHrExecutiveApprovalStatus());
+			}, () -> {
+				logger.warn("No WorkBook found for candidateId = {}", approval.getCandidateId());
+			});
+
+		} catch (Exception e) {
+			logger.error("Exception occurred while getting WorkBook for candidateId = {}", approval.getCandidateId(),
+					e);
+		}
+
+		return "Success";
+	}
+
+	@Override
+	public HrExecutiveWorkBookApproval getWorkBookApproval(Long candidateId) {
+		logger.info("Hr-Executive getting Work-Book approval of candidate Id : {}", candidateId);
+		Optional<WorkBook> workBookOptional = Optional
+				.ofNullable(this.workBookRepository.findByCandidateId(candidateId));
+		logger.debug("Work-Book Optional : {}", workBookOptional);
+		if (!workBookOptional.isPresent()) {
+			logger.error("Work-Book not found for candidate Id : {}", candidateId);
+			throw new RuntimeException("Work-Book not found for candidate Id : " + candidateId);
+		}
+		HrExecutiveWorkBookApproval approval = new HrExecutiveWorkBookApproval();
+		logger.info("Approval : {} ", approval);
+
+		BeanUtils.copyProperties(workBookOptional.get(), approval);
+		return approval;
 	}
 
 	@Override

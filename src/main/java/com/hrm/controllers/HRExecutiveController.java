@@ -1,7 +1,10 @@
 package com.hrm.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +29,7 @@ import com.hrm.payloads.HrExecutiveEducationApprovalDto;
 import com.hrm.payloads.HrExecutiveFamilyApprovalDto;
 import com.hrm.payloads.HrExecutivePersonalApprovalDto;
 import com.hrm.payloads.HrExecutiveWorkApprovalDto;
+import com.hrm.payloads.HrExecutiveWorkBookApproval;
 import com.hrm.services.IHRExecutiveService;
 
 @CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
@@ -33,6 +37,8 @@ import com.hrm.services.IHRExecutiveService;
 @RequestMapping("/HRExecutive")
 
 public class HRExecutiveController {
+
+	private static final Logger logger = LoggerFactory.getLogger(HRExecutiveController.class);
 
 	@Autowired
 	IHRExecutiveService hRExecutiveService;
@@ -176,6 +182,38 @@ public class HRExecutiveController {
 	public ResponseEntity<HrExecutiveAgreementApprovalDto> getAgreementApproval(@PathVariable long candidateId) {
 		HrExecutiveAgreementApprovalDto result = this.hRExecutiveService.getAgreementApproval(candidateId);
 		return new ResponseEntity<HrExecutiveAgreementApprovalDto>(result, HttpStatus.OK);
+	}
+
+	@PostMapping("/workBookApproval")
+	public ResponseEntity<String> workBookApproval(@RequestBody HrExecutiveWorkBookApproval workBookApproval) {
+
+		try {
+			String result = this.hRExecutiveService.workBookApproval(workBookApproval);
+			return new ResponseEntity<String>(result, HttpStatus.OK);
+		} catch (IllegalArgumentException e) {
+			logger.error("Validation error: " + e.getMessage(), e);
+			return ResponseEntity.badRequest().body(null);
+		} catch (Exception e) {
+			logger.error("Error checking workbook submission", e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+
+	@GetMapping("/getWorkBookApproval/{candidateId}")
+	public ResponseEntity<HrExecutiveWorkBookApproval> getWorkApproval(@PathVariable Long candidateId) {
+		if (candidateId == null) {
+			return new ResponseEntity<HrExecutiveWorkBookApproval>(HttpStatus.BAD_REQUEST);
+		}
+		try {
+			HrExecutiveWorkBookApproval workBookApproval = Optional
+					.ofNullable(this.hRExecutiveService.getWorkBookApproval(candidateId))
+					.orElseThrow(() -> new Exception("Work Approval Not Found"));
+			logger.info("Work-Book Approval : {}", workBookApproval);
+			return new ResponseEntity<>(workBookApproval, HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error("Error Getting WorkBook Approval", e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	// ---------------------------Post BGV checkbox--------------------

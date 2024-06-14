@@ -12,6 +12,7 @@ import com.hrm.payloads.HrExecutiveEducationApprovalDto;
 import com.hrm.payloads.HrExecutiveFamilyApprovalDto;
 import com.hrm.payloads.HrExecutivePersonalApprovalDto;
 import com.hrm.payloads.HrExecutiveWorkApprovalDto;
+import com.hrm.payloads.HrExecutiveWorkBookApproval;
 
 public interface IHRExecutiveService {
 
@@ -59,6 +60,10 @@ public interface IHRExecutiveService {
 			long candidateId);
 
 	HrExecutiveAgreementApprovalDto getAgreementApproval(long candidateId);
+
+	String workBookApproval(HrExecutiveWorkBookApproval approval);
+
+	HrExecutiveWorkBookApproval getWorkBookApproval(Long candidateId);
 
 	String postBgv(BackgroundVerification bgv, long candidateId);
 
