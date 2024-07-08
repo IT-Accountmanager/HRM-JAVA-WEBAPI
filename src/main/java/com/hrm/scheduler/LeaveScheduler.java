@@ -1,11 +1,8 @@
 
 package com.hrm.scheduler;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.hrm.helper.EnumCollection.LeaveType;
-import com.hrm.models.Employee;
 import com.hrm.models.LeaveSummary;
 import com.hrm.repositories.IEmployeeRepository;
 import com.hrm.repositories.ILeaveSummaryRepository;

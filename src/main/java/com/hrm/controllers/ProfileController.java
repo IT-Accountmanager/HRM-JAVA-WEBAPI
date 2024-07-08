@@ -2,6 +2,7 @@
 package com.hrm.controllers;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hrm.helper.EnumCollection;
-import com.hrm.helper.EnumCollection.CandidatesStatus;
-import com.hrm.helper.EnumCollection.HrSubmission;
 import com.hrm.models.Onboarding;
-import com.hrm.models.PersonalDetails;
 import com.hrm.models.Profile;
-import com.hrm.payloads.ProfileSummaryDto;
 import com.hrm.services.IProfileService;
 
 @CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })

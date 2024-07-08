@@ -2,11 +2,7 @@ package com.hrm.payloads;
 
 import java.time.Month;
 
-import com.hrm.helper.EnumCollection.Departments;
 import com.hrm.helper.EnumCollection.Departments.Department;
-
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 
 public class ManagerAttendanceViewDto {
 	private Month month;

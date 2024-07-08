@@ -31,6 +31,8 @@ import com.hrm.payloads.VerifyOtpDto;
 import com.hrm.payloads.WelcomeDto;
 import com.hrm.services.IOnboardingService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 //@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
 
 @CrossOrigin(origins = "*")
@@ -64,18 +66,21 @@ public class OnboardingController {
 		return new ResponseEntity<Long>(result, HttpStatus.CREATED);
 	}
 
+	@Operation(summary = "Get All Onboarded Candidates")
 	@GetMapping("/get")
 	public ResponseEntity<List<OnboardingDto>> getAllOnboarding() {
 		List<OnboardingDto> allOnboarding = this.onboardingService.getAllOnboarding();
 		return new ResponseEntity<List<OnboardingDto>>(allOnboarding, HttpStatus.OK);
 	}
 
+	@Operation(summary = "Get Candidate By candidate Id")
 	@GetMapping("/get/{candidateId}")
 	public ResponseEntity<Onboarding> getOnboarding(@PathVariable long candidateId) {
 		Onboarding onboarding = this.onboardingService.getOnboardingByCandidateId(candidateId);
 		return new ResponseEntity<Onboarding>(onboarding, HttpStatus.OK);
 	}
 
+	@Operation(summary = "Update candidate By Candidate Id ")
 	@PostMapping("/update/{candidateId}")
 	public ResponseEntity<String> getOnboarding(@RequestBody OnboardingEditDto onboardingDto,
 			@PathVariable long candidateId) {

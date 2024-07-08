@@ -2,7 +2,6 @@ package com.hrm.payloads;
 
 import java.time.LocalDate;
 
-import com.hrm.helper.EnumCollection.AttendanceStatus;
 import com.hrm.helper.EnumCollection.Half;
 import com.hrm.helper.EnumCollection.LeaveType;
 

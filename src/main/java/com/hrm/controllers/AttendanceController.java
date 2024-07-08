@@ -1,17 +1,14 @@
 package com.hrm.controllers;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 import java.util.Set;
 
-import org.bouncycastle.asn1.ocsp.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +18,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException.BadRequest;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.hrm.exception.ResourceNotFoundException;
 import com.hrm.models.Attendance;
 import com.hrm.payloads.AttendanceEmployeeDto;
@@ -32,14 +29,13 @@ import com.hrm.payloads.BillableHoursDto;
 import com.hrm.payloads.ManagerAttendanceDetailsDto;
 import com.hrm.payloads.ManagerAttendanceEditDto;
 import com.hrm.payloads.ManagerAttendanceSummaryDto;
+import com.hrm.payloads.ManagerAttendanceViewDto;
 import com.hrm.payloads.RegularizationHoursDto;
 import com.hrm.payloads.RegularizationManagerEditDto;
 import com.hrm.payloads.UserAttendanceDto;
 import com.hrm.payloads.UserAttendanceSummaryDto;
-import com.hrm.payloads.ManagerAttendanceViewDto;
 import com.hrm.services.IAttendanceService;
 import com.hrm.utils.ErrorResponse;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /*@CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
 */

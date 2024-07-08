@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.hrm.helper.EnumCollection.DetailsSubmissionStatus;
 import com.hrm.models.Education;
-import com.hrm.models.Family;
 import com.hrm.payloads.EducationStatusResponse;
-import com.hrm.payloads.FamilyStatusResponse;
 import com.hrm.repositories.IEducationRepository;
 import com.hrm.services.IEducationService;
 

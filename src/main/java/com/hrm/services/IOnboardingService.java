@@ -2,7 +2,6 @@ package com.hrm.services;
 
 import java.util.List;
 
-import com.hrm.models.Email;
 import com.hrm.models.Onboarding;
 import com.hrm.payloads.AuthenticateUserDto;
 import com.hrm.payloads.CandidateStatusDto;

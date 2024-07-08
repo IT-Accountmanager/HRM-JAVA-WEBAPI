@@ -1,24 +1,19 @@
 package com.hrm.servicesImpls;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Base64;
 import java.util.Base64.Decoder;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails.Address;
 import org.springframework.stereotype.Service;
 
 import com.hrm.helper.EnumCollection.ApprovalStatus;
 import com.hrm.helper.EnumCollection.DetailsSubmissionStatus;
 import com.hrm.models.Agreement;
 import com.hrm.models.Onboarding;
-import com.hrm.models.PermanentAddress;
 import com.hrm.models.Personal;
-import com.hrm.models.PresentAddress;
 import com.hrm.payloads.AgreementDto;
 import com.hrm.payloads.AgreementEditDto;
 import com.hrm.payloads.AgreementStatusResponse;

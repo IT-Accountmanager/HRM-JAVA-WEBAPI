@@ -7,9 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.hrm.helper.EnumCollection.ShiftRule;
 import com.hrm.helper.EnumCollection.WeekRule;
-import com.hrm.models.Attendance;
 import com.hrm.models.EmployeeWorkWeek;
-import com.hrm.payloads.BillableHoursDto;
 import com.hrm.payloads.EmployeeWorkWeekDto;
 import com.hrm.repositories.EmployeeWorkWeekRepo;
 import com.hrm.repositories.IEmployeeRepository;

@@ -5,13 +5,10 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
-import org.modelmapper.internal.bytebuddy.asm.Advice.Return;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
 import com.hrm.helper.EnumCollection.CandidatesStatus;
 import com.hrm.helper.EnumCollection.CategoryControl;
-import com.hrm.helper.EnumCollection.CategoryControll;
 import com.hrm.helper.EnumCollection.Departments;
 import com.hrm.helper.EnumCollection.Designation;
 import com.hrm.helper.EnumCollection.EmployeeCategory;
@@ -46,7 +41,6 @@ import com.hrm.payloads.EmployeesNameDto;
 import com.hrm.payloads.SetManagerDto;
 import com.hrm.payloads.SummaryAddressInfoDto;
 import com.hrm.payloads.SummaryContactInfoDto;
-import com.hrm.payloads.SummaryDto;
 import com.hrm.payloads.SummaryPersonalInfoDto;
 import com.hrm.payloads.WorkHistoryDto;
 import com.hrm.payloads.WorkInfoDto;
@@ -87,6 +81,8 @@ public class SummaryServiceImpl implements ISummaryService {
 	JavaMailSender javaMailSender;
 	@Value("${spring.mail.username}")
 	private String sender;
+	@Value("${welcome-link}")
+	private String welcomeLink;
 
 	private static final Logger logger = LoggerFactory.getLogger(SummaryServiceImpl.class);
 
@@ -541,7 +537,7 @@ public class SummaryServiceImpl implements ISummaryService {
 
 				// Send mail to fill personal details with link
 				Long candidateId = onboarding.getCandidateId();
-				String link = "http://10.10.20.9:8082/#/welcome/" + candidateId;
+				String link = welcomeLink + candidateId;
 				String name = onboarding.getCandidateName();
 				SimpleMailMessage mailMessage = new SimpleMailMessage();
 

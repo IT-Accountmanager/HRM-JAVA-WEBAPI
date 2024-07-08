@@ -1,15 +1,14 @@
 package com.hrm.repositories;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
-import org.hibernate.query.NativeQuery;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Value;
-import com.hrm.models.Attendance;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import com.hrm.models.Attendance;
 
 @Repository
 public interface IAttendanceRepository extends JpaRepository<Attendance, Integer> {

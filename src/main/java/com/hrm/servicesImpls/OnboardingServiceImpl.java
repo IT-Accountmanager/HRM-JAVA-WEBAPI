@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,20 +17,17 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.hrm.helper.SendSMS;
-import com.hrm.helper.EnumCollection.ApprovalStatus;
 import com.hrm.helper.EnumCollection.CandidatesStatus;
 import com.hrm.helper.EnumCollection.HrSubmission;
 import com.hrm.helper.EnumCollection.SmsStatus;
+import com.hrm.helper.SendSMS;
 //import com.hrm.config.TwilioConfig;
 import com.hrm.models.Attendance;
-import com.hrm.models.Email;
 import com.hrm.models.Employee;
 import com.hrm.models.Onboarding;
 import com.hrm.payloads.AuthenticateUserDto;
 import com.hrm.payloads.CandidateStatusDto;
 import com.hrm.payloads.ExperiencedDto;
-import com.hrm.payloads.LinkRequestDto;
 import com.hrm.payloads.LoginWelcomeDto;
 import com.hrm.payloads.OnboardingDto;
 import com.hrm.payloads.OnboardingEditDto;
@@ -43,12 +40,8 @@ import com.hrm.repositories.IAttendanceRepository;
 import com.hrm.repositories.IEmployeeRepository;
 import com.hrm.repositories.IOnboardingRepository;
 import com.hrm.repositories.IProfileRepository;
-import com.hrm.services.IAttendanceService;
 import com.hrm.services.IOnboardingService;
-import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class OnboardingServiceImpl implements IOnboardingService {

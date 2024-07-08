@@ -22,7 +22,6 @@ import com.hrm.helper.EnumCollection.CandidatesStatus;
 import com.hrm.models.BackgroundVerification;
 import com.hrm.models.HRExecutive;
 import com.hrm.models.Onboarding;
-import com.hrm.models.Personal;
 import com.hrm.payloads.HrExecutiveAgreementApprovalDto;
 import com.hrm.payloads.HrExecutiveBgvSubmissionDto;
 import com.hrm.payloads.HrExecutiveEducationApprovalDto;

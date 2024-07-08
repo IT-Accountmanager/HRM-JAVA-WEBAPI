@@ -1,8 +1,6 @@
 package com.hrm.repositories;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,12 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.hrm.helper.EnumCollection.Departments;
-import com.hrm.helper.EnumCollection.Departments.Department;
 import com.hrm.helper.EnumCollection.EmployeeStatus;
 import com.hrm.models.Employee;
-import com.hrm.models.Onboarding;
-import com.hrm.payloads.DirectReportsDto;
-import com.hrm.payloads.SubDepartmentAndName;
 
 @Repository
 public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {

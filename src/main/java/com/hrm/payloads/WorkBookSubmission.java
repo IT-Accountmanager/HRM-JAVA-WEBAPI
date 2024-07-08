@@ -2,11 +2,6 @@ package com.hrm.payloads;
 
 import com.hrm.helper.EnumCollection.DetailsSubmissionStatus;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 //@Setter
 //@Getter
 //@AllArgsConstructor

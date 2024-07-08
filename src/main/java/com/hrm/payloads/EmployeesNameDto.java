@@ -1,5 +1,10 @@
 package com.hrm.payloads;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
 public class EmployeesNameDto {
 
 	private String name;

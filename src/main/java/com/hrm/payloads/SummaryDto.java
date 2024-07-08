@@ -10,7 +10,6 @@ import com.hrm.helper.EnumCollection.Departments;
 import com.hrm.helper.EnumCollection.Designation;
 import com.hrm.helper.EnumCollection.EmployeeCategory;
 import com.hrm.helper.EnumCollection.EmployeeStatus;
-import com.hrm.helper.EnumCollection.WorkLocation;
 
 public class SummaryDto {
 	private long candidateId;

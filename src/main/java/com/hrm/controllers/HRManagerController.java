@@ -1,6 +1,7 @@
 package com.hrm.controllers;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,19 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hrm.helper.CtcBreakup;
-import com.hrm.helper.PDF;
 import com.hrm.helper.EnumCollection.CandidatesStatus;
-import com.hrm.helper.EnumCollection.Departments;
-import com.hrm.helper.EnumCollection.EmployeeStatus;
 import com.hrm.models.HRManager;
-import com.hrm.models.Onboarding;
-import com.hrm.payloads.AuthorizedSignDto;
 import com.hrm.payloads.CreateAppointmentLetterDto;
 import com.hrm.payloads.EmployeeGenerateDto;
-import com.hrm.payloads.HrExecutiveEducationApprovalDto;
-import com.hrm.payloads.HrExecutiveFamilyApprovalDto;
-import com.hrm.payloads.HrExecutivePersonalApprovalDto;
-import com.hrm.payloads.HrExecutiveWorkApprovalDto;
 import com.hrm.payloads.HrManagerAgreementApprovalDto;
 import com.hrm.payloads.HrManagerBackgroundVerificationDto;
 import com.hrm.payloads.HrManagerDto;
@@ -37,18 +29,7 @@ import com.hrm.payloads.HrManagerFamilyApprovalDto;
 import com.hrm.payloads.HrManagerPersonalApprovalDto;
 import com.hrm.payloads.HrManagerWorkApprovalDto;
 import com.hrm.payloads.ReleaseAppointmentLetterDto;
-import com.hrm.services.IHRExecutiveService;
 import com.hrm.services.IHRManagerService;
-
-import jakarta.websocket.server.PathParam;
-
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.HttpStatus;
 
 @CrossOrigin(origins = { "http://10.10.20.9:8082/", "http://10.10.20.9:8084/", "http://Localhost:4200/" })
 @RestController

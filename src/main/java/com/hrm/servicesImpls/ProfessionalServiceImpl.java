@@ -3,21 +3,16 @@ package com.hrm.servicesImpls;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.stream.Collectors;
 
 import com.hrm.helper.EnumCollection.Departments;
-import com.hrm.helper.EnumCollection.Departments.Department;
 import com.hrm.helper.EnumCollection.Designation;
 import com.hrm.helper.EnumCollection.ManagerType;
 import com.hrm.models.Employee;
-import com.hrm.models.Work;
 import com.hrm.payloads.DirectReportsDto;
 import com.hrm.payloads.MResignationEditDto;
 import com.hrm.payloads.ReportingManagerDto;

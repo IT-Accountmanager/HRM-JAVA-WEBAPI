@@ -1,6 +1,5 @@
 package com.hrm.services;
 
-import com.hrm.models.EmployeeWorkWeek;
 import com.hrm.payloads.EmployeeWorkWeekDto;
 
 public interface EmployeeWorkWeekService {

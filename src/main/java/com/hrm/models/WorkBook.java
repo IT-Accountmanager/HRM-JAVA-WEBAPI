@@ -2,14 +2,11 @@ package com.hrm.models;
 
 import com.hrm.helper.EnumCollection.ApprovalStatus;
 import com.hrm.helper.EnumCollection.DetailsSubmissionStatus;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 //@Setter
 //@Getter

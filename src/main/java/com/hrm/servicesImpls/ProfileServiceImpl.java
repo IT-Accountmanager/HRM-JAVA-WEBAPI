@@ -2,23 +2,20 @@
 package com.hrm.servicesImpls;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hrm.helper.EnumCollection.CandidatesStatus;
 import com.hrm.helper.EnumCollection.DetailsSubmissionStatus;
 import com.hrm.helper.EnumCollection.HrSubmission;
-import com.hrm.models.Agreement;
 import com.hrm.models.Education;
 import com.hrm.models.Family;
 import com.hrm.models.Onboarding;
-import com.hrm.models.Personal;
 import com.hrm.models.PersonalDetails;
 import com.hrm.models.Profile;
 import com.hrm.models.Work;
-import com.hrm.payloads.ProfileSummaryDto;
 import com.hrm.repositories.IAgreementRepository;
 import com.hrm.repositories.IEducationRepository;
 import com.hrm.repositories.IFamilyRepository;

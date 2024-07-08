@@ -3,6 +3,7 @@ package com.hrm.controllers;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,22 +17,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hrm.helper.EnumCollection.Departments;
+import com.hrm.helper.EnumCollection.Departments.Department;
 import com.hrm.helper.EnumCollection.Designation;
 import com.hrm.helper.EnumCollection.EmployeeStatus;
 import com.hrm.helper.EnumCollection.ManagerType;
 import com.hrm.helper.EnumCollection.ProbationPeriod;
 import com.hrm.helper.EnumCollection.WorkLocation;
-import com.hrm.helper.EnumCollection.Departments.Department;
-import com.hrm.payloads.BasicInfoDto;
 import com.hrm.payloads.EmployeeGenerateDto;
 import com.hrm.payloads.EmployeeViewDto;
 import com.hrm.payloads.EmployeesNameDto;
-import com.hrm.payloads.ReportingManagerDto;
-import com.hrm.payloads.ResignationInfoDto;
 import com.hrm.payloads.SetManagerDto;
 import com.hrm.payloads.SummaryAddressInfoDto;
 import com.hrm.payloads.SummaryContactInfoDto;
-import com.hrm.payloads.SummaryDto;
 import com.hrm.payloads.SummaryPersonalInfoDto;
 import com.hrm.payloads.WorkHistoryDto;
 import com.hrm.payloads.WorkInfoDto;
@@ -85,7 +82,7 @@ public class SummaryController {
 			list = this.summaryService.getListOfEmployeesBySearchTerm(searchTerm);
 		} else {
 			list = this.summaryService.getListOfEmployees();
-		}
+		} 
 
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}

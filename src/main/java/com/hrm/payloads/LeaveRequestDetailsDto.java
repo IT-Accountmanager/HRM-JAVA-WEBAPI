@@ -3,7 +3,6 @@ package com.hrm.payloads;
 import java.time.LocalDate;
 
 import com.hrm.helper.EnumCollection.Departments;
-import com.hrm.helper.EnumCollection.Departments.Department;
 import com.hrm.helper.EnumCollection.Designation;
 import com.hrm.helper.EnumCollection.Half;
 import com.hrm.helper.EnumCollection.LeaveType;

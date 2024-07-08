@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hrm.models.JVM;
-import com.hrm.models.NewJobs;
 import com.hrm.repositories.IJVMRepository;
 import com.hrm.services.IJVMService;
 

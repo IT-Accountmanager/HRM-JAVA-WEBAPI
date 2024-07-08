@@ -1,7 +1,6 @@
 package com.hrm.payloads;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class BillableHoursDto {
 // private List<LocalDate> listOfDate;

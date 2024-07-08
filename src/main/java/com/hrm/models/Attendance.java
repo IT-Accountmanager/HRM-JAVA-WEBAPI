@@ -1,6 +1,5 @@
 package com.hrm.models;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;

@@ -2,16 +2,18 @@ package com.hrm.servicesImpls;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-import java.nio.charset.StandardCharsets;
+
 import org.apache.commons.io.FileUtils;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -20,15 +22,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import java.util.OptionalLong;
+
 import com.hrm.helper.Convert;
 import com.hrm.helper.CtcBreakup;
-import com.hrm.helper.Format;
 import com.hrm.helper.EnumCollection.ApprovalStatus;
 import com.hrm.helper.EnumCollection.CandidatesStatus;
 import com.hrm.helper.EnumCollection.EmployeeStatus;
 import com.hrm.helper.EnumCollection.HrSubmission;
+import com.hrm.helper.Format;
 import com.hrm.models.Agreement;
 import com.hrm.models.BackgroundVerification;
 import com.hrm.models.Education;
@@ -63,11 +66,8 @@ import com.hrm.repositories.IWorkRepository;
 import com.hrm.services.IHRManagerService;
 import com.hrm.utils.CommonUtils;
 
-import org.springframework.mail.javamail.MimeMessageHelper;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 @Service
 

@@ -1,8 +1,5 @@
 package com.hrm.controllers;
 
-import java.util.Base64;
-import java.util.Base64.Decoder;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hrm.helper.EnumCollection;
-import com.hrm.helper.EnumCollection.DetailsSubmissionStatus;
 import com.hrm.models.Personal;
-import com.hrm.models.PersonalDetails;
 import com.hrm.payloads.PersonalStatusResponse;
 import com.hrm.services.IPersonalService;
 

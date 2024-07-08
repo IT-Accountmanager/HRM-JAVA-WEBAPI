@@ -3,8 +3,6 @@ package com.hrm.servicesImpls;
 import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.List;
-import java.util.Optional;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hrm.helper.EnumCollection.ApprovalStatus;
-import com.hrm.helper.EnumCollection.Designation;
 import com.hrm.helper.EnumCollection.DetailsSubmissionStatus;
-import com.hrm.helper.EnumCollection.Departments.Department;
 import com.hrm.models.Onboarding;
 import com.hrm.models.Work;
 import com.hrm.payloads.WorkStatusResponse;
