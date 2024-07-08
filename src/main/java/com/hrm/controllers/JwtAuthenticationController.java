@@ -34,6 +34,7 @@ public class JwtAuthenticationController {
 	@PostMapping("/register")
 	public ResponseEntity<String> registerUser(@RequestBody UserEntityRequest user) {
 		return new ResponseEntity<String>(this.authenticationService.registerUser(user), HttpStatus.OK);
+		//
 	}
 
 }
