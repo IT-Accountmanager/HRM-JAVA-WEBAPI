@@ -56,7 +56,7 @@ public class TestJwtAuthenticationController {
 
 		MockHttpServletResponse response2 = andReturn.getResponse();
 
-		assertEquals("12345", response2.getsta);
+		assertEquals("12345", response2.getStatus());
 
 	}
 

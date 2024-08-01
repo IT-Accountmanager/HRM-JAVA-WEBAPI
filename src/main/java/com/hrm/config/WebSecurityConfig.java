@@ -6,13 +6,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import com.hrm.security.JwtAuthenticationEntryPoint;
 import com.hrm.security.JwtRequestFilter;
 import com.hrm.security.JwtUserDetailsService;
@@ -21,10 +19,13 @@ import com.hrm.security.JwtUserDetailsService;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
+	// Declare dependencies for authentication entry point, user details service,
+	// and JWT request filter
 	private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	private final JwtUserDetailsService jwtUserDetailsService;
 	private final JwtRequestFilter jwtRequestFilter;
 
+	// Constructor injection for dependencies
 	public WebSecurityConfig(JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
 			JwtUserDetailsService jwtUserDetailsService, JwtRequestFilter jwtRequestFilter) {
 		this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
@@ -32,11 +33,13 @@ public class WebSecurityConfig {
 		this.jwtRequestFilter = jwtRequestFilter;
 	}
 
+	// Bean definition for password encoder using BCrypt
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
+	// Bean definition for authentication manager
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
 			throws Exception {
@@ -73,9 +76,11 @@ public class WebSecurityConfig {
 //		return httpSecurity.build();
 //	}
 
+	// Define public URLs that can be accessed without authentication
 	private static final String[] PUBLIC_URLS = { "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html",
 			"/swagger-resources/**", "/webjars/**", "/api/auth/**", "/api/test/**", "/auth/**" };
 
+	// Bean definition for security filter chain
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
